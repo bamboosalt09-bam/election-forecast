@@ -1,0 +1,34 @@
+{
+  "schema": "official_assembly_pres_2025_collection_v1",
+  "status": "forecast_only_not_scored",
+  "target_election": "pres_2025",
+  "meeting_window_start": "2025-01-01",
+  "meeting_window_end": "2025-06-02",
+  "availability_policy": "official PDF CreationDate plus one full day",
+  "availability_policy_caveat": "The official site exposes no exact publication timestamp; PDF creation plus one day is a conservative proxy, and missing metadata fails closed.",
+  "safety_lag_days": 1,
+  "meetings_discovered": 239,
+  "meetings_completed": 239,
+  "meetings_eligible_at_cutoff": 91,
+  "meetings_excluded_by_availability": 148,
+  "first_meeting_date": "2025-01-06",
+  "last_meeting_date": "2025-05-14",
+  "semantic_fingerprint": "08c6ed8041c78922005c4dc5c74cb3a41eea46221908a008180ea5c445265ecb",
+  "pres_2025_outcome_used": false,
+  "performance_metrics_computed": false,
+  "outcome_columns_read": [],
+  "outputs": {
+    "discovered_meetings.csv": {
+      "rows": 239,
+      "sha256": "9c0b816325f36bca5decb118badc6889be4086e9eefdec4c453be730de0f0542"
+    },
+    "meeting_manifest.csv": {
+      "rows": 239,
+      "sha256": "eb645e5ea21f207595ea04b3d42a529e811611a97a0f47f4b6dcedc5bc31d9fc"
+    },
+    "assembly_stance_rows_2025_h1.csv": {
+      "rows": 48588,
+      "sha256": "5381ea34d0081ed4bb838ea2c2ba6a2721c745a94c510d4143994bf4a576a4e4"
+    }
+  }
+}

@@ -31,6 +31,12 @@ from presidential_issue_engine.electorate_layers import (  # noqa: E402
     compile_issue_class_signals,
     estimate_electorate_layers,
 )
+from presidential_issue_engine.election_scope import (  # noqa: E402
+    ELECTION_DATES as CENTRAL_ELECTION_DATES,
+    ROLLING_WARMUP_ELECTIONS,
+    SCORED_ELECTIONS,
+    WARMUP_ELECTIONS,
+)
 
 try:
     from presidential_issue_engine.region_bloc_prior import (  # noqa: E402
@@ -95,20 +101,12 @@ CANDIDATE_NEUTRAL_ISSUE_CONTEXT = "data/raw/assembly_neutral_issue_context.csv"
 ASSEMBLY_ISSUE_CHARACTER_OVERLAY = "data/raw/assembly_issue_character_overlay.csv"
 CANDIDATE_GENERATION_PROFILE = "data/raw/candidate_generation_profile.csv"
 ELECTION_GENERATION_WEIGHTS = "data/raw/election_generation_weights.csv"
-ORDER = ["pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022"]
+ORDER = list(SCORED_ELECTIONS)
 WEIGHT_SELECTION_ELECTIONS = tuple(ORDER)
-WARMUP_ORDER = ["pres_1992", "pres_1997"]
-ROLLING_WARMUP_ORDER = ["pres_1997"]
+WARMUP_ORDER = list(WARMUP_ELECTIONS)
+ROLLING_WARMUP_ORDER = list(ROLLING_WARMUP_ELECTIONS)
 REGIONAL_BASE_ORDER = ["pres_1992", "pres_1997", *ORDER]
-ELECTION_DATES = {
-    "pres_1992": "1992-12-18",
-    "pres_1997": "1997-12-18",
-    "pres_2002": "2002-12-19",
-    "pres_2007": "2007-12-19",
-    "pres_2012": "2012-12-19",
-    "pres_2017": "2017-05-09",
-    "pres_2022": "2022-03-09",
-}
+ELECTION_DATES = dict(CENTRAL_ELECTION_DATES)
 PREDICTORS = [
     "slot_A",
     "slot_B",

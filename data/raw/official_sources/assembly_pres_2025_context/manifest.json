@@ -1,0 +1,80 @@
+{
+  "schema": "pres_2025_assembly_forecast_context_v1",
+  "status": "forecast_only_not_scored",
+  "target_election": "pres_2025",
+  "election_date": "2025-06-03",
+  "forecast_cutoff": "2025-06-02",
+  "source_path": "external://assembly_stance_rows_15_22.csv",
+  "source_paths": [
+    "external://assembly_stance_rows_15_22.csv",
+    "repo://data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv"
+  ],
+  "source_bytes": 5851371472,
+  "source_sha256": "3783557f591294580f85cbfbf7f79e7fcdfafde6d8dd1ce7fc1e665919e1a5f2",
+  "source_sha256_basis": "sha256 of canonical source entry manifest",
+  "sources": [
+    {
+      "path": "external://assembly_stance_rows_15_22.csv",
+      "bytes": 5816384190,
+      "sha256": "ce44442c252b40b506ae552dbf719922a5db055eafac5e9d36b0a6ed4c3d1415",
+      "sha256_basis": "verified sibling state.json"
+    },
+    {
+      "path": "repo://data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
+      "bytes": 34987282,
+      "sha256": "5381ea34d0081ed4bb838ea2c2ba6a2721c745a94c510d4143994bf4a576a4e4",
+      "sha256_basis": "computed from source bytes"
+    }
+  ],
+  "candidate_registry_path": "repo://data/raw/official_sources/pres_2025_candidate_registry.csv",
+  "candidate_registry_sha256": "27cead6ccd7baac0e370c00c4fb37a8c0d24e77bf0ae9bd551561f44491350e8",
+  "candidate_registry_rows": 7,
+  "candidate_registry_policy": "complete_registered_roster_not_outcome_selected",
+  "candidate_status_or_withdrawal_used": false,
+  "source_rows_scanned": 4776442,
+  "target_rows_seen": 570665,
+  "target_rows_included": 537062,
+  "post_cutoff_rows_excluded": 33603,
+  "duplicate_rows_excluded": 0,
+  "invalid_date_rows": 0,
+  "source_first_meeting_date": "2022-03-22",
+  "source_last_meeting_date": "2025-05-14",
+  "first_meeting_date": "2022-03-22",
+  "last_meeting_date": "2025-05-08",
+  "assembly_rows": {
+    "21": 333264,
+    "22": 203798
+  },
+  "outcome_columns_read": [],
+  "pres_2025_outcome_used": false,
+  "performance_metrics_computed": false,
+  "scored_elections_unchanged": [
+    "pres_2002",
+    "pres_2007",
+    "pres_2012",
+    "pres_2017",
+    "pres_2022"
+  ],
+  "outputs": {
+    "issue_salience_weekly.csv": {
+      "rows": 2588,
+      "sha256": "5b3f7bb8220d6f4bd48444b992b4a41b85d2d717e3c3da8e98eba67632d3c0df"
+    },
+    "explicit_target_context_weekly.csv": {
+      "rows": 8138,
+      "sha256": "68044450e2ee25a2d9caf74e99ee863d01039baad2ce852baacabd53be7d3100"
+    },
+    "candidate_target_context_weekly.csv": {
+      "rows": 1926,
+      "sha256": "2d5b7d58d5eb1dd79f8b2969452b9f18524d0e53f602e1bfc761f573d46e266f"
+    },
+    "model_issue_salience.csv": {
+      "rows": 2588,
+      "sha256": "f1688998f5090d6325fde1813b8063880b772925ed1cc6fc05de8ff39685523d"
+    },
+    "model_candidate_issue_link.csv": {
+      "rows": 56,
+      "sha256": "68d4537846722d251d059a9fb5a8ed6f7d7a9fb322bc5f1084ecf74734aed440"
+    }
+  }
+}

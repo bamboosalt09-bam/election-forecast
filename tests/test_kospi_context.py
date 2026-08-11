@@ -11,6 +11,25 @@ from presidential_issue_engine.issue_vote_engine import (
     _kospi_context_features,
 )
 from scripts.import_kospi_history import parse_kospi_text
+from scripts.fetch_bok_kospi_daily import normalize_bok_kospi_rows
+
+
+def test_bok_kospi_normalizer_keeps_official_close_only() -> None:
+    rows = [
+        {"TIME": "20220307", "DATA_VALUE": "2651.31"},
+        {"TIME": "20220308", "DATA_VALUE": "2622.40"},
+        {"TIME": "20220308", "DATA_VALUE": "2622.40"},
+    ]
+
+    out = normalize_bok_kospi_rows(rows)
+
+    assert len(out) == 2
+    assert out["date"].tolist() == [pd.Timestamp("2022-03-07"), pd.Timestamp("2022-03-08")]
+    assert out["close"].tolist() == pytest.approx([2651.31, 2622.40])
+    assert out[["open", "high", "low", "volume"]].isna().all().all()
+    assert out["source"].eq("Bank of Korea ECOS").all()
+    assert out["ohlc_quality_flag"].eq("official_close_only").all()
+    assert out["available_date"].equals(out["date"])
 
 
 def test_kospi_text_parser_deduplicates_and_preserves_quality_flags() -> None:

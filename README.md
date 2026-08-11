@@ -13,6 +13,15 @@ The 1997 presidential election is rolling warmup only. No 2025 presidential outc
 The active engine must not import weights or performance claims from the post-2025 archive.
 Long Assembly transcript reprocessing is not run unless explicitly requested.
 
+## 2025 forecast-only demonstration
+
+The project contains a separate, outcome-free 2025 Assembly context for a
+demonstration run. The official 2025 H1 minutes supplement contains 239
+meetings and 48,588 derived issue rows. Only 91 meetings and 14,985 rows pass
+the conservative D-1 availability rule; the rest remain stored but cannot
+enter the forecast. The 2025 result is never scored or used for model choice.
+See `docs/PRES_2025_FORECAST_ONLY_ASSEMBLY_CONTEXT_20260810.md`.
+
 ## Active model
 
 - current version: `v23` (frozen through-2022 baseline)
@@ -120,7 +129,7 @@ Latest complete verification:
 - strict deep PIT audit: PASS, outcome invariance `215/215`
 - active slot audit: PASS
 - active V23 audit: PASS, `199` prediction rows
-- tests: `538 passed` (2026-08-10)
+- tests: `547 passed` (2026-08-12)
 
 ## GitHub workflow
 

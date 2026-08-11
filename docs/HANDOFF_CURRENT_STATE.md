@@ -13,6 +13,30 @@
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
 
+## 2025 forecast-only Assembly context (2026-08-10)
+
+The requested 2025 pre-election minutes supplement is complete against the
+current official National Assembly hierarchy.
+
+- official meetings discovered/completed: `239/239`
+- meeting range: `2025-01-06` to `2025-05-14`
+- derived issue rows: `48,588`
+- D-1 eligible meetings: `91`; retained but excluded: `148`
+- D-1 eligible rows: `14,985`; post-cutoff rows excluded: `33,603`
+- combined `pres_2025` input rows included: `537,062`
+- duplicate rows: `0`
+- 2025 outcome fields used: none
+- 2025 metrics computed: false
+- boundary audit: PASS
+- active V23 historical audit: PASS, outcome invariance `215/215`
+
+Meeting date is not used as availability. The official PDF creation date plus
+one full day is the conservative proxy; missing metadata fails closed. The
+official site does not expose exact first-publication timestamps, so this
+limitation remains explicit. See
+`docs/PRES_2025_FORECAST_ONLY_ASSEMBLY_CONTEXT_20260810.md` and
+`docs/PRES_2025_DEMO_BOUNDARY_AUDIT.json`.
+
 ## Latest stance-classifier audit (2026-08-06)
 
 The precision-first stance experiment advanced through V18 in shadow mode.
