@@ -1,0 +1,14 @@
+{
+  "schema": "external_active_inputs_v1",
+  "inputs": [
+    {
+      "path": "presidential_issue_engine/fixed_dataset/kospi_daily.csv",
+      "bytes": 1145815,
+      "sha256": "6e29dd0e95f4f96e81af8ebd1292f1f9c941df0a5ba48f87739407c3f249f1b9",
+      "status": "excluded_from_git",
+      "reason": "commercial user-provided source retained only for frozen V23 reproduction",
+      "replacement_status": "official BOK ECOS candidate is available but not promoted into V23",
+      "provenance_manifest": "data/raw/official_sources/bok_ecos_kospi_manifest.json"
+    }
+  ]
+}

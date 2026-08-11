@@ -33,6 +33,9 @@ Not tracked:
 
 The excluded data are represented by source metadata, row counts, hashes, and
 reproduction commands. No real credentials are stored in tracked files.
+The frozen V23 KOSPI dependency is additionally pinned by byte count and hash
+in `data/raw/official_sources/external_active_inputs.json`; public CI verifies
+that the file is absent from Git and explicitly ignored.
 
 ## Forecast and information boundary
 

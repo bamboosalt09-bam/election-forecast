@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 import numpy as np
@@ -37,6 +38,7 @@ LEGACY_TRANSFER_INPUTS = {
     "data/raw/withdrawal_event_profiles.csv",
     "presidential_issue_engine/fixed_dataset/coalition_events.csv",
 }
+EXTERNAL_INPUTS = ROOT / "data" / "raw" / "official_sources" / "external_active_inputs.json"
 
 
 def _require(condition: bool, message: str) -> None:
@@ -50,6 +52,11 @@ def _sha256(path: Path) -> str:
 
 def _audit_active_manifest() -> dict[str, int]:
     manifest = pd.read_csv(ACTIVE_DIR / "input_manifest.csv", encoding="utf-8-sig")
+    external_payload = json.loads(EXTERNAL_INPUTS.read_text(encoding="utf-8"))
+    external_inputs = {
+        str(row["path"]).replace("\\", "/"): row
+        for row in external_payload.get("inputs", [])
+    }
     paths = manifest["path"].astype(str).str.replace("\\", "/", regex=False)
     _require(not (set(paths) & LEGACY_TRANSFER_INPUTS), "legacy transfer input is active")
     required = {
@@ -66,7 +73,34 @@ def _audit_active_manifest() -> dict[str, int]:
         if path_text.startswith("generated:"):
             continue
         path = ROOT / path_text
-        _require(path.exists(), f"manifest input is missing: {path_text}")
+        if not path.exists():
+            external = external_inputs.get(path_text)
+            _require(external is not None, f"manifest input is missing: {path_text}")
+            _require(
+                external.get("status") == "excluded_from_git",
+                f"external input has an invalid status: {path_text}",
+            )
+            _require(
+                int(external.get("bytes", -1)) == int(row.bytes),
+                f"external input byte count drift: {path_text}",
+            )
+            _require(
+                str(external.get("sha256", "")) == str(row.sha256),
+                f"external input hash drift: {path_text}",
+            )
+            tracked = subprocess.run(
+                ["git", "ls-files", "--error-unmatch", path_text],
+                cwd=ROOT,
+                capture_output=True,
+            )
+            ignored = subprocess.run(
+                ["git", "check-ignore", "-q", path_text],
+                cwd=ROOT,
+                capture_output=True,
+            )
+            _require(tracked.returncode != 0, f"external input is tracked: {path_text}")
+            _require(ignored.returncode == 0, f"external input is not ignored: {path_text}")
+            continue
         _require(_sha256(path) == str(row.sha256), f"manifest hash drift: {path_text}")
     return {"active_manifest_files": len(manifest)}
 

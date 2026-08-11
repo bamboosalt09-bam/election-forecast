@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -84,7 +86,16 @@ def test_active_engine_exposes_time_varying_macro_diagnostics_without_direct_pre
 
     assert "macro_context_signal" not in issue_vote_engine.PREDICTORS
     assert "macro_context_signal" not in out.columns
-    assert out["kospi_latest_date"].ne("not_available").any()
+    active_kospi = (
+        Path(__file__).resolve().parents[1]
+        / "presidential_issue_engine"
+        / "fixed_dataset"
+        / "kospi_daily.csv"
+    )
+    if active_kospi.exists():
+        assert out["kospi_latest_date"].ne("not_available").any()
+    else:
+        assert out["kospi_latest_date"].eq("not_available").all()
     epoch = out.groupby("election_id", as_index=False)[
         ["economy_epoch_weight", "housing_epoch_weight"]
     ].first()

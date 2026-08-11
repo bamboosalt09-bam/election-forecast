@@ -1099,12 +1099,16 @@ def test_v24s_removes_all_independently_observed_v15_harmful_errors() -> None:
     from election_forecast.stance_precision import precision_first_metrics
 
     root = Path(__file__).resolve().parents[1]
+    audit_path = root / "data" / "shadow" / "stance_locked_audit_v15.csv"
+    labels_path = root / "data" / "shadow" / "stance_locked_audit_v15_labels.csv"
+    if not audit_path.exists() or not labels_path.exists():
+        pytest.skip("external v15 shadow audit is not part of the public repository")
     audit = pd.read_csv(
-        root / "data" / "shadow" / "stance_locked_audit_v15.csv",
+        audit_path,
         encoding="utf-8-sig",
     ).fillna("")
     labels = pd.read_csv(
-        root / "data" / "shadow" / "stance_locked_audit_v15_labels.csv",
+        labels_path,
         encoding="utf-8-sig",
     ).fillna("")
     evaluated = audit.merge(labels, on="text_sha256", validate="one_to_one")
@@ -1148,12 +1152,16 @@ def test_v25s_removes_all_independently_observed_v16_harmful_errors() -> None:
     from election_forecast.stance_precision import precision_first_metrics
 
     root = Path(__file__).resolve().parents[1]
+    audit_path = root / "data" / "shadow" / "stance_locked_audit_v16.csv"
+    labels_path = root / "data" / "shadow" / "stance_locked_audit_v16_labels.csv"
+    if not audit_path.exists() or not labels_path.exists():
+        pytest.skip("external v16 shadow audit is not part of the public repository")
     audit = pd.read_csv(
-        root / "data" / "shadow" / "stance_locked_audit_v16.csv",
+        audit_path,
         encoding="utf-8-sig",
     ).fillna("")
     labels = pd.read_csv(
-        root / "data" / "shadow" / "stance_locked_audit_v16_labels.csv",
+        labels_path,
         encoding="utf-8-sig",
     ).fillna("")
     evaluated = audit.merge(labels, on="text_sha256", validate="one_to_one")
