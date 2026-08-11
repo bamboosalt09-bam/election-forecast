@@ -1,0 +1,20 @@
+{
+  "schema": "unified_exact_lineage_v21",
+  "history_sha256": "c6f3fc38fef1881182e7f53680fa87fb659eb2f9e4e6ad727603dcc610eb2be6",
+  "assembly_sha256": "12744cb873dd84d53d0c54e1873564d62d0c7f32623388b3555ca77df59dfa0e",
+  "party_transitions_sha256": "d2831907e77b037eb6f880f4c7494fbe36bf4ece1956889d4d4b569f8fd009d6",
+  "history_rows": 5925,
+  "assembly_candidate_rows": 8484,
+  "event_rows": 7525,
+  "elections": 55,
+  "lineages": 143,
+  "regions": 17,
+  "assembly_district_source": "exact NEC party rows replace collapsed history",
+  "other_election_source": "preserved pre-normalization history party label",
+  "type_reliability": "prior same-date candidate versus direct-party agreement",
+  "party_genealogy_routing": "dated predecessor-successor graph without vote fitting",
+  "single_region_formula": true,
+  "post_2022_outcomes_used": false,
+  "target_outcome_fields_used": [],
+  "active_model_changed": false
+}

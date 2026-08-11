@@ -1,0 +1,8 @@
+variable_name,variable_group,description,direction,scale_min,scale_max,notes
+regional_base,regional_base,Regional structural tendency toward an analytic slot,positive favors slot,-1.0,1.0,Use as one structural variable, not as direct past vote-share baseline
+candidate_strength,candidate_strength,Candidate-level general competitiveness,positive favors slot,-1.0,1.0,No ideology labels
+national_mood,national_mood,National mood and administration or economic backdrop,positive favors slot,-1.0,1.0,Not candidate ideology
+third_candidate_structure,third_candidate_structure,Structural strength of the C slot,positive favors slot,-1.0,1.0,Distinguishes active and weak third-candidate structures
+local_issue_fit,local_issue_fit,Fit between regional issues and slot message,positive favors slot,-1.0,1.0,
+turnout_structure,turnout_structure,Regional turnout and mobilization structure,positive favors slot,-1.0,1.0,
+risk_or_negative,risk_or_negative,Candidate risk or negative issue burden,negative hurts slot,-1.0,1.0,Negative values should reduce utility

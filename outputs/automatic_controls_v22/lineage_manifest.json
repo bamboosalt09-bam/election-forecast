@@ -1,0 +1,60 @@
+{
+  "schema": "automatic_controls_v22",
+  "status": "v22_dependency_for_v23",
+  "active_model_changed": false,
+  "post_2022_outcomes_used": false,
+  "target_outcome_fields_used": [],
+  "withdrawal_transfer_rate_mode": "retained_semiautomatic_scenario_input",
+  "manual_strength_removed_from_policy_registry": true,
+  "active_outputs": [],
+  "shadow_outputs": [
+    "election_generation_weights.csv",
+    "party_lineage_transitions_behavioral.csv"
+  ],
+  "outputs": {
+    "mega_issue_taxonomy.csv": {
+      "rows": 5,
+      "sha256": "8a7b716d23a54a40e9969eb958e668af3a483fe499329b226b04f5d56c33acd3"
+    },
+    "mega_issue_intensity.csv": {
+      "rows": 5,
+      "sha256": "ef43c82710b98c4fec74dc9b7fbd5db4525042e9192603b58e9c83dba34c7c0d"
+    },
+    "economic_slot_alignment.csv": {
+      "rows": 13,
+      "sha256": "e889939af92572b9f5c798ec3feb66d022e765a5d900d563841fc5aceaceafc0"
+    },
+    "housing_slot_alignment.csv": {
+      "rows": 13,
+      "sha256": "ffbf96f36d6b1ffdc2f5ce5295378a020aa71c2380e2cc29ad711bc17f243415"
+    },
+    "election_generation_weights.csv": {
+      "rows": 7,
+      "sha256": "5981dad1b578629470c5296b2fe00b2b0fb41051f244f851ec85377497e8e646"
+    },
+    "third_candidate_profile.csv": {
+      "rows": 5,
+      "sha256": "c673de7a9c6b4c7450f50ef763435fd2e73fbe93a1a7f551c95b2a716f437430"
+    },
+    "candidate_political_landscape.csv": {
+      "rows": 14,
+      "sha256": "f8b8400a20aa6a0675a60cee0b796f1917b02edc659668be0da21d6a9cdc458f"
+    },
+    "third_candidate_pressure_active_context.csv": {
+      "rows": 0,
+      "sha256": "41e580a6e83dcbb5b4385f4a1e54f89cdeaffa82b3774e3fec32d41cc38e68ee"
+    },
+    "third_candidate_pressure.csv": {
+      "rows": 6,
+      "sha256": "61a997abe695ad9c2ef223b0631fe7cbd26b63f1a5ad467343cb2f474b099cf7"
+    },
+    "regional_alignment_with_policy.csv": {
+      "rows": 3,
+      "sha256": "d79a4e3590cdd4dae192cf37bbdd3e2f5755482d54d74f1502890da7ff9a445b"
+    },
+    "party_lineage_transitions_behavioral.csv": {
+      "rows": 4,
+      "sha256": "bddd070158c508a3a8a7bad08b6409c02f08d4767210a8e5b327081abb94eb55"
+    }
+  }
+}

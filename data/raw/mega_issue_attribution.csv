@@ -1,0 +1,11 @@
+election_id,mega_event,issue_name,target_type,target,polarity,weight,available_date,confidence,notes
+pres_2002,regional_realignment,regional_dev,candidate_slot,A,1,0.60,2002-11-01,0.45,regional realignment helped Roh slot in seed coding
+pres_2007,BBK,corruption_integrity,candidate_slot,A,-1,0.90,2007-11-01,0.70,BBK and DAS allegation attached to Lee Myung-bak
+pres_2007,BBK,regime_change,candidate_slot,B,-1,0.35,2007-11-01,0.45,incumbent liberal fatigue limited opposition attack effectiveness
+pres_2012,opposition_unification,unification_event,candidate_slot,B,1,0.90,2012-11-25,0.70,Ahn withdrawal benefit assigned to Moon slot
+pres_2012,economic_democratization,welfare_pension,candidate_slot,A,1,0.70,2012-11-15,0.55,Park welfare/economic democratization pledge
+pres_2017,impeachment,regime_change,candidate_slot,A,1,0.95,2017-04-01,0.80,opposition slot benefited from impeachment election axis
+pres_2017,impeachment,regime_change,candidate_slot,B,-1,0.95,2017-04-01,0.75,conservative slot burden from incumbent-bloc impeachment
+pres_2017,Choi_Soon_sil,corruption_integrity,candidate_slot,B,-1,0.90,2017-04-01,0.75,state-capture scandal burden on conservative slot
+pres_2022,Daejang_dong,corruption_integrity,candidate_slot,B,-1,0.90,2022-02-01,0.70,Daejang-dong allegation attached to Lee Jae-myung slot
+pres_2022,anti_incumbent,regime_change,candidate_slot,A,1,0.85,2022-02-01,0.70,Yoon benefited from anti-incumbent frame

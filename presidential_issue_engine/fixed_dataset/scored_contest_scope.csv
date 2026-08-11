@@ -1,0 +1,2 @@
+election_id,slot,include_in_scored_contest,available_date,source_type,notes
+pres_2002,C,false,2002-12-18,contest_scope,권영길 실제 출마·득표 원자료는 보존하되 2002 scored contest는 노무현·이회창 양강 기준으로 평가

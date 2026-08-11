@@ -1,0 +1,16 @@
+﻿target_election_id,slot,candidate_name,party_name,query_record_count,matched_record_count,birthday,entity_match_method,entity_match_confidence,resolved
+pres_2002,A,노무현,새천년민주당,4,4,19460806,target_election_party_birthday,1.0,True
+pres_2002,B,이회창,한나라당,5,5,19350602,target_election_party_birthday,1.0,True
+pres_2002,C,권영길,민주노동당,13,7,19411105,target_election_party_birthday,1.0,True
+pres_2007,A,이명박,한나라당,3,3,19411219,target_election_party_birthday,1.0,True
+pres_2007,B,정동영,대통합민주신당,16,9,19530617,target_election_party_birthday,1.0,True
+pres_2007,C,이회창,무소속,5,5,19350602,target_election_party_birthday,1.0,True
+pres_2012,A,박근혜,새누리당,8,5,19520202,target_election_party_birthday,1.0,True
+pres_2012,B,문재인,민주통합당,3,3,19530124,target_election_party_birthday,1.0,True
+pres_2012,C,강지원,무소속,3,1,19490317,target_election_party_birthday,1.0,True
+pres_2017,A,문재인,더불어민주당,3,3,19530124,target_election_party_birthday,1.0,True
+pres_2017,B,홍준표,자유한국당,9,9,19541205,target_election_party_birthday,1.0,True
+pres_2017,C,안철수,국민의당,7,7,19620122,target_election_party_birthday,1.0,True
+pres_2022,A,윤석열,국민의힘,1,1,19601218,target_election_party_birthday,1.0,True
+pres_2022,B,이재명,더불어민주당,16,7,19641222,target_election_party_birthday,1.0,True
+pres_2022,C,심상정,정의당,8,8,19590220,target_election_party_birthday,1.0,True

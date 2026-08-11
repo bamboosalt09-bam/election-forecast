@@ -1,0 +1,9 @@
+election_id,mega_event,shock_type,severity,national_scope,persistence,polarization,target_specificity,available_date,confidence,notes
+pres_2002,regional_realignment,political_realignment,0.60,0.55,0.70,0.55,0.30,2002-11-01,0.50,regional and reform realignment with broad but diffuse candidate attribution
+pres_2007,BBK,accountability_scandal,0.70,0.65,0.60,0.70,0.85,2007-11-01,0.70,targeted allegation and accountability shock
+pres_2012,opposition_unification,coalition_realignment,0.70,0.80,0.55,0.45,0.85,2012-11-25,0.70,candidate withdrawal and endorsement changed the competitive structure
+pres_2012,economic_democratization,distributional_policy,0.55,0.75,0.65,0.55,0.50,2012-11-15,0.60,welfare and economic-democratization policy frame
+pres_2017,impeachment,institutional_crisis,0.98,0.98,0.90,0.95,0.80,2017-04-01,0.85,constitutional accountability crisis with nationwide persistent salience
+pres_2017,Choi_Soon_sil,state_capture_scandal,0.93,0.95,0.85,0.90,0.85,2017-04-01,0.85,state-capture and corruption accountability shock
+pres_2022,Daejang_dong,candidate_scandal,0.78,0.75,0.65,0.80,0.90,2022-02-01,0.70,targeted candidate-accountability allegation
+pres_2022,anti_incumbent,incumbent_assessment,0.75,0.90,0.70,0.75,0.55,2022-02-01,0.70,national incumbent-assessment frame with partial housing linkage

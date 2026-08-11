@@ -1,0 +1,6 @@
+election_id,slot,candidate_name,viability,centrist_appeal,anti_major_party_appeal,regional_base_overlap,available_date,confidence,notes
+pres_2002,C,Kwon Young-ghil,0.22,0.10,0.35,0.10,2002-11-01,0.60,labor progressive third candidate with limited national viability
+pres_2007,C,Lee Hoi-chang,0.65,0.35,0.65,0.25,2007-11-01,0.65,strong conservative breakaway third candidate
+pres_2012,C,Kang Ji-won,0.02,0.05,0.05,0.00,2012-11-01,0.70,inactive minor independent candidate
+pres_2017,C,Ahn Cheol-soo,0.90,0.85,0.75,0.40,2017-04-01,0.75,strong viable centrist third candidate
+pres_2022,C,Ahn Cheol-soo,0.55,0.80,0.70,0.35,2022-02-01,0.70,viable centrist third candidate before unification; final C slot is removed after withdrawal

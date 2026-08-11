@@ -1,0 +1,21 @@
+{
+  "active_model_promoted": false,
+  "candidate_reference_columns": [
+    "election_id",
+    "slot",
+    "candidate_name",
+    "party_name"
+  ],
+  "generated_at": "2026-07-29T01:31:29.361609+00:00",
+  "max_source_date": "2022-12-31",
+  "post_2022_records_persisted": false,
+  "rows": {
+    "automatic_candidate_regional_base": 13,
+    "candidate_history": 77,
+    "candidate_reference": 15,
+    "candidate_resolution_audit": 15
+  },
+  "schema": "official_candidate_automation_manifest_v1",
+  "source_url": "https://apis.data.go.kr/9760000/CndaSrchService/getCndaSrchInqire",
+  "target_outcome_columns_read": []
+}

@@ -1,0 +1,3 @@
+region_id,region_name,province,eligible_voters,expected_turnout,population
+sample_sgg_001,Sample District 1,Sample Province A,100000,0.72,130000
+sample_sgg_002,Sample District 2,Sample Province B,80000,0.68,105000

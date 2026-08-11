@@ -1,0 +1,6 @@
+﻿target_election,tuning_elections,ridge_alpha,residual_enabled,residual_scale,residual_shrinkage,neutral_context_scale,overlay_gain,conversion_scale,district_terrain_scale,within_bloc_transfer_scale,within_bloc_reservoir_gain,within_bloc_stronghold_gain,regionalism_scale,regional_anchor_strength,third_competitiveness_gate_enabled,third_character_multiplier_enabled,manual_issue_seed_enabled,automatic_issue_seed_enabled,outer_row_mae_pp,outer_rows
+pres_2002,,0.3,False,0.0,8.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,1.0,False,False,False,True,4.1706769748678685,32
+pres_2007,pres_2002,0.3,False,0.0,8.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,1.0,False,False,False,True,5.598247499290772,48
+pres_2012,pres_2002|pres_2007,0.8,False,0.0,8.0,0.0,0.0,0.0,0.0,0.5,1.0,0.0,0.15,1.0,False,False,False,True,5.189913428499456,34
+pres_2017,pres_2002|pres_2007|pres_2012,1.2,False,0.0,8.0,0.0,0.0,0.0,0.0,0.5,1.0,0.1,0.15,1.0,False,False,False,True,4.7458705182982595,51
+pres_2022,pres_2002|pres_2007|pres_2012|pres_2017,1.2,False,0.0,8.0,0.6,0.0,0.0,0.0,0.5,1.0,0.25,0.15,1.0,True,True,False,True,2.1454794808842426,34

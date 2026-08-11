@@ -1,0 +1,5 @@
+election_id,slot,candidate_name,party_name,is_active_slot,notes
+pres_2022,A,,,True,1위 경쟁후보
+pres_2022,B,,,True,2위 경쟁후보
+pres_2022,C,,,False,유의미한 3후보일 때만 True
+pres_2022,alpha,기타후보 합산,,True,나머지 후보 전체

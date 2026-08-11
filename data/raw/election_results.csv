@@ -1,0 +1,13 @@
+election_id,election_type,election_date,region_id,party_name,camp,candidate_name,votes,vote_share,turnout,available_date
+dummy_presidential_2017,presidential,2017-05-09,sample_sgg_001,Dummy Conservative Party,conservative,Dummy Past Conservative,52000,0.52,0.76,2017-05-10
+dummy_presidential_2017,presidential,2017-05-09,sample_sgg_001,Dummy Liberal Party,liberal,Dummy Past Liberal,43000,0.43,0.76,2017-05-10
+dummy_presidential_2017,presidential,2017-05-09,sample_sgg_001,Dummy Progressive Party,progressive,Dummy Past Progressive,5000,0.05,0.76,2017-05-10
+dummy_presidential_2017,presidential,2017-05-09,sample_sgg_002,Dummy Conservative Party,conservative,Dummy Past Conservative,30000,0.38,0.74,2017-05-10
+dummy_presidential_2017,presidential,2017-05-09,sample_sgg_002,Dummy Liberal Party,liberal,Dummy Past Liberal,45000,0.57,0.74,2017-05-10
+dummy_presidential_2017,presidential,2017-05-09,sample_sgg_002,Dummy Progressive Party,progressive,Dummy Past Progressive,4000,0.05,0.74,2017-05-10
+dummy_local_2022,local_governor,2022-06-01,sample_sgg_001,Dummy Conservative Party,conservative,Dummy Local Conservative,48000,0.50,0.62,2022-06-02
+dummy_local_2022,local_governor,2022-06-01,sample_sgg_001,Dummy Liberal Party,liberal,Dummy Local Liberal,43000,0.45,0.62,2022-06-02
+dummy_local_2022,local_governor,2022-06-01,sample_sgg_001,Dummy Progressive Party,progressive,Dummy Local Progressive,5000,0.05,0.62,2022-06-02
+dummy_local_2022,local_governor,2022-06-01,sample_sgg_002,Dummy Conservative Party,conservative,Dummy Local Conservative,27000,0.36,0.60,2022-06-02
+dummy_local_2022,local_governor,2022-06-01,sample_sgg_002,Dummy Liberal Party,liberal,Dummy Local Liberal,46000,0.60,0.60,2022-06-02
+dummy_local_2022,local_governor,2022-06-01,sample_sgg_002,Dummy Progressive Party,progressive,Dummy Local Progressive,3000,0.04,0.60,2022-06-02

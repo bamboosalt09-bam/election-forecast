@@ -1,0 +1,2 @@
+election_id,slot,candidate_name,issue_name,association_strength,direction,available_date,source_type,confidence,notes
+pres_YYYY,A,,issue_name,0.0,0,YYYY-MM-DD,manual,0.0,template row only

@@ -1,0 +1,20 @@
+﻿issue_name,national_weight,local_weight,cross_region_share,base_mobilization_share,confidence,notes
+candidate_competence,0.4737055763069426,0.5262944236930573,0.012217387947714164,0.006315564329820214,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+corruption_integrity,0.4529272038324018,0.5470727961675982,0.008465934704656427,0.005460691100805936,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+economy_growth,0.4639914198946292,0.5360085801053708,0.006509325497311375,0.004606014004975133,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+education,0.46450451158318923,0.5354954884168107,0.0056246328295559405,0.0028891509218046665,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+endorsement_event,0.4640383112030647,0.5359616887969353,0.01109758815868319,0.005983611581141434,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+external_shock,0.48678272262015865,0.5132172773798415,0.01639770851837593,0.011378162965153343,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+family_legal_risk,0.4647329745409031,0.5352670254590969,0.007903306125591378,0.004919914368631389,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+foreign_policy,0.48766340944028536,0.5123365905597147,0.006055902600740596,0.006485140895846849,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+gaffe_event,0.4457343135907394,0.5542656864092605,0.013842733938791167,0.006542864752478187,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+gender_generation,0.4705860595406057,0.5294139404593944,0.006664327350899754,0.0030980977619690566,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+housing,0.466385989523556,0.533614010476444,0.004180751508102329,0.0025867685824384023,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+inflation_livelihood,0.48340384334643993,0.5165961566535601,0.013356367615704917,0.007889775334152235,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+jobs_labor,0.45837901965164884,0.5416209803483512,0.00851990242250106,0.005135161816586688,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+regime_change,0.45787116485090035,0.5421288351490996,0.005317265327277125,0.003417333600436536,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+regional_dev,0.4662972301585029,0.5337027698414971,0.006393571713702423,0.0032587919713111214,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+security_nk,0.4830211680729871,0.5169788319270129,0.00897003413575179,0.00795679829110512,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+unification_event,0.4845827527195255,0.5154172472804744,0.021870641799632343,0.009513704424280072,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+welfare_pension,0.47709060231804334,0.5229093976819567,0.006714915227410231,0.0032841721356905752,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only
+withdrawal_event,0.4472341427404329,0.5527658572595672,0.01435641651470053,0.008678193390751307,0.85,Speaker-role/district/proportional derived national/local split; diagnostic seed only

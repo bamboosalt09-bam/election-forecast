@@ -1,0 +1,2 @@
+election_id,mega_event,issue_name,target_type,target,polarity,weight,available_date,confidence,notes
+pres_YYYY,event_name,issue_name,candidate_slot,A,0,0.0,YYYY-MM-DD,0.0,template row only

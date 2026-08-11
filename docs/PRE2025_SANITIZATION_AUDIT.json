@@ -1,0 +1,133 @@
+{
+  "policy": "remove every CSV row containing an exact pres_2025 field",
+  "changed_files": [
+    {
+      "path": "data/issue_salience.csv",
+      "removed_rows": 190,
+      "sha256_before": "6a58738f0ff012087a42ddca69bbd27b0179cd166c7b86ab54acb3b6e085193b",
+      "sha256_after": "9b762624aebe6429e8428dc807e149e85f8d743980625e8fe7aaada131ecac84"
+    },
+    {
+      "path": "data/issue_salience_all.csv",
+      "removed_rows": 190,
+      "sha256_before": "25471ae3b54d1958fefab995f03b3c2ef71400d21fb749c1f763c4238a53b1e8",
+      "sha256_after": "f52ff86eeff0924c38d8b61ac9330cde92fefc1af2998a7f221c7d005ebfd04d"
+    },
+    {
+      "path": "data/presidential/candidate_slots.csv",
+      "removed_rows": 4,
+      "sha256_before": "f9d3e6d91907198f653dbe89a282441f6cad94aa47dcf0170b41699ed9f9bf9e",
+      "sha256_after": "4508fe89d48ef3f7c24449d6b48688a3c35dbd5a45dd5f8314c46da95bca2815"
+    },
+    {
+      "path": "data/raw/assembly15_candidate_legacy_landscape.csv",
+      "removed_rows": 1,
+      "sha256_before": "818502b8110aa661b71881f43b24c4ab81f304b7fdb9750985cc8b4230a59056",
+      "sha256_after": "a840bd520e39ecaedd193d39891a624c85f78312a7e1336ae697941e39686a17"
+    },
+    {
+      "path": "data/raw/assembly_issue_character_overlay.csv",
+      "removed_rows": 57,
+      "sha256_before": "dfd0ccdbf49539c35be7d3e763e62adfd8bf4ab8e75dfdb2b00621c3fc8912ee",
+      "sha256_after": "42af0fe4690b6a28c44e03668b91cc1962469354dea92b1980279458cfc49d2c"
+    },
+    {
+      "path": "data/raw/candidate_issue_profile.csv",
+      "removed_rows": 4,
+      "sha256_before": "f4b48c4e44b8837934700a25785bd0a499f15759527e53a058b07a9e6bcad0eb",
+      "sha256_after": "f2dfe6bddebcaf47589a7d0c6ec00af020ec468514bbc7d4cda38c77fbb4a374"
+    },
+    {
+      "path": "data/raw/candidate_party_speech_context.csv",
+      "removed_rows": 3,
+      "sha256_before": "a662c4f90f324926cc8099bf930f4600e74aa92d47715bfec4d218fca6a876bd",
+      "sha256_after": "36f9a64907b96b71e428ed4b99e0e739f3dfd6aac7d2ea4c01bcaeab453f582a"
+    },
+    {
+      "path": "data/raw/candidate_party_tone_gap.csv",
+      "removed_rows": 3,
+      "sha256_before": "2753f548108196abcab165d0aa3faa463dec6eb6f3067b289e04696a7fec3818",
+      "sha256_after": "b5fac796e925421fd41c1e3c28a30df14b658cf2fcd6e81cc3cb9a3b4e144a91"
+    },
+    {
+      "path": "data/raw/candidate_public_treatment.csv",
+      "removed_rows": 3,
+      "sha256_before": "d6cbe752cd38436a5bae8228796fe6bb291941d1b23bfe1d79c1d7f79b75bb57",
+      "sha256_after": "11b48ad0aa54706aa1eb93fd427cd16e4c11ddb1d9be9a1b90275bcaaf766599"
+    },
+    {
+      "path": "data/raw/candidate_vote_conversion_context.csv",
+      "removed_rows": 3,
+      "sha256_before": "386144603171692e2908859514fb9fd274edb179f31e85a0383c1593b1d8c067",
+      "sha256_after": "c2a9418929b0d61e5eabc2bdbd6868ce39fb8c384cab8db32ef8bf5ca5496a2a"
+    },
+    {
+      "path": "data/raw/mega_issue_attribution.csv",
+      "removed_rows": 3,
+      "sha256_before": "6d6e7424ddd1601ae59716c72801a2aefcf503e6389e528b0e6a9beb2e1b4d03",
+      "sha256_after": "a92c2afd231df97daeed0264e61f07ee894b7fd3ddf042fc63b8f840abe68a73"
+    },
+    {
+      "path": "data/raw/mega_issue_axis.csv",
+      "removed_rows": 2,
+      "sha256_before": "135d9642fb97b130b454b2bb66eb6a9618529aab52b5f016c437d10582a9ab56",
+      "sha256_after": "16f6d14e2157f6085abfb566fd7b6dc0807db9efc4871c568625f4d2ad0b0fc3"
+    },
+    {
+      "path": "data/raw/mega_issue_intensity.csv",
+      "removed_rows": 1,
+      "sha256_before": "dcab5d85e67b8800f59c42ae4b3399a2723029d71bf8ec0e3e2140db16ec01fb",
+      "sha256_after": "ce132d918f11a9e045625ec4985745de50ee3c7fc48f0a11b1121cb79617199a"
+    },
+    {
+      "path": "data/raw/mega_issue_taxonomy.csv",
+      "removed_rows": 2,
+      "sha256_before": "30968e02b51fdd847a2cd7dfc9a068bd95c9bec4f7912ecf2a6e41845a00cfcd",
+      "sha256_after": "d0a7dca5f35dc3f3593c4c107daa50d2cdfdf77f03f9103d0ebabc9040b0cc83"
+    },
+    {
+      "path": "data/raw/pres_2025_national_results.csv",
+      "removed_rows": 4,
+      "sha256_before": "22a780d94ed41ef39c4d36b0212631a79c9afb3dfceee3709fcf6db00065af77",
+      "sha256_after": "a78deb751cf3c852793413acc9f188c6840ed6df691059beb11e1b5891b85be7"
+    },
+    {
+      "path": "data/raw/third_candidate_pressure.csv",
+      "removed_rows": 2,
+      "sha256_before": "d86d57a56e7004d63c067e2881090569f0528729d2302185850b8f338f023636",
+      "sha256_after": "b9f1490b861f852588e577f454e0d6ab486aaca9cc123817884450c08c16b43f"
+    },
+    {
+      "path": "data/raw/third_candidate_profile.csv",
+      "removed_rows": 1,
+      "sha256_before": "b32c627cc01bcdded8c9be6b1b40fedf2a0ba018a0ad0c3472b5cf7d09487394",
+      "sha256_after": "684b04e9ab079f9d9c1dec8064104a2f3eaf7c1b0062175517b5615437675b51"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/economic_slot_alignment.csv",
+      "removed_rows": 3,
+      "sha256_before": "888b2100794f1d6e3fc9f656d89f2cd201a62a4268945590c1b104c9d89a5dab",
+      "sha256_after": "ad668847da71f809f7d600aa1adde05e331d4142ba4cca4180ee20eb0b4aeb3b"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/housing_slot_alignment.csv",
+      "removed_rows": 3,
+      "sha256_before": "747983d2c7b2084d841c8e20d73a415e43cd26c33e3518590e15c664fb7bf366",
+      "sha256_after": "6568dca2dd771c00557067bc95dff1ca72a4853410f4697c930eb3b856e02bcc"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/mega_issue_terms.csv",
+      "removed_rows": 8,
+      "sha256_before": "ac7d50d676f49c4c665ec526c324c8abc99eb8ce321a81f02c542bdb23245b2c",
+      "sha256_after": "a7cde90492003bcaab8b687dc219aa44c8d71d44897ce38180bdd61d7b38bda6"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/presidential_results_standardized.csv",
+      "removed_rows": 68,
+      "sha256_before": "0b5ba9aabdff7fda5bdc1080abca89347197c2fa1767790ec4e826508258244e",
+      "sha256_after": "0d4a63c2e997ce3c3a33db7958d9c5897fd713e4f49a06da6e8ecc5513b159f6"
+    }
+  ],
+  "changed_file_count": 21,
+  "removed_row_count": 555
+}

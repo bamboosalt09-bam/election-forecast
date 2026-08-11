@@ -1,0 +1,76 @@
+﻿issue_name,term,term_type,weight,start_election,end_election,notes
+economy_growth,경제 회복,campaign_phrase,1.075,pres_2007,,macro economy frame
+economy_growth,규제 개혁,campaign_phrase,1.1,pres_2007,,regulatory reform frame
+economy_growth,일자리 창출,campaign_phrase,1.125,pres_2007,,growth-jobs bridge
+jobs_labor,청년 실업,campaign_phrase,1.15,pres_2007,,youth unemployment frame
+jobs_labor,청년 일자리,campaign_phrase,1.15,pres_2007,,youth jobs frame
+jobs_labor,비정규직,campaign_term,1.075,pres_2002,,labor dualization
+jobs_labor,최저임금,campaign_term,1.1,pres_2012,,minimum wage salience
+jobs_labor,노동 개혁,campaign_phrase,1.1,pres_2012,,labor reform frame
+inflation_livelihood,민생 경제,campaign_phrase,1.1,pres_2007,,livelihood economy frame
+inflation_livelihood,물가 안정,campaign_phrase,1.1,pres_2007,,inflation frame
+inflation_livelihood,소상공인 지원,campaign_phrase,1.1,pres_2017,,small business frame
+inflation_livelihood,재난 지원금,campaign_phrase,1.15,pres_2022,pres_2022,covid transfer frame
+housing,종부세,campaign_term,1.175,pres_2007,,comprehensive real estate tax
+housing,부동산 세제,campaign_phrase,1.15,pres_2007,,real estate tax frame
+housing,주택 공급,campaign_phrase,1.15,pres_2007,,housing supply frame
+housing,재건축 규제,campaign_phrase,1.125,pres_2012,,reconstruction regulation frame
+housing,전세 대책,campaign_phrase,1.1,pres_2012,,jeonse policy frame
+housing,전세 사기,campaign_phrase,1.175,pres_2022,,jeonse fraud frame
+welfare_pension,기초연금,campaign_term,1.125,pres_2012,,basic pension frame
+welfare_pension,국민연금,campaign_term,1.1,pres_2012,,national pension frame
+welfare_pension,연금 개혁,campaign_phrase,1.125,pres_2017,,pension reform frame
+welfare_pension,저출생 대책,campaign_phrase,1.1,pres_2017,,low birthrate frame
+security_nk,북핵,campaign_term,1.15,pres_2002,,nuclear issue
+security_nk,북핵 위협,campaign_phrase,1.175,pres_2002,,nuclear threat frame
+security_nk,대북 정책,campaign_phrase,1.125,pres_2002,,north korea policy frame
+security_nk,종전 선언,campaign_phrase,1.175,pres_2017,pres_2022,end-of-war declaration
+security_nk,미사일 도발,campaign_phrase,1.125,pres_2012,,missile provocation
+foreign_policy,한미 동맹,campaign_phrase,1.125,pres_2002,,us alliance frame
+foreign_policy,사드 배치,campaign_phrase,1.175,pres_2017,pres_2022,thaad deployment
+foreign_policy,한중 관계,campaign_phrase,1.1,pres_2012,,china relations
+foreign_policy,경제 안보,campaign_phrase,1.1,pres_2022,,economic security
+regional_dev,행정 수도,campaign_phrase,1.175,pres_2002,pres_2012,administrative capital
+regional_dev,공공 기관 이전,campaign_phrase,1.125,pres_2007,,public institution relocation
+regional_dev,혁신 도시,campaign_phrase,1.125,pres_2007,,innovation city
+regional_dev,신공항,campaign_term,1.125,pres_2012,,new airport
+regional_dev,지역 균형 발전,campaign_phrase,1.125,pres_2002,,balanced regional development
+education,사교육 부담,campaign_phrase,1.1,pres_2007,,private education burden
+education,입시 제도,campaign_phrase,1.1,pres_2007,,admissions system
+education,반값 등록금,campaign_phrase,1.15,pres_2012,pres_2017,half tuition frame
+education,정시 확대,campaign_phrase,1.1,pres_2017,,regular admissions expansion
+gender_generation,청년 정책,campaign_phrase,1.075,pres_2012,,youth policy frame
+gender_generation,세대 갈등,campaign_phrase,1.125,pres_2017,,generation conflict frame
+gender_generation,젠더 갈등,campaign_phrase,1.15,pres_2022,,gender conflict frame
+gender_generation,여가부 폐지,campaign_phrase,1.2,pres_2022,pres_2022,ministry abolition frame
+corruption_integrity,BBK,campaign_term,1.225,pres_2007,pres_2007,2007 scandal frame
+corruption_integrity,다스,campaign_term,1.175,pres_2007,pres_2012,das scandal frame
+corruption_integrity,대장동,campaign_term,1.225,pres_2022,pres_2022,2022 scandal frame
+corruption_integrity,부패 의혹,campaign_phrase,1.125,pres_2002,,corruption allegation
+corruption_integrity,특검 수사,campaign_phrase,1.125,pres_2007,,special prosecutor frame
+family_legal_risk,병역 의혹,campaign_phrase,1.125,pres_2002,,military service allegation
+family_legal_risk,위장 전입,campaign_phrase,1.1,pres_2007,,false address registration
+family_legal_risk,배우자 의혹,campaign_phrase,1.15,pres_2022,,spouse allegation frame
+family_legal_risk,자녀 의혹,campaign_phrase,1.125,pres_2017,,children allegation frame
+candidate_competence,국정 운영,campaign_phrase,1.1,pres_2002,,governance competence
+candidate_competence,후보 검증,campaign_phrase,1.125,pres_2002,,candidate vetting
+candidate_competence,경제 능력,campaign_phrase,1.1,pres_2007,,economic competence
+candidate_competence,공약 이행,campaign_phrase,1.075,pres_2007,,pledge delivery
+regime_change,정권 교체,campaign_phrase,1.2,pres_2002,,change government frame
+regime_change,정권 심판,campaign_phrase,1.2,pres_2002,,judgment frame
+regime_change,정권 재창출,campaign_phrase,1.15,pres_2002,,incumbent continuity frame
+regime_change,국정 안정,campaign_phrase,1.125,pres_2002,,stability frame
+unification_event,후보 단일화,campaign_phrase,1.25,pres_2002,,candidate unification event
+unification_event,단일화 협상,campaign_phrase,1.225,pres_2002,,unification negotiation
+unification_event,단일화 결렬,campaign_phrase,1.225,pres_2002,,unification breakdown
+withdrawal_event,후보 사퇴,campaign_phrase,1.225,pres_2002,,candidate withdrawal
+withdrawal_event,출마 포기,campaign_phrase,1.175,pres_2002,,run withdrawal
+endorsement_event,지지 선언,campaign_phrase,1.125,pres_2002,,endorsement declaration
+endorsement_event,지원 유세,campaign_phrase,1.075,pres_2002,,campaign support speech
+gaffe_event,막말,campaign_term,1.125,pres_2002,,gaffe frame
+gaffe_event,논란 발언,campaign_phrase,1.125,pres_2002,,controversial remark
+gaffe_event,발언 논란,campaign_phrase,1.125,pres_2002,,remark controversy
+external_shock,금융 위기,campaign_phrase,1.15,pres_2007,pres_2012,global financial crisis
+external_shock,코로나 대응,campaign_phrase,1.2,pres_2022,pres_2022,covid response
+external_shock,방역 대책,campaign_phrase,1.15,pres_2022,pres_2022,public health response
+external_shock,우크라이나 전쟁,campaign_phrase,1.125,pres_2022,,ukraine war frame

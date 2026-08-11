@@ -1,0 +1,4 @@
+election_id,candidate_name,target_slot,viability,transfer_rate,voter_compliance,available_date,confidence,notes
+pres_2012,Ahn Cheol-soo,B,0.80,0.85,0.85,2012-11-23,0.75,viable opposition third candidate withdrew and unified behind Moon Jae-in
+pres_2022,Ahn Cheol-soo,A,0.55,0.55,0.70,2022-03-03,0.70,viable centrist third candidate withdrew and formally unified behind Yoon Suk-yeol; plurality but not all retained support is attributed to A
+pres_2022,Ahn Cheol-soo,B,0.55,0.25,0.55,2022-03-03,0.60,centrist and anti-major-party supporters not aligned with Yoon are partially attributed to B

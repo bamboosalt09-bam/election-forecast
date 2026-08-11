@@ -1,0 +1,12 @@
+election_id,slot,candidate_name,region_id,regional_affinity,organization_depth,available_date,confidence,source_type,notes
+pres_2002,A,노무현,sido_26,0.35,0.60,2002-12-18,0.75,pre_election_political_base,Busan political base distinct from the national liberal party terrain
+pres_2002,A,노무현,sido_31,0.35,0.60,2002-12-18,0.75,pre_election_political_base,PK political base spillover distinct from the national liberal party terrain
+pres_2002,A,노무현,sido_48,0.35,0.60,2002-12-18,0.75,pre_election_political_base,PK political base spillover distinct from the national liberal party terrain
+pres_2002,C,권영길,sido_31,0.70,0.65,2002-12-18,0.80,pre_election_organization_base,Ulsan labor movement and organization base; gated by third-candidate conversion capacity
+pres_2007,C,이회창,sido_30,0.85,0.70,2007-12-18,0.85,pre_election_personal_base,Chungcheong personal base of an independent conservative candidate
+pres_2007,C,이회창,sido_43,0.85,0.70,2007-12-18,0.85,pre_election_personal_base,Chungcheong personal base of an independent conservative candidate
+pres_2007,C,이회창,sido_44,0.85,0.70,2007-12-18,0.85,pre_election_personal_base,Chungcheong personal base of an independent conservative candidate
+pres_2017,C,안철수,sido_29,0.65,0.75,2017-05-08,0.85,pre_election_party_organization_base,Honam organization base of the third-party presidential campaign
+pres_2017,C,안철수,sido_45,0.65,0.75,2017-05-08,0.85,pre_election_party_organization_base,Honam organization base of the third-party presidential campaign
+pres_2017,C,안철수,sido_46,0.65,0.75,2017-05-08,0.85,pre_election_party_organization_base,Honam organization base of the third-party presidential campaign
+pres_2022,B,이재명,sido_41,0.55,0.85,2022-03-08,0.90,pre_election_executive_base,Former Gyeonggi governor personal and executive organization base

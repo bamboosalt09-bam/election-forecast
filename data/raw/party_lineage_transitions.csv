@@ -1,0 +1,5 @@
+predecessor_party,successor_party,effective_date,relation_type,continuity,confidence,source_url,notes
+국민중심당,자유선진당,2008-02-12,merge,1.0,1.0,https://news.kbs.co.kr/news/view.do?ncd=1508448,자유선진당과 국민중심당의 합당 완료
+국민중심연합,자유선진당,2011-10-17,merge,1.0,1.0,https://m.nec.go.kr/files/B0000141/201311/BBS_201311250212183081.pdf,중앙선관위 정당 등록 공고의 신설합당 등록일
+자유선진당,선진통일당,2012-05-29,rename,1.0,1.0,https://news.sbs.co.kr/news/endPage.do?news_id=N1001207023,자유선진당의 선진통일당 당명 변경
+선진통일당,새누리당,2012-11-16,merge,1.0,1.0,https://m.peoplepowerparty.kr/about/history,새누리당과 선진통일당의 합당 완료

@@ -1,0 +1,229 @@
+{
+  "policy": {
+    "allowed_elections": [
+      "pres_2002",
+      "pres_2007",
+      "pres_2012",
+      "pres_2017",
+      "pres_2022"
+    ],
+    "warmup_elections": [
+      "pres_1997"
+    ],
+    "selection_method": "fixed-order coordinate search inside nested rolling origin",
+    "selection_steps": [
+      "ridge_alpha",
+      "residual",
+      "neutral_context",
+      "overlay",
+      "conversion",
+      "district_terrain",
+      "regionalism",
+      "third",
+      "within_bloc_transfer"
+    ],
+    "minimum_improvement_pp": {
+      "2_elections": 0.1,
+      "3_elections": 0.075,
+      "4_or_more_elections": 0.05
+    },
+    "within_bloc_transfer_guard": {
+      "minimum_activation": 0.001,
+      "minimum_effective_elections": 2,
+      "observed_effective_elections": [
+        "pres_2002",
+        "pres_2007"
+      ]
+    }
+  },
+  "neutral_baseline": {
+    "config": {
+      "ridge_alpha": 0.3,
+      "residual_enabled": false,
+      "residual_scale": 0.0,
+      "residual_shrinkage": 8.0,
+      "neutral_context_scale": 0.0,
+      "overlay_gain": 0.0,
+      "conversion_scale": 0.0,
+      "district_terrain_scale": 0.0,
+      "within_bloc_transfer_scale": 0.0,
+      "within_bloc_reservoir_gain": 1.0,
+      "within_bloc_stronghold_gain": 0.0,
+      "regionalism_scale": 0.0,
+      "regional_anchor_strength": 1.0,
+      "third_competitiveness_gate_enabled": false,
+      "third_character_multiplier_enabled": false,
+      "manual_issue_seed_enabled": false,
+      "automatic_issue_seed_enabled": true
+    },
+    "rolling_row_mae_pp": 5.685867842310191,
+    "rolling_by_election": {
+      "pres_2002": 4.1706769748678685,
+      "pres_2007": 5.598247499290772,
+      "pres_2012": 5.563916811161015,
+      "pres_2017": 5.0560398780657145,
+      "pres_2022": 8.30232212050509
+    },
+    "loeo_row_mae_pp": 6.804124267093619
+  },
+  "nested_evaluation": {
+    "row_weighted_mae_pp": 4.490554263889376,
+    "outer_folds": [
+      {
+        "target_election": "pres_2002",
+        "tuning_elections": "",
+        "ridge_alpha": 0.3,
+        "residual_enabled": false,
+        "residual_scale": 0.0,
+        "residual_shrinkage": 8.0,
+        "neutral_context_scale": 0.0,
+        "overlay_gain": 0.0,
+        "conversion_scale": 0.0,
+        "district_terrain_scale": 0.0,
+        "within_bloc_transfer_scale": 0.0,
+        "within_bloc_reservoir_gain": 1.0,
+        "within_bloc_stronghold_gain": 0.0,
+        "regionalism_scale": 0.0,
+        "regional_anchor_strength": 1.0,
+        "third_competitiveness_gate_enabled": false,
+        "third_character_multiplier_enabled": false,
+        "manual_issue_seed_enabled": false,
+        "automatic_issue_seed_enabled": true,
+        "outer_row_mae_pp": 4.1706769748678685,
+        "outer_rows": 32
+      },
+      {
+        "target_election": "pres_2007",
+        "tuning_elections": "pres_2002",
+        "ridge_alpha": 0.3,
+        "residual_enabled": false,
+        "residual_scale": 0.0,
+        "residual_shrinkage": 8.0,
+        "neutral_context_scale": 0.0,
+        "overlay_gain": 0.0,
+        "conversion_scale": 0.0,
+        "district_terrain_scale": 0.0,
+        "within_bloc_transfer_scale": 0.0,
+        "within_bloc_reservoir_gain": 1.0,
+        "within_bloc_stronghold_gain": 0.0,
+        "regionalism_scale": 0.0,
+        "regional_anchor_strength": 1.0,
+        "third_competitiveness_gate_enabled": false,
+        "third_character_multiplier_enabled": false,
+        "manual_issue_seed_enabled": false,
+        "automatic_issue_seed_enabled": true,
+        "outer_row_mae_pp": 5.598247499290772,
+        "outer_rows": 48
+      },
+      {
+        "target_election": "pres_2012",
+        "tuning_elections": "pres_2002|pres_2007",
+        "ridge_alpha": 0.8,
+        "residual_enabled": false,
+        "residual_scale": 0.0,
+        "residual_shrinkage": 8.0,
+        "neutral_context_scale": 0.0,
+        "overlay_gain": 0.0,
+        "conversion_scale": 0.0,
+        "district_terrain_scale": 0.0,
+        "within_bloc_transfer_scale": 0.5,
+        "within_bloc_reservoir_gain": 1.0,
+        "within_bloc_stronghold_gain": 0.0,
+        "regionalism_scale": 0.15,
+        "regional_anchor_strength": 1.0,
+        "third_competitiveness_gate_enabled": false,
+        "third_character_multiplier_enabled": false,
+        "manual_issue_seed_enabled": false,
+        "automatic_issue_seed_enabled": true,
+        "outer_row_mae_pp": 5.189913428499456,
+        "outer_rows": 34
+      },
+      {
+        "target_election": "pres_2017",
+        "tuning_elections": "pres_2002|pres_2007|pres_2012",
+        "ridge_alpha": 1.2,
+        "residual_enabled": false,
+        "residual_scale": 0.0,
+        "residual_shrinkage": 8.0,
+        "neutral_context_scale": 0.0,
+        "overlay_gain": 0.0,
+        "conversion_scale": 0.0,
+        "district_terrain_scale": 0.0,
+        "within_bloc_transfer_scale": 0.5,
+        "within_bloc_reservoir_gain": 1.0,
+        "within_bloc_stronghold_gain": 0.1,
+        "regionalism_scale": 0.15,
+        "regional_anchor_strength": 1.0,
+        "third_competitiveness_gate_enabled": false,
+        "third_character_multiplier_enabled": false,
+        "manual_issue_seed_enabled": false,
+        "automatic_issue_seed_enabled": true,
+        "outer_row_mae_pp": 4.7458705182982595,
+        "outer_rows": 51
+      },
+      {
+        "target_election": "pres_2022",
+        "tuning_elections": "pres_2002|pres_2007|pres_2012|pres_2017",
+        "ridge_alpha": 1.2,
+        "residual_enabled": false,
+        "residual_scale": 0.0,
+        "residual_shrinkage": 8.0,
+        "neutral_context_scale": 0.6,
+        "overlay_gain": 0.0,
+        "conversion_scale": 0.0,
+        "district_terrain_scale": 0.0,
+        "within_bloc_transfer_scale": 0.5,
+        "within_bloc_reservoir_gain": 1.0,
+        "within_bloc_stronghold_gain": 0.25,
+        "regionalism_scale": 0.15,
+        "regional_anchor_strength": 1.0,
+        "third_competitiveness_gate_enabled": true,
+        "third_character_multiplier_enabled": true,
+        "manual_issue_seed_enabled": false,
+        "automatic_issue_seed_enabled": true,
+        "outer_row_mae_pp": 2.1454794808842426,
+        "outer_rows": 34
+      }
+    ]
+  },
+  "final_deployment_selection": {
+    "config": {
+      "ridge_alpha": 1.2,
+      "residual_enabled": false,
+      "residual_scale": 0.0,
+      "residual_shrinkage": 8.0,
+      "neutral_context_scale": 0.6,
+      "overlay_gain": 0.0,
+      "conversion_scale": 0.0,
+      "district_terrain_scale": 0.0,
+      "within_bloc_transfer_scale": 0.5,
+      "within_bloc_reservoir_gain": 1.0,
+      "within_bloc_stronghold_gain": 0.25,
+      "regionalism_scale": 0.15,
+      "regional_anchor_strength": 1.0,
+      "third_competitiveness_gate_enabled": true,
+      "third_character_multiplier_enabled": true,
+      "manual_issue_seed_enabled": false,
+      "automatic_issue_seed_enabled": true
+    },
+    "selection_sample_rolling_row_mae_pp": 3.7097809807128734,
+    "selection_sample_rolling_by_election": {
+      "pres_2002": 4.065202887487326,
+      "pres_2007": 4.190202816696663,
+      "pres_2012": 4.052681848133915,
+      "pres_2017": 3.8488765171413775,
+      "pres_2022": 2.1454794808842426
+    },
+    "selection_sample_loeo_row_mae_pp": 4.979926124991846,
+    "warning": "selection-sample metrics are not an external holdout"
+  },
+  "within_bloc_transfer_experiment": {
+    "deployment_eligible": true,
+    "reason": "at least two pre-2022 elections have non-trivial split activation",
+    "best_selection_sample_scale": 0.5,
+    "best_selection_sample_stronghold_gain": 0.25,
+    "best_selection_sample_rolling_row_mae_pp": 3.7097809807128734,
+    "best_selection_sample_loeo_row_mae_pp": 4.979926124991846,
+    "warning": "selection-sample diagnostic; nested outer performance remains primary"
+  }
+}

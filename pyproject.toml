@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "election-forecast"
+version = "0.1.0"
+description = "CSV-driven MVP for Korean presidential election forecasting at candidate-region-date granularity."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "pydantic>=2.0",
+    "beautifulsoup4>=4.12",
+    "feedparser>=6.0",
+    "httpx>=0.25",
+    "python-dateutil>=2.8",
+    "tenacity>=8.2",
+    "tqdm>=4.66",
+    "typer>=0.12",
+    "python-dotenv>=1.0",
+    "PyYAML>=6.0",
+    "openpyxl>=3.1",
+    "scikit-learn>=1.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+stance-embedding = ["sentence-transformers==5.6.0"]
+stance-context = ["sentence-transformers==5.6.0", "transformers>=5.14,<6"]
+
+[project.scripts]
+election-forecast = "election_forecast.cli:main"
+news-analyzer = "news_analyzer.cli:main"
+news-collector = "news_collector.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]

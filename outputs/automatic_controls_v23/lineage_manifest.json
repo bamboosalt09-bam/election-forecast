@@ -1,0 +1,64 @@
+{
+  "schema": "automatic_controls_v23",
+  "status": "active_v23_unified_withdrawal_generation",
+  "active_model_changed": true,
+  "post_2022_outcomes_used": false,
+  "target_outcome_fields_used": [],
+  "candidate_profile_source": "single_automatic_canonical_output",
+  "withdrawal_event_source": "factual_registry_only",
+  "withdrawal_transfer_policy": "universal_low_medium_high_semiautomatic_scenarios",
+  "prediction_transfer_registry": "withdrawal_transfer_registry.csv",
+  "legacy_transfer_inputs_active": [],
+  "legacy_transfer_inputs_isolated": [
+    "data/raw/withdrawn_candidate_transfers.csv",
+    "data/raw/withdrawal_event_profiles.csv",
+    "presidential_issue_engine/fixed_dataset/coalition_events.csv"
+  ],
+  "generation_weights_status": "automatic_latest_strictly_prior_official_report",
+  "outputs": {
+    "candidate_political_profiles.csv": {
+      "rows": 6,
+      "sha256": "31d86ed144faebb68dae5445dfef32f8df78e4707a544a0ca5919275e2bb7051"
+    },
+    "third_candidate_profile.csv": {
+      "rows": 5,
+      "sha256": "a36cf3c621af1f4a57ccc58b8c60b016c68e6b43ac9e6a345a0ab7f0fca22cc0"
+    },
+    "candidate_political_landscape.csv": {
+      "rows": 15,
+      "sha256": "c86a2ebae7dd252c340f5a6d13add1da7693d563a98ff6aa5cfa50107f7271c6"
+    },
+    "withdrawal_transfer_registry.csv": {
+      "rows": 4,
+      "sha256": "3e698906a2c5c4be6934790d83292e640b8175fce4dd600b107fd84c7706ea48"
+    },
+    "election_generation_weights.csv": {
+      "rows": 7,
+      "sha256": "5981dad1b578629470c5296b2fe00b2b0fb41051f244f851ec85377497e8e646"
+    },
+    "third_candidate_pressure.csv": {
+      "rows": 6,
+      "sha256": "61a997abe695ad9c2ef223b0631fe7cbd26b63f1a5ad467343cb2f474b099cf7"
+    },
+    "mega_issue_taxonomy.csv": {
+      "rows": 5,
+      "sha256": "9f9199ff1b12bf8bd8012ead443e343b41398ec0e0f7de9b5d9f2722e664c768"
+    },
+    "mega_issue_intensity.csv": {
+      "rows": 5,
+      "sha256": "ef43c82710b98c4fec74dc9b7fbd5db4525042e9192603b58e9c83dba34c7c0d"
+    },
+    "economic_slot_alignment.csv": {
+      "rows": 13,
+      "sha256": "4ab2c856f1cc7a264c6514f27f48c96392b4ed614725f4581db7bc4a70f6eda0"
+    },
+    "housing_slot_alignment.csv": {
+      "rows": 13,
+      "sha256": "ec4e3e9cfd38927f420b6f5bb9d47a557238db5c23d84c2a0d3cbfd34d3d0ccb"
+    },
+    "regional_alignment_with_policy.csv": {
+      "rows": 3,
+      "sha256": "d79a4e3590cdd4dae192cf37bbdd3e2f5755482d54d74f1502890da7ff9a445b"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+issue_name,importance,근거
+economy_growth,0.9,거의 모든 대선 핵심
+jobs_labor,0.8,고용은 상시 쟁점
+housing,0.8,2022 등 부동산 폭발력
+inflation_livelihood,0.6,체감 민생
+corruption_integrity,0.9,스캔들이 선거를 흔듦
+family_legal_risk,0.5,후보 사법 리스크
+security_nk,0.8,보수-진보 핵심 균열축
+foreign_policy,0.4,부차적
+welfare_pension,0.6,복지 확대 쟁점
+education,0.4,상시이나 결정력 낮음
+gender_generation,0.6,최근 세대 균열
+regional_dev,0.4,지역 한정
+candidate_competence,0.5,인물론
+regime_change,0.7,정권심판/안정론 큼
+unification_event,0.3,사건성
+withdrawal_event,0.4,단일화 영향
+endorsement_event,0.2,약함
+gaffe_event,0.3,일시적
+external_shock,0.4,외생 사건

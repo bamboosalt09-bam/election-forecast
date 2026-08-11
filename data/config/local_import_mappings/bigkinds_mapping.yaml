@@ -1,0 +1,12 @@
+title_col: title
+url_col: url
+canonical_url_col: canonical_url
+summary_col: summary
+body_col: body
+source_col: source_name
+source_domain_col: source_domain
+published_at_col: published_at
+available_date_col: available_date
+section_col: section
+article_type_col: article_type
+raw_source_id_col: raw_source_id

@@ -1,0 +1,6 @@
+issue_name,positive_terms,negative_terms,incumbent_positive_terms,incumbent_negative_terms,notes
+housing,stabilization|supply|relief,price surge|rent crisis|policy failure,home price stability|supply expansion,housing failure|price surge responsibility,seed lexicon; not required by forecast compiler
+economy_growth,recovery|growth|investment,slowdown|crisis|stagnation,recovery under government|growth achievement,economic failure|livelihood crisis,seed lexicon; not required by forecast compiler
+corruption_integrity,integrity|reform|clean politics,corruption|scandal|investigation,anti-corruption reform,power corruption|state capture,seed lexicon; not required by forecast compiler
+regime_change,restoration|change|accountability,instability|backlash,stable government,regime failure|impeachment responsibility,seed lexicon; not required by forecast compiler
+external_shock,crisis response|stability,crisis|shock|martial law,successful crisis response,crisis responsibility|martial law responsibility,seed lexicon; not required by forecast compiler

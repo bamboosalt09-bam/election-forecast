@@ -1,0 +1,25 @@
+issue_name,term,term_type,weight,start_election,end_election,notes
+corruption_integrity,홍삼 게이트,mega_issue,1.30,pres_2002,pres_2002,DJ-family corruption frame; manually configurable
+corruption_integrity,홍삼트리오,mega_issue,1.25,pres_2002,pres_2002,DJ-family corruption frame; manually configurable
+corruption_integrity,권력형 비리,mega_issue,1.20,pres_2002,,large-scale power corruption frame
+corruption_integrity,BBK,mega_issue,1.35,pres_2007,pres_2007,2007 presidential mega scandal frame
+corruption_integrity,비비케이,mega_issue,1.30,pres_2007,pres_2007,BBK Korean spelling variant
+corruption_integrity,다스,mega_issue,1.25,pres_2007,pres_2012,DAS ownership allegation frame
+corruption_integrity,도곡동 땅,mega_issue,1.20,pres_2007,pres_2007,2007 property allegation frame
+corruption_integrity,박연차 게이트,mega_issue,1.25,pres_2012,pres_2012,post-Roh administration corruption frame; manually configurable
+corruption_integrity,박연차,mega_issue,1.20,pres_2012,pres_2012,Park Yeon-cha scandal shorthand
+corruption_integrity,민간인 사찰,mega_issue,1.20,pres_2012,pres_2012,illegal surveillance frame
+corruption_integrity,국정원 댓글,mega_issue,1.25,pres_2012,pres_2017,NIS comment/intervention frame
+corruption_integrity,댓글 공작,mega_issue,1.20,pres_2012,pres_2017,online manipulation scandal frame
+corruption_integrity,국정농단,mega_issue,1.40,pres_2017,pres_2017,Park Geun-hye/Choi Soon-sil scandal frame
+corruption_integrity,최순실,mega_issue,1.35,pres_2017,pres_2017,Choi Soon-sil scandal frame
+corruption_integrity,최순실 게이트,mega_issue,1.40,pres_2017,pres_2017,Choi Soon-sil gate phrase
+regime_change,탄핵,mega_issue,1.35,pres_2017,pres_2017,2017 impeachment election frame
+regime_change,박근혜 탄핵,mega_issue,1.40,pres_2017,pres_2017,2017 impeachment frame
+regime_change,촛불 민심,mega_issue,1.25,pres_2017,pres_2017,2017 candlelight public mood frame
+external_shock,세월호,mega_issue,1.20,pres_2017,pres_2017,Sewol disaster accountability frame
+corruption_integrity,대장동,mega_issue,1.35,pres_2022,pres_2022,2022 presidential mega scandal frame
+corruption_integrity,대장동 의혹,mega_issue,1.35,pres_2022,pres_2022,Daejang-dong allegation phrase
+corruption_integrity,고발사주,mega_issue,1.25,pres_2022,pres_2022,prosecution complaint instigation frame
+corruption_integrity,도이치모터스,mega_issue,1.25,pres_2022,pres_2022,stock manipulation allegation frame
+corruption_integrity,김건희,mega_issue,1.20,pres_2022,,spouse/legal-risk frame; manually configurable

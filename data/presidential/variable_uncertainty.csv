@@ -1,0 +1,8 @@
+variable_name,sigma,distribution,min_value,max_value,notes
+regional_base,0.05,normal,-1,1,regional structure uncertainty
+candidate_strength,0.10,normal,-1,1,candidate tone and visibility uncertainty
+national_mood,0.12,normal,-1,1,party controversy national mood uncertainty
+third_candidate_structure,0.12,normal,-1,1,C-slot structure uncertainty
+local_issue_fit,0.15,normal,-1,1,local issue fit uncertainty
+turnout_structure,0.10,normal,-1,1,turnout structure uncertainty
+risk_or_negative,0.15,normal,-1,1,risk and negative issue uncertainty

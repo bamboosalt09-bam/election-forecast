@@ -1,0 +1,352 @@
+﻿bloc,party,issue_name,matched_rows,issue_weight_sum,unique_speakers,emphasis_within,source
+국민의힘,민자당,foreign_policy,1,0.35,1,1.0,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,jobs_labor,2,2.0,1,0.15384615384615385,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,security_nk,2,2.0,1,0.15384615384615385,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,economy_growth,2,1.75,1,0.1346153846153846,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,foreign_policy,2,1.75,1,0.1346153846153846,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,corruption_integrity,2,1.35,1,0.10384615384615385,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,external_shock,2,1.35,1,0.10384615384615385,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,education,2,0.7,1,0.05384615384615384,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,regional_dev,2,0.7,1,0.05384615384615384,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,family_legal_risk,1,0.35,1,0.02692307692307692,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,gender_generation,1,0.35,1,0.02692307692307692,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,inflation_livelihood,1,0.35,1,0.02692307692307692,15th_assembly_issue_phrase_extraction
+국민의힘,보선 한나라당,welfare_pension,1,0.35,1,0.02692307692307692,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,economy_growth,240,143.7,70,0.11134787493704235,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,corruption_integrity,206,133.0,59,0.10305683623261401,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,regional_dev,228,110.7,66,0.08577738173646896,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,security_nk,227,110.55,65,0.08566115222192089,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,jobs_labor,209,101.8,65,0.07888109720661733,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,external_shock,130,95.1,56,0.07368951222347062,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,foreign_policy,156,94.45,48,0.07318585099376236,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,inflation_livelihood,132,83.05,52,0.06435240788810973,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,candidate_competence,146,78.14999999999999,66,0.06055557707953973,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,education,172,77.14999999999999,56,0.05978071364921932,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,welfare_pension,139,70.05,49,0.05427918329394444,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,family_legal_risk,124,48.349999999999994,46,0.03746464685599163,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,endorsement_event,108,42.25,47,0.03273797993103716,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,gender_generation,57,26.099999999999998,37,0.020223935531362595,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,regime_change,40,25.2,24,0.01952655844407423,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,housing,41,17.9,25,0.013870055402735268,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,unification_event,35,17.15,26,0.013288907829994962,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,gaffe_event,14,9.95,10,0.00770989113168804,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당,withdrawal_event,17,5.949999999999999,15,0.004610437410406416,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",corruption_integrity,10,6.65,3,0.18523676880222842,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",economy_growth,8,4.8999999999999995,2,0.13649025069637882,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",foreign_policy,5,3.85,2,0.10724233983286909,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",security_nk,8,3.4499999999999997,3,0.09610027855153203,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",candidate_competence,5,3.05,2,0.08495821727019498,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",regional_dev,7,2.4499999999999997,3,0.06824512534818941,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",external_shock,3,2.1,2,0.058495821727019504,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",family_legal_risk,4,1.7999999999999998,3,0.05013927576601671,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",education,4,1.4,2,0.03899721448467967,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",jobs_labor,4,1.4,1,0.03899721448467967,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",unification_event,2,1.35,2,0.037604456824512536,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",endorsement_event,3,1.0499999999999998,2,0.029247910863509745,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",welfare_pension,3,1.0499999999999998,2,0.029247910863509745,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",withdrawal_event,2,0.7,2,0.019498607242339833,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",gender_generation,1,0.35,1,0.009749303621169917,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당, 한나라당",inflation_livelihood,1,0.35,1,0.009749303621169917,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",education,9,5.75,1,0.14465408805031446,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",corruption_integrity,8,4.5,1,0.11320754716981132,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",regime_change,4,4.0,1,0.10062893081761007,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",security_nk,7,3.1,1,0.0779874213836478,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",regional_dev,7,3.0999999999999996,1,0.0779874213836478,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",family_legal_risk,7,2.8499999999999996,1,0.07169811320754717,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",candidate_competence,6,2.5,1,0.06289308176100629,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",economy_growth,6,2.5,1,0.06289308176100629,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",welfare_pension,3,2.35,1,0.05911949685534591,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",foreign_policy,4,2.05,1,0.05157232704402515,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",external_shock,2,1.75,1,0.0440251572327044,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",jobs_labor,5,1.75,1,0.0440251572327044,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",gender_generation,2,1.1,1,0.027672955974842768,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",unification_event,1,1.0,1,0.025157232704402517,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",endorsement_event,1,0.75,1,0.018867924528301886,15th_assembly_issue_phrase_extraction
+국민의힘,"신한국당,한나라당",withdrawal_event,2,0.7,1,0.01761006289308176,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,corruption_integrity,33,21.5,5,0.17430077016619377,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,regional_dev,33,15.6,6,0.12646939602756385,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,candidate_competence,16,9.9,5,0.08025942440210783,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,economy_growth,20,9.6,5,0.07782732063234699,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,welfare_pension,18,8.9,3,0.07215241183623836,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,external_shock,9,7.7,6,0.062423996757194976,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,security_nk,18,7.35,5,0.059586542359140654,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,family_legal_risk,20,7.0,6,0.05674908796108634,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,jobs_labor,16,6.8999999999999995,6,0.05593838670449939,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,education,16,6.25,5,0.05066882853668423,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,regime_change,6,3.8,3,0.030806647750304013,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,unification_event,7,3.75,4,0.03040129712201054,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,housing,7,3.0999999999999996,4,0.025131738954195376,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,endorsement_event,7,2.8499999999999996,3,0.023104985812728008,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,inflation_livelihood,6,2.75,4,0.022294284556141065,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,foreign_policy,7,2.4499999999999997,5,0.019862180786380218,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,gaffe_event,3,1.85,2,0.014997973246858535,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,gender_generation,3,1.0499999999999998,2,0.00851236319416295,15th_assembly_issue_phrase_extraction
+국민의힘,신한국당·한나라당,withdrawal_event,3,1.0499999999999998,2,0.00851236319416295,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,corruption_integrity,144,96.6,31,0.12723919915700738,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,economy_growth,123,78.15,34,0.10293730242360381,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,regional_dev,156,70.95,30,0.09345363540569021,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,security_nk,135,70.14999999999999,33,0.09239989462592202,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,candidate_competence,86,52.25,32,0.06882244467860907,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,external_shock,67,51.1,29,0.06730769230769232,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,welfare_pension,86,47.55,29,0.06263171759747102,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,jobs_labor,102,46.9,30,0.06177555321390938,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,education,90,40.5,31,0.05334562697576397,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,foreign_policy,73,40.199999999999996,28,0.052950474183350894,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,regime_change,47,36.0,23,0.04741833508956797,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,inflation_livelihood,55,31.75,27,0.04182033719704953,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,family_legal_risk,67,25.95,27,0.03418071654373024,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,endorsement_event,66,25.45,31,0.03352212855637513,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,gender_generation,37,15.45,20,0.02035036880927292,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,unification_event,19,11.2,13,0.014752370916754479,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,withdrawal_event,24,8.799999999999999,15,0.011591148577449946,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,housing,15,5.8999999999999995,14,0.007771338250790305,15th_assembly_issue_phrase_extraction
+국민의힘,한나라당,gaffe_event,9,4.35,7,0.005729715489989463,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,economy_growth,130,75.35,23,0.1427759355755566,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,corruption_integrity,103,66.2,23,0.12543818095689246,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,security_nk,105,47.699999999999996,26,0.09038370440549502,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,regional_dev,89,43.949999999999996,25,0.08327806726669824,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,external_shock,57,41.7,22,0.07901468498342018,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,jobs_labor,59,31.45,20,0.05959261013737565,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,foreign_policy,54,30.55,19,0.057887257224064424,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,welfare_pension,48,28.65,18,0.05428706774040739,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,education,58,25.25,19,0.04784462340123164,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,regime_change,36,24.95,15,0.0472761724301279,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,candidate_competence,47,24.3,17,0.04604452865940313,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,family_legal_risk,59,21.45,22,0.04064424443391757,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,endorsement_event,49,21.099999999999998,23,0.039981051634296536,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,inflation_livelihood,27,15.049999999999999,16,0.028517290383704402,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,gaffe_event,15,8.05,9,0.015253434391283753,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,gender_generation,15,7.2,11,0.013642823306489816,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,housing,17,6.35,9,0.012032212221695877,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,unification_event,9,5.25,8,0.00994789199431549,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의,withdrawal_event,7,3.25,6,0.006158218853623875,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",corruption_integrity,6,4.05,1,0.175704989154013,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",security_nk,4,3.35,1,0.14533622559652928,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",economy_growth,4,2.85,1,0.12364425162689804,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",external_shock,4,2.7,1,0.11713665943600868,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",regime_change,3,1.45,1,0.06290672451193058,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",family_legal_risk,4,1.4,1,0.06073752711496746,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",inflation_livelihood,2,1.35,1,0.05856832971800434,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",jobs_labor,2,1.1,1,0.047722342733188726,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",education,3,1.0499999999999998,1,0.045553145336225585,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",foreign_policy,1,1.0,1,0.04338394793926247,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",welfare_pension,1,1.0,1,0.04338394793926247,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",endorsement_event,2,0.7,1,0.03036876355748373,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",gaffe_event,2,0.7,1,0.03036876355748373,15th_assembly_issue_phrase_extraction
+더불어민주당,"국민회의, 새천년민주당",regional_dev,1,0.35,1,0.015184381778741865,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,inflation_livelihood,6,3.4,1,0.16999999999999998,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,external_shock,3,2.75,1,0.1375,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,economy_growth,4,2.7,1,0.135,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,security_nk,7,2.4499999999999997,1,0.12249999999999998,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,gaffe_event,2,1.75,1,0.0875,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,regional_dev,5,1.75,1,0.0875,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,family_legal_risk,3,1.0499999999999998,1,0.05249999999999999,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,foreign_policy,1,1.0,1,0.05,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,education,2,0.7,1,0.034999999999999996,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,welfare_pension,2,0.7,1,0.034999999999999996,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,corruption_integrity,1,0.35,1,0.017499999999999998,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,endorsement_event,1,0.35,1,0.017499999999999998,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,housing,1,0.35,1,0.017499999999999998,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,jobs_labor,1,0.35,1,0.017499999999999998,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의·민주당,regime_change,1,0.35,1,0.017499999999999998,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,welfare_pension,4,2.7,1,0.2307692307692308,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,economy_growth,3,1.7000000000000002,1,0.1452991452991453,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,regional_dev,3,1.7,1,0.1452991452991453,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,jobs_labor,2,1.35,1,0.1153846153846154,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,gaffe_event,1,0.75,1,0.06410256410256411,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,candidate_competence,2,0.7,1,0.05982905982905983,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,corruption_integrity,2,0.7,1,0.05982905982905983,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,education,2,0.7,1,0.05982905982905983,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,family_legal_risk,2,0.7,1,0.05982905982905983,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,foreign_policy,1,0.35,1,0.029914529914529916,15th_assembly_issue_phrase_extraction
+더불어민주당,국민회의당,security_nk,1,0.35,1,0.029914529914529916,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,corruption_integrity,47,31.5,9,0.16212043232115286,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,security_nk,41,22.15,10,0.11399897066392177,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,welfare_pension,28,17.75,6,0.09135357694287186,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,candidate_competence,25,15.65,7,0.08054554812146167,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,regional_dev,34,14.5,10,0.0746268656716418,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,economy_growth,24,14.4,9,0.07411219763252702,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,external_shock,19,13.049999999999999,8,0.06716417910447761,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,jobs_labor,19,9.9,7,0.05095213587236233,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,education,19,8.9,6,0.045805455481214626,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,foreign_policy,16,8.6,8,0.04426145136387031,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,regime_change,10,8.2,7,0.04220277920741122,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,endorsement_event,21,7.35,8,0.03782810087493567,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,family_legal_risk,19,6.6499999999999995,7,0.03422542460113227,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,withdrawal_event,10,4.8,2,0.024704065877509007,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,unification_event,9,3.9499999999999997,5,0.020329387545033453,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,gender_generation,9,3.15,4,0.016212043232115288,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,inflation_livelihood,7,3.0999999999999996,4,0.0159547092125579,15th_assembly_issue_phrase_extraction
+더불어민주당,민주당,gaffe_event,2,0.7,2,0.003602676273803397,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",corruption_integrity,4,3.35,1,0.14988814317673377,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",security_nk,3,2.75,1,0.12304250559284116,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",economy_growth,3,2.5,1,0.11185682326621924,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",candidate_competence,3,2.35,1,0.10514541387024608,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",regime_change,2,2.0,1,0.08948545861297538,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",family_legal_risk,4,1.4,1,0.06263982102908276,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",foreign_policy,2,1.35,1,0.06040268456375839,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",inflation_livelihood,2,1.35,1,0.06040268456375839,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",education,3,1.0499999999999998,1,0.04697986577181207,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",regional_dev,3,1.0499999999999998,1,0.04697986577181207,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",unification_event,1,0.75,1,0.03355704697986577,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",endorsement_event,2,0.7,1,0.03131991051454138,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",jobs_labor,2,0.7,1,0.03131991051454138,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",external_shock,1,0.35,1,0.01565995525727069,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",gaffe_event,1,0.35,1,0.01565995525727069,15th_assembly_issue_phrase_extraction
+더불어민주당,"민주당, 새천년 민주당",gender_generation,1,0.35,1,0.01565995525727069,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,economy_growth,10,6.5,3,0.14772727272727273,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,external_shock,6,5.75,3,0.13068181818181818,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,jobs_labor,8,4.1,3,0.09318181818181817,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,welfare_pension,7,3.75,3,0.08522727272727272,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,security_nk,8,3.4499999999999997,3,0.0784090909090909,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,education,6,3.4,3,0.07727272727272727,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,regional_dev,8,3.1999999999999997,3,0.07272727272727272,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,inflation_livelihood,4,2.7,3,0.06136363636363637,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,corruption_integrity,3,2.1,3,0.04772727272727273,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,candidate_competence,2,1.75,2,0.03977272727272727,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,family_legal_risk,4,1.4,2,0.031818181818181815,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,housing,2,1.35,2,0.030681818181818185,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,regime_change,2,1.35,2,0.030681818181818185,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,endorsement_event,3,1.0499999999999998,2,0.02386363636363636,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,gender_generation,3,1.0499999999999998,2,0.02386363636363636,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,foreign_policy,1,0.75,1,0.017045454545454544,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치 국민회의,unification_event,1,0.35,1,0.007954545454545454,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,corruption_integrity,138,89.75,29,0.1258677512095926,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,economy_growth,142,81.8,32,0.11471846294088774,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,external_shock,77,60.35,25,0.08463642100834444,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,welfare_pension,118,60.05,27,0.08421569314914802,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,regional_dev,129,54.55,29,0.07650234906388051,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,security_nk,119,54.55,30,0.07650234906388051,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,jobs_labor,107,50.4,31,0.07068228034499685,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,education,90,43.25,27,0.06065493303414908,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,inflation_livelihood,60,37.15,24,0.052100133230488746,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,candidate_competence,68,35.65,26,0.0499964939345067,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,regime_change,43,33.8,23,0.04740200546946217,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,endorsement_event,69,29.65,28,0.0415819367505785,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,family_legal_risk,76,28.849999999999998,28,0.04045999579272141,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,foreign_policy,31,16.2,16,0.02271930439660613,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,gender_generation,27,11.549999999999999,12,0.016198022579061777,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,unification_event,19,9.25,12,0.012972442325222636,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,housing,18,7.1,12,0.009957226000981699,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,gaffe_event,8,5.05,7,0.007082252296472898,15th_assembly_issue_phrase_extraction
+더불어민주당,새정치국민회의,withdrawal_event,8,4.1,7,0.0057499474090176,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,economy_growth,35,22.3,8,0.11389172625127683,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,corruption_integrity,32,20.599999999999998,6,0.10520939734422881,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,external_shock,21,18.55,7,0.09473953013278857,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,security_nk,37,17.5,7,0.08937691521961186,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,welfare_pension,33,17.15,7,0.08758937691521962,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,foreign_policy,21,15.8,5,0.08069458631256385,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,jobs_labor,24,12.299999999999999,7,0.06281920326864147,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,regional_dev,23,10.4,7,0.05311542390194076,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,education,23,9.1,6,0.04647599591419816,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,candidate_competence,16,8.85,5,0.04519918283963228,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,inflation_livelihood,12,7.85,5,0.040091930541368746,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,endorsement_event,19,7.3,6,0.0372829417773238,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,gender_generation,12,6.45,4,0.0329417773237998,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,regime_change,8,6.05,4,0.030898876404494385,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,family_legal_risk,16,6.0,7,0.030643513789581207,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,unification_event,17,5.949999999999999,3,0.03038815117466803,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,gaffe_event,3,1.85,2,0.00944841675178754,15th_assembly_issue_phrase_extraction
+더불어민주당,새천년민주당,housing,4,1.7999999999999998,4,0.009193054136874362,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",economy_growth,3,3.0,1,0.18461538461538463,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",corruption_integrity,3,2.35,1,0.14461538461538462,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",candidate_competence,4,2.05,1,0.12615384615384614,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",regime_change,2,2.0,1,0.12307692307692308,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",regional_dev,2,1.35,1,0.08307692307692308,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",security_nk,3,1.0499999999999998,1,0.0646153846153846,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",foreign_policy,1,1.0,1,0.06153846153846154,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",welfare_pension,1,1.0,1,0.06153846153846154,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",education,2,0.7,1,0.043076923076923075,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",external_shock,2,0.7,1,0.043076923076923075,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",endorsement_event,1,0.35,1,0.021538461538461538,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",family_legal_risk,1,0.35,1,0.021538461538461538,15th_assembly_issue_phrase_extraction
+더불어민주당,"새천년민주당, 국민회의",jobs_labor,1,0.35,1,0.021538461538461538,15th_assembly_issue_phrase_extraction
+더불어민주당,자유민주당,security_nk,1,0.35,1,0.5,15th_assembly_issue_phrase_extraction
+더불어민주당,자유민주당,welfare_pension,1,0.35,1,0.5,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,external_shock,6,5.5,2,0.1523545706371191,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,corruption_integrity,6,4.7,2,0.13019390581717452,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,candidate_competence,6,3.4,2,0.09418282548476453,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,regional_dev,6,3.4,2,0.09418282548476453,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,endorsement_event,6,2.75,1,0.07617728531855955,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,inflation_livelihood,4,2.7,2,0.07479224376731303,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,security_nk,4,2.7,1,0.07479224376731303,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,foreign_policy,4,2.45,2,0.06786703601108034,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,regime_change,2,2.0,1,0.055401662049861494,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,economy_growth,2,1.35,2,0.03739612188365651,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,welfare_pension,2,1.35,1,0.03739612188365651,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,family_legal_risk,3,1.0499999999999998,1,0.029085872576177278,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,unification_event,1,1.0,1,0.027700831024930747,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,education,2,0.7,2,0.019390581717451522,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,jobs_labor,2,0.7,1,0.019390581717451522,15th_assembly_issue_phrase_extraction
+더불어민주당,통합민주당,housing,1,0.35,1,0.009695290858725761,15th_assembly_issue_phrase_extraction
+무소속,무소속,regional_dev,27,14.0,9,0.13678553981436248,15th_assembly_issue_phrase_extraction
+무소속,무소속,economy_growth,18,9.7,9,0.09477283829995115,15th_assembly_issue_phrase_extraction
+무소속,무소속,external_shock,12,8.75,8,0.08549096238397656,15th_assembly_issue_phrase_extraction
+무소속,무소속,welfare_pension,19,8.6,5,0.08402540302882266,15th_assembly_issue_phrase_extraction
+무소속,무소속,candidate_competence,11,8.15,6,0.07962872496336103,15th_assembly_issue_phrase_extraction
+무소속,무소속,corruption_integrity,13,7.95,6,0.07767464582315585,15th_assembly_issue_phrase_extraction
+무소속,무소속,jobs_labor,17,7.6499999999999995,9,0.07474352711284807,15th_assembly_issue_phrase_extraction
+무소속,무소속,education,12,6.1499999999999995,6,0.06008793356130923,15th_assembly_issue_phrase_extraction
+무소속,무소속,endorsement_event,15,5.25,8,0.051294577430385936,15th_assembly_issue_phrase_extraction
+무소속,무소속,security_nk,12,5.25,7,0.051294577430385936,15th_assembly_issue_phrase_extraction
+무소속,무소속,family_legal_risk,10,3.9,5,0.038104543234000976,15th_assembly_issue_phrase_extraction
+무소속,무소속,inflation_livelihood,5,3.45,5,0.03370786516853933,15th_assembly_issue_phrase_extraction
+무소속,무소속,unification_event,4,3.0,4,0.029311187103077677,15th_assembly_issue_phrase_extraction
+무소속,무소속,gaffe_event,3,2.5,2,0.02442598925256473,15th_assembly_issue_phrase_extraction
+무소속,무소속,foreign_policy,4,2.45,3,0.023937469467513437,15th_assembly_issue_phrase_extraction
+무소속,무소속,housing,4,2.05,4,0.020029311187103077,15th_assembly_issue_phrase_extraction
+무소속,무소속,withdrawal_event,4,1.7999999999999998,2,0.017586712261846604,15th_assembly_issue_phrase_extraction
+무소속,무소속,gender_generation,3,1.0499999999999998,3,0.010258915486077184,15th_assembly_issue_phrase_extraction
+무소속,무소속,regime_change,2,0.7,2,0.006839276990718124,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",corruption_integrity,3,3.0,1,0.10830324909747292,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",external_shock,3,3.0,1,0.10830324909747292,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",jobs_labor,3,3.0,1,0.10830324909747292,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",security_nk,3,3.0,1,0.10830324909747292,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",inflation_livelihood,3,2.35,1,0.0848375451263538,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",economy_growth,3,2.1,1,0.07581227436823106,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",regime_change,2,2.0,1,0.07220216606498195,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",welfare_pension,2,2.0,1,0.07220216606498195,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",unification_event,2,1.75,1,0.0631768953068592,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",candidate_competence,3,1.7,1,0.061371841155234655,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",education,3,1.7,1,0.061371841155234655,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",regional_dev,3,1.0499999999999998,1,0.03790613718411552,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",endorsement_event,2,0.7,1,0.02527075812274368,15th_assembly_issue_phrase_extraction
+제3지대,"무소속,자민련",family_legal_risk,1,0.35,1,0.01263537906137184,15th_assembly_issue_phrase_extraction
+제3지대,자민련,economy_growth,89,47.85,24,0.11396927474097894,15th_assembly_issue_phrase_extraction
+제3지대,자민련,corruption_integrity,81,46.05,23,0.10968202929617721,15th_assembly_issue_phrase_extraction
+제3지대,자민련,regional_dev,77,36.449999999999996,23,0.08681672025723472,15th_assembly_issue_phrase_extraction
+제3지대,자민련,security_nk,73,35.85,24,0.08538763844230084,15th_assembly_issue_phrase_extraction
+제3지대,자민련,external_shock,46,33.2,23,0.07907586042634275,15th_assembly_issue_phrase_extraction
+제3지대,자민련,candidate_competence,52,29.95,24,0.07133500059545075,15th_assembly_issue_phrase_extraction
+제3지대,자민련,education,51,22.799999999999997,19,0.054305108967488386,15th_assembly_issue_phrase_extraction
+제3지대,자민련,jobs_labor,47,22.05,24,0.052518756698821015,15th_assembly_issue_phrase_extraction
+제3지대,자민련,inflation_livelihood,39,22.0,17,0.052399666547576516,15th_assembly_issue_phrase_extraction
+제3지대,자민련,foreign_policy,36,20.8,18,0.04954150291770871,15th_assembly_issue_phrase_extraction
+제3지대,자민련,welfare_pension,41,19.3,14,0.045968798380373946,15th_assembly_issue_phrase_extraction
+제3지대,자민련,endorsement_event,47,17.25,19,0.04108610217934977,15th_assembly_issue_phrase_extraction
+제3지대,자민련,regime_change,27,17.15,15,0.04084792187686078,15th_assembly_issue_phrase_extraction
+제3지대,자민련,family_legal_risk,46,16.099999999999998,21,0.03834702870072645,15th_assembly_issue_phrase_extraction
+제3지대,자민련,unification_event,22,12.4,14,0.02953435750863404,15th_assembly_issue_phrase_extraction
+제3지대,자민련,gaffe_event,11,7.1499999999999995,7,0.017029891627962368,15th_assembly_issue_phrase_extraction
+제3지대,자민련,housing,14,6.199999999999999,10,0.014767178754317017,15th_assembly_issue_phrase_extraction
+제3지대,자민련,gender_generation,8,3.85,7,0.009169941645825892,15th_assembly_issue_phrase_extraction
+제3지대,자민련,withdrawal_event,5,3.45,4,0.008217220435869955,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,economy_growth,118,89.0,15,0.11719778772715302,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,corruption_integrity,96,72.9,13,0.0959968396102186,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,external_shock,87,71.05,14,0.09356070582038452,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,security_nk,106,61.949999999999996,14,0.08157756123255201,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,regional_dev,117,60.65,17,0.07986568343429024,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,welfare_pension,80,54.65,8,0.0719647089807743,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,jobs_labor,89,51.449999999999996,12,0.06775085593889912,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,candidate_competence,73,50.85,14,0.06696075849354755,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,inflation_livelihood,76,40.65,10,0.05352910192257045,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,foreign_policy,66,39.8,9,0.05240979720832236,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,education,83,38.3,14,0.05043455359494337,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,family_legal_risk,76,32.6,10,0.042928627864103244,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,unification_event,28,20.5,10,0.026994996049512773,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,endorsement_event,52,19.25,13,0.02534895970503029,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,regime_change,24,19.2,9,0.02528311825125099,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,gaffe_event,17,10.6,6,0.013958388201211482,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,gender_generation,23,10.549999999999999,8,0.013892546747432183,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,housing,22,8.1,8,0.01066631551224651,15th_assembly_issue_phrase_extraction
+제3지대,자유민주연합,withdrawal_event,18,7.35,5,0.009678693705557018,15th_assembly_issue_phrase_extraction

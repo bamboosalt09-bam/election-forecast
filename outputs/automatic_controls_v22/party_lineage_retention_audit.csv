@@ -1,0 +1,5 @@
+﻿predecessor_party,successor_party,status,target_outcome_used
+국민중심당,자유선진당,structural_prior_only,False
+국민중심연합,자유선진당,structural_prior_only,False
+자유선진당,선진통일당,structural_prior_only,False
+선진통일당,새누리당,structural_prior_only,False

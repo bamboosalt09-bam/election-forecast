@@ -1,0 +1,26 @@
+{
+  "enabled": true,
+  "provenance": "post-hoc fixed structural experiment on frozen nested outer predictions",
+  "config": {
+    "terrain_anchor_gain": 0.0,
+    "preference_gain": 0.04,
+    "turnout_gain": 0.0,
+    "nonvoter_gain": 0.0
+  },
+  "evaluation": {
+    "script": "scripts/evaluate_electorate_layers.py",
+    "artifact": "outputs/electorate_layer_experiment/summary.json",
+    "metric": "contest-vote weighted row MAE within election, equal-election macro",
+    "baseline_nested_outer_mae_pp": 4.627768096071586,
+    "fixed_experiment_mae_pp": 4.593551031999581,
+    "improvement_pp": 0.03421706407200453,
+    "strict_nested_selection_result": false
+  },
+  "constraints": {
+    "not_active": true,
+    "not_a_strict_nested_estimate": true,
+    "post_2022_presidential_outcomes_used": false,
+    "turnout_channel_active": false,
+    "nonvoter_channel_active": false
+  }
+}

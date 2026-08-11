@@ -1,0 +1,16 @@
+{
+  "schema": "current_presidential_model_pointer_v1",
+  "active_version": "v23",
+  "lifecycle_status": "frozen_pre_2025_evaluation",
+  "canonical_document": "docs/FINAL_MODEL_V23_20260802.md",
+  "finalization_manifest": "outputs/active_presidential_nested_v23/finalization_manifest.json",
+  "runner": "scripts/run_active_presidential_model_v23.py",
+  "config": "data/config/active_presidential_model_v23.json",
+  "output": "outputs/active_presidential_nested_v23",
+  "predecessor": "v22",
+  "rollback_checkpoint": "backups/model_checkpoints/20260802_pre_v23_unified_withdrawal_generation",
+  "regional_equal_election_macro_mae_pp": 3.3678986784747,
+  "national_equal_election_macro_mae_pp": 1.5978445771719516,
+  "winner_accuracy": 0.8,
+  "post_2022_outcomes_used": false
+}

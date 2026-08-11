@@ -1,0 +1,20 @@
+issue_name,conservative,liberal,progressive,centrist,anti_establishment,reform,regionalist,notes
+candidate_competence,0.30,0.30,0.10,0.70,0.10,0.55,0.00,competence framing is usually centrist and reform-compatible
+corruption_integrity,0.20,0.25,0.20,0.35,0.75,0.65,0.00,integrity attacks and reform frames signal anti-establishment politics
+economy_growth,0.75,0.15,0.05,0.45,0.05,0.25,0.05,growth and business competence lean conservative but can be centrist
+education,0.15,0.45,0.40,0.35,0.05,0.55,0.05,education reform and welfare-state agenda lean liberal reform
+endorsement_event,0.20,0.20,0.10,0.35,0.35,0.25,0.05,coalition and endorsement politics can signal anti-party positioning
+external_shock,0.35,0.25,0.10,0.35,0.25,0.20,0.00,external shocks are weakly ideological
+family_legal_risk,0.15,0.15,0.10,0.15,0.65,0.25,0.00,personal legal-risk frames mainly signal anti-establishment conflict
+foreign_policy,0.45,0.35,0.10,0.35,0.05,0.20,0.00,foreign-policy agenda is mixed with slight conservative security loading
+gaffe_event,0.10,0.10,0.05,0.10,0.45,0.15,0.00,gaffe frames are weak anti-establishment risk signals
+gender_generation,0.20,0.35,0.45,0.30,0.20,0.35,0.00,generation and gender frames lean progressive-liberal
+housing,0.20,0.45,0.35,0.35,0.15,0.45,0.00,housing policy leans liberal reform but is not purely ideological
+inflation_livelihood,0.30,0.40,0.30,0.40,0.10,0.35,0.00,livelihood inflation is mixed economic-popular agenda
+jobs_labor,0.15,0.45,0.65,0.25,0.15,0.40,0.00,labor and jobs agenda leans progressive-liberal
+regime_change,0.45,0.25,0.10,0.35,0.80,0.45,0.00,regime-change frame is strongly anti-incumbent and anti-establishment
+regional_dev,0.25,0.25,0.15,0.30,0.10,0.35,0.85,regional development signals regionalist politics
+security_nk,0.80,0.15,0.05,0.25,0.05,0.15,0.00,security and North Korea agenda lean conservative
+unification_event,0.25,0.45,0.25,0.45,0.25,0.35,0.00,unification or candidate-unification frames are centrist-liberal coalition signals
+welfare_pension,0.15,0.60,0.60,0.35,0.10,0.45,0.00,welfare and pension agenda lean liberal-progressive
+withdrawal_event,0.15,0.25,0.10,0.55,0.60,0.45,0.00,withdrawal and third-candidate events signal centrist anti-party politics

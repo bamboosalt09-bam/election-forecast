@@ -1,0 +1,13 @@
+{
+  "schema": "footprint_candidate_base_build_v9",
+  "post_2022_outcomes_used": false,
+  "target_presidential_outcome_fields_used": [],
+  "footprint_controlled": true,
+  "lost_executive_candidacies_create_office_base": false,
+  "repeat_combination": "bounded_union",
+  "district_history_rows": 8484,
+  "candidate_history_rows": 77,
+  "component_rows": 40,
+  "regional_base_rows": 24,
+  "active_model_changed": false
+}

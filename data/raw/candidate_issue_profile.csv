@@ -1,0 +1,21 @@
+election_id,candidate_id,slot,candidate_name,issue_name,association_strength,direction,available_date,source_type,confidence,notes
+pres_2002,pres_2002_A,A,Roh Moo-hyun,candidate_competence,0.65,1,2002-11-01,manual_seed,0.55,reform and administrative change image
+pres_2002,pres_2002_A,A,Roh Moo-hyun,regional_dev,0.55,1,2002-11-01,manual_seed,0.45,regional realignment appeal
+pres_2002,pres_2002_B,B,Lee Hoi-chang,candidate_competence,0.60,1,2002-11-01,manual_seed,0.50,establishment competence image
+pres_2002,pres_2002_B,B,Lee Hoi-chang,corruption_integrity,0.45,-1,2002-11-01,manual_seed,0.45,elite establishment risk frame
+pres_2007,pres_2007_A,A,Lee Myung-bak,economy_growth,0.85,1,2007-11-01,manual_seed,0.60,growth and business competence frame
+pres_2007,pres_2007_A,A,Lee Myung-bak,corruption_integrity,0.75,-1,2007-11-01,manual_seed,0.65,BBK and DAS allegation risk
+pres_2007,pres_2007_B,B,Chung Dong-young,welfare_pension,0.45,1,2007-11-01,manual_seed,0.45,liberal welfare continuity frame
+pres_2007,pres_2007_B,B,Chung Dong-young,regime_change,0.55,-1,2007-11-01,manual_seed,0.50,incumbent liberal fatigue
+pres_2012,pres_2012_A,A,Park Geun-hye,welfare_pension,0.70,1,2012-11-15,manual_seed,0.55,economic democratization and welfare pledge
+pres_2012,pres_2012_A,A,Park Geun-hye,candidate_competence,0.55,1,2012-11-15,manual_seed,0.45,stable conservative leadership image
+pres_2012,pres_2012_B,B,Moon Jae-in,regime_change,0.60,1,2012-11-15,manual_seed,0.50,opposition accountability frame
+pres_2012,pres_2012_B,B,Moon Jae-in,unification_event,0.70,1,2012-11-25,manual_seed,0.60,Ahn withdrawal and opposition unification
+pres_2017,pres_2017_A,A,Moon Jae-in,regime_change,0.95,1,2017-04-01,manual_seed,0.75,impeachment election change candidate
+pres_2017,pres_2017_A,A,Moon Jae-in,corruption_integrity,0.80,1,2017-04-01,manual_seed,0.65,anti-corruption accountability frame
+pres_2017,pres_2017_B,B,Hong Joon-pyo,regime_change,0.90,-1,2017-04-01,manual_seed,0.70,conservative incumbent-bloc burden
+pres_2017,pres_2017_B,B,Hong Joon-pyo,corruption_integrity,0.80,-1,2017-04-01,manual_seed,0.65,Park scandal bloc responsibility
+pres_2022,pres_2022_A,A,Yoon Suk-yeol,regime_change,0.90,1,2022-02-01,manual_seed,0.70,anti-incumbent and prosecutor reform-change image
+pres_2022,pres_2022_A,A,Yoon Suk-yeol,family_legal_risk,0.60,-1,2022-02-01,manual_seed,0.55,spouse and family allegation risk
+pres_2022,pres_2022_B,B,Lee Jae-myung,candidate_competence,0.70,1,2022-02-01,manual_seed,0.60,governor and administrative competence image
+pres_2022,pres_2022_B,B,Lee Jae-myung,corruption_integrity,0.80,-1,2022-02-01,manual_seed,0.65,Daejang-dong allegation risk

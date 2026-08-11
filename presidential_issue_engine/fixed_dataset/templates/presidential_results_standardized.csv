@@ -1,0 +1,5 @@
+election_id,region_id,region_name,province,slot,candidate_name,party_name,is_active_slot,votes,vote_share
+pres_2022,sido_11,서울특별시,서울특별시,A,,,True,,
+pres_2022,sido_11,서울특별시,서울특별시,B,,,True,,
+pres_2022,sido_11,서울특별시,서울특별시,C,,,False,0,0
+pres_2022,sido_11,서울특별시,서울특별시,alpha,기타후보 합산,,True,,

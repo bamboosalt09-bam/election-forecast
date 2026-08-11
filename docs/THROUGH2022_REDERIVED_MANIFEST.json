@@ -1,0 +1,2145 @@
+{
+  "baseline": "through2022_rederived",
+  "information_cutoff": "2025-06-02",
+  "archive_workspace": "C:\\english_folder\\poll_project_post2025_outcome_aware_20260714",
+  "archive_exists": true,
+  "post2025_layers_default": "disabled",
+  "file_count": 427,
+  "files": [
+    {
+      "path": ".env.example",
+      "bytes": 600,
+      "sha256": "3bae645d09c58ae04ba2a394aefabb5be9517fab0d5ebfc90b24bb103cf603ab"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 599,
+      "sha256": "f1e372cc87061e8b9fa59b8e13def990e90103a67e1686cdddfb6f58b787a977"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2889,
+      "sha256": "79a6378f33fc59c249bc599fa6d6f57518611f29271ba2fa7a76c3be5f210bcb"
+    },
+    {
+      "path": "STRUCTURE.md",
+      "bytes": 753,
+      "sha256": "02a248532fe07760db0a761c906782e17883919be27e53bfb0905aa341ad5233"
+    },
+    {
+      "path": "common/README.md",
+      "bytes": 2239,
+      "sha256": "2496b33f928f87d766ece8dffbae91d85eda916a95ab856efb5fd23eecc29868"
+    },
+    {
+      "path": "common/__init__.py",
+      "bytes": 1059,
+      "sha256": "6fd425259e0bc95bc4bbe8c928a8e2147813ec14d938ad39b212e8ff67c57de1"
+    },
+    {
+      "path": "common/election_slot_schema/__init__.py",
+      "bytes": 267,
+      "sha256": "b949a39cb8c35b2e44b21997cf180d137e660fb905c6e34eebd224b4dfa5b50f"
+    },
+    {
+      "path": "common/election_slot_schema/slots.py",
+      "bytes": 2330,
+      "sha256": "5c4846648ad281fe52b2aa1dd7fe1a73e4ac10c9433b7ae5d400da23c79591dc"
+    },
+    {
+      "path": "common/evaluation/__init__.py",
+      "bytes": 277,
+      "sha256": "c0bd1302b0a1a035b91aff73462f5f2d4cb36588c1fb4917d421b3e20b67ebb4"
+    },
+    {
+      "path": "common/evaluation/metrics.py",
+      "bytes": 7312,
+      "sha256": "15a90398a26b605e2a06f709c7bbfa20de0cd5df4cdb87c26c24f17310e59598"
+    },
+    {
+      "path": "common/feature_schema/__init__.py",
+      "bytes": 357,
+      "sha256": "82854b2b2ab627e47f307df63cdce9aace654367005c5f062a71940bca764440"
+    },
+    {
+      "path": "common/feature_schema/features.py",
+      "bytes": 5150,
+      "sha256": "79a30a7775b71746e9d45d79bc9de5f355ffbc28d6bb09fe6e6e7dd197192ae7"
+    },
+    {
+      "path": "common/issue_store/README.md",
+      "bytes": 2586,
+      "sha256": "db73a1957ef493c6475871c97a528532e5fa4c69ab982996a982cb810b0eecd8"
+    },
+    {
+      "path": "common/issue_store/__init__.py",
+      "bytes": 1192,
+      "sha256": "6e1d1c49beafd5093a22386642058e2a99e514f793aa7c254ad8f20f61f559d5"
+    },
+    {
+      "path": "common/issue_store/rollup.py",
+      "bytes": 5179,
+      "sha256": "f84ad7dc3cfcaabea55330fb059be014080a7ca854ff4b473f21ec201332a8b9"
+    },
+    {
+      "path": "common/issue_store/schema.py",
+      "bytes": 5175,
+      "sha256": "e4933c03686d77947b86d1b8642ce8fd1a3356574111cd79677073b8d3674c7f"
+    },
+    {
+      "path": "common/shared_schema/__init__.py",
+      "bytes": 866,
+      "sha256": "55dc0e4937783adefe2e3706b0bb080a0a5519e37a878f6af6c59e7afa121a72"
+    },
+    {
+      "path": "common/shared_schema/election.py",
+      "bytes": 4587,
+      "sha256": "116f5c12a796e63ae7be63c35f9d3b8b615bd5af3ecba8e7b3ac88c1591ae142"
+    },
+    {
+      "path": "data/assembly_roster.csv",
+      "bytes": 87083,
+      "sha256": "ac8cdf267c89455c9201a0abd147dc35a341839b5a9464d71add449d0db0dc5c"
+    },
+    {
+      "path": "data/candidate_issue_link.csv",
+      "bytes": 21007,
+      "sha256": "137d53f497a01bd5ca48b96c8a53e9bba9172cd9389f03a26a3c92ee80cd6dcd"
+    },
+    {
+      "path": "data/config/archive_categories.csv",
+      "bytes": 241,
+      "sha256": "89ef0567a4f45a0973395ce033beaa7c74ec5ca3af234d30dd2cd65a41fe415d"
+    },
+    {
+      "path": "data/config/archive_crawl_policy.yaml",
+      "bytes": 257,
+      "sha256": "e61db15a56b94f8fd98549d36589353e13c17148d185af6a3ccd0315d026fe4c"
+    },
+    {
+      "path": "data/config/archive_request_plan.csv",
+      "bytes": 404494,
+      "sha256": "43d3416b40a3559656f54105e7b703d2a108e537a722c7bd4c60ce0480b0d434"
+    },
+    {
+      "path": "data/config/base_issue_keywords.csv",
+      "bytes": 86,
+      "sha256": "318e5845b55c6f8567b3c63cfb58f19282f50decf264e8e1e11369371e21bb9d"
+    },
+    {
+      "path": "data/config/candidate_names.csv",
+      "bytes": 45,
+      "sha256": "3d6084604c5e8c7a1e9ec5389755d639e9b8619e34207bf5b2f904220f9b8027"
+    },
+    {
+      "path": "data/config/feeds.csv",
+      "bytes": 83,
+      "sha256": "c24955722be4014424eafc15efc3f765d4871c85a8b7acbd8a9ac3352cc5064d"
+    },
+    {
+      "path": "data/config/local_import_mappings/bigkinds_mapping.yaml",
+      "bytes": 307,
+      "sha256": "f0ab5314184bf9fcf386e81da271cb8d7e84a12072fac366b4b8c24cc30a625c"
+    },
+    {
+      "path": "data/config/party_names.csv",
+      "bytes": 60,
+      "sha256": "683f2dc30b6828d9cf2d1a5d0e5e0f8e0b14bf11b136ae0b5eb4d2e6b1679f85"
+    },
+    {
+      "path": "data/config/query_plan.csv",
+      "bytes": 87689,
+      "sha256": "d7a62f87ab5318091933298273f140c98e0c5ef5bdf53ae83e1a91f5e3973aee"
+    },
+    {
+      "path": "data/config/region_keywords.csv",
+      "bytes": 42,
+      "sha256": "7cdc2b394f55438985a05c9434052976451e916ed446be7e3762b09f335e8914"
+    },
+    {
+      "path": "data/config/source_list.csv",
+      "bytes": 745,
+      "sha256": "3943a5ea4cba079d22e2a5c76888a280111c16f52a618136fe4d6f00ab130c65"
+    },
+    {
+      "path": "data/config/through2022_rederived_layers.json",
+      "bytes": 3712,
+      "sha256": "49c8bb12b10ad1a3e7c5001a7acd1dd322f9a527331cf636260588318da22c8a"
+    },
+    {
+      "path": "data/generation_vote.csv",
+      "bytes": 1863,
+      "sha256": "edff867113a4e1e75873eaa75d4db89ff78866f980ffd4c5b0a29e62c6074762"
+    },
+    {
+      "path": "data/imports/dummy_articles.csv",
+      "bytes": 163,
+      "sha256": "89ed0fac4c5a5458b6fea3c6becda81ebd958f03d962af913234d4fb8ad14886"
+    },
+    {
+      "path": "data/issue_salience.csv",
+      "bytes": 66,
+      "sha256": "9b762624aebe6429e8428dc807e149e85f8d743980625e8fe7aaada131ecac84"
+    },
+    {
+      "path": "data/issue_salience_2002.csv",
+      "bytes": 314,
+      "sha256": "13bc1b3c65a139422b390b35ab05b8ffba62993b3d30c18ffc5752fd0fe8a872"
+    },
+    {
+      "path": "data/issue_salience_all.csv",
+      "bytes": 314,
+      "sha256": "f52ff86eeff0924c38d8b61ac9330cde92fefc1af2998a7f221c7d005ebfd04d"
+    },
+    {
+      "path": "data/issue_salience_assembly.csv",
+      "bytes": 85652,
+      "sha256": "cba331c2ef50df0b3b4bb9f004e78037b66985b16f53fd0efe267bd8cd335bd3"
+    },
+    {
+      "path": "data/news_aggregated/.gitkeep",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "data/news_analyzed/.gitkeep",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "data/news_cleaned/.gitkeep",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "data/news_raw/.gitkeep",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "data/presidential/candidate_slots.csv",
+      "bytes": 667,
+      "sha256": "4508fe89d48ef3f7c24449d6b48688a3c35dbd5a45dd5f8314c46da95bca2815"
+    },
+    {
+      "path": "data/presidential/candidate_tone_scores.csv",
+      "bytes": 657,
+      "sha256": "97fee0ba653bc0f9ee8b80bb65633b303a021b81ce2fbe3eaa1716c792d23c94"
+    },
+    {
+      "path": "data/presidential/manual_political_variables.csv",
+      "bytes": 3276,
+      "sha256": "7b6bc4e987d87ee172e5eaf2849ed895518afc4a9352afa4c19aa030c0240874"
+    },
+    {
+      "path": "data/presidential/model_weights.csv",
+      "bytes": 788,
+      "sha256": "f87a8f210be267dec67a60027c1b20dc12039c7d972804f35042df54ef2f4b15"
+    },
+    {
+      "path": "data/presidential/party_controversy_scores.csv",
+      "bytes": 539,
+      "sha256": "56b158052789278b0f08d21f3e01618c6d6095e913cdefc2b0c0772c0d3b798b"
+    },
+    {
+      "path": "data/presidential/political_variables.csv",
+      "bytes": 5959,
+      "sha256": "2243f74823910d57d9259ba9a0171fbab021cad218f97af5bf83b64504e92067"
+    },
+    {
+      "path": "data/presidential/presidential_results_raw.csv",
+      "bytes": 906,
+      "sha256": "f7389e503032116c7d3a1867e5e1b111fbf3c16cc0ce1a0334ea45edfc794aa2"
+    },
+    {
+      "path": "data/presidential/presidential_results_standardized.csv",
+      "bytes": 1825,
+      "sha256": "279e8b9a1b26a5df2598e80a9d7de5af4085eba3304734c621bfbb1ec584eb84"
+    },
+    {
+      "path": "data/presidential/regions_master.csv",
+      "bytes": 145,
+      "sha256": "bb670b548404f0c05575748263c1a0887523ea53303efc24f95bd574602c2859"
+    },
+    {
+      "path": "data/presidential/standardize_report.csv",
+      "bytes": 247,
+      "sha256": "b88c9269efd94e917bc72e5d9fdb339ba581888915fae285b35ed0b4deac495e"
+    },
+    {
+      "path": "data/presidential/transfer_contributions.csv",
+      "bytes": 1769,
+      "sha256": "0b1c541d8086760f85751c4ab3b096013c44ad7103ebc302017077ed7b8c4778"
+    },
+    {
+      "path": "data/presidential/transfer_events.csv",
+      "bytes": 311,
+      "sha256": "c056e4a9095e24a861c41f4f1eb5f4e8b788d13b7d576d6495645cceaf223c39"
+    },
+    {
+      "path": "data/presidential/variable_contributions.csv",
+      "bytes": 12544,
+      "sha256": "706e3c8c05028c2df5b142ca8296705014bd9eb8411e11dd61876f44f9126587"
+    },
+    {
+      "path": "data/presidential/variable_dictionary.csv",
+      "bytes": 1054,
+      "sha256": "2edd549a72edaf3ea048bf151006f4bb639f19f1e511d69cdd99c27a36ba7587"
+    },
+    {
+      "path": "data/presidential/variable_uncertainty.csv",
+      "bytes": 542,
+      "sha256": "9da7790843ccbd5ee6fa722ab0fa4cf4a5ba93305cd133afbc9a77c691d7133d"
+    },
+    {
+      "path": "data/raw/assembly15_bloc_issue_profile.csv",
+      "bytes": 43008,
+      "sha256": "6e383dcffc17ef5a59515de8857c485cfb03ac26093cb69bd6d1dde275983d8f"
+    },
+    {
+      "path": "data/raw/assembly15_bloc_political_landscape.csv",
+      "bytes": 1468,
+      "sha256": "3de7406d7bd657152637cea97a66d23d50ea4372e10de44eaf9aaf1f56968aa7"
+    },
+    {
+      "path": "data/raw/assembly15_candidate_legacy_landscape.csv",
+      "bytes": 2541,
+      "sha256": "a840bd520e39ecaedd193d39891a624c85f78312a7e1336ae697941e39686a17"
+    },
+    {
+      "path": "data/raw/assembly15_member_roster.csv",
+      "bytes": 23033,
+      "sha256": "c7feb8a026664aaa46b539fff55f8cac7151a38ef62c0d0c64f1fb86e10181be"
+    },
+    {
+      "path": "data/raw/assembly_issue_character_overlay.csv",
+      "bytes": 133455,
+      "sha256": "42af0fe4690b6a28c44e03668b91cc1962469354dea92b1980279458cfc49d2c"
+    },
+    {
+      "path": "data/raw/assembly_issue_speaker_weighted.csv",
+      "bytes": 33037,
+      "sha256": "5317a5989f340835e4aa350a65e69c388a95e66e1a46ba13ca755763e094738f"
+    },
+    {
+      "path": "data/raw/assembly_member_history.csv",
+      "bytes": 25110,
+      "sha256": "acdb10a57732ad6d3abf24ed0184a9ebb657f0a8ba3d146cc983f049b57aaf04"
+    },
+    {
+      "path": "data/raw/assembly_neutral_issue_context.csv",
+      "bytes": 5257,
+      "sha256": "d4d946d11b8bb24caf645a75bc98ce40e4bc2fa397b5ad4cf679ec3dc2975ddb"
+    },
+    {
+      "path": "data/raw/assembly_speaker_influence.csv",
+      "bytes": 1224197,
+      "sha256": "0cc1e7890121ae36e40b6b9bdac31543a6506f359a8a7a2d4d7458cd9c22c5d1"
+    },
+    {
+      "path": "data/raw/assembly_stance_entity_aliases.csv",
+      "bytes": 3001,
+      "sha256": "50e301098d408b959d1d300be679fc3043e64ddbf403e5b2b67a68f7e2e9b74f"
+    },
+    {
+      "path": "data/raw/auto_issue_seed/candidate_issue_profile.csv",
+      "bytes": 18199,
+      "sha256": "44a50ef6dff7b4fd0c861a7cc115517a24c8848d7e24c6744f89e25bcb9c93ab"
+    },
+    {
+      "path": "data/raw/auto_issue_seed/mega_issue_attribution.csv",
+      "bytes": 4036,
+      "sha256": "078e5c546a5e7902468a9d3fc96170f096bf946ba353fe58c49a33de141e0d4f"
+    },
+    {
+      "path": "data/raw/auto_issue_seed/mega_issue_axis.csv",
+      "bytes": 1910,
+      "sha256": "9651f75de79f908df531ed2c7b51eb41da0a862111e34f46b691925fb9b8175b"
+    },
+    {
+      "path": "data/raw/bloc_history_results.csv",
+      "bytes": 492113,
+      "sha256": "c6f3fc38fef1881182e7f53680fa87fb659eb2f9e4e6ad727603dcc610eb2be6"
+    },
+    {
+      "path": "data/raw/candidate_generation_profile.csv",
+      "bytes": 2228,
+      "sha256": "655895ed7308fd8a5ac555afb830fc8ea5bd8ff5f674a12bad8978ac5d18c2f1"
+    },
+    {
+      "path": "data/raw/candidate_issue_profile.csv",
+      "bytes": 2658,
+      "sha256": "f2dfe6bddebcaf47589a7d0c6ec00af020ec468514bbc7d4cda38c77fbb4a374"
+    },
+    {
+      "path": "data/raw/candidate_party_speech_context.csv",
+      "bytes": 4631,
+      "sha256": "36f9a64907b96b71e428ed4b99e0e739f3dfd6aac7d2ea4c01bcaeab453f582a"
+    },
+    {
+      "path": "data/raw/candidate_party_tone_gap.csv",
+      "bytes": 11335,
+      "sha256": "b5fac796e925421fd41c1e3c28a30df14b658cf2fcd6e81cc3cb9a3b4e144a91"
+    },
+    {
+      "path": "data/raw/candidate_party_vectors.csv",
+      "bytes": 99,
+      "sha256": "7da8adafb6e19768e7f4742174a4d8db104599d1ee76f37e70e174e23d7d2108"
+    },
+    {
+      "path": "data/raw/candidate_policy_positions.csv",
+      "bytes": 78,
+      "sha256": "46cd8fb078c4f179cfff7759dd273e99748de3a8558ac7b3023a3988ff3fbdaa"
+    },
+    {
+      "path": "data/raw/candidate_political_landscape.csv",
+      "bytes": 3452,
+      "sha256": "4263c55e95b5e1b05c89bcad8a2e7b83e58171aaf11340e7049931add5fd6cc0"
+    },
+    {
+      "path": "data/raw/candidate_public_treatment.csv",
+      "bytes": 4773,
+      "sha256": "11b48ad0aa54706aa1eb93fd427cd16e4c11ddb1d9be9a1b90275bcaaf766599"
+    },
+    {
+      "path": "data/raw/candidate_regional_base.csv",
+      "bytes": 1849,
+      "sha256": "e5608d845dd632a06dd17b882efc114ade9d766ee8fbb106ad5783fc5f76ef8b"
+    },
+    {
+      "path": "data/raw/candidate_vote_conversion_context.csv",
+      "bytes": 4404,
+      "sha256": "c2a9418929b0d61e5eabc2bdbd6868ce39fb8c384cab8db32ef8bf5ca5496a2a"
+    },
+    {
+      "path": "data/raw/candidates.csv",
+      "bytes": 202,
+      "sha256": "53347880a38c5702ad3f0617f23ed51ea44919ab8dee37901bb622975a614c9a"
+    },
+    {
+      "path": "data/raw/election_generation_weights.csv",
+      "bytes": 625,
+      "sha256": "d793a5abab283396a2a19ccf2255c9830371fd682bfc109e068a5c5d27e5e7c1"
+    },
+    {
+      "path": "data/raw/election_results.csv",
+      "bytes": 1845,
+      "sha256": "ab9f3930bc558a826e8c295d0603722e318096740f52f68952d741b0c44fedf5"
+    },
+    {
+      "path": "data/raw/event_effects.csv",
+      "bytes": 143,
+      "sha256": "e92c3d09f0b729ee739306b1063540fb53b2d0f998366d3202e997fcfe8bd8d1"
+    },
+    {
+      "path": "data/raw/issue_direction_terms.csv",
+      "bytes": 1053,
+      "sha256": "16c14b6303a4b2a433a3783e4bae256136ea2c3af380071ff8f8164b78958e91"
+    },
+    {
+      "path": "data/raw/issue_epoch_importance.csv",
+      "bytes": 15962,
+      "sha256": "fe63eeec8c929a5ff85d474f66151670fd0436d64d4dd4ab9aa65858a5389476"
+    },
+    {
+      "path": "data/raw/issue_scope_weights.csv",
+      "bytes": 1223,
+      "sha256": "26cd5581a43ca4a41ccbc9620106ba9f4a4754535dd12f1e87ca95ff763da586"
+    },
+    {
+      "path": "data/raw/issue_scope_weights_assembly_derived.csv",
+      "bytes": 3670,
+      "sha256": "5457832e20d7660c90be58542ab380cd4e244f7680424120c37775e4985010e2"
+    },
+    {
+      "path": "data/raw/issue_scores.csv",
+      "bytes": 138,
+      "sha256": "809e4a0ff3a137e415a2ae2d95388358d75bc1cbc08ce78614f1a2063b472e19"
+    },
+    {
+      "path": "data/raw/issue_temporal_conversion.csv",
+      "bytes": 20703,
+      "sha256": "aa23a6fd6bfe803e41940b86bcdcda33ae66f2641514615a420dcd5857af63bd"
+    },
+    {
+      "path": "data/raw/kospi_history_source.txt",
+      "bytes": 623422,
+      "sha256": "ada5678a73b42e22913d5e1cea3fbc89896687456e24ef9118801e7ae70e0c88"
+    },
+    {
+      "path": "data/raw/mega_issue_attribution.csv",
+      "bytes": 1432,
+      "sha256": "a92c2afd231df97daeed0264e61f07ee894b7fd3ddf042fc63b8f840abe68a73"
+    },
+    {
+      "path": "data/raw/mega_issue_axis.csv",
+      "bytes": 1304,
+      "sha256": "16f6d14e2157f6085abfb566fd7b6dc0807db9efc4871c568625f4d2ad0b0fc3"
+    },
+    {
+      "path": "data/raw/mega_issue_intensity.csv",
+      "bytes": 591,
+      "sha256": "ce132d918f11a9e045625ec4985745de50ee3c7fc48f0a11b1121cb79617199a"
+    },
+    {
+      "path": "data/raw/mega_issue_taxonomy.csv",
+      "bytes": 1316,
+      "sha256": "d0a7dca5f35dc3f3593c4c107daa50d2cdfdf77f03f9103d0ebabc9040b0cc83"
+    },
+    {
+      "path": "data/raw/point_in_time_input_manifest.csv",
+      "bytes": 3209,
+      "sha256": "b15359d8ef412a4214daa09b2220b4248583803745366dd111b8898fe6ec7b09"
+    },
+    {
+      "path": "data/raw/political_landscape_issue_axis.csv",
+      "bytes": 2223,
+      "sha256": "8c5cf455f2696ca74659a9e29c64a04c2258e4c0a67ef4a2522f3b086a274ed6"
+    },
+    {
+      "path": "data/raw/polls.csv",
+      "bytes": 121,
+      "sha256": "583a6e6a84d444cf5482a0c474db7ed951c7ab6ab6dbb545faef089cbc7ccc98"
+    },
+    {
+      "path": "data/raw/region_issue_sensitivity.csv",
+      "bytes": 54,
+      "sha256": "b04e7d693802acebc29eebfdc7487bbfe0cc990469558245a3011d03548f210b"
+    },
+    {
+      "path": "data/raw/regions.csv",
+      "bytes": 214,
+      "sha256": "9499166c86269b124572e05873b5648e57cf85d96a5fa9e2a3983914979043e3"
+    },
+    {
+      "path": "data/raw/third_candidate_pressure.csv",
+      "bytes": 930,
+      "sha256": "b9f1490b861f852588e577f454e0d6ab486aaca9cc123817884450c08c16b43f"
+    },
+    {
+      "path": "data/raw/third_candidate_profile.csv",
+      "bytes": 727,
+      "sha256": "684b04e9ab079f9d9c1dec8064104a2f3eaf7c1b0062175517b5615437675b51"
+    },
+    {
+      "path": "data/raw/withdrawn_candidate_transfers.csv",
+      "bytes": 592,
+      "sha256": "a0a034fbda12899e1f1d83474e86bdba43ff531cdf77c892d38f08bfc9f93d50"
+    },
+    {
+      "path": "data/raw_lake/local_import/dummy_articles_2021_01.jsonl",
+      "bytes": 854,
+      "sha256": "2b31588cfa04622c7ca5336551aa0573f3169946cfc24bef6fc4faa713fe275f"
+    },
+    {
+      "path": "data/raw_lake/manifest.csv",
+      "bytes": 579,
+      "sha256": "f24bd9f96039be30091df738e4c7dd8c3670c1ece8eb67d1a9c4a13a43977942"
+    },
+    {
+      "path": "docs/CURRENT_MODEL_PERFORMANCE_20260716.md",
+      "bytes": 7852,
+      "sha256": "4e9ea996123e11d6bf2e654d770e68c244bd52be54f0db15d4c8edb617dda488"
+    },
+    {
+      "path": "docs/DISTRICT_TERRAIN_AND_CANDIDATE_REGIONALISM.md",
+      "bytes": 3239,
+      "sha256": "ba9e42b874f6d2939d3fe5e9bf7084a125ca6f4091eed5e80833d7028bd83ded"
+    },
+    {
+      "path": "docs/HANDOFF_CURRENT_STATE.md",
+      "bytes": 1769,
+      "sha256": "15a750f150c91c365973214c9c053bfb5b8adcff3c0f6a539fe2980614fbca10"
+    },
+    {
+      "path": "docs/PRE2025_ASOF_AUDIT.json",
+      "bytes": 4180,
+      "sha256": "ac81c8e25dc72aa4cb61faba494898a5e6dd1d748a47366033a5f69749977a75"
+    },
+    {
+      "path": "docs/PRE2025_RECONSTRUCTION.md",
+      "bytes": 891,
+      "sha256": "98e1fc7c29ac3dc2410299e42afcbf1c6df4628ba1801cba20c0b68bfe68fb1c"
+    },
+    {
+      "path": "docs/PRE2025_SANITIZATION_AUDIT.json",
+      "bytes": 6144,
+      "sha256": "1350fa09e69ae11270cf73983c7fea04c1f83323d596d71c2c1f24cdb857cb09"
+    },
+    {
+      "path": "docs/PRE2025_VALIDATION_20260714.md",
+      "bytes": 550,
+      "sha256": "831070afd35b25ef25a5751b2400d064cd09f509abb15d68b1d98d2c8420f0c7"
+    },
+    {
+      "path": "docs/REGIONAL_ERROR_DIAGNOSIS_20260715.md",
+      "bytes": 5590,
+      "sha256": "d17f379d7883c287d5bd0541704dcf51f01f9a6b55b1422639d5c05561feb1d9"
+    },
+    {
+      "path": "docs/THROUGH2022_AUTOMATIC_ISSUE_SEED.md",
+      "bytes": 2620,
+      "sha256": "4747d9d95084413af5ee624494d5db09733e5a002d9b661d37e7cb82a2453f27"
+    },
+    {
+      "path": "docs/THROUGH2022_FEATURE_PRESERVATION.md",
+      "bytes": 3386,
+      "sha256": "d1782cff918e9053f5d2aec89bbbf2b0a80b1fd2f04574a70e04a3c2a2552049"
+    },
+    {
+      "path": "docs/THROUGH2022_REDERIVATION.md",
+      "bytes": 4063,
+      "sha256": "375e14481ccd2a3af8222d198e597b0ba068e81e007b333c4507c67651bb0873"
+    },
+    {
+      "path": "docs/WEIGHT_TUNING_POLICY.md",
+      "bytes": 1905,
+      "sha256": "635b1ede1e3ed223f246d405692922998a138da7db0ac297f4d905398646fab6"
+    },
+    {
+      "path": "docs/WITHIN_BLOC_REGIONAL_TRANSFER.md",
+      "bytes": 3838,
+      "sha256": "4a5fb0de4ffd5cc84f0395757cd31b806fadc0ecd5b2abad6ede0997be5740db"
+    },
+    {
+      "path": "presidential_issue_engine/FROZEN.md",
+      "bytes": 1044,
+      "sha256": "26fd23740c522c1973c9dd08d454aa961328a4c25128aaa56af66635efeefb76"
+    },
+    {
+      "path": "presidential_issue_engine/IMPORT_SPEC.md",
+      "bytes": 3539,
+      "sha256": "3fa1c805568e4955a37fd3c501b03f9e1cff96711eb7caf57ee0e1e7e36dbf7f"
+    },
+    {
+      "path": "presidential_issue_engine/README.md",
+      "bytes": 650,
+      "sha256": "a17802132542daf83beced446944f4383ce3310058c8b494572cd5b2cbe98bb6"
+    },
+    {
+      "path": "presidential_issue_engine/audit_point_in_time.py",
+      "bytes": 10205,
+      "sha256": "e336d40e1b0c650bdcb48937563a595442c88417d00e559ea440333bb79081a4"
+    },
+    {
+      "path": "presidential_issue_engine/audit_predictors_and_intervals.py",
+      "bytes": 13576,
+      "sha256": "ce8b131c884716dbb12c5a83360721dd7d1a659530e9ae195600e4de9a077b46"
+    },
+    {
+      "path": "presidential_issue_engine/audit_weight_selection_boundary.py",
+      "bytes": 8653,
+      "sha256": "216bd176b74915679222dc35e82fb9da37a9e74c603ae89493c39424389a4900"
+    },
+    {
+      "path": "presidential_issue_engine/build_assembly_neutral_issue_context.py",
+      "bytes": 4568,
+      "sha256": "ab634d18cef4dc05ffcbadae09ab7042d0974cfd78047b37c097a707a94d6c0d"
+    },
+    {
+      "path": "presidential_issue_engine/build_assembly_speaker_influence.py",
+      "bytes": 27357,
+      "sha256": "5b9e7efec46b2714c397a75c400fad02c40f0922526a5588ea6171ba01634b7d"
+    },
+    {
+      "path": "presidential_issue_engine/build_bloc_history_from_nec.py",
+      "bytes": 9388,
+      "sha256": "f06d90fadde27d8a72011adc4058c0cb37c471e2c3e6358bc4678f4f9b58bd5d"
+    },
+    {
+      "path": "presidential_issue_engine/build_candidate_generation_profile_from_assembly.py",
+      "bytes": 5823,
+      "sha256": "551d43a0c55c2352a76e002e96243d8b685b52ee4068252f2a69038718092058"
+    },
+    {
+      "path": "presidential_issue_engine/build_candidate_vote_conversion_context.py",
+      "bytes": 12762,
+      "sha256": "3023e5260102ab4b1afdbdbf58ffe2ca49c22befae8c1f7489b59a5666be0ff9"
+    },
+    {
+      "path": "presidential_issue_engine/build_issue_epoch_importance_from_salience.py",
+      "bytes": 11260,
+      "sha256": "d732de723edec597854883d4100a7f7ad1bf667b82cc09844814e4fbf9ecd9ac"
+    },
+    {
+      "path": "presidential_issue_engine/dual_axis_engine.py",
+      "bytes": 4954,
+      "sha256": "a190b66188768b6c577fab97da5e0f65e7bd546aacd51602a597eb93d5b7864e"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/README.md",
+      "bytes": 493,
+      "sha256": "7e11ee25e7900d680e3451f01abb7452fd97243e675e18a58cf9c5fa91b3235d"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/bloc_history_results.csv",
+      "bytes": 492113,
+      "sha256": "c6f3fc38fef1881182e7f53680fa87fb659eb2f9e4e6ad727603dcc610eb2be6"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/campaign_issue_terms.csv",
+      "bytes": 6459,
+      "sha256": "61072fe8f638f399f264cedf900c9dc70d718138f346fc93686357e524923ce4"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/coalition_events.csv",
+      "bytes": 603,
+      "sha256": "72988d5de63e151f21038932964a9941a44e0cfaeb8b2352a33e02bc87ebb721"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/economic_indicators.csv",
+      "bytes": 66017,
+      "sha256": "f56589eb065001317f23312ea4852941d8bc2b64e160f2bf77d14ec7f8b2f4f4"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/economic_slot_alignment.csv",
+      "bytes": 1528,
+      "sha256": "ad668847da71f809f7d600aa1adde05e331d4142ba4cca4180ee20eb0b4aeb3b"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/generation_issue_sensitivity.csv",
+      "bytes": 676,
+      "sha256": "0e248c4446058c20e1d45b255b5fb3ecf7faef79b82d7ae900b1d1b4469d6a13"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/housing_price_index_sgg.csv",
+      "bytes": 2206548,
+      "sha256": "2dbf8a93a444072839f961084854e1ddfaaacaeb8088db1fd131432013632563"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/housing_price_index_sido.csv",
+      "bytes": 137723,
+      "sha256": "4f492569ee08304da0eb4fa7c25ebed9c64fbc15cbcfd239743e7956d409d60a"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/housing_slot_alignment.csv",
+      "bytes": 1549,
+      "sha256": "6568dca2dd771c00557067bc95dff1ca72a4853410f4697c930eb3b856e02bcc"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv",
+      "bytes": 50293,
+      "sha256": "71ea948ff74b9df29c61eca6f297b5214915c3238dbe20a5445ba3388f82f758"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/issue_context_rules.csv",
+      "bytes": 1651,
+      "sha256": "a35e1bc8c5fdb4fd657a54aec60ad58dc0a0b2470b138a41402518da03bda7ec"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/issue_importance.csv",
+      "bytes": 769,
+      "sha256": "2b8233a1af23bed1f06aeaec6eff10ea5943023cdf62b959ae81a917beb71269"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/issue_keywords.csv",
+      "bytes": 6510,
+      "sha256": "769e5e6f4bf18b5a55bf393c280594734b5800099ed2b9d1d35b8aaf230242d1"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/issue_taxonomy.csv",
+      "bytes": 1948,
+      "sha256": "40775f75d9949e05493530e08e26937e6bf557ed8797dc5313748819c6bbb5d9"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/kospi_daily.csv",
+      "bytes": 1145815,
+      "sha256": "6e29dd0e95f4f96e81af8ebd1292f1f9c941df0a5ba48f87739407c3f249f1b9"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/mega_issue_terms.csv",
+      "bytes": 2579,
+      "sha256": "a7cde90492003bcaab8b687dc219aa44c8d71d44897ce38180bdd61d7b38bda6"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/presidential_results_standardized.csv",
+      "bytes": 33111,
+      "sha256": "0d4a63c2e997ce3c3a33db7958d9c5897fd713e4f49a06da6e8ecc5513b159f6"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/region_issue_sensitivity_curated.csv",
+      "bytes": 1669,
+      "sha256": "85359a82618f221dc091c78f3cf2fdf4f56f54b423847c157f022136a3cea0fe"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/regions_master.csv",
+      "bytes": 717,
+      "sha256": "f96e3ef478377ad7d6feba7c6a9fd9c88b025a1efc0272aa3a91cfb257433fc6"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/scored_contest_scope.csv",
+      "bytes": 248,
+      "sha256": "7fa38d46defe831939dec3b0cecee984cebc1e7d3d16800c4b57835b8d580a7b"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/README.md",
+      "bytes": 397,
+      "sha256": "22b5f24f2ef6db5ef285653e2963943b7648940aa24fc31f3709bdb572a5b7f1"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/bloc_history_results.README.md",
+      "bytes": 2283,
+      "sha256": "fd292e6f3388aad2ec034b6193cd24a215b464f69a098d9088bb2963764a1cb1"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/bloc_history_results.csv",
+      "bytes": 72,
+      "sha256": "fd1fb26d62de72749020ce6460acd74ec8d50e8c5e2512cddf25070f7b23fd91"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/candidate_issue_profile.csv",
+      "bytes": 188,
+      "sha256": "becd78fdc870d0ef610755c7f7fee8d851bf32f980db7cba725ba8984c4e157b"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/candidate_slots.csv",
+      "bytes": 260,
+      "sha256": "039098a20c57e35d388aee6d44a792abc2e3d54286840b5b1f23fab33a65aaac"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/issue_direction_terms.csv",
+      "bytes": 168,
+      "sha256": "3ea500be64a9a5a9f456ae32726cfa8d987b2569985501641ec37a9b842dc815"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/issue_events.csv",
+      "bytes": 671,
+      "sha256": "04c3aa58e2261ba5ccca9c4e0d585a8b6d1acb0a4af6d5a4f26a65bbe5794536"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/issue_scope_weights.csv",
+      "bytes": 83,
+      "sha256": "2d71abde27712ad329e18b6cb8fae89b172bd1785cb130dbd934eae2c19ea7f3"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/mega_issue_attribution.csv",
+      "bytes": 189,
+      "sha256": "f6855037e7170e54f98ffac1e66d11cb45a7f5baaf4ddcd86446f8a6f043dfe1"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/mega_issue_axis.csv",
+      "bytes": 219,
+      "sha256": "2e2325d222199715aa997fa867f6b161b4edf8bdd1732fcdfda7f18c05cdcd1b"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/polls.csv",
+      "bytes": 305,
+      "sha256": "a659065b42cc8c8c8d779770376f56b2dc1077381b07e5c52ba335b61da720d2"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/presidential_results_standardized.csv",
+      "bytes": 376,
+      "sha256": "9f04a434ec3e629f233c1bd4a1e11e5a31f7ecfa738b4cda2b08cd7de52349b9"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/templates/region_issue_sensitivity.csv",
+      "bytes": 148,
+      "sha256": "66958bc6635a29b48cde6f348d7a804151ab991f8da7c79c2b6c7d184baeb0f3"
+    },
+    {
+      "path": "presidential_issue_engine/import_nec_vote_api_history.py",
+      "bytes": 13408,
+      "sha256": "367d7ea48862f94c52c66a98d348afc56839a46d425976f94aa19ab0e33eac25"
+    },
+    {
+      "path": "presidential_issue_engine/import_official_assembly_pr_history.py",
+      "bytes": 8712,
+      "sha256": "d56ce70badbc7488272b8426a29ac0d4a0026b445d2345c20ba4e99c1f64ae47"
+    },
+    {
+      "path": "presidential_issue_engine/issue_vote_engine.py",
+      "bytes": 254144,
+      "sha256": "17913321f4d2205e08f511f876bce3de03c4b0dc8e924b2324518b1e6032e196"
+    },
+    {
+      "path": "presidential_issue_engine/make_poster_figures.py",
+      "bytes": 9128,
+      "sha256": "1f0511c5f46dc2a49a2b4a9958c990ad945893999e36f68dba38fc6bb06d938b"
+    },
+    {
+      "path": "presidential_issue_engine/notebooks/.gitkeep",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "presidential_issue_engine/point_in_time.py",
+      "bytes": 4698,
+      "sha256": "55ecd775cba570549134c5e4c021c6b3a22f59e9040271a892139df7a9385819"
+    },
+    {
+      "path": "presidential_issue_engine/region_bloc_prior.py",
+      "bytes": 17296,
+      "sha256": "c543da9bedf8792a70df3246a9095fdc41576dfec4ebf26d2dff57f247ce8c23"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/nested_outer_results.csv",
+      "bytes": 1104,
+      "sha256": "6f7c5746142836c1ba9636265c8b1f561f875f9c62712abc062222f9bd2884c6"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/overlay_variants/overlay_gain_0.080.csv",
+      "bytes": 131978,
+      "sha256": "87ee9a9be5fff4a7ae54c9de76a1a76b7a14ec2b97e1b043244141038bed6a42"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/overlay_variants/overlay_gain_0.120.csv",
+      "bytes": 132020,
+      "sha256": "9aca3cab108106ac5b5a38e7edd24336e90189985e2d498cc2d3df499346aa7e"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/overlay_variants/overlay_gain_0.160.csv",
+      "bytes": 131950,
+      "sha256": "db2ca020a554d579283d4de4eb350b67d0bcda31c9a77aaaf8f403e9b902581a"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/overlay_variants/overlay_gain_0.240.csv",
+      "bytes": 132058,
+      "sha256": "52ca94f13c357d6245c889cd87f3304a1f086e471c6ae97b6f4a65f66082b8e7"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/overlay_variants/overlay_gain_0.320.csv",
+      "bytes": 132037,
+      "sha256": "5611da78b99837f97448189056e01b7b903875e99509498f55b97e53ea798572"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/selection_trace.csv",
+      "bytes": 51817,
+      "sha256": "6580e8fc917babd12b57d154149c190ff8d6fdffe2f903b1f4a9eb73bb9da0fe"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/summary.json",
+      "bytes": 8026,
+      "sha256": "178cc85262d9964f49a33d341ec9e040af39754939f8d874efd24075d0c207f4"
+    },
+    {
+      "path": "presidential_issue_engine/report/through2022_rederived/within_bloc_transfer_experiment.csv",
+      "bytes": 2840,
+      "sha256": "0888760159aaede30a1f2b74ba054988a5faf612d640704a5dbed825761ae0c2"
+    },
+    {
+      "path": "presidential_issue_engine/robustness_check.py",
+      "bytes": 16481,
+      "sha256": "9508e53367fead9b8b9ab8326e00a52f30ca86eb3fed64daa50da83348da5b80"
+    },
+    {
+      "path": "presidential_issue_engine/simple_feature_analysis.py",
+      "bytes": 13387,
+      "sha256": "a16063fc24f8a94f82954dd5d2988a20671072dc6502ecbcc5024f8f2e654528"
+    },
+    {
+      "path": "presidential_issue_engine/speech_landscape_builder.py",
+      "bytes": 8607,
+      "sha256": "bbed3f14362a83d22b24af5355b82468dd72f05e1620d57f9c1db0c66141d810"
+    },
+    {
+      "path": "presidential_issue_engine/theme_decomposition.py",
+      "bytes": 4006,
+      "sha256": "bdaa4292e8553331c2c315c08df48d3f3b4f5520f92660391dfdec92011acda2"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 968,
+      "sha256": "586bf69f54e1c7a1b5090c156f4e0b1584da8e5df0622eef2c5960e057a7d286"
+    },
+    {
+      "path": "scripts/analyze_housing_by_regime.py",
+      "bytes": 5590,
+      "sha256": "f8e19778a7b84ec32c1248bd01b370e8b27eaf02228e3d5b1f36237c0ad329c4"
+    },
+    {
+      "path": "scripts/apply_stance_classifier_v3_5000.py",
+      "bytes": 13041,
+      "sha256": "2bce5890b1dc9a8898a1cb6c236bcd5e9b74de3b3a2a123bfba026d7504a4900"
+    },
+    {
+      "path": "scripts/apply_stance_context_intensity_5000.py",
+      "bytes": 5245,
+      "sha256": "b7ec1d0c26c13cdd1e32aadb7f94087403ca7da88a8cdb8e06dd970941d9f013"
+    },
+    {
+      "path": "scripts/apply_stance_context_model_5000.py",
+      "bytes": 3093,
+      "sha256": "409683b8ae411b079a3d90c095193fe9d239b7e9d72d41370409a2b973a1af61"
+    },
+    {
+      "path": "scripts/apply_stance_text_model.py",
+      "bytes": 6334,
+      "sha256": "324c1a03fd07909bc8c4295c33b5c38fee7cf76d4a9a4dd49e464c7fda099c0a"
+    },
+    {
+      "path": "scripts/assembly_bloc_issue_posture.py",
+      "bytes": 9433,
+      "sha256": "fbc1768308191c92d7d53205c937066a23c91efa4fee01f0c27f7fa08947cd8a"
+    },
+    {
+      "path": "scripts/audit_stance_classifier_weaknesses.py",
+      "bytes": 14991,
+      "sha256": "4f4d0c9ae4721b093f370a6735c75da0a63cf1cdd6647eb9aaad9b2820cb7b6a"
+    },
+    {
+      "path": "scripts/audit_stance_metadata_dependence.py",
+      "bytes": 15298,
+      "sha256": "373156b84cda79d3478550bdc02d82fc1ce1ebb2a441e3588adfcf2855593365"
+    },
+    {
+      "path": "scripts/build_15th_assembly_workbook.mjs",
+      "bytes": 4876,
+      "sha256": "ecef6b99e4b5eb296def3c49ceab73c01a108a2c0261a3bc3cd576406e410978"
+    },
+    {
+      "path": "scripts/build_15th_candidate_legacy_landscape.py",
+      "bytes": 5132,
+      "sha256": "aec6867c59493f9a24dd829ccc92ec1f7cb0e4a7886bf85fc25a4d25bce7a233"
+    },
+    {
+      "path": "scripts/build_15th_issue_phrase_workbook.mjs",
+      "bytes": 4442,
+      "sha256": "d14c0f694f723458fc385ae3f363d77d0816223be10d9b3f4d6ea7476917f5b5"
+    },
+    {
+      "path": "scripts/build_15th_long_term_landscape.py",
+      "bytes": 8201,
+      "sha256": "b3a8601a8abe332c381ce3bfb65a63126323e8c887e9c8887f2301726cdf36b3"
+    },
+    {
+      "path": "scripts/build_assembly_stance_pilot.py",
+      "bytes": 11143,
+      "sha256": "dd085f6930a5dc5fef0355da4263b102c5247b88ef367733f6a2d5a0e12e20a6"
+    },
+    {
+      "path": "scripts/build_candidate_party_speech_context.py",
+      "bytes": 8304,
+      "sha256": "be9679b7a0880ae3a8872ca894f7993d7ef50d61e41609fa38730cc1075ccb0b"
+    },
+    {
+      "path": "scripts/build_candidate_party_tone_gap.py",
+      "bytes": 17081,
+      "sha256": "da50164cdfbaff93514adf2c1c40460b31cc01521ad5c2ecd8fa9450c32a2839"
+    },
+    {
+      "path": "scripts/build_candidate_public_treatment.py",
+      "bytes": 14000,
+      "sha256": "7b16d7271581454f19369144ee7c85e92aee5ea2fac4211b6e7c794986812aeb"
+    },
+    {
+      "path": "scripts/build_party_issue_all.py",
+      "bytes": 3657,
+      "sha256": "9c09d595c9c5d5fd0f82c1027cd68e35958942136916dc228c6e2070a2008800"
+    },
+    {
+      "path": "scripts/build_pre2025_baseline_manifest.py",
+      "bytes": 2195,
+      "sha256": "00ee862fd8a65380f3eb27ce1341d5de1bfd430e9704295442b9c055ba9ef503"
+    },
+    {
+      "path": "scripts/build_stance_context_5000.py",
+      "bytes": 6525,
+      "sha256": "492bc6f575d61b4fa9941617401d5a69888905c5dbb37df52a93f30d0419e03f"
+    },
+    {
+      "path": "scripts/build_stance_gold_context.py",
+      "bytes": 5244,
+      "sha256": "03182ccf7caa4e9c7042b9788aba65f1daac327ddda788c2e6a79a5ab0bab2d0"
+    },
+    {
+      "path": "scripts/build_target_aware_annotation_500.py",
+      "bytes": 8060,
+      "sha256": "9289b5005f16a4903a83721a46e496a91df9d02128e0b240e50ce3951b8809e9"
+    },
+    {
+      "path": "scripts/build_through2022_automatic_issue_seeds.py",
+      "bytes": 11461,
+      "sha256": "de94dc5c615a345743226d8ff2d1ce94e5936b17ed8a36fe79efbb081cc4f9fc"
+    },
+    {
+      "path": "scripts/build_through2022_rederived_manifest.py",
+      "bytes": 156,
+      "sha256": "cc918c81c6862db74985f095979f2fa3f70dfa9450e213266a719974c18bb20e"
+    },
+    {
+      "path": "scripts/enforce_pre2025_asof.py",
+      "bytes": 4388,
+      "sha256": "e5eed971323ff5ec6ea6758910a5dc4e65f113e28d21a11faf868db1f3dee876"
+    },
+    {
+      "path": "scripts/evaluate_bloc_history_forecast.py",
+      "bytes": 7463,
+      "sha256": "259ef975842db398986d88fbd886570279546665807914840e57bee206845ea1"
+    },
+    {
+      "path": "scripts/evaluate_neutral_context_full_corpus.py",
+      "bytes": 7822,
+      "sha256": "9857fb7df29aa2652ac73efc8401a0e49d96a0943d7b72f217f68d8961bc11b6"
+    },
+    {
+      "path": "scripts/evaluate_neutral_context_protocols.py",
+      "bytes": 14124,
+      "sha256": "97899c97ad8410a9223241bb65adf2e7036a77567f8184e26287891ea781288d"
+    },
+    {
+      "path": "scripts/evaluate_party_history_forecast.py",
+      "bytes": 10389,
+      "sha256": "98283c5fde0732d1d3b2709a3c9329b948f92d256fa3d43a1f18603659567fd6"
+    },
+    {
+      "path": "scripts/evaluate_raw_stance_shadow.py",
+      "bytes": 10543,
+      "sha256": "d78f7366c4440f17c8d94aa314756a39ed8079610d82d56ed96ae76201c37374"
+    },
+    {
+      "path": "scripts/evaluate_stance_context_5000_protocols.py",
+      "bytes": 4910,
+      "sha256": "0066dc810d4d40b7be0f7ee2c7b9e038004099bdfee360990f6be7748da3aa79"
+    },
+    {
+      "path": "scripts/evaluate_stance_context_hard_labels_5000.py",
+      "bytes": 7126,
+      "sha256": "a06c5700b53b3d8ced183366acb7ec7793226539449bfb06693239eff3c1e1b6"
+    },
+    {
+      "path": "scripts/evaluate_stance_context_intensity_5000.py",
+      "bytes": 17173,
+      "sha256": "d6b92011277d9712b401c11755c06a5134933a099cc1ab0547a247a1b5000d29"
+    },
+    {
+      "path": "scripts/evaluate_stance_pilot_3000_sensitivity.py",
+      "bytes": 48020,
+      "sha256": "eda2f6e4e0846075303c575e285e628ca6ec2aea68be33f41dac3dcfaf4d7fe1"
+    },
+    {
+      "path": "scripts/evaluate_stance_pilot_cross_election.py",
+      "bytes": 16546,
+      "sha256": "e19daa280f951d42537821128b9b46bf3f3aaf7c5a53ecffab38a8cbc2a40cea"
+    },
+    {
+      "path": "scripts/evaluate_stance_target_aware_v2_5000.py",
+      "bytes": 10803,
+      "sha256": "af67fcb801cf5fadf68a4d9eb33144bc62a49429b3f20f1c696e7878ac827adc"
+    },
+    {
+      "path": "scripts/evaluate_stance_text_model_protocols.py",
+      "bytes": 2616,
+      "sha256": "0390adcba42d125fcd117be0cd589b7e87940d6f7437e822069782acc9cf60c4"
+    },
+    {
+      "path": "scripts/evaluate_stance_v3_issue_overlay.py",
+      "bytes": 8433,
+      "sha256": "b845ad7992e571c7aaecd1bb57df0750c7633b5498aa7656d2098fe8c9543cf4"
+    },
+    {
+      "path": "scripts/extract_15th_assembly_sources.py",
+      "bytes": 9089,
+      "sha256": "c5078b9a2e8abfa867d88561ae9f18c5078998e746f039a879388b8b2314899c"
+    },
+    {
+      "path": "scripts/extract_assembly_speaker_issue_matches.py",
+      "bytes": 15955,
+      "sha256": "0b0196fbf79f97807b48c6c7de17b7fc808ab65edf808a7bb760fdfca066b8a7"
+    },
+    {
+      "path": "scripts/extract_assembly_stance_rows.py",
+      "bytes": 25990,
+      "sha256": "9672140c0593269696ffe0f33ba0d35432dce1c9906dae1837991d4664df6723"
+    },
+    {
+      "path": "scripts/fetch_bok_base_rate.py",
+      "bytes": 4575,
+      "sha256": "7cb5605515c8a9cf3e44ffe5d01329d3b89fdc88e03b3ebce669fd9c5a3fc79b"
+    },
+    {
+      "path": "scripts/import_housing_price_index.py",
+      "bytes": 5733,
+      "sha256": "27994f71888935cf8eab5a961df248c19e04130ac37a49531e53ddf7a5b383ce"
+    },
+    {
+      "path": "scripts/import_kospi_history.py",
+      "bytes": 3892,
+      "sha256": "34756d1384194e6f7d6babdbcf1db46fc3c601b8f87507371d4ecc1d406ea98c"
+    },
+    {
+      "path": "scripts/migrate_strict_point_in_time.py",
+      "bytes": 5484,
+      "sha256": "594c01fb68052b14cf64a2e990599c69cebc85532c5401cd2878646365817208"
+    },
+    {
+      "path": "scripts/process_15th_assembly_issue_phrases.py",
+      "bytes": 10911,
+      "sha256": "07bf1d76b533574d26470500decf09778a52c22d4312c128bf8d45135f6fc79e"
+    },
+    {
+      "path": "scripts/rederive_layers_through2022.py",
+      "bytes": 25896,
+      "sha256": "93e5628d1208e660a6f47562f01a4f3b5cc10e3401c2c67b935015f61a67c043"
+    },
+    {
+      "path": "scripts/reprocess_2022.py",
+      "bytes": 2114,
+      "sha256": "792d8aecbe21ce7a3c6b5b755598e3639d54ba8d412b9ba38533ce504ae52c48"
+    },
+    {
+      "path": "scripts/reprocess_assembly_issues_long.py",
+      "bytes": 13895,
+      "sha256": "a141a61ebea7634e0459e07ddfcf6f1d990a25bb8e1183d609fdc089f14f021f"
+    },
+    {
+      "path": "scripts/reprocess_party_2022.py",
+      "bytes": 3612,
+      "sha256": "5792d134d14e7d2035571aab59d003c718e6edcf0633bb478aed535b5a825c1b"
+    },
+    {
+      "path": "scripts/run_assembly_stance_resumable.ps1",
+      "bytes": 1244,
+      "sha256": "0fb68e45aedd13a5b6992ff10f3a2cb9d1b22b68dc4f8804173090003ed24b15"
+    },
+    {
+      "path": "scripts/sanitize_pre2025_workspace.py",
+      "bytes": 2741,
+      "sha256": "fd3b507e108970e876fd76ff61db7799ba7343e048888003633a54d38c78cb23"
+    },
+    {
+      "path": "scripts/train_stance_classifier_v3.py",
+      "bytes": 12774,
+      "sha256": "69dba6af02103ad5e10273eccf6d2e3b84ce2307da8f80daf972346a95c0bbca"
+    },
+    {
+      "path": "scripts/train_stance_context_model_5000.py",
+      "bytes": 13226,
+      "sha256": "f1361901c149f974cdb0f2bd1332ce9de44cfe2f4ca0092b1d810012179644e1"
+    },
+    {
+      "path": "scripts/train_stance_text_model.py",
+      "bytes": 9589,
+      "sha256": "af186783a5990750fad8bbd22cbfcc1377114a2d46c960cea575cce934b0d807"
+    },
+    {
+      "path": "src/election_forecast.egg-info/PKG-INFO",
+      "bytes": 6505,
+      "sha256": "136814d27baa65e8e324fa2726b1e603108a561304b3e674239ba0e1b27d31a1"
+    },
+    {
+      "path": "src/election_forecast.egg-info/SOURCES.txt",
+      "bytes": 2438,
+      "sha256": "1ba2e6fd5fb72cbda7210a2da6bb1cb96af581b3bfede848541b86a71b090716"
+    },
+    {
+      "path": "src/election_forecast.egg-info/dependency_links.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "src/election_forecast.egg-info/entry_points.txt",
+      "bytes": 145,
+      "sha256": "d00897b1bbd6e53b5860c00def736de91d3bc4b95b785c572833a794417451d2"
+    },
+    {
+      "path": "src/election_forecast.egg-info/requires.txt",
+      "bytes": 209,
+      "sha256": "e2cdfedd21350b8a5d50d02356e4bfbce3f3bcd4de373d73560c6863f6c5d65e"
+    },
+    {
+      "path": "src/election_forecast.egg-info/top_level.txt",
+      "bytes": 47,
+      "sha256": "11ea8c4e642780afce122ed44e685123314d218a34800ddbead16d07a3f92489"
+    },
+    {
+      "path": "src/election_forecast/__init__.py",
+      "bytes": 110,
+      "sha256": "6e71ad4d90353d7ab54eba9e88da6bea63da3b81876a25c9f9849e94e8691c46"
+    },
+    {
+      "path": "src/election_forecast/backtest.py",
+      "bytes": 2268,
+      "sha256": "ed497494e6a2d7ea00fb923cddb8714ff203d3e28f5b1e414103f0f0645e9920"
+    },
+    {
+      "path": "src/election_forecast/candidate_score.py",
+      "bytes": 1175,
+      "sha256": "92b26784ee42d1d6472957629c8c7af53bc2c5092870748a639f4f7d8d210d0a"
+    },
+    {
+      "path": "src/election_forecast/cli.py",
+      "bytes": 12297,
+      "sha256": "b1ee1b8c461320d912c58bea8898cb216cd146cbcfccb0e7ad31b7ba8dee5cd0"
+    },
+    {
+      "path": "src/election_forecast/config.py",
+      "bytes": 2733,
+      "sha256": "38df82fce1d93f4d41b2bf3e0d1647697989c84640a14c88303beb45cf243088"
+    },
+    {
+      "path": "src/election_forecast/data_sources/README.md",
+      "bytes": 678,
+      "sha256": "46ee6322057776f0010bbb4214bbde8a2188a81db1214721151d6aaa6800a8c7"
+    },
+    {
+      "path": "src/election_forecast/data_sources/__init__.py",
+      "bytes": 74,
+      "sha256": "f6f4f6ed918657a71639e5b56b777759e3162a078ea2e29f462b228c95317414"
+    },
+    {
+      "path": "src/election_forecast/enhanced_issue_audit.py",
+      "bytes": 8196,
+      "sha256": "209d20b31adde2604e6b4b478c4920bcce34f252b71170585f7582f17b9f4c88"
+    },
+    {
+      "path": "src/election_forecast/enhanced_issues.py",
+      "bytes": 9291,
+      "sha256": "61517f91feee91a8f3cabf9f0749f6cdffc76a9fa8500cbe60121a2081ddaa96"
+    },
+    {
+      "path": "src/election_forecast/ensemble.py",
+      "bytes": 4143,
+      "sha256": "27754b96a57f2e7193ba9db96683317b3f8d233996cb540c563542c15ec80a31"
+    },
+    {
+      "path": "src/election_forecast/event_effects.py",
+      "bytes": 2911,
+      "sha256": "8cec340ec07ce159a291711f2690a874b7adcfd65b961cf83e0b06b5e3d10d85"
+    },
+    {
+      "path": "src/election_forecast/features/README.md",
+      "bytes": 1439,
+      "sha256": "366a5d15eed29e0836d50a9075b1c6943b336aaaa25f7f0a63cdda63f4d069a6"
+    },
+    {
+      "path": "src/election_forecast/features/__init__.py",
+      "bytes": 48,
+      "sha256": "6324f7eb4291742557fa1cfcee2054e1b2c06909a7cc2a0560a74d4ce083910e"
+    },
+    {
+      "path": "src/election_forecast/features/issue_matcher.py",
+      "bytes": 12344,
+      "sha256": "55801ddb6b19eee016b38d4fec43027aea9e5df3c53070fcac4f7a78db7cac5d"
+    },
+    {
+      "path": "src/election_forecast/features/region_bloc_prior.py",
+      "bytes": 9802,
+      "sha256": "b5c6dee54fca79607f074b9f4a122b8da8cc36d737724eaa5335530b4dd1cf67"
+    },
+    {
+      "path": "src/election_forecast/filters.py",
+      "bytes": 1190,
+      "sha256": "e038a35b79c452c589471f09b40ed264bf632437310c3e3308f3325e6762f477"
+    },
+    {
+      "path": "src/election_forecast/issue_score.py",
+      "bytes": 4633,
+      "sha256": "70d42913b01ec70bc05fc49cef7e3308489abba09200b0586520fc959ac86b37"
+    },
+    {
+      "path": "src/election_forecast/load_data.py",
+      "bytes": 3501,
+      "sha256": "4eaff291efbbbbb32a6acbc68910171a471d2466bf282ebbade53cd743ec9cff"
+    },
+    {
+      "path": "src/election_forecast/local_fit.py",
+      "bytes": 1177,
+      "sha256": "ae52ce2f5e65ab5f41f54658bc9783f2e979f0c16ff4f5ab25a4bb1665e7695d"
+    },
+    {
+      "path": "src/election_forecast/models/README.md",
+      "bytes": 530,
+      "sha256": "00d4cf535cb333e757bd6d3999ae0ff396ed1aa7f49e488eff05a652169b399d"
+    },
+    {
+      "path": "src/election_forecast/models/__init__.py",
+      "bytes": 38,
+      "sha256": "964f3f21aef835c7c6866e74aeb2e48246816d7084a0f2607abab4ff24709e1f"
+    },
+    {
+      "path": "src/election_forecast/party_base.py",
+      "bytes": 6131,
+      "sha256": "e3a07c205669ce744adedb6b1d700dbd254f732a2d4c0ca7e98f91f2a93eedb4"
+    },
+    {
+      "path": "src/election_forecast/poll_score.py",
+      "bytes": 1837,
+      "sha256": "a393d4e28810b2f1dc431825660008afd50d7ae315dad2353027986d41a170c6"
+    },
+    {
+      "path": "src/election_forecast/presidential/__init__.py",
+      "bytes": 58,
+      "sha256": "27737af23227548a4a1700fe8a444e88abf9fc4c1e5bf5f832187974c701065c"
+    },
+    {
+      "path": "src/election_forecast/presidential/evaluate.py",
+      "bytes": 5810,
+      "sha256": "1dad8c1910faefb26d4a8762d79afd4638232e2a0841eb30ba51c530c6815acb"
+    },
+    {
+      "path": "src/election_forecast/presidential/feature_builder.py",
+      "bytes": 4681,
+      "sha256": "851dd217127633a5800d250d81f90d31c287a38e204ba4c80b7b74e7d9086431"
+    },
+    {
+      "path": "src/election_forecast/presidential/load_data.py",
+      "bytes": 1328,
+      "sha256": "afaee3f9a7aa077bff4d809d790061df5d31fa61d0f1d0cd63b7aa6df9b2f16e"
+    },
+    {
+      "path": "src/election_forecast/presidential/monte_carlo.py",
+      "bytes": 6107,
+      "sha256": "abb4bd6d51be69f3281a1a20d48f244c665aaf2b63f98fa1e418e1290ce0bfbb"
+    },
+    {
+      "path": "src/election_forecast/presidential/schemas.py",
+      "bytes": 8066,
+      "sha256": "a92447de88c3f770b031672049f495be0264aa0544814a6ba3cb93589be228ce"
+    },
+    {
+      "path": "src/election_forecast/presidential/standardize_results.py",
+      "bytes": 4329,
+      "sha256": "2904e4808285de864a3debacfa2dcc4cca2c06702cbf4137bfd1a563a8597cac"
+    },
+    {
+      "path": "src/election_forecast/presidential/transfer.py",
+      "bytes": 5681,
+      "sha256": "39f91221b98c784010715de58d7e4f424451bbe325357f78e016ae91b1000b83"
+    },
+    {
+      "path": "src/election_forecast/presidential/utility_model.py",
+      "bytes": 3559,
+      "sha256": "07a927db7af6ebf67aca2032bc8b2fc134cb252c10ea999aa09f7600905df237"
+    },
+    {
+      "path": "src/election_forecast/presidential/validate_presidential.py",
+      "bytes": 952,
+      "sha256": "615afff41414b12d03c26d2f60800b079087bdbae60dc20654588df017f9ba2d"
+    },
+    {
+      "path": "src/election_forecast/presidential/variables.py",
+      "bytes": 1438,
+      "sha256": "5e0217541762d581c2f09864012734ae23537567b838f875cb93b60cc0e0c2e6"
+    },
+    {
+      "path": "src/election_forecast/presidential/vote_share.py",
+      "bytes": 1294,
+      "sha256": "c95aeeab767ac25df337744762658fccfee05a24c8f6c0fb68da8926a65b97d6"
+    },
+    {
+      "path": "src/election_forecast/schemas.py",
+      "bytes": 8159,
+      "sha256": "cf7a4312f21826b657e6e542cc445ce74a47d0d4f4355699c94c4984ff3d5a4d"
+    },
+    {
+      "path": "src/election_forecast/stance_context_model.py",
+      "bytes": 4658,
+      "sha256": "9186b185a3f9b193ffff850ebb15f8d8497cf704fc77e3c82f610f10969bcec0"
+    },
+    {
+      "path": "src/election_forecast/stance_intensity.py",
+      "bytes": 5843,
+      "sha256": "cc1096d33230d0d3c9ea85b8b1d36d8e960f938dfa332e02a67e101ae6e5dbf5"
+    },
+    {
+      "path": "src/election_forecast/stance_target_policy.py",
+      "bytes": 3911,
+      "sha256": "42103e6f9c0845c881b1f46b0142c2e7d94a9ae5b116d27ae2f6fe19edef43ab"
+    },
+    {
+      "path": "src/election_forecast/stance_text_model.py",
+      "bytes": 6924,
+      "sha256": "8bc66a1368780e7fe0bab1a307de1a6baf5e9d8a5ef6d3112051d0cff35060cd"
+    },
+    {
+      "path": "src/election_forecast/stance_v3.py",
+      "bytes": 7508,
+      "sha256": "e4bdba2e36be75a2212dc98218ce8a4392fb8c44f089e4e8fcbb0a524e77118c"
+    },
+    {
+      "path": "src/election_forecast/utility.py",
+      "bytes": 12495,
+      "sha256": "e8f28beba15a226d1a631c1d53e491efb8593d297fe69ae7a2ca04a4e75b48ec"
+    },
+    {
+      "path": "src/election_forecast/validation/README.md",
+      "bytes": 550,
+      "sha256": "dedab501b609951ef7c714c552aa10033a6c00bf1d3ac791a0991dc43f9e4e9d"
+    },
+    {
+      "path": "src/election_forecast/validation/__init__.py",
+      "bytes": 58,
+      "sha256": "675e3619c2577fb21b8323acc1b4c8d7944ff4c37f323171130442846ab4dec8"
+    },
+    {
+      "path": "src/election_forecast/vote_share.py",
+      "bytes": 2101,
+      "sha256": "9cb06adf7e0429b0061cfa5675f40093bb8c3bf80fd23ef1fcdfbbb83ff07c2f"
+    },
+    {
+      "path": "src/news_analyzer/__init__.py",
+      "bytes": 73,
+      "sha256": "f9ccfb73c0b088299aa803cfaa33d72b1fd03729f5b9a362c3d0c301ab88e2f3"
+    },
+    {
+      "path": "src/news_analyzer/aggregate.py",
+      "bytes": 5286,
+      "sha256": "d58c60fa7cd6da2fe01cf857916202c8bd7cd927fa3b85a46af42762f2ad3037"
+    },
+    {
+      "path": "src/news_analyzer/analyze.py",
+      "bytes": 4585,
+      "sha256": "36adb2d198b78d3f5878476480123d4f192c321dfec903bb5be0b47aa87cd002"
+    },
+    {
+      "path": "src/news_analyzer/batch_analyze.py",
+      "bytes": 146,
+      "sha256": "636462347cd90766b1a6d5072a68ba8db37b147d90f159da337ff1533a90402c"
+    },
+    {
+      "path": "src/news_analyzer/clean.py",
+      "bytes": 751,
+      "sha256": "185558b15258e33687bd46291ff3e97c4a642f60201ce7b5fe69569736329893"
+    },
+    {
+      "path": "src/news_analyzer/cli.py",
+      "bytes": 5581,
+      "sha256": "79b34060a813b8e0e5061fda8c77d2a3de53b54916a4dfa61b7e4aab581efb1f"
+    },
+    {
+      "path": "src/news_analyzer/collect.py",
+      "bytes": 5516,
+      "sha256": "76d9432efac5f3d52c3a0f7dac32e42691f75be43887f5691cabbd17138e15bb"
+    },
+    {
+      "path": "src/news_analyzer/config.py",
+      "bytes": 1300,
+      "sha256": "b5c42a1d190b324bbcf933078693cc2d586137d7413469c953be0d4c5dae5abe"
+    },
+    {
+      "path": "src/news_analyzer/dedupe.py",
+      "bytes": 4224,
+      "sha256": "0273f2c95c7a4b8a297e7964ece7bcf8f508bcd98cdf165f19efce4d2318ae2c"
+    },
+    {
+      "path": "src/news_analyzer/export.py",
+      "bytes": 1458,
+      "sha256": "91e2e8e77de3abde869d1145f86148db8344e35594acc6c7347239e1b8446bad"
+    },
+    {
+      "path": "src/news_analyzer/prompts/article_analysis_prompt.txt",
+      "bytes": 1463,
+      "sha256": "40e2d103ced9146f55d972393a169765c2e566ed3b1cabab94d979eeda3b5330"
+    },
+    {
+      "path": "src/news_analyzer/salience.py",
+      "bytes": 8063,
+      "sha256": "88d7dade1217883ab797cf0025c43540c410a61bf1809af5123e3f7f88139fa8"
+    },
+    {
+      "path": "src/news_analyzer/schemas.py",
+      "bytes": 3853,
+      "sha256": "ea8571ca4088a8ae57ae0ee7d129e99d4a0258d5a3603346c1b4c24fcb2a5af8"
+    },
+    {
+      "path": "src/news_analyzer/sources/__init__.py",
+      "bytes": 25,
+      "sha256": "17a218be64da586f1ec42a4c34a1829a7cfd04f1152f8335b56755ca2fda1e7f"
+    },
+    {
+      "path": "src/news_analyzer/sources/base.py",
+      "bytes": 265,
+      "sha256": "39d6f8b639624ea1d4de29a1e6331ebcb792643de4ce8f7137d2c7b3b12b9d4e"
+    },
+    {
+      "path": "src/news_analyzer/sources/gdelt.py",
+      "bytes": 792,
+      "sha256": "87282a7b61e8ace3e255b1f9e23ea4ff9d5bfcc3fc90b00bfeec8ab18770b5d0"
+    },
+    {
+      "path": "src/news_analyzer/sources/local_files.py",
+      "bytes": 162,
+      "sha256": "deaa28d1d6d3ce66f3cea97cb4a531acfbc03ab6aafbd48cef08a8f80ea7fd09"
+    },
+    {
+      "path": "src/news_analyzer/sources/naver_news.py",
+      "bytes": 3446,
+      "sha256": "0ec20035cfa268de6ac9899103303877bbf80564d35688b77980cac5b46ddc6c"
+    },
+    {
+      "path": "src/news_analyzer/sources/rss.py",
+      "bytes": 1732,
+      "sha256": "6c1daab29c86430b2642581bd6d8e98e726776bec638a978143e85d6362908e6"
+    },
+    {
+      "path": "src/news_analyzer/validate.py",
+      "bytes": 387,
+      "sha256": "361ae87e6c62574ee06119f143e19b56df3136746ca65bd1b097da2cd8ed57a9"
+    },
+    {
+      "path": "src/news_collector/__init__.py",
+      "bytes": 144,
+      "sha256": "b827050aefe89819fb8a6f0feb634134ab6132a02b551d41ac6543fd7a535215"
+    },
+    {
+      "path": "src/news_collector/checkpoint.py",
+      "bytes": 4201,
+      "sha256": "df9d26ee6454ffc5597334d41b2b1ea7267481be36b554969b3fc1d8ed46aff2"
+    },
+    {
+      "path": "src/news_collector/cli.py",
+      "bytes": 10632,
+      "sha256": "1b6b1b7c57b9ca083ccc79afa6a6b8546da784db3294ccd6f81b07b97d87bcff"
+    },
+    {
+      "path": "src/news_collector/collect.py",
+      "bytes": 370,
+      "sha256": "9fa0b728d11349f749cfd692c45d05f6acab3b5b72a3baebfe1b26bb61d5086f"
+    },
+    {
+      "path": "src/news_collector/config.py",
+      "bytes": 2068,
+      "sha256": "fadc4e35805981a0a106d25606cd51fdae339c644bb8e0c22cdfad9fa41873bf"
+    },
+    {
+      "path": "src/news_collector/dedupe.py",
+      "bytes": 8050,
+      "sha256": "aae5773c398ae10ab8990da9257bb5f10fa17173d26f885ac97258c419377432"
+    },
+    {
+      "path": "src/news_collector/export_manifest.py",
+      "bytes": 4629,
+      "sha256": "3066dd638ac4414805347e3cda9016e934286e60b7a7c140880389a84e33ccf8"
+    },
+    {
+      "path": "src/news_collector/query_plan.py",
+      "bytes": 6566,
+      "sha256": "bcb39de1f8ec6e0573b580b71458a05c4c6cdf4af2d89720e6b40aad07159913"
+    },
+    {
+      "path": "src/news_collector/schemas.py",
+      "bytes": 3282,
+      "sha256": "50d4169a6c3b5ee32447b64118de258347799c3052ba0db84807020496816074"
+    },
+    {
+      "path": "src/news_collector/source_archive_collector.py",
+      "bytes": 8211,
+      "sha256": "645869b43062a33fc13a37dce09359818868821a69067a85289021421c3371dd"
+    },
+    {
+      "path": "src/news_collector/source_archive_parser.py",
+      "bytes": 2446,
+      "sha256": "776d61efb03252c4cccdcc6027b48431fd27fda71c0c759e2da00797188b5084"
+    },
+    {
+      "path": "src/news_collector/source_archive_plan.py",
+      "bytes": 3361,
+      "sha256": "e207104e30ee772e678584ced3c634f18a32a9d8d315ac6e4536fe09f1a75e67"
+    },
+    {
+      "path": "src/news_collector/sources/__init__.py",
+      "bytes": 41,
+      "sha256": "e7d6630393581c2a09b7d32d93f4fc96d473df615bfbe82f84fe1b425d6258d8"
+    },
+    {
+      "path": "src/news_collector/sources/assembly_batch.py",
+      "bytes": 8184,
+      "sha256": "0bfb66358418e230122e8a0302c7877bfbfb6f4e785f79da852431052e631ed3"
+    },
+    {
+      "path": "src/news_collector/sources/assembly_records.py",
+      "bytes": 5063,
+      "sha256": "bf6a8bb7b5e29f3ba17063b4076c808f49fed49a08b5942059efb84b02f7d0b0"
+    },
+    {
+      "path": "src/news_collector/sources/base.py",
+      "bytes": 684,
+      "sha256": "badf4af9fea6064f099ab28147c9279f2edb8874cb53fd1572ffd24cf1567655"
+    },
+    {
+      "path": "src/news_collector/sources/bigkinds_metadata.py",
+      "bytes": 5369,
+      "sha256": "ad12c28951fb0c1678ed6836e840b74dfefdf1ec28fc7194dd54e7304afda39d"
+    },
+    {
+      "path": "src/news_collector/sources/bigkinds_salience.py",
+      "bytes": 2596,
+      "sha256": "4537c80b63c867dd0aad6218aaff6166eab962d7421bac9859846fabe19e0afe"
+    },
+    {
+      "path": "src/news_collector/sources/contextual_issue_weights.py",
+      "bytes": 6053,
+      "sha256": "30eb3f333a58603601c7d9a03e328d008357a582f8be84fb8b0ea6f21d2626f3"
+    },
+    {
+      "path": "src/news_collector/sources/datalab.py",
+      "bytes": 7980,
+      "sha256": "54b48af577161ebd63fdf2adcdcefccf697bcc84f1ed931fc81b5d2f2fb14365"
+    },
+    {
+      "path": "src/news_collector/sources/gdelt.py",
+      "bytes": 5982,
+      "sha256": "16495235899495df9aeb2622ec41e2d2b0836a965c6ed4ab8958aabd0a79abba"
+    },
+    {
+      "path": "src/news_collector/sources/issue_term_weights.py",
+      "bytes": 2798,
+      "sha256": "cb3d29babeac1329c6a8e219bd40842868f5469051b4f687ec7651ec124bc39d"
+    },
+    {
+      "path": "src/news_collector/sources/local_import.py",
+      "bytes": 5615,
+      "sha256": "adbc8e5538b6f85b40e592e964509d1bf12c60225d8c5978424c0d14aa0bc31f"
+    },
+    {
+      "path": "src/news_collector/sources/member_party.py",
+      "bytes": 4063,
+      "sha256": "befebda9e94bc1362b29f906b05f471a3da7564858a6761d04a4562f42741a18"
+    },
+    {
+      "path": "src/news_collector/sources/naver_news.py",
+      "bytes": 8144,
+      "sha256": "e76405c1f2b6d358bf401e331512597a99f7aa5ec7e093f31b7d85d8d9cd9985"
+    },
+    {
+      "path": "src/news_collector/sources/nec_api.py",
+      "bytes": 2701,
+      "sha256": "0ef7347da215d20a2144d3932eec896808215bb9b9ec0a893f7f17d42606aa21"
+    },
+    {
+      "path": "src/news_collector/sources/nec_results.py",
+      "bytes": 7260,
+      "sha256": "d0a837542d1754fbbfcb301d873af9e569bd8edf2465e9ef0d5e295ddba7043c"
+    },
+    {
+      "path": "src/news_collector/sources/nec_vote_api.py",
+      "bytes": 5820,
+      "sha256": "48246e72cb9e1cd3b7fd9d4e3b61bfdf2d703bf4a4c638bc38c59a808911fcd0"
+    },
+    {
+      "path": "src/news_collector/sources/rss.py",
+      "bytes": 5469,
+      "sha256": "518a888999c02430caa4cda6000648150ec4b966937391ec229f85d9e46ce8e2"
+    },
+    {
+      "path": "src/news_collector/sources/salience_base.py",
+      "bytes": 2712,
+      "sha256": "9de3941e0fd02f66f5bc62881eb7d08516878da5ff69c7f40ab12892e514f0c0"
+    },
+    {
+      "path": "src/news_collector/sources/source_archive/__init__.py",
+      "bytes": 368,
+      "sha256": "76b643dc8846f7d641e90924e522f3c189ae5ae563a8a21562bfc2f822af49e9"
+    },
+    {
+      "path": "src/news_collector/sources/source_archive/base.py",
+      "bytes": 1405,
+      "sha256": "3e9385bab10c9c549dd5b8aa67b0737de1f511a41aaa8ab1b944a42f48c96a56"
+    },
+    {
+      "path": "src/news_collector/sources/source_archive/generic.py",
+      "bytes": 3134,
+      "sha256": "678bb327fcdca2a9afc3841212b91010c5f9c70678db2b517192b20cb9f689f1"
+    },
+    {
+      "path": "src/news_collector/sources/source_archive/yonhap.py",
+      "bytes": 2858,
+      "sha256": "39c7d7ae2cf7356ed069463322c1ff3ef51260f41f0b507df81c6819db5c4c60"
+    },
+    {
+      "path": "src/news_collector/storage.py",
+      "bytes": 2954,
+      "sha256": "a113f6a70a7d107482a64a9e3b2f7995e61aab02e461c5d51f8b6b2f5cc32016"
+    },
+    {
+      "path": "src/news_collector/validate.py",
+      "bytes": 2077,
+      "sha256": "8b5a1798f4c486ef415829991caa090b37d9f6bb7aef266a835af4e3c870795d"
+    },
+    {
+      "path": "tests/test_assembly_batch.py",
+      "bytes": 1626,
+      "sha256": "66ff0202b8938a0f1422253f818d546da7c22a3ddd8965a964f9212c3d69fb2e"
+    },
+    {
+      "path": "tests/test_assembly_bloc_issue_posture.py",
+      "bytes": 2615,
+      "sha256": "886ead7970a60ff4d2ad55be509ad7c5731a618f8aae31420e26f166f110b1a3"
+    },
+    {
+      "path": "tests/test_assembly_neutral_issue_context.py",
+      "bytes": 5252,
+      "sha256": "511a5e1230e100f06da58f2c436cd3f28c077769bb06ec92dd3881ad6f21e651"
+    },
+    {
+      "path": "tests/test_assembly_records.py",
+      "bytes": 2385,
+      "sha256": "eeea83e902570b5d216e25ff27fc2e0c5f07c71fe5ab0c56f4793ad276b2f4dd"
+    },
+    {
+      "path": "tests/test_assembly_speaker_influence.py",
+      "bytes": 4910,
+      "sha256": "777d0cbe6d24381c1532bccae31c5bf2c005fbdea8322ddb2be9174bd0b33bc5"
+    },
+    {
+      "path": "tests/test_assembly_stance_extraction.py",
+      "bytes": 1159,
+      "sha256": "d68b2b5cf27eba1aa60754b74390e1602e46e6ab447a8da1e279332ab8d9b74b"
+    },
+    {
+      "path": "tests/test_automatic_issue_seed.py",
+      "bytes": 2354,
+      "sha256": "7de670b3c7b0ada8015d098afd6ad6de5835692f4e30265db93c5d7336380faf"
+    },
+    {
+      "path": "tests/test_available_date_filter.py",
+      "bytes": 654,
+      "sha256": "f7a619cae6151bc4bce8b397201da02ec2d0cd8d3627222669eb78a8918fefa9"
+    },
+    {
+      "path": "tests/test_bigkinds_metadata.py",
+      "bytes": 2343,
+      "sha256": "5f1cec194655c0b0aea3e490e0e518d40c7bc4e01614fc6ff6ae453a4e928e52"
+    },
+    {
+      "path": "tests/test_build_political_variables.py",
+      "bytes": 2013,
+      "sha256": "98d8f02a34838698ce98325d7a73b31bab42917302e2c064ea6f4a7f17b5f80e"
+    },
+    {
+      "path": "tests/test_candidate_regionalism.py",
+      "bytes": 16060,
+      "sha256": "2792f038c648fd8b23b5bddbda5b47a69c13a4949e3a6b4e7e8799edae3c8baf"
+    },
+    {
+      "path": "tests/test_candidate_vote_conversion_context.py",
+      "bytes": 6402,
+      "sha256": "ce9f71ebfad338d24ae9608d648513417377ada17fcef2df811e7408c2e17701"
+    },
+    {
+      "path": "tests/test_checkpoint.py",
+      "bytes": 589,
+      "sha256": "c62b40e0003914c18e304d9deca47fd73f7a9e8f0f7debe20b8441891e1604bd"
+    },
+    {
+      "path": "tests/test_coalition_events.py",
+      "bytes": 6724,
+      "sha256": "9c622d6a117ca2491cdc8735394e5e1c879cb940649f9600f13dd975553cc85c"
+    },
+    {
+      "path": "tests/test_contextual_issue_weights.py",
+      "bytes": 1306,
+      "sha256": "4bbffcfada6d34946fed2c4658c7de758e73f4a32928712b896b6fbbd6e32a9a"
+    },
+    {
+      "path": "tests/test_datalab.py",
+      "bytes": 2740,
+      "sha256": "030f190779d3b490fd57b319af5b808a820a11e237efbb2882d2a792e5865d86"
+    },
+    {
+      "path": "tests/test_dedupe.py",
+      "bytes": 1146,
+      "sha256": "4e89a8d1d05217f630fb4cb44d3dfb1a3071e82513889eb7182105967117aace"
+    },
+    {
+      "path": "tests/test_economic_context.py",
+      "bytes": 3994,
+      "sha256": "90e12945195d6c64c422183a06d459ad2a94a2b9d5d41e7591fb5c09256b101d"
+    },
+    {
+      "path": "tests/test_enhanced_issues.py",
+      "bytes": 15301,
+      "sha256": "781d953332cd2527bd33a71b1f008a6d29742e54a44e297e905d7e1a5fd0b2e3"
+    },
+    {
+      "path": "tests/test_ensemble.py",
+      "bytes": 838,
+      "sha256": "78524c042d2954fbed95f4ad3eb75ede642d756580ae3760a47ed1651bf0a3d4"
+    },
+    {
+      "path": "tests/test_generation_features.py",
+      "bytes": 5519,
+      "sha256": "7038bbdc35bcbcfe606c3639210619e433d155dafe083c16a10ce242376f5b6d"
+    },
+    {
+      "path": "tests/test_housing_context.py",
+      "bytes": 5788,
+      "sha256": "88b517e5cf236a8e6c984c87af0524d0e96c3edb4704312857d3f481ce84ce43"
+    },
+    {
+      "path": "tests/test_interest_rate_context.py",
+      "bytes": 1697,
+      "sha256": "c1ccb2752b4c93f8faacc491212704d23ed52ead07dcc825dc6647adf25a94b1"
+    },
+    {
+      "path": "tests/test_issue_epoch_importance_builder.py",
+      "bytes": 2969,
+      "sha256": "dd3c06cfa1f1f611ffd5cfffbdd97976265c7657ccfa3978c6e179a766417286"
+    },
+    {
+      "path": "tests/test_issue_matcher.py",
+      "bytes": 4640,
+      "sha256": "cb0881c3babc9ddd8e1abc904e0ddf462e3cd675b44ca30b7ea4a0a61a0a1aa3"
+    },
+    {
+      "path": "tests/test_issue_temporal_conversion.py",
+      "bytes": 3359,
+      "sha256": "480e88ca8b4673010a3e8b30ceb29d1130de27332576b2177fb2f9eb8b9548ec"
+    },
+    {
+      "path": "tests/test_issue_temporal_salience.py",
+      "bytes": 3950,
+      "sha256": "f0bef8fa81d86172faaedd7338330b44bff5a94303bd93018c3a0544dcd84716"
+    },
+    {
+      "path": "tests/test_issue_term_weights.py",
+      "bytes": 1861,
+      "sha256": "cdc6bfdeb720fe5a4a685cd83b204c2f66f9d297af48c6c2318066da96a088f6"
+    },
+    {
+      "path": "tests/test_jsonl_append.py",
+      "bytes": 783,
+      "sha256": "45bd3ebfb015999dd144151138edbff27fb1155c73cc1604d04a50572b5a0baf"
+    },
+    {
+      "path": "tests/test_kospi_context.py",
+      "bytes": 6282,
+      "sha256": "00cb5b10970142d766c7a907ab08c5c111e105d24f253171aa335f28e8bd97f7"
+    },
+    {
+      "path": "tests/test_local_import.py",
+      "bytes": 1272,
+      "sha256": "f794adde404172b9cb52f6ca77e7b67f928e2d65684c1cdfddb8145e9bd886b1"
+    },
+    {
+      "path": "tests/test_mega_issue_taxonomy.py",
+      "bytes": 6595,
+      "sha256": "39a892a56f1bdd9eaadd614809fa8b086e72c1b0b3eb52ce39df2e784624ada1"
+    },
+    {
+      "path": "tests/test_monte_carlo.py",
+      "bytes": 2258,
+      "sha256": "1291ff8fa7d40a993911ea0b5bbb7a827c87cfe8878553c8fc6ee9e6866a47b0"
+    },
+    {
+      "path": "tests/test_nec_api.py",
+      "bytes": 713,
+      "sha256": "2cba7ea4f86562cb1333accccb098e286e0f05dd1dea4b0f93be45e5360bf244"
+    },
+    {
+      "path": "tests/test_nec_results.py",
+      "bytes": 2133,
+      "sha256": "790b051f7a45b69d8f291b490631f3e4e47d47a9039b4a338cd6b36c9299bf8f"
+    },
+    {
+      "path": "tests/test_nec_vote_api.py",
+      "bytes": 2981,
+      "sha256": "691e1c83c702ac6972a72a4aec4ca08b9b924c87e72d3e3dc92b5df84cfedf21"
+    },
+    {
+      "path": "tests/test_news_analyzer_aggregate.py",
+      "bytes": 1342,
+      "sha256": "a68605190ab4b7f43469aa3a89b495225ef66595e7f9bcd8c5b4eec5844ef5bd"
+    },
+    {
+      "path": "tests/test_news_analyzer_available_date.py",
+      "bytes": 1979,
+      "sha256": "b7366b9ca10868a9462fa64a74dd193e13bdcc25065ef92613b8cf8655cd4859"
+    },
+    {
+      "path": "tests/test_news_analyzer_dedupe.py",
+      "bytes": 1295,
+      "sha256": "38c5d5a1b4d8cedd50af4e2cc2e12acade4b2484fe48ab301b23b9aeab193d73"
+    },
+    {
+      "path": "tests/test_news_analyzer_json_output.py",
+      "bytes": 613,
+      "sha256": "02ebcdb938a98a119eb12b47d967b60dffc0850910551324e9bfd74d0c8d8e11"
+    },
+    {
+      "path": "tests/test_news_analyzer_schemas.py",
+      "bytes": 1432,
+      "sha256": "b861a31baa100eaedf87b8119ff49d49437741c4b99880eecf18f69e7941cfea"
+    },
+    {
+      "path": "tests/test_no_ai_dependency.py",
+      "bytes": 699,
+      "sha256": "bbc6e81d21763bb02bc6bd534e5df2d7741d092523e1793bd9efeed3a90b8247"
+    },
+    {
+      "path": "tests/test_party_base.py",
+      "bytes": 3202,
+      "sha256": "3ed7137391a52ec5977e8143325dcf711f757573d5d53606b89a078291835cf0"
+    },
+    {
+      "path": "tests/test_party_stance_proxy.py",
+      "bytes": 2132,
+      "sha256": "2ece8c3739c6831cd60bd446e66532ea94b6fda8803b17af9f26f181a933ce3b"
+    },
+    {
+      "path": "tests/test_point_in_time.py",
+      "bytes": 2340,
+      "sha256": "0015faadacb1e89f803ff4b5b307986edc1efb078c82080f2c1f8a70fdd6ee42"
+    },
+    {
+      "path": "tests/test_predictor_interval_audit.py",
+      "bytes": 1406,
+      "sha256": "b6a256d602a3b658eb486a94c4f2a2062166e9e4f7e8d8c3e65ba4c8baa35a96"
+    },
+    {
+      "path": "tests/test_presidential_mega_axis_boost.py",
+      "bytes": 3958,
+      "sha256": "0f9150483a10e97a7e43fbbb140cf22a4b0173d244767b30914e86c5dff95161"
+    },
+    {
+      "path": "tests/test_presidential_slots.py",
+      "bytes": 635,
+      "sha256": "024ef786f4453ab8f6efa7dbd9b1e4ff9a3375b763dde5ff53d9dc1bad5b5e1e"
+    },
+    {
+      "path": "tests/test_presidential_standardize.py",
+      "bytes": 1161,
+      "sha256": "8ca416eea4abc5cb308e52acfd2d004973db61416e9cf5c87b2b4c6d6c8e7616"
+    },
+    {
+      "path": "tests/test_presidential_variable_dates.py",
+      "bytes": 1414,
+      "sha256": "fd4f590c0c726766bd38da47348e6520b2083c4b917080e1803072d738570180"
+    },
+    {
+      "path": "tests/test_query_plan.py",
+      "bytes": 989,
+      "sha256": "4126fd8d9ef6822287a53427f033b1d28a3f2334eb47c8e63bf75e9731c57a67"
+    },
+    {
+      "path": "tests/test_region_bloc_prior.py",
+      "bytes": 8150,
+      "sha256": "6259e389518ae98b44d60747db95c062fb0ae93d1aff96eb824213c97e0113ed"
+    },
+    {
+      "path": "tests/test_rolling_report_consistency.py",
+      "bytes": 1070,
+      "sha256": "2d40325ab78dfcfadab35b8ff9dc9a646ec34fbd498a3bc2ba1ca8e87e6f45b7"
+    },
+    {
+      "path": "tests/test_salience.py",
+      "bytes": 2831,
+      "sha256": "b7858d92cb4ba127bfb68bd679f97c739012914c6e514759ff2f34efadf2b00c"
+    },
+    {
+      "path": "tests/test_salience_sources.py",
+      "bytes": 2656,
+      "sha256": "e3d237b9ac3bcea30eb6f10798a8c53590e02025e5669c2e7e83f3c0d37fec3b"
+    },
+    {
+      "path": "tests/test_schema.py",
+      "bytes": 928,
+      "sha256": "12258169038296891357455eaceee07cea5410e9b1e2f832e6455025405884c4"
+    },
+    {
+      "path": "tests/test_scored_contest_scope.py",
+      "bytes": 2996,
+      "sha256": "73098b1597eb5c0b8b31991f1d9226002f0a4a851bad1021c6498cda1a643985"
+    },
+    {
+      "path": "tests/test_source_archive_adapter.py",
+      "bytes": 1371,
+      "sha256": "14a88b8a47be6d4049e78fb2c8d0083e39a087da69263c9c618bc47c584e0a62"
+    },
+    {
+      "path": "tests/test_source_archive_collector.py",
+      "bytes": 4138,
+      "sha256": "d13432b23c31c76857ba18218829be736ac65277bcaee04e7a23334fbb1e38c9"
+    },
+    {
+      "path": "tests/test_source_archive_parser.py",
+      "bytes": 674,
+      "sha256": "ed89f784bedb4215bbcf3b86732395dd44ce11daec0b4472e0ce36f1227ab0a5"
+    },
+    {
+      "path": "tests/test_source_archive_plan.py",
+      "bytes": 1752,
+      "sha256": "dd27a238269786e7da46243fdc8fa39721d93d214fe455ec190b0f427755b46f"
+    },
+    {
+      "path": "tests/test_speech_landscape_builder.py",
+      "bytes": 4711,
+      "sha256": "459c258d7662f60f595025a38725d622c7f7d0ab17c26d0a04f60a61fe36b85c"
+    },
+    {
+      "path": "tests/test_stance_context_model.py",
+      "bytes": 1572,
+      "sha256": "be8d67a3bb91569c621c958160819f37418e4a4aa153014de41e4ebc249875d9"
+    },
+    {
+      "path": "tests/test_stance_intensity.py",
+      "bytes": 1253,
+      "sha256": "854250fb312211c80652fd5dcea0051bfd0589c6ce7448d9560a958fd29e75be"
+    },
+    {
+      "path": "tests/test_stance_issue_overlay.py",
+      "bytes": 3595,
+      "sha256": "0bb991eaab9a614bc2fa7d5b654e8dee756d1262b22ce7848104420e0992ef0c"
+    },
+    {
+      "path": "tests/test_stance_metadata_blind_audit.py",
+      "bytes": 3298,
+      "sha256": "758f383733367a09b0cd6e678ec2c7cb8462d876a4495e95b163def12eaa5d83"
+    },
+    {
+      "path": "tests/test_stance_pilot_signal.py",
+      "bytes": 1606,
+      "sha256": "2f82829b329b18167baf2360cd7ee0a65f3987972f2ec86fee5933d05fcd8750"
+    },
+    {
+      "path": "tests/test_stance_target_policy.py",
+      "bytes": 2692,
+      "sha256": "25055a3a9fd50a5b8d24b3f9733eacf8dd58d8cd1e62bc5f507a3f5c91c91e56"
+    },
+    {
+      "path": "tests/test_stance_text_model.py",
+      "bytes": 1317,
+      "sha256": "36c50fc377d9fc42017c1dcf832a2f2e08c1dbe4f5682eadf1370c433b54b89f"
+    },
+    {
+      "path": "tests/test_stance_v3.py",
+      "bytes": 2648,
+      "sha256": "6f81fb433654947027445d27c5a2da35d52d57237d15fbd3d82e34290ccb176d"
+    },
+    {
+      "path": "tests/test_third_candidate_structure.py",
+      "bytes": 16429,
+      "sha256": "ef2c63fd364e8dc0ab40c57c2669291dd3ca3fa2679d3757ee6e520c895b9585"
+    },
+    {
+      "path": "tests/test_transfer_events.py",
+      "bytes": 2740,
+      "sha256": "be3095f4f6c7f0dd0e89a20138aacb28255252f374bb1a1817d43d5fa29ce493"
+    },
+    {
+      "path": "tests/test_variable_contributions.py",
+      "bytes": 863,
+      "sha256": "542775203f5a7a3cdaf53b2967ada16c2c4b309b5eba066cb26ab48f5b7f321c"
+    },
+    {
+      "path": "tests/test_variable_model_evaluate.py",
+      "bytes": 1123,
+      "sha256": "ecb73bc154f866fde51de6961a2d7e7ca162f8e3237334449266e17e5ec56ffa"
+    },
+    {
+      "path": "tests/test_variable_model_softmax.py",
+      "bytes": 1923,
+      "sha256": "6f8638fc27ffc0bed333f579f04bf4c6d030bd2d963e40ff723863616544904f"
+    },
+    {
+      "path": "tests/test_variable_model_utility.py",
+      "bytes": 693,
+      "sha256": "043fed8af2f8b0b7a80ce6efa65c579110e2bc6b365cddacbf469aabdc132241"
+    },
+    {
+      "path": "tests/test_vote_share.py",
+      "bytes": 540,
+      "sha256": "7bb3bfc3ad4c62f78b3e20402e50aa548613ac3df1fdc6fc19b41179e1f92b76"
+    },
+    {
+      "path": "tests/test_vote_share_normalization.py",
+      "bytes": 6809,
+      "sha256": "e63b06857b43d765cc87eaef3d1a4e05e8ef5663ad0c317b8b78370222bc0003"
+    },
+    {
+      "path": "tests/test_yonhap_adapter.py",
+      "bytes": 2234,
+      "sha256": "2788b08907e13605362f8467897bd92aeefac4147054e064d567b50ce168d3e8"
+    }
+  ]
+}

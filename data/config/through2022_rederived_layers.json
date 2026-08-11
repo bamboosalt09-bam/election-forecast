@@ -1,0 +1,115 @@
+{
+  "provenance": "rederived only from rolling elections through 2022",
+  "config": {
+    "ridge_alpha": 1.2,
+    "residual_enabled": false,
+    "residual_scale": 0.0,
+    "residual_shrinkage": 8.0,
+    "neutral_context_scale": 0.6,
+    "overlay_gain": 0.04,
+    "conversion_scale": 0.0,
+    "district_terrain_scale": 0.0,
+    "within_bloc_transfer_scale": 0.5,
+    "within_bloc_reservoir_gain": 1.0,
+    "within_bloc_stronghold_gain": 0.25,
+    "regionalism_scale": 0.15,
+    "regional_anchor_strength": 1.0,
+    "third_competitiveness_gate_enabled": true,
+    "third_character_multiplier_enabled": true,
+    "manual_issue_seed_enabled": false,
+    "automatic_issue_seed_enabled": true
+  },
+  "registered_layers": {
+    "issue_character_overlay": {
+      "enabled": true,
+      "gain": 0.04,
+      "link_gain": 0.01,
+      "source": "data/raw/assembly_issue_character_overlay.csv",
+      "source_model": "stance_nli_ambiguity_v14",
+      "activation_policy": "bounded explanatory reactivation; not selected as a predictive MAE improvement",
+      "direct_candidate_vote_adjustment": false
+    },
+    "third_candidate_competitiveness_gate": {
+      "enabled": true,
+      "source": "derived pre-election third-candidate profile"
+    },
+    "third_candidate_character_multiplier": {
+      "enabled": true,
+      "source": "derived pre-election third-regime character"
+    },
+    "candidate_vote_conversion_context": {
+      "enabled": false,
+      "scale": 0.0,
+      "source": "data/raw/candidate_vote_conversion_context.csv"
+    },
+    "district_terrain": {
+      "enabled": false,
+      "scale": 0.0,
+      "source": "presidential_issue_engine/fixed_dataset/bloc_history_results.csv",
+      "source_types": [
+        "assembly_district",
+        "metro_council_district",
+        "local_council_district",
+        "metro_governor",
+        "local_governor"
+      ],
+      "candidate_mapping": "pre-election assembly political landscape"
+    },
+    "within_bloc_regional_transfer": {
+      "enabled": true,
+      "scale": 0.5,
+      "source": "pre-election bloc-split character plus candidate regional and district terrain",
+      "constraint": "region-zero-sum transfer among orientation-affine candidates",
+      "reservoir_gain": 1.0,
+      "reservoir_source": "orientation-affine donor partisan prior with pre-election evidence reliability",
+      "stronghold_gain": 0.25,
+      "stronghold_source": "documented pre-election candidate regional base",
+      "status": "selected from eligible through-2022 elections",
+      "minimum_effective_elections": 2,
+      "observed_effective_elections": [
+        "pres_2002",
+        "pres_2007"
+      ]
+    },
+    "manual_issue_seed": {
+      "enabled": false,
+      "elections": [
+        "pres_2002",
+        "pres_2007",
+        "pres_2012",
+        "pres_2017",
+        "pres_2022"
+      ],
+      "sources": [
+        "data/raw/candidate_issue_profile.csv",
+        "data/raw/mega_issue_axis.csv",
+        "data/raw/mega_issue_attribution.csv"
+      ],
+      "status": "disabled for forecasting"
+    },
+    "automatic_issue_seed": {
+      "enabled": true,
+      "elections": [
+        "pres_2002",
+        "pres_2007",
+        "pres_2012",
+        "pres_2017",
+        "pres_2022"
+      ],
+      "builder": "scripts/build_through2022_automatic_issue_seeds.py",
+      "sources": [
+        "data/issue_salience_assembly.csv",
+        "data/candidate_issue_link.csv",
+        "data/raw/assembly_issue_character_overlay.csv",
+        "data/raw/candidate_public_treatment.csv",
+        "data/raw/candidate_party_tone_gap.csv"
+      ],
+      "outputs": [
+        "data/raw/auto_issue_seed/candidate_issue_profile.csv",
+        "data/raw/auto_issue_seed/mega_issue_axis.csv",
+        "data/raw/auto_issue_seed/mega_issue_attribution.csv"
+      ],
+      "outcome_fields_used": []
+    }
+  }
+}

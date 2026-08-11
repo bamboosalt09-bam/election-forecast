@@ -1,0 +1,4 @@
+﻿election_id,region_scope,candidate_name,affinity,available_date,confidence,evidence_type,source_url,notes
+pres_2002,chungcheong,노무현,0.7576651983963101,2002-12-18,0.7984359711335656,automatic_regional_policy_commitment,https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART000869966,Factual commitment routed with automatically derived candidate-issue association and issue importance
+pres_2007,chungcheong,이회창,1.0,2007-12-18,0.6172782559478416,automatic_regional_party_candidate_fit,official_nec_history_and_assembly_vectors,Prior-only Chungcheong regional-party reservoir routed to the strongest compatible active non-major candidate
+pres_2017,chungcheong,안철수,1.0,2017-05-08,0.6423846144867621,automatic_regional_party_candidate_fit,official_nec_history_and_assembly_vectors,Prior-only Chungcheong regional-party reservoir routed to the strongest compatible active non-major candidate

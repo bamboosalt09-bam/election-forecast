@@ -1,0 +1,5 @@
+source_election_id,event_date,published_date,young_weight,middle_weight,senior_weight,source_url,notes
+pres_2007,2007-12-19,2008-03-09,0.156,0.436,0.408,https://www.nec.go.kr/site/nec/ex/bbs/View.do?bcIdx=135337&cbIdx=1090,NEC sampled voter composition: age 19 plus 20s; 30s plus 40s; 50s plus 60 and older
+pres_2012,2012-12-19,2013-02-18,0.163,0.403,0.434,https://www.nec.go.kr/files/1/4/1_4_205_20130218112410_1.pdf,NEC sampled voter composition grouped into young middle and senior bands
+pres_2017,2017-05-09,2017-09-19,0.173,0.368,0.459,https://sj.nec.go.kr/sj/bbs/B0000264/view.do?category1=sj&category2=&deleteCd=0&menuNo=900002&nttId=43479&pageIndex=8,NEC sampled voter composition: age 19 plus 20s; 30s plus 40s; 50s and older
+pres_2022,2022-03-09,2022-09-29,0.157,0.314,0.529,https://www.nec.go.kr/site/nec/ex/bbs/View.do?bcIdx=188987&cbIdx=1129,NEC sampled voter composition: ages 18-19 plus 20s; 30s plus 40s; 50s and older

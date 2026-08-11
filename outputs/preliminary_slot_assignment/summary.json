@@ -1,0 +1,51 @@
+{
+  "scope": {
+    "warmup_elections": [
+      "pres_1997"
+    ],
+    "assigned_elections": [
+      "pres_2002",
+      "pres_2007",
+      "pres_2012",
+      "pres_2017",
+      "pres_2022"
+    ],
+    "post_2022_outcomes_used": false,
+    "target_election_outcomes_used_for_assignment": false
+  },
+  "predictors": [
+    "issue_advantage",
+    "rif",
+    "partisan_prior",
+    "landscape_bloc_alignment",
+    "landscape_centrist",
+    "landscape_inferred_prior"
+  ],
+  "excluded_slot_predictors": [
+    "slotA_prior",
+    "slotB_prior",
+    "slot_A",
+    "slot_B"
+  ],
+  "ridge_alpha": 0.3,
+  "candidate_strength": {
+    "source": "assembly-derived candidate_weight",
+    "exponent": 2.0,
+    "floor": 0.08,
+    "target_outcomes_used": false
+  },
+  "monte_carlo_draws": 4000,
+  "uncertainty_scope": "ridge coefficient uncertainty; not final forecast interval",
+  "candidate_scope": "standardized A/B/C ballot candidates; alpha aggregate excluded",
+  "withdrawn_candidate_policy": "separate transfer reservoir; not assigned C",
+  "withdrawn_candidate_share_policy": {
+    "pre_event_share": "same strict preliminary Ridge plus latent candidate weight",
+    "target_fraction": "transfer_rate times voter_compliance",
+    "support_withdrawal": "common strength-times-reach time decay attenuates the prior target transfer without restoring C",
+    "event_profile_source": "data\\raw\\withdrawal_event_profiles.csv",
+    "unconverted_mass": "removed before final valid-vote normalization",
+    "target_outcomes_used": false
+  },
+  "status": "experimental; not yet wired into the production forecast",
+  "role_aware_assignment": false
+}

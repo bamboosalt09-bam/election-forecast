@@ -1,0 +1,21 @@
+다음 기사 텍스트만 근거로 분석하라. 기사 이후 발생한 사건, 실제 선거 결과, 사후 평가, 최종 득표율은 절대 사용하지 마라. 이 기사가 특정 후보, 정당, 지역, 이슈와 어떻게 연결되는지만 구조화하라.
+
+결과는 반드시 JSON 객체 하나로만 출력하라. 설명문, 마크다운, 코드블록은 출력하지 마라.
+
+필수 JSON 필드:
+
+- candidates: 기사에서 직접 언급되거나 명확히 연결된 후보명 배열
+- parties: 기사에서 직접 언급되거나 명확히 연결된 정당명 배열
+- regions: 기사와 관련된 지역명 배열
+- issues: 기사에서 다루는 이슈명 배열
+- article_type: news, editorial, column, interview, factcheck, press_release, unknown 중 하나
+- stance_by_candidate: 후보별 기사 논조 점수 객체. 범위는 -1.0부터 1.0까지
+- candidate_link_score: 후보별 이슈 연결 강도 객체. 범위는 0.0부터 1.0까지
+- responsibility_target: 책임 주체 배열
+- beneficiary: 수혜 주체 배열
+- harmed: 피해 주체 배열
+- frame_tags: 프레임 태그 배열
+- region_relevance_score: 지역별 관련성 점수 객체. 범위는 0.0부터 1.0까지
+- source_reliability_score: 기사 근거 명확성 및 출처 신뢰도 점수. 범위는 0.0부터 1.0까지
+- analysis_confidence: 분석 확신도. 범위는 0.0부터 1.0까지
+- needs_human_review: 사람이 검토해야 하면 true, 아니면 false

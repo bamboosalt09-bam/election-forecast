@@ -1,0 +1,7 @@
+﻿election_id,mega_event,issue_name,target_type,target,polarity,weight,available_date,confidence,notes
+pres_2002,assembly_salience_economy_growth,economy_growth,candidate_slot,A,-1.0,0.6662608207258162,2002-12-18,0.3283839291929996,Automatic PIT attribution from explicit person/party/government target evaluation
+pres_2002,assembly_salience_corruption_integrity,corruption_integrity,candidate_slot,A,-1.0,0.6306386720234313,2002-12-18,0.28366289366583736,Automatic PIT attribution from explicit person/party/government target evaluation
+pres_2002,assembly_salience_security_nk,security_nk,candidate_slot,A,1.0,0.5973974096769721,2002-12-18,0.27660839352179895,Automatic PIT attribution from explicit person/party/government target evaluation
+pres_2007,assembly_salience_economy_growth,economy_growth,candidate_slot,B,-1.0,0.6394277754586664,2007-12-18,0.2760325189279931,Automatic PIT attribution from explicit person/party/government target evaluation
+pres_2007,assembly_salience_security_nk,security_nk,candidate_slot,B,1.0,0.5768148821570978,2007-12-18,0.323617967257463,Automatic PIT attribution from explicit person/party/government target evaluation
+pres_2022,assembly_salience_external_shock,external_shock,candidate_slot,B,-1.0,0.598371870445911,2022-03-08,0.30791794880979356,Automatic PIT attribution from explicit person/party/government target evaluation

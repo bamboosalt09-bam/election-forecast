@@ -1,0 +1,31 @@
+{
+  "schema": "github_repository_baseline_v1",
+  "created_date": "2026-08-10",
+  "source_workspace": "C:\\english_folder\\poll_project",
+  "active_version": "v23",
+  "active_policy": "active_strict_nested_v23_unified_withdrawal_generation",
+  "post_2022_outcomes_used": false,
+  "expected_hashes": {
+    "data/config/current_presidential_model.json": "d01b584b126ae850696f3b280872267783e7d336bd59ae1dc2a04a6bacf824d4",
+    "outputs/active_presidential_nested_v23/finalization_manifest.json": "7e9b7c23a5b38f438c1cb7fadaff2735909ef75eb7254ae3236791d7d637c3a4",
+    "outputs/active_presidential_nested_v23/nested_predictions.csv": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b"
+  },
+  "verified_before_migration": {
+    "active_v23_audit": "pass",
+    "active_manifest_files": 50,
+    "active_prediction_rows": 199,
+    "outcome_invariance_rows": 215,
+    "latest_regression_suite": "538 passed"
+  },
+  "tracked_file_max_bytes": 26214400,
+  "allowed_output_prefixes": [
+    "outputs/active_presidential_nested_v23/",
+    "outputs/automatic_controls_v22/",
+    "outputs/automatic_controls_v23/",
+    "outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation/active_run/",
+    "outputs/footprint_candidate_base_v9/",
+    "outputs/preliminary_slot_assignment/",
+    "outputs/preliminary_slot_assignment_v23/",
+    "outputs/unified_exact_lineage_v21/"
+  ]
+}

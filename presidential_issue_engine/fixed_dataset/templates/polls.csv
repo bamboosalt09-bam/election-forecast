@@ -1,0 +1,3 @@
+poll_id,pollster,election_id,region_id,slot,published_date,start_date,end_date,sample_size,support_rate,available_date
+poll_2022_001,예시기관,pres_2022,ALL,A,2022-03-01,2022-02-27,2022-02-28,1000,,2022-03-01
+poll_2022_001,예시기관,pres_2022,ALL,B,2022-03-01,2022-02-27,2022-02-28,1000,,2022-03-01

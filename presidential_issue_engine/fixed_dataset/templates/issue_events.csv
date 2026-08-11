@@ -1,0 +1,4 @@
+issue_id,election_id,issue_name,issue_type,event_date,available_date,slot,candidate_id,region_scope,salience_score,direction_score,candidate_link_score,media_reliability_score,final_issue_score,populator,confidence,source_note
+evt_sample_001,pres_2022,housing,policy,2022-02-15,2022-02-16,A,,ALL,0.6,0.3,0.5,0.8,,curated,1.0,예시행 — 실제 이슈로 교체
+evt_sample_002,pres_2022,ethics,scandal,2022-02-20,2022-02-21,B,,ALL,0.7,-0.5,0.6,0.9,,curated,1.0,예시행 — scandal은 risk_or_negative로 라우팅
+evt_sample_003,pres_2022,industry,policy,2022-02-25,2022-02-26,A,,sido_31,0.5,0.4,0.4,0.8,,aggregate,0.8,예시행 — region_scope=특정 시도(울산)

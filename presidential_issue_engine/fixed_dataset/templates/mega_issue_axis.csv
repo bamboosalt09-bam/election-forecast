@@ -1,0 +1,2 @@
+election_id,mega_event,primary_issue,secondary_issue,axis_weight,regime_axis_weight,available_date,activation_method,notes
+pres_YYYY,event_name,issue_name,regime_change,1.0,0.0,YYYY-MM-DD,manual_floor,template row only

@@ -1,0 +1,5 @@
+election_id,region_id,raw_candidates,matched_non_alpha_candidates,alpha_votes,total_votes
+pres_2012,sgg_001,3,2,2000.0,100000.0
+pres_2012,sgg_002,3,2,3000.0,100000.0
+pres_2022,sgg_001,4,3,2000.0,100000.0
+pres_2022,sgg_002,4,3,2000.0,100000.0

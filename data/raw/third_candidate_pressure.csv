@@ -1,0 +1,11 @@
+election_id,slot,source_slot,transfer_pressure,available_date,confidence,notes
+pres_2002,C,A,0.03,2002-11-01,0.50,limited draw from liberal reform slot
+pres_2002,C,B,0.05,2002-11-01,0.50,limited draw from conservative slot
+pres_2007,C,A,0.35,2007-11-01,0.60,conservative breakaway drew from Lee Myung-bak slot
+pres_2007,C,B,0.05,2007-11-01,0.50,limited draw from liberal slot
+pres_2012,C,A,0.00,2012-11-01,0.70,inactive third candidate
+pres_2012,C,B,0.00,2012-11-01,0.70,inactive third candidate
+pres_2017,C,A,0.25,2017-04-01,0.60,centrist opposition draw from Moon Jae-in slot
+pres_2017,C,B,0.65,2017-04-01,0.70,large centrist anti-Moon and anti-major-party draw from Hong Joon-pyo slot
+pres_2022,C,A,0.25,2022-02-01,0.60,Ahn pre-unification drew some support from Yoon-compatible centrist conservatives
+pres_2022,C,B,0.45,2022-02-01,0.60,Ahn pre-unification drew anti-major-party and centrist support from Lee-compatible voters

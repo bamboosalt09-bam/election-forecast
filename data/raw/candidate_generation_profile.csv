@@ -1,0 +1,13 @@
+﻿election_id,slot,candidate_name,young_affinity,middle_affinity,senior_affinity,available_date,confidence,notes
+pres_2002,A,노무현,0.51815,0.5117,0.46954999999999997,2002-12-18,0.594716,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2002,B,이회창,0.48185,0.48829999999999996,0.53045,2002-12-18,0.6045559999999999,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2007,A,이명박,0.51288,0.62177,0.36525,2007-12-18,0.609332,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2007,B,정동영,0.61587,0.6202100000000002,0.26382,2007-12-18,0.6099559999999999,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2007,C,이회창,0.37124999999999997,0.25802000000000014,0.8709299999999999,2007-12-18,0.75,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2012,A,박근혜,0.49350499999999997,0.49693999999999994,0.509855,2012-12-18,0.6131359999999999,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2012,B,문재인,0.506495,0.5030599999999997,0.490145,2012-12-18,0.610448,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2017,A,문재인,0.50106,0.48016000000000025,0.5183800000000001,2017-05-08,0.6366799999999999,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2017,B,홍준표,0.51858,0.46882000000000024,0.5125000000000001,2017-05-08,0.6413359999999999,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2017,C,안철수,0.48036,0.5510200000000002,0.46912000000000004,2017-05-08,0.6086959999999999,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2022,A,윤석열,0.50531,0.4913599999999997,0.50333,2022-03-08,0.5391079999999999,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity
+pres_2022,B,이재명,0.49469,0.50864,0.49667,2022-03-08,0.532196,assembly_issue_link derived; issue emphasis mapped through generation_issue_sensitivity

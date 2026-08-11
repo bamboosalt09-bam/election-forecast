@@ -1,0 +1,9 @@
+rule_id,source_issue,context_terms,source_multiplier,target_issue,target_weight,start_election,end_election,notes
+housing_regime_context,housing,정권|정부|국정|여당|대통령|책임|실정|심판,1.15,regime_change,0.45,pres_2007,,housing issue co-mentioned with regime responsibility
+economy_regime_context,economy_growth,정권|정부|국정|여당|대통령|책임|실정|심판,1.10,regime_change,0.35,pres_2007,,macro economy co-mentioned with regime responsibility
+livelihood_regime_context,inflation_livelihood,정권|정부|국정|여당|대통령|책임|실정|심판,1.10,regime_change,0.35,pres_2007,,livelihood/inflation co-mentioned with regime responsibility
+corruption_regime_context,corruption_integrity,정권|정부|국정|여당|대통령|권력|책임|심판,1.15,regime_change,0.50,pres_2007,,corruption co-mentioned with governing responsibility
+external_shock_regime_context,external_shock,정권|정부|국정|여당|대통령|대응|책임|심판,1.10,regime_change,0.30,pres_2007,,external shock co-mentioned with government response
+mega_corruption_regime_context,corruption_integrity,국정농단|최순실|BBK|대장동|박연차|홍삼|도이치|고발사주|명태균,1.20,regime_change,0.55,pres_2007,,mega scandal terms also activate regime accountability
+mega_impeachment_regime_context,regime_change,탄핵|계엄|내란|촛불|국정농단,1.20,regime_change,0.00,pres_2017,,mega regime crisis terms strengthen regime-change issue
+mega_shock_regime_context,external_shock,비상계엄|계엄|계엄령|내란|세월호,1.20,regime_change,0.50,pres_2017,,mega shock terms also activate regime accountability

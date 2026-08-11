@@ -1,0 +1,17 @@
+election_id,region_id,region_name,province,slot,candidate_name,party_name,is_active_slot,votes,vote_share
+pres_2012,sgg_001,Sample District 1,Sample Province A,A,Sample 2012 Candidate A,Sample Party A,True,47000.0,0.47
+pres_2012,sgg_001,Sample District 1,Sample Province A,B,Sample 2012 Candidate B,Sample Party B,True,51000.0,0.51
+pres_2012,sgg_001,Sample District 1,Sample Province A,C,Inactive C Slot,,False,0.0,0.0
+pres_2012,sgg_001,Sample District 1,Sample Province A,alpha,Other Candidates,Other,True,2000.0,0.02
+pres_2012,sgg_002,Sample District 2,Sample Province B,A,Sample 2012 Candidate A,Sample Party A,True,53000.0,0.53
+pres_2012,sgg_002,Sample District 2,Sample Province B,B,Sample 2012 Candidate B,Sample Party B,True,44000.0,0.44
+pres_2012,sgg_002,Sample District 2,Sample Province B,C,Inactive C Slot,,False,0.0,0.0
+pres_2012,sgg_002,Sample District 2,Sample Province B,alpha,Other Candidates,Other,True,3000.0,0.03
+pres_2022,sgg_001,Sample District 1,Sample Province A,A,Sample 2022 Candidate A,Sample Party A,True,56000.0,0.56
+pres_2022,sgg_001,Sample District 1,Sample Province A,B,Sample 2022 Candidate B,Sample Party B,True,39000.0,0.39
+pres_2022,sgg_001,Sample District 1,Sample Province A,C,Sample 2022 Candidate C,Sample Party C,True,3000.0,0.03
+pres_2022,sgg_001,Sample District 1,Sample Province A,alpha,Other Candidates,Other,True,2000.0,0.02
+pres_2022,sgg_002,Sample District 2,Sample Province B,A,Sample 2022 Candidate A,Sample Party A,True,38000.0,0.38
+pres_2022,sgg_002,Sample District 2,Sample Province B,B,Sample 2022 Candidate B,Sample Party B,True,56000.0,0.56
+pres_2022,sgg_002,Sample District 2,Sample Province B,C,Sample 2022 Candidate C,Sample Party C,True,4000.0,0.04
+pres_2022,sgg_002,Sample District 2,Sample Province B,alpha,Other Candidates,Other,True,2000.0,0.02

@@ -1,0 +1,20 @@
+{
+  "districts": 1911,
+  "elections": [
+    "assembly_1992_district",
+    "assembly_1996_district",
+    "assembly_2000_district",
+    "assembly_2004_district",
+    "assembly_2008_district",
+    "assembly_2012_district",
+    "assembly_2016_district",
+    "assembly_2020_district"
+  ],
+  "generated_at": "2026-07-29T02:22:53.109906+00:00",
+  "maximum_election": "assembly_2020_district",
+  "outcome_fields_used_for_presidential_target": [],
+  "pages": 69,
+  "post_2022_queries": 0,
+  "rows": 8484,
+  "schema": "nec_assembly_district_collection_manifest_v1"
+}

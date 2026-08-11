@@ -1,0 +1,92 @@
+{
+  "policy": "remove observations with available_date after 2025-06-02",
+  "cutoff_date": "2025-06-02",
+  "changed_files": [
+    {
+      "path": "data/raw/candidate_party_vectors.csv",
+      "removed_rows": 3,
+      "sha256_before": "dd4808f77577f56b28e2e23837a66d81c530b478a60a057980f836062ca13245",
+      "sha256_after": "7da8adafb6e19768e7f4742174a4d8db104599d1ee76f37e70e174e23d7d2108"
+    },
+    {
+      "path": "data/raw/candidate_policy_positions.csv",
+      "removed_rows": 6,
+      "sha256_before": "088848aed2f573a84305b565c1532f36196ba8d29c58423cd47c19a696e4b397",
+      "sha256_after": "46cd8fb078c4f179cfff7759dd273e99748de3a8558ac7b3023a3988ff3fbdaa"
+    },
+    {
+      "path": "data/raw/candidates.csv",
+      "removed_rows": 3,
+      "sha256_before": "9318bf3e199343a5f910cb28eba787e81f6e78243b0deb90384b8dcb770135e9",
+      "sha256_after": "53347880a38c5702ad3f0617f23ed51ea44919ab8dee37901bb622975a614c9a"
+    },
+    {
+      "path": "data/raw/election_results.csv",
+      "removed_rows": 6,
+      "sha256_before": "44c48c1fde2773e99902e210645ba62d39f6d9eabad481026a8e352a5637be2c",
+      "sha256_after": "ab9f3930bc558a826e8c295d0603722e318096740f52f68952d741b0c44fedf5"
+    },
+    {
+      "path": "data/raw/event_effects.csv",
+      "removed_rows": 1,
+      "sha256_before": "13ae2c435d6b8913ed599b83078feb7172cabe4ff16301db4da74a16f583580a",
+      "sha256_after": "e92c3d09f0b729ee739306b1063540fb53b2d0f998366d3202e997fcfe8bd8d1"
+    },
+    {
+      "path": "data/raw/issue_scores.csv",
+      "removed_rows": 6,
+      "sha256_before": "8f5fcc64d403c0dd325134458d9826240b59f3dea6ab8647b3f5c66f9e93f087",
+      "sha256_after": "809e4a0ff3a137e415a2ae2d95388358d75bc1cbc08ce78614f1a2063b472e19"
+    },
+    {
+      "path": "data/raw/polls.csv",
+      "removed_rows": 6,
+      "sha256_before": "c7d90ebdc72dfde2a98cca9b88869c1f8cd9fc8c293c65fc1bd7dfcb3cd2451c",
+      "sha256_after": "583a6e6a84d444cf5482a0c474db7ed951c7ab6ab6dbb545faef089cbc7ccc98"
+    },
+    {
+      "path": "data/raw/region_issue_sensitivity.csv",
+      "removed_rows": 4,
+      "sha256_before": "9d2d5e642f93be92df804fb9877a690e8b2f534eeb8c26b3f341ea186c1b24f0",
+      "sha256_after": "b04e7d693802acebc29eebfdc7487bbfe0cc990469558245a3011d03548f210b"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/economic_indicators.csv",
+      "removed_rows": 12,
+      "sha256_before": "cdfb4af1b936d4901090d8b399aa08742bc61ab9a62b0c93723587c98ad2e09d",
+      "sha256_after": "f56589eb065001317f23312ea4852941d8bc2b64e160f2bf77d14ec7f8b2f4f4"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/housing_price_index_sgg.csv",
+      "removed_rows": 468,
+      "sha256_before": "1c672402183586941a17509de6285eb4e8a4dddf9dc8e233507fe53fb0d3de0c",
+      "sha256_after": "2dbf8a93a444072839f961084854e1ddfaaacaeb8088db1fd131432013632563"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/housing_price_index_sido.csv",
+      "removed_rows": 32,
+      "sha256_before": "f53bc6a954b0c7ca93378abd99f45f1dcf2fb3fdea7ff0b264afa2763f86efbf",
+      "sha256_after": "4f492569ee08304da0eb4fa7c25ebed9c64fbc15cbcfd239743e7956d409d60a"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv",
+      "removed_rows": 13,
+      "sha256_before": "f4531a5ed60812fc5ff2e2d715297e16fd5cb64649348f041f97facb883aace4",
+      "sha256_after": "71ea948ff74b9df29c61eca6f297b5214915c3238dbe20a5445ba3388f82f758"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/kospi_daily.csv",
+      "removed_rows": 271,
+      "sha256_before": "51b7d1c0323a11d7666309a47ebd447ce2619bad51c8db435bd4dd27478672ff",
+      "sha256_after": "6e29dd0e95f4f96e81af8ebd1292f1f9c941df0a5ba48f87739407c3f249f1b9"
+    },
+    {
+      "path": "data/raw/kospi_history_source.txt",
+      "removed_rows": 271,
+      "sha256_before": "4ef8a8761e175f19c3c376db849bded88df325377c6888f843162f9958c6d089",
+      "sha256_after": "ada5678a73b42e22913d5e1cea3fbc89896687456e24ef9118801e7ae70e0c88"
+    }
+  ],
+  "changed_file_count": 14,
+  "removed_row_count": 1102
+}

@@ -1,0 +1,16 @@
+election_id,slot,housing_responsibility_score,available_date,source_note
+pres_2002,A,1.0,2002-11-25,manual config: incumbent-continuity slot; housing pressure tends to hurt
+pres_2002,B,-1.0,2002-11-25,manual config: main opposition slot; housing pressure tends to help
+pres_2002,C,-0.2,2002-11-25,manual config: non-incumbent minor slot; weaker housing pressure benefit
+pres_2007,A,-1.0,2007-11-25,manual config: main opposition slot; housing pressure tends to help
+pres_2007,B,1.0,2007-11-25,manual config: incumbent-continuity slot; housing pressure tends to hurt
+pres_2007,C,-0.3,2007-11-25,manual config: non-incumbent third slot; weaker housing pressure benefit
+pres_2012,A,1.0,2012-11-25,manual config: incumbent-continuity slot; housing pressure tends to hurt
+pres_2012,B,-1.0,2012-11-25,manual config: main opposition slot; housing pressure tends to help
+pres_2012,C,0.0,2012-11-25,manual config: independent minor slot; no direct housing responsibility
+pres_2017,A,-1.0,2017-04-15,manual config: main opposition slot; housing pressure tends to help
+pres_2017,B,1.0,2017-04-15,manual config: incumbent-side conservative slot; housing pressure tends to hurt
+pres_2017,C,-0.4,2017-04-15,manual config: non-incumbent third slot; weaker housing pressure benefit
+pres_2022,A,-1.0,2022-02-14,manual config: main opposition slot; housing pressure tends to help
+pres_2022,B,1.0,2022-02-14,manual config: incumbent-continuity slot; housing pressure tends to hurt
+pres_2022,C,0.0,2022-02-14,manual config: third slot; no direct housing responsibility

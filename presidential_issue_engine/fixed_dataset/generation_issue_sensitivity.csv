@@ -1,0 +1,20 @@
+issue_name,youth_lean,근거
+jobs_labor,0.5,청년 고용·노동 민감
+gender_generation,0.8,청년(특히 2030) 핵심 균열
+housing,0.5,청년 내집마련·전세
+education,0.3,청년·학부모
+inflation_livelihood,0.1,전세대 but 청년 체감
+economy_growth,0.0,중립
+corruption_integrity,0.0,중립
+family_legal_risk,0.0,중립
+candidate_competence,0.0,중립
+regime_change,0.0,중립
+regional_dev,0.0,중립(지역 이슈)
+foreign_policy,-0.2,중장년
+welfare_pension,-0.5,노년 연금·복지
+security_nk,-0.7,노년 안보
+unification_event,0.0,사건
+withdrawal_event,0.0,사건
+endorsement_event,0.0,사건
+gaffe_event,0.0,사건
+external_shock,0.0,사건

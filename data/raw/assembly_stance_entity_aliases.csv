@@ -1,0 +1,30 @@
+entity_type,canonical_name,alias,start_date,end_date,model_eligible,notes
+person,노무현,노무현,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,이회창,이회창,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,권영길,권영길,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,이명박,이명박,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,정동영,정동영,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,박근혜,박근혜,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,문재인,문재인,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,안철수,안철수,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,홍준표,홍준표,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,윤석열,윤석열,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,이재명,이재명,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,심상정,심상정,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,김문수,김문수,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+person,이준석,이준석,,,,0,Explicit person target only; candidate linkage requires a separately dated roster.
+party,한나라당,한나라당,,,,0,Party target; not yet a direct model feature.
+party,열린우리당,열린우리당,,,,0,Party target; not yet a direct model feature.
+party,민주노동당,민주노동당,,,,0,Party target; not yet a direct model feature.
+party,대통합민주신당,대통합민주신당,,,,0,Party target; not yet a direct model feature.
+party,새누리당,새누리당,,,,0,Party target; not yet a direct model feature.
+party,민주통합당,민주통합당,,,,0,Party target; not yet a direct model feature.
+party,더불어민주당,더불어민주당,,,,0,Party target; not yet a direct model feature.
+party,국민의당,국민의당,,,,0,Party target; not yet a direct model feature.
+party,자유한국당,자유한국당,,,,0,Party target; not yet a direct model feature.
+party,바른정당,바른정당,,,,0,Party target; not yet a direct model feature.
+party,국민의힘,국민의힘,,,,0,Party target; not yet a direct model feature.
+party,정의당,정의당,,,,0,Party target; not yet a direct model feature.
+party,개혁신당,개혁신당,,,,0,Party target; not yet a direct model feature.
+government,정부,정부,,,,0,Generic government target; not yet a direct model feature.
+government,청와대,청와대,,,,0,Generic executive-office target; not yet a direct model feature.

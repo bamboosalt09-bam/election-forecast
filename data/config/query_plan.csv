@@ -1,0 +1,1281 @@
+﻿query_id,query,category,priority,window_start,window_end,enabled
+q0001,대선,election_issue,1,2021-01-01,2021-03-31,true
+q0002,대선,election_issue,1,2021-04-01,2021-06-30,true
+q0003,대선,election_issue,1,2021-07-01,2021-09-30,true
+q0004,대선,election_issue,1,2021-10-01,2021-12-31,true
+q0005,대선,election_issue,1,2022-01-01,2022-03-09,true
+q0006,대선 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0007,대선 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0008,대선 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0009,대선 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0010,대선 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0011,총선,election_issue,1,2021-01-01,2021-03-31,true
+q0012,총선,election_issue,1,2021-04-01,2021-06-30,true
+q0013,총선,election_issue,1,2021-07-01,2021-09-30,true
+q0014,총선,election_issue,1,2021-10-01,2021-12-31,true
+q0015,총선,election_issue,1,2022-01-01,2022-03-09,true
+q0016,총선 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0017,총선 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0018,총선 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0019,총선 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0020,총선 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0021,지방선거,election_issue,1,2021-01-01,2021-03-31,true
+q0022,지방선거,election_issue,1,2021-04-01,2021-06-30,true
+q0023,지방선거,election_issue,1,2021-07-01,2021-09-30,true
+q0024,지방선거,election_issue,1,2021-10-01,2021-12-31,true
+q0025,지방선거,election_issue,1,2022-01-01,2022-03-09,true
+q0026,지방선거 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0027,지방선거 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0028,지방선거 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0029,지방선거 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0030,지방선거 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0031,정권교체,election_issue,1,2021-01-01,2021-03-31,true
+q0032,정권교체,election_issue,1,2021-04-01,2021-06-30,true
+q0033,정권교체,election_issue,1,2021-07-01,2021-09-30,true
+q0034,정권교체,election_issue,1,2021-10-01,2021-12-31,true
+q0035,정권교체,election_issue,1,2022-01-01,2022-03-09,true
+q0036,정권교체 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0037,정권교체 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0038,정권교체 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0039,정권교체 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0040,정권교체 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0041,정권심판,election_issue,1,2021-01-01,2021-03-31,true
+q0042,정권심판,election_issue,1,2021-04-01,2021-06-30,true
+q0043,정권심판,election_issue,1,2021-07-01,2021-09-30,true
+q0044,정권심판,election_issue,1,2021-10-01,2021-12-31,true
+q0045,정권심판,election_issue,1,2022-01-01,2022-03-09,true
+q0046,정권심판 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0047,정권심판 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0048,정권심판 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0049,정권심판 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0050,정권심판 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0051,여당,election_issue,1,2021-01-01,2021-03-31,true
+q0052,여당,election_issue,1,2021-04-01,2021-06-30,true
+q0053,여당,election_issue,1,2021-07-01,2021-09-30,true
+q0054,여당,election_issue,1,2021-10-01,2021-12-31,true
+q0055,여당,election_issue,1,2022-01-01,2022-03-09,true
+q0056,여당 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0057,여당 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0058,여당 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0059,여당 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0060,여당 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0061,야당,election_issue,1,2021-01-01,2021-03-31,true
+q0062,야당,election_issue,1,2021-04-01,2021-06-30,true
+q0063,야당,election_issue,1,2021-07-01,2021-09-30,true
+q0064,야당,election_issue,1,2021-10-01,2021-12-31,true
+q0065,야당,election_issue,1,2022-01-01,2022-03-09,true
+q0066,야당 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0067,야당 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0068,야당 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0069,야당 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0070,야당 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0071,경제,election_issue,1,2021-01-01,2021-03-31,true
+q0072,경제,election_issue,1,2021-04-01,2021-06-30,true
+q0073,경제,election_issue,1,2021-07-01,2021-09-30,true
+q0074,경제,election_issue,1,2021-10-01,2021-12-31,true
+q0075,경제,election_issue,1,2022-01-01,2022-03-09,true
+q0076,경제 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0077,경제 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0078,경제 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0079,경제 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0080,경제 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0081,물가,election_issue,1,2021-01-01,2021-03-31,true
+q0082,물가,election_issue,1,2021-04-01,2021-06-30,true
+q0083,물가,election_issue,1,2021-07-01,2021-09-30,true
+q0084,물가,election_issue,1,2021-10-01,2021-12-31,true
+q0085,물가,election_issue,1,2022-01-01,2022-03-09,true
+q0086,물가 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0087,물가 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0088,물가 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0089,물가 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0090,물가 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0091,부동산,election_issue,1,2021-01-01,2021-03-31,true
+q0092,부동산,election_issue,1,2021-04-01,2021-06-30,true
+q0093,부동산,election_issue,1,2021-07-01,2021-09-30,true
+q0094,부동산,election_issue,1,2021-10-01,2021-12-31,true
+q0095,부동산,election_issue,1,2022-01-01,2022-03-09,true
+q0096,부동산 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0097,부동산 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0098,부동산 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0099,부동산 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0100,부동산 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0101,연금,election_issue,1,2021-01-01,2021-03-31,true
+q0102,연금,election_issue,1,2021-04-01,2021-06-30,true
+q0103,연금,election_issue,1,2021-07-01,2021-09-30,true
+q0104,연금,election_issue,1,2021-10-01,2021-12-31,true
+q0105,연금,election_issue,1,2022-01-01,2022-03-09,true
+q0106,연금 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0107,연금 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0108,연금 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0109,연금 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0110,연금 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0111,일자리,election_issue,1,2021-01-01,2021-03-31,true
+q0112,일자리,election_issue,1,2021-04-01,2021-06-30,true
+q0113,일자리,election_issue,1,2021-07-01,2021-09-30,true
+q0114,일자리,election_issue,1,2021-10-01,2021-12-31,true
+q0115,일자리,election_issue,1,2022-01-01,2022-03-09,true
+q0116,일자리 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0117,일자리 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0118,일자리 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0119,일자리 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0120,일자리 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0121,복지,election_issue,1,2021-01-01,2021-03-31,true
+q0122,복지,election_issue,1,2021-04-01,2021-06-30,true
+q0123,복지,election_issue,1,2021-07-01,2021-09-30,true
+q0124,복지,election_issue,1,2021-10-01,2021-12-31,true
+q0125,복지,election_issue,1,2022-01-01,2022-03-09,true
+q0126,복지 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0127,복지 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0128,복지 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0129,복지 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0130,복지 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0131,안보,election_issue,1,2021-01-01,2021-03-31,true
+q0132,안보,election_issue,1,2021-04-01,2021-06-30,true
+q0133,안보,election_issue,1,2021-07-01,2021-09-30,true
+q0134,안보,election_issue,1,2021-10-01,2021-12-31,true
+q0135,안보,election_issue,1,2022-01-01,2022-03-09,true
+q0136,안보 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0137,안보 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0138,안보 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0139,안보 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0140,안보 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0141,청년 주거,election_issue,1,2021-01-01,2021-03-31,true
+q0142,청년 주거,election_issue,1,2021-04-01,2021-06-30,true
+q0143,청년 주거,election_issue,1,2021-07-01,2021-09-30,true
+q0144,청년 주거,election_issue,1,2021-10-01,2021-12-31,true
+q0145,청년 주거,election_issue,1,2022-01-01,2022-03-09,true
+q0146,청년 주거 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0147,청년 주거 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0148,청년 주거 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0149,청년 주거 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0150,청년 주거 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0151,검찰개혁,election_issue,1,2021-01-01,2021-03-31,true
+q0152,검찰개혁,election_issue,1,2021-04-01,2021-06-30,true
+q0153,검찰개혁,election_issue,1,2021-07-01,2021-09-30,true
+q0154,검찰개혁,election_issue,1,2021-10-01,2021-12-31,true
+q0155,검찰개혁,election_issue,1,2022-01-01,2022-03-09,true
+q0156,검찰개혁 대선,election_issue,1,2021-01-01,2021-03-31,true
+q0157,검찰개혁 대선,election_issue,1,2021-04-01,2021-06-30,true
+q0158,검찰개혁 대선,election_issue,1,2021-07-01,2021-09-30,true
+q0159,검찰개혁 대선,election_issue,1,2021-10-01,2021-12-31,true
+q0160,검찰개혁 대선,election_issue,1,2022-01-01,2022-03-09,true
+q0161,대선 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0162,대선 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0163,대선 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0164,대선 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0165,대선 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0166,대선 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0167,대선 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0168,대선 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0169,대선 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0170,대선 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0171,대선 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0172,대선 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0173,대선 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0174,대선 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0175,대선 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0176,대선 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0177,대선 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0178,대선 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0179,대선 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0180,대선 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0181,대선 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0182,대선 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0183,대선 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0184,대선 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0185,대선 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0186,대선 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0187,대선 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0188,대선 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0189,대선 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0190,대선 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0191,대선 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0192,대선 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0193,대선 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0194,대선 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0195,대선 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0196,대선 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0197,대선 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0198,대선 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0199,대선 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0200,대선 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0201,총선 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0202,총선 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0203,총선 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0204,총선 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0205,총선 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0206,총선 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0207,총선 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0208,총선 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0209,총선 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0210,총선 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0211,총선 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0212,총선 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0213,총선 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0214,총선 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0215,총선 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0216,총선 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0217,총선 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0218,총선 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0219,총선 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0220,총선 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0221,총선 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0222,총선 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0223,총선 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0224,총선 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0225,총선 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0226,총선 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0227,총선 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0228,총선 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0229,총선 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0230,총선 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0231,총선 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0232,총선 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0233,총선 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0234,총선 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0235,총선 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0236,총선 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0237,총선 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0238,총선 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0239,총선 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0240,총선 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0241,지방선거 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0242,지방선거 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0243,지방선거 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0244,지방선거 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0245,지방선거 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0246,지방선거 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0247,지방선거 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0248,지방선거 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0249,지방선거 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0250,지방선거 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0251,지방선거 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0252,지방선거 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0253,지방선거 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0254,지방선거 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0255,지방선거 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0256,지방선거 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0257,지방선거 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0258,지방선거 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0259,지방선거 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0260,지방선거 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0261,지방선거 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0262,지방선거 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0263,지방선거 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0264,지방선거 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0265,지방선거 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0266,지방선거 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0267,지방선거 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0268,지방선거 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0269,지방선거 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0270,지방선거 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0271,지방선거 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0272,지방선거 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0273,지방선거 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0274,지방선거 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0275,지방선거 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0276,지방선거 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0277,지방선거 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0278,지방선거 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0279,지방선거 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0280,지방선거 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0281,정권교체 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0282,정권교체 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0283,정권교체 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0284,정권교체 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0285,정권교체 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0286,정권교체 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0287,정권교체 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0288,정권교체 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0289,정권교체 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0290,정권교체 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0291,정권교체 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0292,정권교체 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0293,정권교체 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0294,정권교체 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0295,정권교체 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0296,정권교체 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0297,정권교체 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0298,정권교체 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0299,정권교체 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0300,정권교체 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0301,정권교체 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0302,정권교체 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0303,정권교체 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0304,정권교체 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0305,정권교체 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0306,정권교체 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0307,정권교체 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0308,정권교체 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0309,정권교체 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0310,정권교체 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0311,정권교체 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0312,정권교체 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0313,정권교체 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0314,정권교체 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0315,정권교체 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0316,정권교체 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0317,정권교체 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0318,정권교체 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0319,정권교체 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0320,정권교체 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0321,정권심판 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0322,정권심판 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0323,정권심판 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0324,정권심판 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0325,정권심판 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0326,정권심판 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0327,정권심판 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0328,정권심판 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0329,정권심판 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0330,정권심판 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0331,정권심판 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0332,정권심판 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0333,정권심판 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0334,정권심판 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0335,정권심판 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0336,정권심판 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0337,정권심판 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0338,정권심판 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0339,정권심판 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0340,정권심판 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0341,정권심판 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0342,정권심판 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0343,정권심판 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0344,정권심판 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0345,정권심판 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0346,정권심판 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0347,정권심판 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0348,정권심판 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0349,정권심판 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0350,정권심판 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0351,정권심판 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0352,정권심판 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0353,정권심판 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0354,정권심판 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0355,정권심판 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0356,정권심판 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0357,정권심판 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0358,정권심판 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0359,정권심판 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0360,정권심판 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0361,여당 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0362,여당 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0363,여당 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0364,여당 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0365,여당 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0366,여당 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0367,여당 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0368,여당 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0369,여당 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0370,여당 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0371,여당 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0372,여당 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0373,여당 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0374,여당 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0375,여당 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0376,여당 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0377,여당 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0378,여당 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0379,여당 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0380,여당 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0381,여당 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0382,여당 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0383,여당 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0384,여당 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0385,여당 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0386,여당 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0387,여당 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0388,여당 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0389,여당 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0390,여당 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0391,여당 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0392,여당 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0393,여당 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0394,여당 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0395,여당 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0396,여당 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0397,여당 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0398,여당 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0399,여당 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0400,여당 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0401,야당 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0402,야당 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0403,야당 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0404,야당 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0405,야당 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0406,야당 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0407,야당 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0408,야당 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0409,야당 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0410,야당 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0411,야당 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0412,야당 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0413,야당 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0414,야당 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0415,야당 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0416,야당 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0417,야당 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0418,야당 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0419,야당 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0420,야당 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0421,야당 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0422,야당 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0423,야당 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0424,야당 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0425,야당 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0426,야당 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0427,야당 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0428,야당 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0429,야당 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0430,야당 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0431,야당 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0432,야당 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0433,야당 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0434,야당 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0435,야당 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0436,야당 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0437,야당 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0438,야당 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0439,야당 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0440,야당 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0441,경제 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0442,경제 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0443,경제 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0444,경제 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0445,경제 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0446,경제 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0447,경제 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0448,경제 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0449,경제 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0450,경제 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0451,경제 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0452,경제 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0453,경제 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0454,경제 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0455,경제 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0456,경제 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0457,경제 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0458,경제 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0459,경제 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0460,경제 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0461,경제 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0462,경제 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0463,경제 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0464,경제 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0465,경제 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0466,경제 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0467,경제 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0468,경제 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0469,경제 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0470,경제 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0471,경제 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0472,경제 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0473,경제 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0474,경제 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0475,경제 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0476,경제 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0477,경제 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0478,경제 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0479,경제 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0480,경제 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0481,물가 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0482,물가 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0483,물가 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0484,물가 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0485,물가 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0486,물가 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0487,물가 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0488,물가 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0489,물가 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0490,물가 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0491,물가 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0492,물가 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0493,물가 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0494,물가 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0495,물가 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0496,물가 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0497,물가 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0498,물가 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0499,물가 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0500,물가 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0501,물가 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0502,물가 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0503,물가 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0504,물가 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0505,물가 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0506,물가 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0507,물가 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0508,물가 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0509,물가 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0510,물가 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0511,물가 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0512,물가 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0513,물가 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0514,물가 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0515,물가 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0516,물가 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0517,물가 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0518,물가 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0519,물가 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0520,물가 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0521,부동산 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0522,부동산 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0523,부동산 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0524,부동산 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0525,부동산 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0526,부동산 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0527,부동산 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0528,부동산 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0529,부동산 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0530,부동산 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0531,부동산 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0532,부동산 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0533,부동산 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0534,부동산 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0535,부동산 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0536,부동산 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0537,부동산 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0538,부동산 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0539,부동산 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0540,부동산 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0541,부동산 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0542,부동산 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0543,부동산 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0544,부동산 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0545,부동산 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0546,부동산 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0547,부동산 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0548,부동산 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0549,부동산 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0550,부동산 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0551,부동산 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0552,부동산 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0553,부동산 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0554,부동산 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0555,부동산 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0556,부동산 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0557,부동산 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0558,부동산 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0559,부동산 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0560,부동산 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0561,연금 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0562,연금 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0563,연금 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0564,연금 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0565,연금 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0566,연금 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0567,연금 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0568,연금 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0569,연금 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0570,연금 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0571,연금 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0572,연금 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0573,연금 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0574,연금 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0575,연금 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0576,연금 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0577,연금 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0578,연금 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0579,연금 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0580,연금 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0581,연금 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0582,연금 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0583,연금 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0584,연금 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0585,연금 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0586,연금 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0587,연금 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0588,연금 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0589,연금 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0590,연금 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0591,연금 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0592,연금 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0593,연금 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0594,연금 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0595,연금 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0596,연금 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0597,연금 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0598,연금 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0599,연금 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0600,연금 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0601,일자리 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0602,일자리 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0603,일자리 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0604,일자리 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0605,일자리 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0606,일자리 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0607,일자리 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0608,일자리 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0609,일자리 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0610,일자리 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0611,일자리 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0612,일자리 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0613,일자리 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0614,일자리 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0615,일자리 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0616,일자리 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0617,일자리 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0618,일자리 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0619,일자리 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0620,일자리 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0621,일자리 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0622,일자리 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0623,일자리 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0624,일자리 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0625,일자리 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0626,일자리 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0627,일자리 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0628,일자리 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0629,일자리 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0630,일자리 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0631,일자리 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0632,일자리 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0633,일자리 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0634,일자리 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0635,일자리 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0636,일자리 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0637,일자리 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0638,일자리 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0639,일자리 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0640,일자리 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0641,복지 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0642,복지 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0643,복지 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0644,복지 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0645,복지 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0646,복지 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0647,복지 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0648,복지 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0649,복지 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0650,복지 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0651,복지 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0652,복지 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0653,복지 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0654,복지 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0655,복지 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0656,복지 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0657,복지 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0658,복지 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0659,복지 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0660,복지 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0661,복지 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0662,복지 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0663,복지 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0664,복지 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0665,복지 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0666,복지 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0667,복지 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0668,복지 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0669,복지 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0670,복지 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0671,복지 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0672,복지 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0673,복지 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0674,복지 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0675,복지 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0676,복지 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0677,복지 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0678,복지 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0679,복지 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0680,복지 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0681,안보 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0682,안보 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0683,안보 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0684,안보 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0685,안보 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0686,안보 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0687,안보 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0688,안보 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0689,안보 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0690,안보 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0691,안보 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0692,안보 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0693,안보 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0694,안보 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0695,안보 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0696,안보 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0697,안보 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0698,안보 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0699,안보 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0700,안보 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0701,안보 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0702,안보 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0703,안보 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0704,안보 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0705,안보 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0706,안보 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0707,안보 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0708,안보 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0709,안보 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0710,안보 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0711,안보 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0712,안보 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0713,안보 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0714,안보 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0715,안보 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0716,안보 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0717,안보 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0718,안보 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0719,안보 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0720,안보 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0721,청년 주거 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0722,청년 주거 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0723,청년 주거 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0724,청년 주거 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0725,청년 주거 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0726,청년 주거 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0727,청년 주거 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0728,청년 주거 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0729,청년 주거 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0730,청년 주거 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0731,청년 주거 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0732,청년 주거 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0733,청년 주거 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0734,청년 주거 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0735,청년 주거 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0736,청년 주거 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0737,청년 주거 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0738,청년 주거 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0739,청년 주거 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0740,청년 주거 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0741,청년 주거 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0742,청년 주거 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0743,청년 주거 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0744,청년 주거 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0745,청년 주거 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0746,청년 주거 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0747,청년 주거 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0748,청년 주거 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0749,청년 주거 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0750,청년 주거 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0751,청년 주거 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0752,청년 주거 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0753,청년 주거 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0754,청년 주거 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0755,청년 주거 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0756,청년 주거 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0757,청년 주거 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0758,청년 주거 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0759,청년 주거 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0760,청년 주거 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0761,검찰개혁 더불어민주당,issue_party,2,2021-01-01,2021-03-31,true
+q0762,검찰개혁 더불어민주당,issue_party,2,2021-04-01,2021-06-30,true
+q0763,검찰개혁 더불어민주당,issue_party,2,2021-07-01,2021-09-30,true
+q0764,검찰개혁 더불어민주당,issue_party,2,2021-10-01,2021-12-31,true
+q0765,검찰개혁 더불어민주당,issue_party,2,2022-01-01,2022-03-09,true
+q0766,검찰개혁 국민의힘,issue_party,2,2021-01-01,2021-03-31,true
+q0767,검찰개혁 국민의힘,issue_party,2,2021-04-01,2021-06-30,true
+q0768,검찰개혁 국민의힘,issue_party,2,2021-07-01,2021-09-30,true
+q0769,검찰개혁 국민의힘,issue_party,2,2021-10-01,2021-12-31,true
+q0770,검찰개혁 국민의힘,issue_party,2,2022-01-01,2022-03-09,true
+q0771,검찰개혁 정의당,issue_party,2,2021-01-01,2021-03-31,true
+q0772,검찰개혁 정의당,issue_party,2,2021-04-01,2021-06-30,true
+q0773,검찰개혁 정의당,issue_party,2,2021-07-01,2021-09-30,true
+q0774,검찰개혁 정의당,issue_party,2,2021-10-01,2021-12-31,true
+q0775,검찰개혁 정의당,issue_party,2,2022-01-01,2022-03-09,true
+q0776,검찰개혁 국민의당,issue_party,2,2021-01-01,2021-03-31,true
+q0777,검찰개혁 국민의당,issue_party,2,2021-04-01,2021-06-30,true
+q0778,검찰개혁 국민의당,issue_party,2,2021-07-01,2021-09-30,true
+q0779,검찰개혁 국민의당,issue_party,2,2021-10-01,2021-12-31,true
+q0780,검찰개혁 국민의당,issue_party,2,2022-01-01,2022-03-09,true
+q0781,검찰개혁 이재명,issue_candidate,2,2021-01-01,2021-03-31,true
+q0782,검찰개혁 이재명,issue_candidate,2,2021-04-01,2021-06-30,true
+q0783,검찰개혁 이재명,issue_candidate,2,2021-07-01,2021-09-30,true
+q0784,검찰개혁 이재명,issue_candidate,2,2021-10-01,2021-12-31,true
+q0785,검찰개혁 이재명,issue_candidate,2,2022-01-01,2022-03-09,true
+q0786,검찰개혁 윤석열,issue_candidate,2,2021-01-01,2021-03-31,true
+q0787,검찰개혁 윤석열,issue_candidate,2,2021-04-01,2021-06-30,true
+q0788,검찰개혁 윤석열,issue_candidate,2,2021-07-01,2021-09-30,true
+q0789,검찰개혁 윤석열,issue_candidate,2,2021-10-01,2021-12-31,true
+q0790,검찰개혁 윤석열,issue_candidate,2,2022-01-01,2022-03-09,true
+q0791,검찰개혁 심상정,issue_candidate,2,2021-01-01,2021-03-31,true
+q0792,검찰개혁 심상정,issue_candidate,2,2021-04-01,2021-06-30,true
+q0793,검찰개혁 심상정,issue_candidate,2,2021-07-01,2021-09-30,true
+q0794,검찰개혁 심상정,issue_candidate,2,2021-10-01,2021-12-31,true
+q0795,검찰개혁 심상정,issue_candidate,2,2022-01-01,2022-03-09,true
+q0796,검찰개혁 안철수,issue_candidate,2,2021-01-01,2021-03-31,true
+q0797,검찰개혁 안철수,issue_candidate,2,2021-04-01,2021-06-30,true
+q0798,검찰개혁 안철수,issue_candidate,2,2021-07-01,2021-09-30,true
+q0799,검찰개혁 안철수,issue_candidate,2,2021-10-01,2021-12-31,true
+q0800,검찰개혁 안철수,issue_candidate,2,2022-01-01,2022-03-09,true
+q0801,이재명 대선,candidate_support,2,2021-01-01,2021-03-31,true
+q0802,이재명 대선,candidate_support,2,2021-04-01,2021-06-30,true
+q0803,이재명 대선,candidate_support,2,2021-07-01,2021-09-30,true
+q0804,이재명 대선,candidate_support,2,2021-10-01,2021-12-31,true
+q0805,이재명 대선,candidate_support,2,2022-01-01,2022-03-09,true
+q0806,이재명 공약,candidate_support,2,2021-01-01,2021-03-31,true
+q0807,이재명 공약,candidate_support,2,2021-04-01,2021-06-30,true
+q0808,이재명 공약,candidate_support,2,2021-07-01,2021-09-30,true
+q0809,이재명 공약,candidate_support,2,2021-10-01,2021-12-31,true
+q0810,이재명 공약,candidate_support,2,2022-01-01,2022-03-09,true
+q0811,이재명 논란,candidate_support,2,2021-01-01,2021-03-31,true
+q0812,이재명 논란,candidate_support,2,2021-04-01,2021-06-30,true
+q0813,이재명 논란,candidate_support,2,2021-07-01,2021-09-30,true
+q0814,이재명 논란,candidate_support,2,2021-10-01,2021-12-31,true
+q0815,이재명 논란,candidate_support,2,2022-01-01,2022-03-09,true
+q0816,윤석열 대선,candidate_support,2,2021-01-01,2021-03-31,true
+q0817,윤석열 대선,candidate_support,2,2021-04-01,2021-06-30,true
+q0818,윤석열 대선,candidate_support,2,2021-07-01,2021-09-30,true
+q0819,윤석열 대선,candidate_support,2,2021-10-01,2021-12-31,true
+q0820,윤석열 대선,candidate_support,2,2022-01-01,2022-03-09,true
+q0821,윤석열 공약,candidate_support,2,2021-01-01,2021-03-31,true
+q0822,윤석열 공약,candidate_support,2,2021-04-01,2021-06-30,true
+q0823,윤석열 공약,candidate_support,2,2021-07-01,2021-09-30,true
+q0824,윤석열 공약,candidate_support,2,2021-10-01,2021-12-31,true
+q0825,윤석열 공약,candidate_support,2,2022-01-01,2022-03-09,true
+q0826,윤석열 논란,candidate_support,2,2021-01-01,2021-03-31,true
+q0827,윤석열 논란,candidate_support,2,2021-04-01,2021-06-30,true
+q0828,윤석열 논란,candidate_support,2,2021-07-01,2021-09-30,true
+q0829,윤석열 논란,candidate_support,2,2021-10-01,2021-12-31,true
+q0830,윤석열 논란,candidate_support,2,2022-01-01,2022-03-09,true
+q0831,심상정 대선,candidate_support,2,2021-01-01,2021-03-31,true
+q0832,심상정 대선,candidate_support,2,2021-04-01,2021-06-30,true
+q0833,심상정 대선,candidate_support,2,2021-07-01,2021-09-30,true
+q0834,심상정 대선,candidate_support,2,2021-10-01,2021-12-31,true
+q0835,심상정 대선,candidate_support,2,2022-01-01,2022-03-09,true
+q0836,심상정 공약,candidate_support,2,2021-01-01,2021-03-31,true
+q0837,심상정 공약,candidate_support,2,2021-04-01,2021-06-30,true
+q0838,심상정 공약,candidate_support,2,2021-07-01,2021-09-30,true
+q0839,심상정 공약,candidate_support,2,2021-10-01,2021-12-31,true
+q0840,심상정 공약,candidate_support,2,2022-01-01,2022-03-09,true
+q0841,심상정 논란,candidate_support,2,2021-01-01,2021-03-31,true
+q0842,심상정 논란,candidate_support,2,2021-04-01,2021-06-30,true
+q0843,심상정 논란,candidate_support,2,2021-07-01,2021-09-30,true
+q0844,심상정 논란,candidate_support,2,2021-10-01,2021-12-31,true
+q0845,심상정 논란,candidate_support,2,2022-01-01,2022-03-09,true
+q0846,안철수 대선,candidate_support,2,2021-01-01,2021-03-31,true
+q0847,안철수 대선,candidate_support,2,2021-04-01,2021-06-30,true
+q0848,안철수 대선,candidate_support,2,2021-07-01,2021-09-30,true
+q0849,안철수 대선,candidate_support,2,2021-10-01,2021-12-31,true
+q0850,안철수 대선,candidate_support,2,2022-01-01,2022-03-09,true
+q0851,안철수 공약,candidate_support,2,2021-01-01,2021-03-31,true
+q0852,안철수 공약,candidate_support,2,2021-04-01,2021-06-30,true
+q0853,안철수 공약,candidate_support,2,2021-07-01,2021-09-30,true
+q0854,안철수 공약,candidate_support,2,2021-10-01,2021-12-31,true
+q0855,안철수 공약,candidate_support,2,2022-01-01,2022-03-09,true
+q0856,안철수 논란,candidate_support,2,2021-01-01,2021-03-31,true
+q0857,안철수 논란,candidate_support,2,2021-04-01,2021-06-30,true
+q0858,안철수 논란,candidate_support,2,2021-07-01,2021-09-30,true
+q0859,안철수 논란,candidate_support,2,2021-10-01,2021-12-31,true
+q0860,안철수 논란,candidate_support,2,2022-01-01,2022-03-09,true
+q0861,더불어민주당 대선,party_support,2,2021-01-01,2021-03-31,true
+q0862,더불어민주당 대선,party_support,2,2021-04-01,2021-06-30,true
+q0863,더불어민주당 대선,party_support,2,2021-07-01,2021-09-30,true
+q0864,더불어민주당 대선,party_support,2,2021-10-01,2021-12-31,true
+q0865,더불어민주당 대선,party_support,2,2022-01-01,2022-03-09,true
+q0866,국민의힘 대선,party_support,2,2021-01-01,2021-03-31,true
+q0867,국민의힘 대선,party_support,2,2021-04-01,2021-06-30,true
+q0868,국민의힘 대선,party_support,2,2021-07-01,2021-09-30,true
+q0869,국민의힘 대선,party_support,2,2021-10-01,2021-12-31,true
+q0870,국민의힘 대선,party_support,2,2022-01-01,2022-03-09,true
+q0871,정의당 대선,party_support,2,2021-01-01,2021-03-31,true
+q0872,정의당 대선,party_support,2,2021-04-01,2021-06-30,true
+q0873,정의당 대선,party_support,2,2021-07-01,2021-09-30,true
+q0874,정의당 대선,party_support,2,2021-10-01,2021-12-31,true
+q0875,정의당 대선,party_support,2,2022-01-01,2022-03-09,true
+q0876,국민의당 대선,party_support,2,2021-01-01,2021-03-31,true
+q0877,국민의당 대선,party_support,2,2021-04-01,2021-06-30,true
+q0878,국민의당 대선,party_support,2,2021-07-01,2021-09-30,true
+q0879,국민의당 대선,party_support,2,2021-10-01,2021-12-31,true
+q0880,국민의당 대선,party_support,2,2022-01-01,2022-03-09,true
+q0881,서울 대선,region_support,2,2021-01-01,2021-03-31,true
+q0882,서울 대선,region_support,2,2021-04-01,2021-06-30,true
+q0883,서울 대선,region_support,2,2021-07-01,2021-09-30,true
+q0884,서울 대선,region_support,2,2021-10-01,2021-12-31,true
+q0885,서울 대선,region_support,2,2022-01-01,2022-03-09,true
+q0886,서울 총선,region_issue,3,2021-01-01,2021-03-31,true
+q0887,서울 총선,region_issue,3,2021-04-01,2021-06-30,true
+q0888,서울 총선,region_issue,3,2021-07-01,2021-09-30,true
+q0889,서울 총선,region_issue,3,2021-10-01,2021-12-31,true
+q0890,서울 총선,region_issue,3,2022-01-01,2022-03-09,true
+q0891,서울 지방선거,region_issue,3,2021-01-01,2021-03-31,true
+q0892,서울 지방선거,region_issue,3,2021-04-01,2021-06-30,true
+q0893,서울 지방선거,region_issue,3,2021-07-01,2021-09-30,true
+q0894,서울 지방선거,region_issue,3,2021-10-01,2021-12-31,true
+q0895,서울 지방선거,region_issue,3,2022-01-01,2022-03-09,true
+q0896,서울 정권교체,region_issue,3,2021-01-01,2021-03-31,true
+q0897,서울 정권교체,region_issue,3,2021-04-01,2021-06-30,true
+q0898,서울 정권교체,region_issue,3,2021-07-01,2021-09-30,true
+q0899,서울 정권교체,region_issue,3,2021-10-01,2021-12-31,true
+q0900,서울 정권교체,region_issue,3,2022-01-01,2022-03-09,true
+q0901,서울 정권심판,region_issue,3,2021-01-01,2021-03-31,true
+q0902,서울 정권심판,region_issue,3,2021-04-01,2021-06-30,true
+q0903,서울 정권심판,region_issue,3,2021-07-01,2021-09-30,true
+q0904,서울 정권심판,region_issue,3,2021-10-01,2021-12-31,true
+q0905,서울 정권심판,region_issue,3,2022-01-01,2022-03-09,true
+q0906,서울 여당,region_issue,3,2021-01-01,2021-03-31,true
+q0907,서울 여당,region_issue,3,2021-04-01,2021-06-30,true
+q0908,서울 여당,region_issue,3,2021-07-01,2021-09-30,true
+q0909,서울 여당,region_issue,3,2021-10-01,2021-12-31,true
+q0910,서울 여당,region_issue,3,2022-01-01,2022-03-09,true
+q0911,서울 야당,region_issue,3,2021-01-01,2021-03-31,true
+q0912,서울 야당,region_issue,3,2021-04-01,2021-06-30,true
+q0913,서울 야당,region_issue,3,2021-07-01,2021-09-30,true
+q0914,서울 야당,region_issue,3,2021-10-01,2021-12-31,true
+q0915,서울 야당,region_issue,3,2022-01-01,2022-03-09,true
+q0916,서울 경제,region_issue,3,2021-01-01,2021-03-31,true
+q0917,서울 경제,region_issue,3,2021-04-01,2021-06-30,true
+q0918,서울 경제,region_issue,3,2021-07-01,2021-09-30,true
+q0919,서울 경제,region_issue,3,2021-10-01,2021-12-31,true
+q0920,서울 경제,region_issue,3,2022-01-01,2022-03-09,true
+q0921,서울 물가,region_issue,3,2021-01-01,2021-03-31,true
+q0922,서울 물가,region_issue,3,2021-04-01,2021-06-30,true
+q0923,서울 물가,region_issue,3,2021-07-01,2021-09-30,true
+q0924,서울 물가,region_issue,3,2021-10-01,2021-12-31,true
+q0925,서울 물가,region_issue,3,2022-01-01,2022-03-09,true
+q0926,서울 부동산,region_issue,3,2021-01-01,2021-03-31,true
+q0927,서울 부동산,region_issue,3,2021-04-01,2021-06-30,true
+q0928,서울 부동산,region_issue,3,2021-07-01,2021-09-30,true
+q0929,서울 부동산,region_issue,3,2021-10-01,2021-12-31,true
+q0930,서울 부동산,region_issue,3,2022-01-01,2022-03-09,true
+q0931,서울 연금,region_issue,3,2021-01-01,2021-03-31,true
+q0932,서울 연금,region_issue,3,2021-04-01,2021-06-30,true
+q0933,서울 연금,region_issue,3,2021-07-01,2021-09-30,true
+q0934,서울 연금,region_issue,3,2021-10-01,2021-12-31,true
+q0935,서울 연금,region_issue,3,2022-01-01,2022-03-09,true
+q0936,서울 일자리,region_issue,3,2021-01-01,2021-03-31,true
+q0937,서울 일자리,region_issue,3,2021-04-01,2021-06-30,true
+q0938,서울 일자리,region_issue,3,2021-07-01,2021-09-30,true
+q0939,서울 일자리,region_issue,3,2021-10-01,2021-12-31,true
+q0940,서울 일자리,region_issue,3,2022-01-01,2022-03-09,true
+q0941,서울 복지,region_issue,3,2021-01-01,2021-03-31,true
+q0942,서울 복지,region_issue,3,2021-04-01,2021-06-30,true
+q0943,서울 복지,region_issue,3,2021-07-01,2021-09-30,true
+q0944,서울 복지,region_issue,3,2021-10-01,2021-12-31,true
+q0945,서울 복지,region_issue,3,2022-01-01,2022-03-09,true
+q0946,서울 안보,region_issue,3,2021-01-01,2021-03-31,true
+q0947,서울 안보,region_issue,3,2021-04-01,2021-06-30,true
+q0948,서울 안보,region_issue,3,2021-07-01,2021-09-30,true
+q0949,서울 안보,region_issue,3,2021-10-01,2021-12-31,true
+q0950,서울 안보,region_issue,3,2022-01-01,2022-03-09,true
+q0951,서울 청년 주거,region_issue,3,2021-01-01,2021-03-31,true
+q0952,서울 청년 주거,region_issue,3,2021-04-01,2021-06-30,true
+q0953,서울 청년 주거,region_issue,3,2021-07-01,2021-09-30,true
+q0954,서울 청년 주거,region_issue,3,2021-10-01,2021-12-31,true
+q0955,서울 청년 주거,region_issue,3,2022-01-01,2022-03-09,true
+q0956,서울 검찰개혁,region_issue,3,2021-01-01,2021-03-31,true
+q0957,서울 검찰개혁,region_issue,3,2021-04-01,2021-06-30,true
+q0958,서울 검찰개혁,region_issue,3,2021-07-01,2021-09-30,true
+q0959,서울 검찰개혁,region_issue,3,2021-10-01,2021-12-31,true
+q0960,서울 검찰개혁,region_issue,3,2022-01-01,2022-03-09,true
+q0961,경기 대선,region_support,2,2021-01-01,2021-03-31,true
+q0962,경기 대선,region_support,2,2021-04-01,2021-06-30,true
+q0963,경기 대선,region_support,2,2021-07-01,2021-09-30,true
+q0964,경기 대선,region_support,2,2021-10-01,2021-12-31,true
+q0965,경기 대선,region_support,2,2022-01-01,2022-03-09,true
+q0966,경기 총선,region_issue,3,2021-01-01,2021-03-31,true
+q0967,경기 총선,region_issue,3,2021-04-01,2021-06-30,true
+q0968,경기 총선,region_issue,3,2021-07-01,2021-09-30,true
+q0969,경기 총선,region_issue,3,2021-10-01,2021-12-31,true
+q0970,경기 총선,region_issue,3,2022-01-01,2022-03-09,true
+q0971,경기 지방선거,region_issue,3,2021-01-01,2021-03-31,true
+q0972,경기 지방선거,region_issue,3,2021-04-01,2021-06-30,true
+q0973,경기 지방선거,region_issue,3,2021-07-01,2021-09-30,true
+q0974,경기 지방선거,region_issue,3,2021-10-01,2021-12-31,true
+q0975,경기 지방선거,region_issue,3,2022-01-01,2022-03-09,true
+q0976,경기 정권교체,region_issue,3,2021-01-01,2021-03-31,true
+q0977,경기 정권교체,region_issue,3,2021-04-01,2021-06-30,true
+q0978,경기 정권교체,region_issue,3,2021-07-01,2021-09-30,true
+q0979,경기 정권교체,region_issue,3,2021-10-01,2021-12-31,true
+q0980,경기 정권교체,region_issue,3,2022-01-01,2022-03-09,true
+q0981,경기 정권심판,region_issue,3,2021-01-01,2021-03-31,true
+q0982,경기 정권심판,region_issue,3,2021-04-01,2021-06-30,true
+q0983,경기 정권심판,region_issue,3,2021-07-01,2021-09-30,true
+q0984,경기 정권심판,region_issue,3,2021-10-01,2021-12-31,true
+q0985,경기 정권심판,region_issue,3,2022-01-01,2022-03-09,true
+q0986,경기 여당,region_issue,3,2021-01-01,2021-03-31,true
+q0987,경기 여당,region_issue,3,2021-04-01,2021-06-30,true
+q0988,경기 여당,region_issue,3,2021-07-01,2021-09-30,true
+q0989,경기 여당,region_issue,3,2021-10-01,2021-12-31,true
+q0990,경기 여당,region_issue,3,2022-01-01,2022-03-09,true
+q0991,경기 야당,region_issue,3,2021-01-01,2021-03-31,true
+q0992,경기 야당,region_issue,3,2021-04-01,2021-06-30,true
+q0993,경기 야당,region_issue,3,2021-07-01,2021-09-30,true
+q0994,경기 야당,region_issue,3,2021-10-01,2021-12-31,true
+q0995,경기 야당,region_issue,3,2022-01-01,2022-03-09,true
+q0996,경기 경제,region_issue,3,2021-01-01,2021-03-31,true
+q0997,경기 경제,region_issue,3,2021-04-01,2021-06-30,true
+q0998,경기 경제,region_issue,3,2021-07-01,2021-09-30,true
+q0999,경기 경제,region_issue,3,2021-10-01,2021-12-31,true
+q1000,경기 경제,region_issue,3,2022-01-01,2022-03-09,true
+q1001,경기 물가,region_issue,3,2021-01-01,2021-03-31,true
+q1002,경기 물가,region_issue,3,2021-04-01,2021-06-30,true
+q1003,경기 물가,region_issue,3,2021-07-01,2021-09-30,true
+q1004,경기 물가,region_issue,3,2021-10-01,2021-12-31,true
+q1005,경기 물가,region_issue,3,2022-01-01,2022-03-09,true
+q1006,경기 부동산,region_issue,3,2021-01-01,2021-03-31,true
+q1007,경기 부동산,region_issue,3,2021-04-01,2021-06-30,true
+q1008,경기 부동산,region_issue,3,2021-07-01,2021-09-30,true
+q1009,경기 부동산,region_issue,3,2021-10-01,2021-12-31,true
+q1010,경기 부동산,region_issue,3,2022-01-01,2022-03-09,true
+q1011,경기 연금,region_issue,3,2021-01-01,2021-03-31,true
+q1012,경기 연금,region_issue,3,2021-04-01,2021-06-30,true
+q1013,경기 연금,region_issue,3,2021-07-01,2021-09-30,true
+q1014,경기 연금,region_issue,3,2021-10-01,2021-12-31,true
+q1015,경기 연금,region_issue,3,2022-01-01,2022-03-09,true
+q1016,경기 일자리,region_issue,3,2021-01-01,2021-03-31,true
+q1017,경기 일자리,region_issue,3,2021-04-01,2021-06-30,true
+q1018,경기 일자리,region_issue,3,2021-07-01,2021-09-30,true
+q1019,경기 일자리,region_issue,3,2021-10-01,2021-12-31,true
+q1020,경기 일자리,region_issue,3,2022-01-01,2022-03-09,true
+q1021,경기 복지,region_issue,3,2021-01-01,2021-03-31,true
+q1022,경기 복지,region_issue,3,2021-04-01,2021-06-30,true
+q1023,경기 복지,region_issue,3,2021-07-01,2021-09-30,true
+q1024,경기 복지,region_issue,3,2021-10-01,2021-12-31,true
+q1025,경기 복지,region_issue,3,2022-01-01,2022-03-09,true
+q1026,경기 안보,region_issue,3,2021-01-01,2021-03-31,true
+q1027,경기 안보,region_issue,3,2021-04-01,2021-06-30,true
+q1028,경기 안보,region_issue,3,2021-07-01,2021-09-30,true
+q1029,경기 안보,region_issue,3,2021-10-01,2021-12-31,true
+q1030,경기 안보,region_issue,3,2022-01-01,2022-03-09,true
+q1031,경기 청년 주거,region_issue,3,2021-01-01,2021-03-31,true
+q1032,경기 청년 주거,region_issue,3,2021-04-01,2021-06-30,true
+q1033,경기 청년 주거,region_issue,3,2021-07-01,2021-09-30,true
+q1034,경기 청년 주거,region_issue,3,2021-10-01,2021-12-31,true
+q1035,경기 청년 주거,region_issue,3,2022-01-01,2022-03-09,true
+q1036,경기 검찰개혁,region_issue,3,2021-01-01,2021-03-31,true
+q1037,경기 검찰개혁,region_issue,3,2021-04-01,2021-06-30,true
+q1038,경기 검찰개혁,region_issue,3,2021-07-01,2021-09-30,true
+q1039,경기 검찰개혁,region_issue,3,2021-10-01,2021-12-31,true
+q1040,경기 검찰개혁,region_issue,3,2022-01-01,2022-03-09,true
+q1041,부산 대선,region_support,2,2021-01-01,2021-03-31,true
+q1042,부산 대선,region_support,2,2021-04-01,2021-06-30,true
+q1043,부산 대선,region_support,2,2021-07-01,2021-09-30,true
+q1044,부산 대선,region_support,2,2021-10-01,2021-12-31,true
+q1045,부산 대선,region_support,2,2022-01-01,2022-03-09,true
+q1046,부산 총선,region_issue,3,2021-01-01,2021-03-31,true
+q1047,부산 총선,region_issue,3,2021-04-01,2021-06-30,true
+q1048,부산 총선,region_issue,3,2021-07-01,2021-09-30,true
+q1049,부산 총선,region_issue,3,2021-10-01,2021-12-31,true
+q1050,부산 총선,region_issue,3,2022-01-01,2022-03-09,true
+q1051,부산 지방선거,region_issue,3,2021-01-01,2021-03-31,true
+q1052,부산 지방선거,region_issue,3,2021-04-01,2021-06-30,true
+q1053,부산 지방선거,region_issue,3,2021-07-01,2021-09-30,true
+q1054,부산 지방선거,region_issue,3,2021-10-01,2021-12-31,true
+q1055,부산 지방선거,region_issue,3,2022-01-01,2022-03-09,true
+q1056,부산 정권교체,region_issue,3,2021-01-01,2021-03-31,true
+q1057,부산 정권교체,region_issue,3,2021-04-01,2021-06-30,true
+q1058,부산 정권교체,region_issue,3,2021-07-01,2021-09-30,true
+q1059,부산 정권교체,region_issue,3,2021-10-01,2021-12-31,true
+q1060,부산 정권교체,region_issue,3,2022-01-01,2022-03-09,true
+q1061,부산 정권심판,region_issue,3,2021-01-01,2021-03-31,true
+q1062,부산 정권심판,region_issue,3,2021-04-01,2021-06-30,true
+q1063,부산 정권심판,region_issue,3,2021-07-01,2021-09-30,true
+q1064,부산 정권심판,region_issue,3,2021-10-01,2021-12-31,true
+q1065,부산 정권심판,region_issue,3,2022-01-01,2022-03-09,true
+q1066,부산 여당,region_issue,3,2021-01-01,2021-03-31,true
+q1067,부산 여당,region_issue,3,2021-04-01,2021-06-30,true
+q1068,부산 여당,region_issue,3,2021-07-01,2021-09-30,true
+q1069,부산 여당,region_issue,3,2021-10-01,2021-12-31,true
+q1070,부산 여당,region_issue,3,2022-01-01,2022-03-09,true
+q1071,부산 야당,region_issue,3,2021-01-01,2021-03-31,true
+q1072,부산 야당,region_issue,3,2021-04-01,2021-06-30,true
+q1073,부산 야당,region_issue,3,2021-07-01,2021-09-30,true
+q1074,부산 야당,region_issue,3,2021-10-01,2021-12-31,true
+q1075,부산 야당,region_issue,3,2022-01-01,2022-03-09,true
+q1076,부산 경제,region_issue,3,2021-01-01,2021-03-31,true
+q1077,부산 경제,region_issue,3,2021-04-01,2021-06-30,true
+q1078,부산 경제,region_issue,3,2021-07-01,2021-09-30,true
+q1079,부산 경제,region_issue,3,2021-10-01,2021-12-31,true
+q1080,부산 경제,region_issue,3,2022-01-01,2022-03-09,true
+q1081,부산 물가,region_issue,3,2021-01-01,2021-03-31,true
+q1082,부산 물가,region_issue,3,2021-04-01,2021-06-30,true
+q1083,부산 물가,region_issue,3,2021-07-01,2021-09-30,true
+q1084,부산 물가,region_issue,3,2021-10-01,2021-12-31,true
+q1085,부산 물가,region_issue,3,2022-01-01,2022-03-09,true
+q1086,부산 부동산,region_issue,3,2021-01-01,2021-03-31,true
+q1087,부산 부동산,region_issue,3,2021-04-01,2021-06-30,true
+q1088,부산 부동산,region_issue,3,2021-07-01,2021-09-30,true
+q1089,부산 부동산,region_issue,3,2021-10-01,2021-12-31,true
+q1090,부산 부동산,region_issue,3,2022-01-01,2022-03-09,true
+q1091,부산 연금,region_issue,3,2021-01-01,2021-03-31,true
+q1092,부산 연금,region_issue,3,2021-04-01,2021-06-30,true
+q1093,부산 연금,region_issue,3,2021-07-01,2021-09-30,true
+q1094,부산 연금,region_issue,3,2021-10-01,2021-12-31,true
+q1095,부산 연금,region_issue,3,2022-01-01,2022-03-09,true
+q1096,부산 일자리,region_issue,3,2021-01-01,2021-03-31,true
+q1097,부산 일자리,region_issue,3,2021-04-01,2021-06-30,true
+q1098,부산 일자리,region_issue,3,2021-07-01,2021-09-30,true
+q1099,부산 일자리,region_issue,3,2021-10-01,2021-12-31,true
+q1100,부산 일자리,region_issue,3,2022-01-01,2022-03-09,true
+q1101,부산 복지,region_issue,3,2021-01-01,2021-03-31,true
+q1102,부산 복지,region_issue,3,2021-04-01,2021-06-30,true
+q1103,부산 복지,region_issue,3,2021-07-01,2021-09-30,true
+q1104,부산 복지,region_issue,3,2021-10-01,2021-12-31,true
+q1105,부산 복지,region_issue,3,2022-01-01,2022-03-09,true
+q1106,부산 안보,region_issue,3,2021-01-01,2021-03-31,true
+q1107,부산 안보,region_issue,3,2021-04-01,2021-06-30,true
+q1108,부산 안보,region_issue,3,2021-07-01,2021-09-30,true
+q1109,부산 안보,region_issue,3,2021-10-01,2021-12-31,true
+q1110,부산 안보,region_issue,3,2022-01-01,2022-03-09,true
+q1111,부산 청년 주거,region_issue,3,2021-01-01,2021-03-31,true
+q1112,부산 청년 주거,region_issue,3,2021-04-01,2021-06-30,true
+q1113,부산 청년 주거,region_issue,3,2021-07-01,2021-09-30,true
+q1114,부산 청년 주거,region_issue,3,2021-10-01,2021-12-31,true
+q1115,부산 청년 주거,region_issue,3,2022-01-01,2022-03-09,true
+q1116,부산 검찰개혁,region_issue,3,2021-01-01,2021-03-31,true
+q1117,부산 검찰개혁,region_issue,3,2021-04-01,2021-06-30,true
+q1118,부산 검찰개혁,region_issue,3,2021-07-01,2021-09-30,true
+q1119,부산 검찰개혁,region_issue,3,2021-10-01,2021-12-31,true
+q1120,부산 검찰개혁,region_issue,3,2022-01-01,2022-03-09,true
+q1121,대구 대선,region_support,2,2021-01-01,2021-03-31,true
+q1122,대구 대선,region_support,2,2021-04-01,2021-06-30,true
+q1123,대구 대선,region_support,2,2021-07-01,2021-09-30,true
+q1124,대구 대선,region_support,2,2021-10-01,2021-12-31,true
+q1125,대구 대선,region_support,2,2022-01-01,2022-03-09,true
+q1126,대구 총선,region_issue,3,2021-01-01,2021-03-31,true
+q1127,대구 총선,region_issue,3,2021-04-01,2021-06-30,true
+q1128,대구 총선,region_issue,3,2021-07-01,2021-09-30,true
+q1129,대구 총선,region_issue,3,2021-10-01,2021-12-31,true
+q1130,대구 총선,region_issue,3,2022-01-01,2022-03-09,true
+q1131,대구 지방선거,region_issue,3,2021-01-01,2021-03-31,true
+q1132,대구 지방선거,region_issue,3,2021-04-01,2021-06-30,true
+q1133,대구 지방선거,region_issue,3,2021-07-01,2021-09-30,true
+q1134,대구 지방선거,region_issue,3,2021-10-01,2021-12-31,true
+q1135,대구 지방선거,region_issue,3,2022-01-01,2022-03-09,true
+q1136,대구 정권교체,region_issue,3,2021-01-01,2021-03-31,true
+q1137,대구 정권교체,region_issue,3,2021-04-01,2021-06-30,true
+q1138,대구 정권교체,region_issue,3,2021-07-01,2021-09-30,true
+q1139,대구 정권교체,region_issue,3,2021-10-01,2021-12-31,true
+q1140,대구 정권교체,region_issue,3,2022-01-01,2022-03-09,true
+q1141,대구 정권심판,region_issue,3,2021-01-01,2021-03-31,true
+q1142,대구 정권심판,region_issue,3,2021-04-01,2021-06-30,true
+q1143,대구 정권심판,region_issue,3,2021-07-01,2021-09-30,true
+q1144,대구 정권심판,region_issue,3,2021-10-01,2021-12-31,true
+q1145,대구 정권심판,region_issue,3,2022-01-01,2022-03-09,true
+q1146,대구 여당,region_issue,3,2021-01-01,2021-03-31,true
+q1147,대구 여당,region_issue,3,2021-04-01,2021-06-30,true
+q1148,대구 여당,region_issue,3,2021-07-01,2021-09-30,true
+q1149,대구 여당,region_issue,3,2021-10-01,2021-12-31,true
+q1150,대구 여당,region_issue,3,2022-01-01,2022-03-09,true
+q1151,대구 야당,region_issue,3,2021-01-01,2021-03-31,true
+q1152,대구 야당,region_issue,3,2021-04-01,2021-06-30,true
+q1153,대구 야당,region_issue,3,2021-07-01,2021-09-30,true
+q1154,대구 야당,region_issue,3,2021-10-01,2021-12-31,true
+q1155,대구 야당,region_issue,3,2022-01-01,2022-03-09,true
+q1156,대구 경제,region_issue,3,2021-01-01,2021-03-31,true
+q1157,대구 경제,region_issue,3,2021-04-01,2021-06-30,true
+q1158,대구 경제,region_issue,3,2021-07-01,2021-09-30,true
+q1159,대구 경제,region_issue,3,2021-10-01,2021-12-31,true
+q1160,대구 경제,region_issue,3,2022-01-01,2022-03-09,true
+q1161,대구 물가,region_issue,3,2021-01-01,2021-03-31,true
+q1162,대구 물가,region_issue,3,2021-04-01,2021-06-30,true
+q1163,대구 물가,region_issue,3,2021-07-01,2021-09-30,true
+q1164,대구 물가,region_issue,3,2021-10-01,2021-12-31,true
+q1165,대구 물가,region_issue,3,2022-01-01,2022-03-09,true
+q1166,대구 부동산,region_issue,3,2021-01-01,2021-03-31,true
+q1167,대구 부동산,region_issue,3,2021-04-01,2021-06-30,true
+q1168,대구 부동산,region_issue,3,2021-07-01,2021-09-30,true
+q1169,대구 부동산,region_issue,3,2021-10-01,2021-12-31,true
+q1170,대구 부동산,region_issue,3,2022-01-01,2022-03-09,true
+q1171,대구 연금,region_issue,3,2021-01-01,2021-03-31,true
+q1172,대구 연금,region_issue,3,2021-04-01,2021-06-30,true
+q1173,대구 연금,region_issue,3,2021-07-01,2021-09-30,true
+q1174,대구 연금,region_issue,3,2021-10-01,2021-12-31,true
+q1175,대구 연금,region_issue,3,2022-01-01,2022-03-09,true
+q1176,대구 일자리,region_issue,3,2021-01-01,2021-03-31,true
+q1177,대구 일자리,region_issue,3,2021-04-01,2021-06-30,true
+q1178,대구 일자리,region_issue,3,2021-07-01,2021-09-30,true
+q1179,대구 일자리,region_issue,3,2021-10-01,2021-12-31,true
+q1180,대구 일자리,region_issue,3,2022-01-01,2022-03-09,true
+q1181,대구 복지,region_issue,3,2021-01-01,2021-03-31,true
+q1182,대구 복지,region_issue,3,2021-04-01,2021-06-30,true
+q1183,대구 복지,region_issue,3,2021-07-01,2021-09-30,true
+q1184,대구 복지,region_issue,3,2021-10-01,2021-12-31,true
+q1185,대구 복지,region_issue,3,2022-01-01,2022-03-09,true
+q1186,대구 안보,region_issue,3,2021-01-01,2021-03-31,true
+q1187,대구 안보,region_issue,3,2021-04-01,2021-06-30,true
+q1188,대구 안보,region_issue,3,2021-07-01,2021-09-30,true
+q1189,대구 안보,region_issue,3,2021-10-01,2021-12-31,true
+q1190,대구 안보,region_issue,3,2022-01-01,2022-03-09,true
+q1191,대구 청년 주거,region_issue,3,2021-01-01,2021-03-31,true
+q1192,대구 청년 주거,region_issue,3,2021-04-01,2021-06-30,true
+q1193,대구 청년 주거,region_issue,3,2021-07-01,2021-09-30,true
+q1194,대구 청년 주거,region_issue,3,2021-10-01,2021-12-31,true
+q1195,대구 청년 주거,region_issue,3,2022-01-01,2022-03-09,true
+q1196,대구 검찰개혁,region_issue,3,2021-01-01,2021-03-31,true
+q1197,대구 검찰개혁,region_issue,3,2021-04-01,2021-06-30,true
+q1198,대구 검찰개혁,region_issue,3,2021-07-01,2021-09-30,true
+q1199,대구 검찰개혁,region_issue,3,2021-10-01,2021-12-31,true
+q1200,대구 검찰개혁,region_issue,3,2022-01-01,2022-03-09,true
+q1201,광주 대선,region_support,2,2021-01-01,2021-03-31,true
+q1202,광주 대선,region_support,2,2021-04-01,2021-06-30,true
+q1203,광주 대선,region_support,2,2021-07-01,2021-09-30,true
+q1204,광주 대선,region_support,2,2021-10-01,2021-12-31,true
+q1205,광주 대선,region_support,2,2022-01-01,2022-03-09,true
+q1206,광주 총선,region_issue,3,2021-01-01,2021-03-31,true
+q1207,광주 총선,region_issue,3,2021-04-01,2021-06-30,true
+q1208,광주 총선,region_issue,3,2021-07-01,2021-09-30,true
+q1209,광주 총선,region_issue,3,2021-10-01,2021-12-31,true
+q1210,광주 총선,region_issue,3,2022-01-01,2022-03-09,true
+q1211,광주 지방선거,region_issue,3,2021-01-01,2021-03-31,true
+q1212,광주 지방선거,region_issue,3,2021-04-01,2021-06-30,true
+q1213,광주 지방선거,region_issue,3,2021-07-01,2021-09-30,true
+q1214,광주 지방선거,region_issue,3,2021-10-01,2021-12-31,true
+q1215,광주 지방선거,region_issue,3,2022-01-01,2022-03-09,true
+q1216,광주 정권교체,region_issue,3,2021-01-01,2021-03-31,true
+q1217,광주 정권교체,region_issue,3,2021-04-01,2021-06-30,true
+q1218,광주 정권교체,region_issue,3,2021-07-01,2021-09-30,true
+q1219,광주 정권교체,region_issue,3,2021-10-01,2021-12-31,true
+q1220,광주 정권교체,region_issue,3,2022-01-01,2022-03-09,true
+q1221,광주 정권심판,region_issue,3,2021-01-01,2021-03-31,true
+q1222,광주 정권심판,region_issue,3,2021-04-01,2021-06-30,true
+q1223,광주 정권심판,region_issue,3,2021-07-01,2021-09-30,true
+q1224,광주 정권심판,region_issue,3,2021-10-01,2021-12-31,true
+q1225,광주 정권심판,region_issue,3,2022-01-01,2022-03-09,true
+q1226,광주 여당,region_issue,3,2021-01-01,2021-03-31,true
+q1227,광주 여당,region_issue,3,2021-04-01,2021-06-30,true
+q1228,광주 여당,region_issue,3,2021-07-01,2021-09-30,true
+q1229,광주 여당,region_issue,3,2021-10-01,2021-12-31,true
+q1230,광주 여당,region_issue,3,2022-01-01,2022-03-09,true
+q1231,광주 야당,region_issue,3,2021-01-01,2021-03-31,true
+q1232,광주 야당,region_issue,3,2021-04-01,2021-06-30,true
+q1233,광주 야당,region_issue,3,2021-07-01,2021-09-30,true
+q1234,광주 야당,region_issue,3,2021-10-01,2021-12-31,true
+q1235,광주 야당,region_issue,3,2022-01-01,2022-03-09,true
+q1236,광주 경제,region_issue,3,2021-01-01,2021-03-31,true
+q1237,광주 경제,region_issue,3,2021-04-01,2021-06-30,true
+q1238,광주 경제,region_issue,3,2021-07-01,2021-09-30,true
+q1239,광주 경제,region_issue,3,2021-10-01,2021-12-31,true
+q1240,광주 경제,region_issue,3,2022-01-01,2022-03-09,true
+q1241,광주 물가,region_issue,3,2021-01-01,2021-03-31,true
+q1242,광주 물가,region_issue,3,2021-04-01,2021-06-30,true
+q1243,광주 물가,region_issue,3,2021-07-01,2021-09-30,true
+q1244,광주 물가,region_issue,3,2021-10-01,2021-12-31,true
+q1245,광주 물가,region_issue,3,2022-01-01,2022-03-09,true
+q1246,광주 부동산,region_issue,3,2021-01-01,2021-03-31,true
+q1247,광주 부동산,region_issue,3,2021-04-01,2021-06-30,true
+q1248,광주 부동산,region_issue,3,2021-07-01,2021-09-30,true
+q1249,광주 부동산,region_issue,3,2021-10-01,2021-12-31,true
+q1250,광주 부동산,region_issue,3,2022-01-01,2022-03-09,true
+q1251,광주 연금,region_issue,3,2021-01-01,2021-03-31,true
+q1252,광주 연금,region_issue,3,2021-04-01,2021-06-30,true
+q1253,광주 연금,region_issue,3,2021-07-01,2021-09-30,true
+q1254,광주 연금,region_issue,3,2021-10-01,2021-12-31,true
+q1255,광주 연금,region_issue,3,2022-01-01,2022-03-09,true
+q1256,광주 일자리,region_issue,3,2021-01-01,2021-03-31,true
+q1257,광주 일자리,region_issue,3,2021-04-01,2021-06-30,true
+q1258,광주 일자리,region_issue,3,2021-07-01,2021-09-30,true
+q1259,광주 일자리,region_issue,3,2021-10-01,2021-12-31,true
+q1260,광주 일자리,region_issue,3,2022-01-01,2022-03-09,true
+q1261,광주 복지,region_issue,3,2021-01-01,2021-03-31,true
+q1262,광주 복지,region_issue,3,2021-04-01,2021-06-30,true
+q1263,광주 복지,region_issue,3,2021-07-01,2021-09-30,true
+q1264,광주 복지,region_issue,3,2021-10-01,2021-12-31,true
+q1265,광주 복지,region_issue,3,2022-01-01,2022-03-09,true
+q1266,광주 안보,region_issue,3,2021-01-01,2021-03-31,true
+q1267,광주 안보,region_issue,3,2021-04-01,2021-06-30,true
+q1268,광주 안보,region_issue,3,2021-07-01,2021-09-30,true
+q1269,광주 안보,region_issue,3,2021-10-01,2021-12-31,true
+q1270,광주 안보,region_issue,3,2022-01-01,2022-03-09,true
+q1271,광주 청년 주거,region_issue,3,2021-01-01,2021-03-31,true
+q1272,광주 청년 주거,region_issue,3,2021-04-01,2021-06-30,true
+q1273,광주 청년 주거,region_issue,3,2021-07-01,2021-09-30,true
+q1274,광주 청년 주거,region_issue,3,2021-10-01,2021-12-31,true
+q1275,광주 청년 주거,region_issue,3,2022-01-01,2022-03-09,true
+q1276,광주 검찰개혁,region_issue,3,2021-01-01,2021-03-31,true
+q1277,광주 검찰개혁,region_issue,3,2021-04-01,2021-06-30,true
+q1278,광주 검찰개혁,region_issue,3,2021-07-01,2021-09-30,true
+q1279,광주 검찰개혁,region_issue,3,2021-10-01,2021-12-31,true
+q1280,광주 검찰개혁,region_issue,3,2022-01-01,2022-03-09,true

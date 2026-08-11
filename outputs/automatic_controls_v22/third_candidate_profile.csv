@@ -1,0 +1,6 @@
+﻿election_id,slot,candidate_name,viability,centrist_appeal,anti_major_party_appeal,regional_base_overlap,available_date,confidence,notes
+pres_2002,C,권영길,0.2002861657537909,0.1666666666666666,0.32175,0.1625961880365863,2002-12-18,0.3776503168428453,Automatic V22 profile source=election_and_assembly_derived; no target-election vote outcome
+pres_2007,C,이회창,0.6606834048636688,0.3185164816851648,0.6656980850794689,0.2218118566278784,2007-12-18,0.5886164164530889,Automatic V22 profile source=election_and_assembly_derived; no target-election vote outcome
+pres_2012,C,Ahn Cheol-soo,0.8627274536659868,0.5,0.5,0.0,2012-11-23,0.25,Automatic V22 profile source=low_information_structural_fallback; no target-election vote outcome
+pres_2017,C,안철수,0.8980507030347159,0.8303481864787281,0.7310747514215004,0.3715921991543937,2017-05-08,0.653317888212555,Automatic V22 profile source=election_and_assembly_derived; no target-election vote outcome
+pres_2022,C,Ahn Cheol-soo,0.521338369165214,0.8,0.7,0.2689798092451039,2022-03-03,0.75,Automatic V22 profile source=strictly_prior_candidate_profile; no target-election vote outcome

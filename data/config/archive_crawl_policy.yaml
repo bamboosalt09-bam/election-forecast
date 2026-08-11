@@ -1,0 +1,10 @@
+max_concurrency: 1
+min_delay_seconds: 3.0
+random_delay_seconds_min: 2.0
+random_delay_seconds_max: 8.0
+stop_on_403: true
+cooldown_on_429_minutes: 120
+retry_5xx: 3
+body_collection: false
+user_agent: "StudentElectionForecastPilot/0.1"
+respect_robots_txt: true

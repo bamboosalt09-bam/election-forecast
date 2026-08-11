@@ -1,0 +1,9 @@
+election_id,mega_event,primary_issue,secondary_issue,axis_weight,regime_axis_weight,available_date,activation_method,notes
+pres_2002,regional_realignment,regional_dev,candidate_competence,0.80,0.20,2002-11-01,manual_floor,regional and reform alignment seed
+pres_2007,BBK,corruption_integrity,regime_change,1.20,0.25,2007-11-01,manual_floor,BBK and DAS allegation axis
+pres_2012,opposition_unification,unification_event,regime_change,1.00,0.30,2012-11-25,event_date,Ahn withdrawal and endorsement axis
+pres_2012,economic_democratization,welfare_pension,economy_growth,0.85,0.20,2012-11-15,manual_floor,welfare and economic democratization axis
+pres_2017,impeachment,regime_change,corruption_integrity,1.45,0.60,2017-04-01,manual_floor,Park impeachment and regime-change axis; secondary weight reduced to avoid double-counting with corruption axis
+pres_2017,Choi_Soon_sil,corruption_integrity,regime_change,1.35,0.45,2017-04-01,manual_floor,state capture and corruption axis; secondary weight reduced to avoid double-counting with impeachment axis
+pres_2022,Daejang_dong,corruption_integrity,regime_change,1.20,0.30,2022-02-01,manual_floor,candidate scandal and accountability axis
+pres_2022,anti_incumbent,regime_change,housing,1.10,0.45,2022-02-01,manual_floor,anti-incumbent and housing discontent axis

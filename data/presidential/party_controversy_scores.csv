@@ -1,0 +1,5 @@
+election_id,slot,party_name,period_start,period_end,controversy_count,controversy_z_score,source_count,score,available_date,source_note
+pres_2022,A,Sample Party A,2022-02-01,2022-03-08,2,-0.2,12,0.15,2022-03-08,sample rule-based aggregate
+pres_2022,B,Sample Party B,2022-02-01,2022-03-08,5,0.4,15,-0.05,2022-03-08,sample rule-based aggregate
+pres_2022,C,Sample Party C,2022-02-01,2022-03-08,1,0.0,6,0.00,2022-03-08,sample rule-based aggregate
+pres_2022,alpha,Other,2022-02-01,2022-03-08,0,0.0,3,0.00,2022-03-08,sample rule-based aggregate

@@ -1,0 +1,15 @@
+election_id,region_id,candidate_name,party_name,votes
+pres_2012,sgg_001,Sample 2012 Candidate A,Sample Party A,47000
+pres_2012,sgg_001,Sample 2012 Candidate B,Sample Party B,51000
+pres_2012,sgg_001,Minor 2012 Candidate,Minor Party,2000
+pres_2012,sgg_002,Sample 2012 Candidate A,Sample Party A,53000
+pres_2012,sgg_002,Sample 2012 Candidate B,Sample Party B,44000
+pres_2012,sgg_002,Minor 2012 Candidate,Minor Party,3000
+pres_2022,sgg_001,Sample 2022 Candidate A,Sample Party A,56000
+pres_2022,sgg_001,Sample 2022 Candidate B,Sample Party B,39000
+pres_2022,sgg_001,Sample 2022 Candidate C,Sample Party C,3000
+pres_2022,sgg_001,Minor 2022 Candidate,Minor Party,2000
+pres_2022,sgg_002,Sample 2022 Candidate A,Sample Party A,38000
+pres_2022,sgg_002,Sample 2022 Candidate B,Sample Party B,56000
+pres_2022,sgg_002,Sample 2022 Candidate C,Sample Party C,4000
+pres_2022,sgg_002,Minor 2022 Candidate,Minor Party,2000

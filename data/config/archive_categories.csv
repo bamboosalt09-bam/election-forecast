@@ -1,0 +1,5 @@
+category_id,category_name,enabled,notes
+all,전체,true,카테고리 구분 없이 수집
+politics,정치,true,가능한 경우에만 사용
+economy,경제,true,가능한 경우에만 사용
+society,사회,true,가능한 경우에만 사용

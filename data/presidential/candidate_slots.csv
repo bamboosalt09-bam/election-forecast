@@ -1,0 +1,9 @@
+election_id,slot,candidate_name,party_name,is_active_slot,notes
+pres_2012,A,Sample 2012 Candidate A,Sample Party A,true,main candidate 1
+pres_2012,B,Sample 2012 Candidate B,Sample Party B,true,main candidate 2
+pres_2012,C,Inactive C Slot,None,false,withdrawn candidate treated as inactive two-way race
+pres_2012,alpha,Other Candidates,Other,true,other candidates aggregate
+pres_2022,A,Sample 2022 Candidate A,Sample Party A,true,main candidate 1
+pres_2022,B,Sample 2022 Candidate B,Sample Party B,true,main candidate 2
+pres_2022,C,Sample 2022 Candidate C,Sample Party C,true,third candidate slot
+pres_2022,alpha,Other Candidates,Other,true,other candidates aggregate

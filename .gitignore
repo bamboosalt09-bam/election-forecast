@@ -1,0 +1,69 @@
+# Secrets - never commit real credentials.
+.env
+*.env
+!.env.example
+
+# Python environments and caches.
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+.venv-stance/
+build/
+dist/
+
+# Local editors and operating-system files.
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Large, regenerated, or private working material.
+archives/
+backups/
+data/cache/
+data/logs/
+data/raw_lake/
+data/shadow/
+data/generated/
+data/imports/
+data/news_raw/
+data/news_cleaned/
+data/news_analyzed/
+data/news_aggregated/
+data/raw/official_sources/cache/
+data/raw/official_sources/checkpoints/
+data/member_issue*.csv
+data/issue_salience.csv
+data/issue_salience_2002.csv
+data/issue_salience_all.csv
+
+# Generated outputs are excluded by default. The allowlist below contains only
+# the small, frozen artifacts required to reproduce and audit active V23.
+outputs/*
+!outputs/active_presidential_nested_v23/
+!outputs/active_presidential_nested_v23/**
+!outputs/automatic_controls_v22/
+!outputs/automatic_controls_v22/**
+!outputs/automatic_controls_v23/
+!outputs/automatic_controls_v23/**
+!outputs/footprint_candidate_base_v9/
+!outputs/footprint_candidate_base_v9/**
+!outputs/preliminary_slot_assignment/
+!outputs/preliminary_slot_assignment/**
+!outputs/preliminary_slot_assignment_v23/
+!outputs/preliminary_slot_assignment_v23/**
+!outputs/unified_exact_lineage_v21/
+!outputs/unified_exact_lineage_v21/**
+
+# Keep only the gated experiment run used by the active V23 reproduction audit.
+!outputs/automatic_controls_v23_ablation_v3/
+outputs/automatic_controls_v23_ablation_v3/*
+!outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation/
+outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation/*
+!outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation/active_run/
+!outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation/active_run/**
+
+# Statistics-competition material is maintained outside this active repository.
+stats_competition/

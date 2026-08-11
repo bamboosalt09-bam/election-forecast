@@ -1,0 +1,39 @@
+{
+  "schema_version": "automatic_issue_interpretation_v2",
+  "elections": [
+    "pres_2002",
+    "pres_2007",
+    "pres_2012",
+    "pres_2017",
+    "pres_2022"
+  ],
+  "inputs": {
+    "data\\candidate_issue_link.csv": {
+      "sha256": "137d53f497a01bd5ca48b96c8a53e9bba9172cd9389f03a26a3c92ee80cd6dcd",
+      "size": 21007
+    },
+    "data\\issue_salience_assembly.csv": {
+      "sha256": "cba331c2ef50df0b3b4bb9f004e78037b66985b16f53fd0efe267bd8cd335bd3",
+      "size": 85652
+    },
+    "data\\raw\\assembly_issue_character_overlay.csv": {
+      "sha256": "561b36dc9ace5c445e64f9fc4f3f9f43971a23496f31a5d9ea24cdaf637b7316",
+      "size": 106114
+    },
+    "data\\raw\\candidate_public_treatment.csv": {
+      "sha256": "11b48ad0aa54706aa1eb93fd427cd16e4c11ddb1d9be9a1b90275bcaaf766599",
+      "size": 4773
+    },
+    "data\\raw\\candidate_party_tone_gap.csv": {
+      "sha256": "b5fac796e925421fd41c1e3c28a30df14b658cf2fcd6e81cc3cb9a3b4e144a91",
+      "size": 11335
+    }
+  },
+  "outputs": {
+    "candidate_issue_profile.csv": 247,
+    "mega_issue_axis.csv": 15,
+    "mega_issue_attribution.csv": 6
+  },
+  "outcome_fields_used": [],
+  "direction_policy": "explicit evaluated target only; global issue tone and speaker party cannot manufacture candidate direction"
+}

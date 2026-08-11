@@ -1,0 +1,2 @@
+event_id,election_id,candidate_name,issue_name,region_scope,event_date,available_date,source_type,source_url,notes
+pres_2002_roh_administrative_capital,pres_2002,노무현,regional_dev,chungcheong,2002-09-30,2002-09-30,academic_pre_election_record,https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART000869966,Pre-election administrative-capital commitment; registry stores no effect size

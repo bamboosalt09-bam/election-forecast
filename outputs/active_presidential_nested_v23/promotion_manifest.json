@@ -1,0 +1,29 @@
+{
+  "schema": "active_presidential_model_promotion_v23",
+  "status": "active",
+  "predecessor": "active_v22",
+  "experiment": "automatic_controls_v23_ablation_v3",
+  "promotion_candidate": "v23_unified_profile_transfer_generation",
+  "strict_nested": true,
+  "single_candidate_profile": true,
+  "single_withdrawal_transfer_registry": true,
+  "legacy_transfer_inputs_active": [],
+  "generation_weights_status": "active_latest_strictly_prior_official_report",
+  "withdrawal_transfer_rate_mode": "common_low_medium_high_scenarios",
+  "post_2022_outcomes_used": false,
+  "target_outcome_fields_used_by_new_layers": [],
+  "selection_is_development_outcome_aware": true,
+  "untouched_historical_holdout": false,
+  "config_sha256": "295c7f78ed14548b6555f49db7a4afb39d2d1ec0e26a34d2927b01ef41cd2094",
+  "registry_sha256": "3e698906a2c5c4be6934790d83292e640b8175fce4dd600b107fd84c7706ea48",
+  "generation_weights_sha256": "5981dad1b578629470c5296b2fe00b2b0fb41051f244f851ec85377497e8e646",
+  "predictions_sha256": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
+  "metrics": {
+    "variant": "fully_nested_postprocess",
+    "regional_equal_election_macro_mae_pp": 3.3678986784747,
+    "national_equal_election_macro_mae_pp": 1.5978445771719516,
+    "winner_accuracy": 0.8,
+    "rows": 199
+  },
+  "rollback_checkpoint": "backups/model_checkpoints/20260802_pre_v23_unified_withdrawal_generation"
+}

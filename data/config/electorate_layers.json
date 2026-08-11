@@ -1,0 +1,70 @@
+{
+  "enabled": true,
+  "provenance": "strict chronological nested gain learning within a declared 0.04 cap",
+  "config": {
+    "terrain_anchor_gain": 0.0,
+    "camp_core_anchor_gain": 0.0,
+    "camp_regional_lean_gain": 0.0,
+    "camp_composition_gain": 0.0,
+    "preference_gain": 0.04,
+    "layer_separation": 0.0,
+    "layer_response_profile": "combined",
+    "mass_profile": "direct_party_layers",
+    "turnout_gain": 0.0,
+    "nonvoter_gain": 0.0
+  },
+  "fixed_response_templates": {
+    "layers": [
+      "core",
+      "critical",
+      "swing",
+      "nonvoter"
+    ],
+    "issue_classes": [
+      "economy",
+      "housing",
+      "integrity_candidate",
+      "regime",
+      "social",
+      "security",
+      "coalition",
+      "regional"
+    ]
+  },
+  "selection": {
+    "script": "scripts/evaluate_nested_electorate_learning.py",
+    "artifact": "outputs/electorate_nested_learning/summary.json",
+    "metric": "contest-vote weighted row MAE within election, equal-election macro",
+    "policy": "active values are the capped strict chronological nested selection result",
+    "baseline_nested_mae_pp": 4.627768096071586,
+    "fixed_structural_mae_pp": 4.593551031999581,
+    "fixed_structural_improvement_pp": 0.03421706407200453,
+    "adaptive_nested_mae_pp": 4.613162032074633,
+    "adaptive_nested_improvement_pp": 0.014606063996952946,
+    "adaptive_selector_retained_layer": true,
+    "mass_profile_adoption": {
+      "profile": "direct_party_layers",
+      "artifact": "outputs/electorate_mass_profile_experiment/summary.json",
+      "policy": "noninferior structural refinement with final reclassification capped at 3pp",
+      "legacy_nested_mae_pp": 4.613552423375878,
+      "direct_party_layers_nested_mae_pp": 4.613162032074633,
+      "improvement_pp": 0.0003903913012450744
+    },
+    "fixed_experiment_config": "data/config/electorate_layers_fixed_experiment.json",
+    "rejected_uncapped_nested_experiment": {
+      "artifact": "outputs/electorate_nested_learning_uncapped/summary.json",
+      "baseline_weighted_macro_mae_pp": 4.627768096071586,
+      "learned_weighted_macro_mae_pp": 5.470804764707461,
+      "improvement_pp": -0.8430366686358752,
+      "adopted": false
+    }
+  },
+  "constraints": {
+    "post_2022_presidential_outcomes_used": false,
+    "legacy_partisan_moderation_retained": true,
+    "legacy_party_tone_replaced": true,
+    "turnout_history_rows": 0,
+    "turnout_channel_active": false,
+    "nonvoter_channel_active": false
+  }
+}

@@ -1,0 +1,20 @@
+issue_name,label_ko,description,recurring,default_issue_type,notes
+economy_growth,경제성장,경제성장·성장률·기업/투자 등 거시경제 쟁점,yes,policy,거의 모든 대선 핵심
+jobs_labor,일자리·노동,고용·청년실업·노동시간·비정규직,yes,policy,
+inflation_livelihood,물가·민생,물가·생활비·소상공인 등 체감경기,yes,policy,2007·2022 부각
+housing,부동산·주택,집값·전세·공급·세제,yes,policy,2022 핵심
+welfare_pension,복지·연금,복지확대·기초연금·국민연금 개혁,yes,policy,2012 경제민주화/복지
+security_nk,안보·대북,대북정책·북핵·평화/강경,yes,policy,보수-진보 균열축
+foreign_policy,외교,한미·한중·한일 관계,yes,policy,
+regional_dev,지역균형·개발,행정수도·균형발전·지역 SOC,yes,policy,2002 행정수도
+education,교육,입시·대학·사교육,yes,policy,
+gender_generation,젠더·세대,세대·성별 갈등 및 관련 공약,no,policy,2022 부각
+corruption_integrity,부패·도덕성,후보 비리·의혹·도덕성 검증,yes,scandal,선거특수 스캔들 흡수(예 대장동·BBK)
+family_legal_risk,가족·사법 리스크,후보 가족/본인 사법·논란,no,scandal,
+candidate_competence,후보 능력·자질,국정운영 능력·경력·리더십,yes,policy,
+regime_change,정권교체·심판론,정권교체론·안정론·회고적 심판,yes,policy,전국 무드(national_mood로도 작동)
+unification_event,단일화,후보 단일화·연대,no,unification,사건성. transfer_events와 연계
+withdrawal_event,사퇴,후보 사퇴/불출마,no,withdrawal,사건성
+endorsement_event,지지선언,주요 인사/단체 지지선언,no,endorsement,사건성
+gaffe_event,실언·논란발언,실언·막말 등 발언 리스크,no,gaffe,사건성
+external_shock,외부충격,경제위기·안보위기·재난 등 외생 사건,no,external_shock,예 2022 코로나
