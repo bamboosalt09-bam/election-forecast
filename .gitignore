@@ -34,6 +34,9 @@ data/news_analyzed/
 data/news_aggregated/
 data/raw/official_sources/cache/
 data/raw/official_sources/checkpoints/
+data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv
+data/raw/kospi_history_source.txt
+presidential_issue_engine/fixed_dataset/kospi_daily.csv
 data/member_issue*.csv
 data/issue_salience.csv
 data/issue_salience_2002.csv

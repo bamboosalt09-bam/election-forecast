@@ -1,0 +1,8 @@
+election_id,candidate_id,candidate_name,party_name,ballot_number,available_date,source_url,source_type,notes
+pres_2025,pres_2025_lee_jaemyung,이재명,더불어민주당,1,2025-05-20,https://www.nec.go.kr/html/partyinfo_2025.html,nec_official_candidate_information,재외투표 개시일까지 공개가 확실한 전체 등록후보 명부; 사퇴 여부와 득표 결과는 사용하지 않음
+pres_2025,pres_2025_kim_moonsu,김문수,국민의힘,2,2025-05-20,https://www.nec.go.kr/html/partyinfo_2025.html,nec_official_candidate_information,재외투표 개시일까지 공개가 확실한 전체 등록후보 명부; 사퇴 여부와 득표 결과는 사용하지 않음
+pres_2025,pres_2025_lee_junseok,이준석,개혁신당,4,2025-05-20,https://www.nec.go.kr/html/partyinfo_2025.html,nec_official_candidate_information,재외투표 개시일까지 공개가 확실한 전체 등록후보 명부; 사퇴 여부와 득표 결과는 사용하지 않음
+pres_2025,pres_2025_kwon_youngguk,권영국,민주노동당,5,2025-05-20,https://www.nec.go.kr/html/partyinfo_2025.html,nec_official_candidate_information,재외투표 개시일까지 공개가 확실한 전체 등록후보 명부; 사퇴 여부와 득표 결과는 사용하지 않음
+pres_2025,pres_2025_ku_joowa,구주와,자유통일당,6,2025-05-20,https://www.nec.go.kr/html/partyinfo_2025.html,nec_official_candidate_information,재외투표 개시일까지 공개가 확실한 전체 등록후보 명부; 사퇴 여부와 득표 결과는 사용하지 않음
+pres_2025,pres_2025_hwang_kyoahn,황교안,무소속,7,2025-05-20,https://www.nec.go.kr/html/partyinfo_2025.html,nec_official_candidate_information,재외투표 개시일까지 공개가 확실한 전체 등록후보 명부; 사퇴 여부와 득표 결과는 사용하지 않음
+pres_2025,pres_2025_song_jinho,송진호,무소속,8,2025-05-20,https://www.nec.go.kr/html/partyinfo_2025.html,nec_official_candidate_information,재외투표 개시일까지 공개가 확실한 전체 등록후보 명부; 사퇴 여부와 득표 결과는 사용하지 않음

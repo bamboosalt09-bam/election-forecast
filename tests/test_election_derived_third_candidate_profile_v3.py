@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 from pandas.testing import assert_frame_equal
+import pytest
 
 from presidential_issue_engine.election_derived_third_candidate_profile_v3 import (
     build_election_derived_third_profile_v3,
@@ -60,6 +61,15 @@ def _real_inputs() -> tuple[pd.DataFrame, ...]:
 
 
 def test_target_presidential_outcomes_cannot_change_v3_profile() -> None:
+    shadow_profile = (
+        ROOT
+        / "outputs"
+        / "speech_derived_candidate_context_v2"
+        / "auto_candidate_role"
+        / "third_candidate_profile.csv"
+    )
+    if not shadow_profile.exists():
+        pytest.skip("external speech-derived shadow output is not publicly tracked")
     inputs = _real_inputs()
     base, _ = build_election_derived_third_profile_v3(*inputs)
     for election_id in base["election_id"]:

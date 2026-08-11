@@ -1,0 +1,23 @@
+{
+  "dataset": "KOSPI daily closing index",
+  "provider": "Bank of Korea ECOS",
+  "original_source_organization": "Korea Exchange",
+  "api_documentation": "https://ecos.bok.or.kr/api/",
+  "api_service": "StatisticSearch",
+  "stat_code": "802Y001",
+  "item_code": "0001000",
+  "frequency": "D",
+  "requested_start": "19950103",
+  "requested_end": "20221231",
+  "first_observation": "1995-01-03",
+  "last_observation": "2022-12-29",
+  "row_count": 7112,
+  "retrieved_at_utc": "2026-08-10T11:54:42.059214+00:00",
+  "csv_path": "data/raw/official_sources/cache/bok_ecos_kospi_daily.csv",
+  "csv_sha256": "7F3F2CFE6C7558896AA56050DE2309F235D3F34A90F1E54246FFEC93AAA956C2",
+  "availability_rule": "same trading date; election forecasts use the engine cutoff",
+  "fields_used": [
+    "date",
+    "close"
+  ]
+}

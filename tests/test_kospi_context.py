@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -11,6 +13,25 @@ from presidential_issue_engine.issue_vote_engine import (
     _kospi_context_features,
 )
 from scripts.import_kospi_history import parse_kospi_text
+from scripts.fetch_bok_kospi_daily import normalize_bok_kospi_rows
+
+
+def test_bok_kospi_normalizer_keeps_official_close_only() -> None:
+    rows = [
+        {"TIME": "20220307", "DATA_VALUE": "2651.31"},
+        {"TIME": "20220308", "DATA_VALUE": "2622.40"},
+        {"TIME": "20220308", "DATA_VALUE": "2622.40"},
+    ]
+
+    out = normalize_bok_kospi_rows(rows)
+
+    assert len(out) == 2
+    assert out["date"].tolist() == [pd.Timestamp("2022-03-07"), pd.Timestamp("2022-03-08")]
+    assert out["close"].tolist() == pytest.approx([2651.31, 2622.40])
+    assert out[["open", "high", "low", "volume"]].isna().all().all()
+    assert out["source"].eq("Bank of Korea ECOS").all()
+    assert out["ohlc_quality_flag"].eq("official_close_only").all()
+    assert out["available_date"].equals(out["date"])
 
 
 def test_kospi_text_parser_deduplicates_and_preserves_quality_flags() -> None:
@@ -65,7 +86,16 @@ def test_active_engine_exposes_time_varying_macro_diagnostics_without_direct_pre
 
     assert "macro_context_signal" not in issue_vote_engine.PREDICTORS
     assert "macro_context_signal" not in out.columns
-    assert out["kospi_latest_date"].ne("not_available").any()
+    active_kospi = (
+        Path(__file__).resolve().parents[1]
+        / "presidential_issue_engine"
+        / "fixed_dataset"
+        / "kospi_daily.csv"
+    )
+    if active_kospi.exists():
+        assert out["kospi_latest_date"].ne("not_available").any()
+    else:
+        assert out["kospi_latest_date"].eq("not_available").all()
     epoch = out.groupby("election_id", as_index=False)[
         ["economy_epoch_weight", "housing_epoch_weight"]
     ].first()

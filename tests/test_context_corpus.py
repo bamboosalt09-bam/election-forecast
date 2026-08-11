@@ -62,10 +62,11 @@ def test_classifier_sign_margin_is_not_treated_as_vote_margin() -> None:
 
 
 def test_context_model_registry_pins_enabled_model_revisions() -> None:
+    registry_path = ROOT / "data" / "shadow" / "context_model_sources.json"
+    if not registry_path.exists():
+        pytest.skip("external shadow model registry is not part of the public repository")
     registry = json.loads(
-        (ROOT / "data" / "shadow" / "context_model_sources.json").read_text(
-            encoding="utf-8"
-        )
+        registry_path.read_text(encoding="utf-8")
     )
     enabled = {
         row["id"]: row
