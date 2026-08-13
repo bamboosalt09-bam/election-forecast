@@ -140,6 +140,15 @@ virtual environments, API caches, and shadow corpora remain outside Git. Run
 data-boundary, and model-promotion rules are documented in
 `docs/GITHUB_WORKFLOW.md`.
 
+## License
+
+Project-authored source code and documentation are licensed under the
+[Apache License 2.0](LICENSE), an OSI-approved open-source license. See
+`NOTICE` for the scope boundary. Datasets, model weights, third-party
+software, and externally sourced material retain their respective licenses
+and terms; their presence or collection metadata in this repository does not
+relicense them.
+
 ## Key artifacts
 
 - `docs/FINAL_MODEL_V23_20260802.md`

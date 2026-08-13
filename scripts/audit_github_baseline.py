@@ -16,6 +16,11 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _normalized_text_sha256(path: Path) -> str:
+    content = path.read_bytes().replace(b"\r\n", b"\n").strip() + b"\n"
+    return hashlib.sha256(content).hexdigest()
+
+
 def _tracked_files() -> list[str]:
     result = subprocess.run(
         ["git", "ls-files", "-z"],
@@ -32,6 +37,21 @@ def _tracked_files() -> list[str]:
 
 def main() -> None:
     baseline = json.loads(BASELINE.read_text(encoding="utf-8"))
+
+    license_record = baseline["license"]
+    license_path = ROOT / license_record["path"]
+    if not license_path.is_file():
+        raise RuntimeError(f"required license is missing: {license_record['path']}")
+    license_hash = _normalized_text_sha256(license_path)
+    if license_hash != license_record["normalized_sha256"]:
+        raise RuntimeError(
+            "license text drift: "
+            f"{license_record['path']}: {license_hash} != "
+            f"{license_record['normalized_sha256']}"
+        )
+    for relative in baseline.get("required_repository_files", []):
+        if not (ROOT / relative).is_file():
+            raise RuntimeError(f"required repository file is missing: {relative}")
 
     for relative, expected in baseline["expected_hashes"].items():
         path = ROOT / relative
@@ -75,6 +95,7 @@ def main() -> None:
     print("[GitHub baseline audit: PASS]")
     print(f"tracked_files={len(tracked)}")
     print(f"active_version={baseline['active_version']}")
+    print(f"license={license_record['spdx']}")
     print("post_2022_outcomes_used=false")
 
 
