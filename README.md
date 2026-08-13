@@ -71,6 +71,16 @@ V23은 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested R
 
 전국 균일 스윙 기준선에는 목표 선거의 실제 전국 결과를 의도적으로 제공합니다. 따라서 모델에 유리한 설명이 아니라 **기준선에 유리한 oracle 조건**입니다. 선거별 값, skill의 1-sample t-test, 95% 신뢰구간은 `outputs/forecast_baselines/`에서 재현됩니다.
 
+## 2025 전향 시연
+
+```bash
+python scripts/run_prospective_forecast.py --version v23
+```
+
+이 러너는 동결 V23 코드와 2025-06-02(D-1)까지 공개된 후보 명부·국회 발언 맥락만 사용합니다. 2025 실제 결과를 읽거나 성능지표를 계산하지 않으며, 입력 파일의 SHA-256과 결과정보 미사용 선언을 `run_manifest.json`에 기록합니다. V24는 사람이 승격한 설정 파일이 존재할 때만 실행할 수 있습니다.
+
+![2025 D-1 전향 예측](presidential_issue_engine/poster_figures/13_prospective_forecast_v23.png)
+
 ## 최고 회고 성능과 활성 버전
 
 17개 보존 버전의 `summary.json`을 비교하면 최저 회고 지역 MAE는 V17의 **3.2133%p**, 최저 전국 진단 MAE는 V19의 **1.4707%p**입니다. 활성 V23은 이보다 낮은 성능을 주장하지 않습니다.
@@ -87,6 +97,7 @@ V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서
 | `data/raw/` | 날짜와 출처가 있는 입력·공식자료 레지스트리 |
 | `data/config/` | 버전별 모델 설정과 활성 포인터 |
 | `outputs/active_presidential_nested_v23/` | 읽기 전용 V23 동결 산출물 |
+| `outputs/prospective_pres_2025_v23/` | 실제 결과 없이 생성한 D-1 전향 시연 산출물 |
 | `docs/` | 설계·감사·승격·재현성 기록 |
 | `tests/` | PIT, 누수, 입력 경계, 회귀 테스트 |
 

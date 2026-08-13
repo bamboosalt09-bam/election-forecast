@@ -36,6 +36,7 @@ ROOT = Path(__file__).resolve().parents[1]
 NESTED_PREDICTIONS = ROOT / "outputs" / "active_presidential_nested_v23" / "nested_predictions.csv"
 REGIONS = Path(__file__).resolve().parent / "fixed_dataset" / "regions_master.csv"
 BASELINE_BY_ELECTION = ROOT / "outputs" / "forecast_baselines" / "baseline_by_election.csv"
+PROSPECTIVE_DIR = ROOT / "outputs" / "prospective_pres_2025_{version}"
 
 NAVY = "#1f3b6f"
 BLUE = "#2e86de"
@@ -397,6 +398,58 @@ def baseline_comparison() -> plt.Figure:
     return fig
 
 
+def prospective_forecast(version: str = "v23") -> plt.Figure:
+    path = Path(str(PROSPECTIVE_DIR).format(version=version)) / "prospective_predictions.csv"
+    predictions = pd.read_csv(path, encoding="utf-8-sig")
+    regions = pd.read_csv(REGIONS, encoding="utf-8-sig")[["region_id", "region_name"]]
+    frame = predictions.merge(
+        regions,
+        on="region_id",
+        how="left",
+        validate="many_to_one",
+    )
+    if frame.empty or frame["region_name"].isna().any():
+        raise ValueError(f"invalid prospective prediction input: {path}")
+
+    slots = sorted(frame["slot"].astype(str).unique())
+    fig, axes = plt.subplots(
+        1,
+        len(slots),
+        figsize=(6.2 * len(slots), 8.2),
+        sharex=True,
+        squeeze=False,
+    )
+    colors = [BLUE, RED, GREEN]
+    for axis, slot, color in zip(axes[0], slots, colors):
+        rows = frame.loc[frame["slot"].astype(str).eq(slot)].sort_values(
+            "predicted_share", ascending=True
+        )
+        axis.barh(
+            rows["region_name"],
+            rows["predicted_share"] * 100.0,
+            color=color,
+        )
+        axis.set_xlim(0, 100)
+        axis.grid(axis="x", alpha=0.25)
+        candidate = str(rows["candidate_name"].iloc[0])
+        axis.set_title(
+            f"{slot} · {candidate}",
+            fontsize=13,
+            fontweight="bold",
+            color=NAVY,
+        )
+        axis.set_xlabel("예측 득표율 (%)")
+    fig.suptitle(
+        f"2025 대선 전향 예측 ({version})\n예측 시점 2025-06-02 (D-1), 실제 결과 미사용",
+        fontsize=18,
+        fontweight="bold",
+        color=NAVY,
+        y=1.02,
+    )
+    fig.tight_layout()
+    return fig
+
+
 def main() -> None:
     _require_viz()
     setup_style()
@@ -412,6 +465,7 @@ def main() -> None:
             for election_id in ("pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022")
         },
         "12_baseline_comparison": baseline_comparison(),
+        "13_prospective_forecast_v23": prospective_forecast("v23"),
     }
     for name, fig in figures.items():
         save(fig, name)
