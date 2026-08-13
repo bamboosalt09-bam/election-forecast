@@ -1,0 +1,259 @@
+{
+  "schema": "v24_defect_ablation_decision_v1",
+  "status": "measurement_only_not_promoted",
+  "active_pointer_changed": false,
+  "strict_nested": true,
+  "post_2022_outcomes_used": false,
+  "reference": {
+    "regional_equal_election_macro_mae_pp": 3.3678986784747,
+    "national_equal_election_macro_mae_pp": 1.5978445771719516,
+    "winner_accuracy": 0.8,
+    "prediction_sha256": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
+    "pit_audit_pass": true,
+    "slot_leakage_audit_pass": true,
+    "by_election": [
+      {
+        "election_id": "pres_2002",
+        "regional_weighted_mae_pp": 3.98164116001174,
+        "national_candidate_mae_pp": 3.322039828338108
+      },
+      {
+        "election_id": "pres_2007",
+        "regional_weighted_mae_pp": 4.759600839753567,
+        "national_candidate_mae_pp": 1.6760990699655116
+      },
+      {
+        "election_id": "pres_2012",
+        "regional_weighted_mae_pp": 2.6669169114233098,
+        "national_candidate_mae_pp": 0.1626738236938346
+      },
+      {
+        "election_id": "pres_2017",
+        "regional_weighted_mae_pp": 4.06577710426629,
+        "national_candidate_mae_pp": 2.6526420593729405
+      },
+      {
+        "election_id": "pres_2022",
+        "regional_weighted_mae_pp": 1.3655573769185902,
+        "national_candidate_mae_pp": 0.1757681044893627
+      }
+    ]
+  },
+  "a2_dated_regional_issue_sensitivity": {
+    "status": "not_implemented_missing_source",
+    "reason": "data/raw/region_issue_sensitivity.csv has only a header; the dated template is not observational evidence and the curated source has no available_date"
+  },
+  "c1_documentation_matches_active_floor": {
+    "status": "implemented_documentation_only",
+    "numerically_invariant": true
+  },
+  "individual_modifications": {
+    "a1_remove_rif": {
+      "regional_equal_election_macro_mae_pp": 3.3348961270440176,
+      "national_equal_election_macro_mae_pp": 1.5889011594139584,
+      "winner_accuracy": 0.8,
+      "prediction_sha256": "df1b8d1202bb617f949efccf38ade6c974dc2d37f38c955393748bf6181485d4",
+      "pit_audit_pass": true,
+      "slot_leakage_audit_pass": true,
+      "by_election": [
+        {
+          "election_id": "pres_2002",
+          "regional_weighted_mae_pp": 3.98164116001174,
+          "national_candidate_mae_pp": 3.322039828338108
+        },
+        {
+          "election_id": "pres_2007",
+          "regional_weighted_mae_pp": 4.48259311003254,
+          "national_candidate_mae_pp": 1.563431130641933
+        },
+        {
+          "election_id": "pres_2012",
+          "regional_weighted_mae_pp": 2.781167300122623,
+          "national_candidate_mae_pp": 0.2513881504079246
+        },
+        {
+          "election_id": "pres_2017",
+          "regional_weighted_mae_pp": 4.063129059506461,
+          "national_candidate_mae_pp": 2.63477989706702
+        },
+        {
+          "election_id": "pres_2022",
+          "regional_weighted_mae_pp": 1.3659500055467266,
+          "national_candidate_mae_pp": 0.1728667906148062
+        }
+      ],
+      "delta_regional_mae_pp": -0.0330025514306822,
+      "delta_national_mae_pp": -0.008943417757993233,
+      "delta_winner_accuracy": 0.0,
+      "numerically_invariant": false
+    },
+    "b1_enforce_config_caps": {
+      "regional_equal_election_macro_mae_pp": 3.4495940888234307,
+      "national_equal_election_macro_mae_pp": 1.7257498640011062,
+      "winner_accuracy": 0.8,
+      "prediction_sha256": "5173a3278ee0341c5919be3eb60a7173022fa5aacd889f3046d5f760fea797eb",
+      "pit_audit_pass": true,
+      "slot_leakage_audit_pass": true,
+      "by_election": [
+        {
+          "election_id": "pres_2002",
+          "regional_weighted_mae_pp": 3.98164116001174,
+          "national_candidate_mae_pp": 3.322039828338108
+        },
+        {
+          "election_id": "pres_2007",
+          "regional_weighted_mae_pp": 4.759600839753567,
+          "national_candidate_mae_pp": 1.6760990699655116
+        },
+        {
+          "election_id": "pres_2012",
+          "regional_weighted_mae_pp": 2.655182182103509,
+          "national_candidate_mae_pp": 0.1288211185629856
+        },
+        {
+          "election_id": "pres_2017",
+          "regional_weighted_mae_pp": 4.485988885329747,
+          "national_candidate_mae_pp": 3.326021198649562
+        },
+        {
+          "election_id": "pres_2022",
+          "regional_weighted_mae_pp": 1.3655573769185902,
+          "national_candidate_mae_pp": 0.1757681044893627
+        }
+      ],
+      "delta_regional_mae_pp": 0.08169541034873085,
+      "delta_national_mae_pp": 0.12790528682915459,
+      "delta_winner_accuracy": 0.0,
+      "numerically_invariant": false
+    },
+    "b2_gain_is_cap": {
+      "regional_equal_election_macro_mae_pp": 3.3678986784747,
+      "national_equal_election_macro_mae_pp": 1.5978445771719516,
+      "winner_accuracy": 0.8,
+      "prediction_sha256": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
+      "pit_audit_pass": true,
+      "slot_leakage_audit_pass": true,
+      "by_election": [
+        {
+          "election_id": "pres_2002",
+          "regional_weighted_mae_pp": 3.98164116001174,
+          "national_candidate_mae_pp": 3.322039828338108
+        },
+        {
+          "election_id": "pres_2007",
+          "regional_weighted_mae_pp": 4.759600839753567,
+          "national_candidate_mae_pp": 1.6760990699655116
+        },
+        {
+          "election_id": "pres_2012",
+          "regional_weighted_mae_pp": 2.6669169114233098,
+          "national_candidate_mae_pp": 0.1626738236938346
+        },
+        {
+          "election_id": "pres_2017",
+          "regional_weighted_mae_pp": 4.06577710426629,
+          "national_candidate_mae_pp": 2.6526420593729405
+        },
+        {
+          "election_id": "pres_2022",
+          "regional_weighted_mae_pp": 1.3655573769185902,
+          "national_candidate_mae_pp": 0.1757681044893627
+        }
+      ],
+      "delta_regional_mae_pp": 0.0,
+      "delta_national_mae_pp": 0.0,
+      "delta_winner_accuracy": 0.0,
+      "numerically_invariant": true
+    },
+    "c2_remove_preference_floor": {
+      "regional_equal_election_macro_mae_pp": 3.382621073251877,
+      "national_equal_election_macro_mae_pp": 1.6070162388643705,
+      "winner_accuracy": 0.8,
+      "prediction_sha256": "b699357283f9ceca14a41371fd3939c95200b0e50d0392403db91da8a9a41cdd",
+      "pit_audit_pass": true,
+      "slot_leakage_audit_pass": true,
+      "by_election": [
+        {
+          "election_id": "pres_2002",
+          "regional_weighted_mae_pp": 4.039768277827727,
+          "national_candidate_mae_pp": 3.397209730528794
+        },
+        {
+          "election_id": "pres_2007",
+          "regional_weighted_mae_pp": 4.775085695823465,
+          "national_candidate_mae_pp": 1.64678747623692
+        },
+        {
+          "election_id": "pres_2012",
+          "regional_weighted_mae_pp": 2.6669169114233098,
+          "national_candidate_mae_pp": 0.1626738236938346
+        },
+        {
+          "election_id": "pres_2017",
+          "regional_weighted_mae_pp": 4.06577710426629,
+          "national_candidate_mae_pp": 2.6526420593729405
+        },
+        {
+          "election_id": "pres_2022",
+          "regional_weighted_mae_pp": 1.3655573769185902,
+          "national_candidate_mae_pp": 0.1757681044893627
+        }
+      ],
+      "delta_regional_mae_pp": 0.014722394777177072,
+      "delta_national_mae_pp": 0.009171661692418898,
+      "delta_winner_accuracy": 0.0,
+      "numerically_invariant": false
+    },
+    "d1_disable_dead_general_identity": {
+      "regional_equal_election_macro_mae_pp": 3.3678986784747,
+      "national_equal_election_macro_mae_pp": 1.5978445771719516,
+      "winner_accuracy": 0.8,
+      "prediction_sha256": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
+      "pit_audit_pass": true,
+      "slot_leakage_audit_pass": true,
+      "by_election": [
+        {
+          "election_id": "pres_2002",
+          "regional_weighted_mae_pp": 3.98164116001174,
+          "national_candidate_mae_pp": 3.322039828338108
+        },
+        {
+          "election_id": "pres_2007",
+          "regional_weighted_mae_pp": 4.759600839753567,
+          "national_candidate_mae_pp": 1.6760990699655116
+        },
+        {
+          "election_id": "pres_2012",
+          "regional_weighted_mae_pp": 2.6669169114233098,
+          "national_candidate_mae_pp": 0.1626738236938346
+        },
+        {
+          "election_id": "pres_2017",
+          "regional_weighted_mae_pp": 4.06577710426629,
+          "national_candidate_mae_pp": 2.6526420593729405
+        },
+        {
+          "election_id": "pres_2022",
+          "regional_weighted_mae_pp": 1.3655573769185902,
+          "national_candidate_mae_pp": 0.1757681044893627
+        }
+      ],
+      "delta_regional_mae_pp": 0.0,
+      "delta_national_mae_pp": 0.0,
+      "delta_winner_accuracy": 0.0,
+      "numerically_invariant": true
+    }
+  },
+  "numerically_invariant_modifications": [
+    "b2_gain_is_cap",
+    "d1_disable_dead_general_identity",
+    "c1_documentation_matches_active_floor"
+  ],
+  "numerically_changing_modifications": [
+    "a1_remove_rif",
+    "b1_enforce_config_caps",
+    "c2_remove_preference_floor"
+  ],
+  "combination_selected": false,
+  "promotion_decision": "human_review_required"
+}

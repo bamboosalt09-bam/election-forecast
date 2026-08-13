@@ -1,0 +1,292 @@
+{
+  "policy_version": "v24_defect_ablation_b2_gain_is_cap",
+  "active": false,
+  "variant": "slot_free_hierarchy_no_neutral",
+  "scope": {
+    "warmup_elections": [
+      "pres_1997"
+    ],
+    "scored_elections": [
+      "pres_2002",
+      "pres_2007",
+      "pres_2012",
+      "pres_2017",
+      "pres_2022"
+    ],
+    "post_2022_outcomes_used": false
+  },
+  "candidate_assignment": {
+    "method": "strict_rolling_preliminary_expected_share",
+    "artifact": "outputs/preliminary_slot_assignment/candidate_slot_assignments_v2.csv",
+    "regenerate_on_run": true,
+    "realized_rank_used": false
+  },
+  "issue_interpretation": {
+    "schema": "automatic_issue_interpretation_v2",
+    "regenerate_on_run": true,
+    "outcome_fields_used": [],
+    "direction_policy": "explicit evaluated person, party, or government target only",
+    "speaker_party_policy": "reliability weighting only; never creates polarity",
+    "unsigned_issue_policy": "salience and candidate-link evidence only",
+    "manual_issue_seed_enabled": false
+  },
+  "predictors": [
+    "issue_advantage",
+    "rif",
+    "partisan_prior",
+    "landscape_bloc_alignment",
+    "landscape_centrist",
+    "landscape_inferred_prior"
+  ],
+  "forbidden_predictors": [
+    "slot_A",
+    "slot_B",
+    "slotA_prior",
+    "slotB_prior"
+  ],
+  "structural_layers": {
+    "outer_config_overrides": {
+      "conversion_scale": 0.05,
+      "regionalism_scale": 0.15,
+      "within_bloc_transfer_scale": 0.5,
+      "within_bloc_stronghold_gain": 0.25
+    },
+    "electorate_response": {
+      "preference_gain_floor": 0.04,
+      "mass_profile": "direct_party_layers",
+      "concrete_support": {
+        "eligible_lineages": [
+          "국민의힘",
+          "더불어민주당"
+        ],
+        "matching": "exact_pre_normalization_party_lineage",
+        "other_lineage_core": 0.0,
+        "other_stable_support_reclassification": "critical_support",
+        "cross_candidate_core_sharing": false
+      },
+      "terrain_anchor": {
+        "source": "core_critical_swing_from_strictly_prior_party_and_candidate_ballots",
+        "reliability_field": "direct_party_reliability",
+        "reliability_multiplier": 0.5,
+        "gain_cap": 0.25,
+        "mega_shock_attenuation": true,
+        "shock_floor": 1.0
+      },
+      "regional_accent": {
+        "source": "strictly_prior_direct_party_multiaxis_history",
+        "reliability_multiplier": 0.3,
+        "gain_cap": 0.2,
+        "signal_width": 0.1,
+        "core_policy": "inverse_core_share_mobility",
+        "mega_shock_attenuation": false
+      },
+      "regional_swing_offset": {
+        "enabled": true,
+        "source": "rolling_nonpresidential_direct_party_ballots",
+        "method": "hierarchical_logit_offset",
+        "base_gain": 0.25,
+        "prior_strength": 2.0,
+        "minimum_prior_scored_elections": 2,
+        "vif_threshold": 20.0,
+        "activation_gate": "minimum_two_scored_elections_and_max_finite_vif_gt_20",
+        "vif_policy": "maximum_finite_vif_excluding_constant_and_exact_duplicate_columns",
+        "mega_shock_attenuation": true,
+        "third_candidate_mass_preserved": true,
+        "outcome_fields_used": []
+      }
+    },
+    "strategic_lane_transfer": {
+      "enabled": true,
+      "reservoir": "nonmajor_effective_critical_support",
+      "recipient_pool": "aligned_major_party_candidates",
+      "viability_source": "preliminary_expected_share",
+      "pressure_formula": "major_party_gravity * (1 - wasted_vote_resistance) * (1 - donor_preliminary_share / strongest_major_preliminary_share) * confidence * lane_clarity",
+      "affinity_power": 2.0,
+      "outcome_fields_used": []
+    },
+    "chungcheong_regional_identity": {
+      "enabled": true,
+      "reservoir_source": "strictly_prior_full_election_history",
+      "routing_evidence": [
+        "footprint_candidate_regional_base",
+        "dated_pre_election_alignment",
+        "automatic_regional_party_candidate_fit"
+      ],
+      "gain": 0.5,
+      "regional_shift_cap": 0.08,
+      "half_life_years": 12.0,
+      "prior_strength": 1.5,
+      "unrouted_mass_policy": "remain_critical_or_swing",
+      "outcome_fields_used": [],
+      "automatic_alignment_schema": "automatic_regional_party_alignment_v11",
+      "superseded_by": "unified_exact_lineage_identity"
+    },
+    "general_regional_identity": {
+      "enabled": true,
+      "region_scope": "non_chungcheong_with_dated_candidate_base_only",
+      "distinctiveness_source": "strictly_prior_direct_party_and_downweighted_presidential_ballots",
+      "routing_evidence": [
+        "candidate_regional_base"
+      ],
+      "donor_policy": "least_compatible_prior_regional_camp_first",
+      "gain": 0.1,
+      "regional_shift_cap": 0.04,
+      "half_life_years": 12.0,
+      "prior_strength": 1.5,
+      "outcome_fields_used": [],
+      "superseded_by": "unified_exact_lineage_identity"
+    },
+    "party_context_cohesion": {
+      "mode": "supporter_retention",
+      "direct_vote_adjustment": false,
+      "core_defection_cap": 0.02,
+      "critical_defection_cap": 0.15,
+      "released_mass_allocation": "regional_pre_adjustment_prediction",
+      "candidate_conversion_direct_input": "nonparty_candidate_stature",
+      "same_orientation_use": "within_bloc_dispersion_only"
+    },
+    "selection_status": "fixed universal evidence-gated pipeline; candidate stages retained for diagnostics only",
+    "unified_exact_lineage_identity": {
+      "enabled": true,
+      "ledger": "outputs/unified_exact_lineage_v21/exact_lineage_events.csv",
+      "party_transition_registry": "data/raw/party_lineage_transitions.csv",
+      "party_name_policy": "preserve exact observed name before lineage mapping",
+      "region_policy": "same estimator and routing formula for all regions",
+      "ridge_boundary": "project the same exact ledger to analytic blocs only at feature attachment",
+      "candidate_ballot_reliability": "estimated from strictly prior same-date direct-party agreement",
+      "lineage_resolution": "prior exact spatial profile with unresolved state retained",
+      "genealogy_routing": "dated predecessor-successor graph without vote fitting",
+      "manual_alignment_rows": false,
+      "direct_score_scope": "non_major_only",
+      "gain": 0.5,
+      "regional_shift_cap": 0.08,
+      "half_life_years": 12.0,
+      "prior_strength": 1.5,
+      "outcome_fields_used": []
+    }
+  },
+  "postprocess": {
+    "neutral_context_direct_adjustment": false,
+    "direct_mega_issue_shift": true,
+    "direct_mega_logit_gain": 0.4,
+    "direct_mega_log_shift_cap": 0.2,
+    "direct_mega_score_cap": 0.5,
+    "direct_mega_minimum_intensity": 1.0,
+    "incumbent_shock_response": true,
+    "government_burden_gain": 1.0,
+    "rupture_extra_gain": 0.4,
+    "incumbent_conversion_buffer": 0.15,
+    "incumbent_shock_log_shift_cap": 0.15,
+    "contest_regime_response": true,
+    "contest_regime_expansion_gain": 0.5,
+    "contest_regime_critical_elasticity": 0.75,
+    "contest_regime_swing_elasticity": 1.25,
+    "contest_regime_rejection_double_discount": false,
+    "contest_regime_core_floor": "min_effective_direct_core_times_reliability",
+    "cumulative_regime_rejection": true,
+    "cumulative_rejection_breadth_reference": 4,
+    "cumulative_rejection_party_erosion_width": 0.08,
+    "cumulative_rejection_conversion_buffer": 0.15,
+    "cumulative_rejection_rupture_score_reference": 0.25,
+    "withdrawn_candidate_transfer_adjustment": true,
+    "withdrawn_candidate_transfer_scale": 0.15,
+    "third_candidate_hierarchy": true,
+    "third_prior_log_odds_weight": 0.25,
+    "third_absolute_cap": 0.3,
+    "third_to_second_cap": 0.95,
+    "electorate_preference_gain_selection": "earlier_outer_folds_only",
+    "contest_regime_gain_selection": "earlier_outer_folds_only",
+    "rejection_beneficiary_routing": true,
+    "contest_regime_cap_policy": "selected_gain_is_log_shift_cap_and_1.25_times_gain_is_swing_cap"
+  },
+  "promotion": {
+    "status": "experimental_not_active",
+    "criterion": "minimum strict-nested automatic-control bundle that improves V21 without winner regression",
+    "direct_mega_gain_nested_selected": false,
+    "direct_mega_gain_development_selected": true,
+    "direct_mega_stage_nested_selected": false,
+    "direct_mega_stage_fixed_for_deployment": true,
+    "candidate_numeric_parameters_historically_development_selected": true,
+    "untouched_historical_holdout": false,
+    "legacy_outcome_aligned_slots": "archived_diagnostic_only",
+    "source_experiment": "outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation",
+    "manual_third_profile_retained_after_v12_regression": false,
+    "manual_third_pressure_retained_after_v12_regression": true,
+    "automatic_third_viability_active": true,
+    "manual_third_character_traits_retained": true,
+    "manual_third_pressure_retained_after_v16_regression": false,
+    "automation_equivalence_gate": {
+      "regional_degradation_cap_pp": 0.1,
+      "national_degradation_cap_pp": 0.1,
+      "maximum_election_regression_cap_pp": 0.25,
+      "observed_regional_change_pp": -0.0722284318776737,
+      "observed_national_change_pp": -0.088161120301677,
+      "observed_maximum_election_regression_pp": 0.1003907109857854,
+      "performance_improvement_claim": true
+    },
+    "automatic_third_character_fields": [
+      "anti_major_party_appeal",
+      "regional_base_overlap"
+    ],
+    "manual_third_character_fields_retained": [],
+    "methodology_priority": "single candidate profile and withdrawal registry; latest strictly-prior official generation report",
+    "manual_candidate_alignment_rows_used": false,
+    "same_formula_all_regions": true,
+    "exact_party_name_preserved": true,
+    "assembly_constituency_exact_party_restored": true,
+    "party_transition_weights_fitted_to_presidential_outcomes": false,
+    "post_2022_outcomes_used": false,
+    "selection_is_development_outcome_aware": true,
+    "automatic_policy_effect_strength": true,
+    "automatic_mega_taxonomy": true,
+    "automatic_third_profile_landscape_and_pressure": true,
+    "automatic_economic_housing_responsibility_inputs": true,
+    "generation_weights_status": "active_strictly_prior_official_report",
+    "behavioral_party_retention_status": "shadow",
+    "withdrawal_transfer_rate_mode": "single_registry_common_low_medium_high_scenarios",
+    "observed_tradeoff_vs_v20": {
+      "regional_change_pp": 0.1779019992878048,
+      "national_change_pp": 0.28433582741005603,
+      "maximum_election_regression_pp": 0.4480489895621975,
+      "winner_accuracy_change": 0.0,
+      "performance_improvement_claim": false
+    },
+    "source_active_version": "v23",
+    "active_pointer_changed": false,
+    "single_change": "b2_gain_is_cap"
+  },
+  "strict_nested_selection": {
+    "enabled": true,
+    "mode": "fixed_universal_evidence_gated_pipeline",
+    "fixed_deployment_stage": "structural_mega_shock_regime",
+    "metric": "regional_weighted_mae_pp",
+    "minimum_prior_scored_elections": 2,
+    "ordered_stages": [
+      "strict_base",
+      "structural",
+      "structural_mega",
+      "structural_mega_shock",
+      "structural_mega_shock_regime"
+    ],
+    "undated_issue_importance": "neutral_default_0.5",
+    "undated_region_issue_sensitivity": "neutral_default_0.3",
+    "historical_candidate_set_status": "retrospective_not_untouched_holdout"
+  },
+  "derived_inputs": {
+    "candidate_regional_base": "outputs/footprint_candidate_base_v9/candidate_regional_base.csv",
+    "chungcheong_identity_alignment": "outputs/automatic_controls_v23/regional_alignment_with_policy.csv",
+    "regional_party_identity_events": "outputs/unified_exact_lineage_v21/exact_lineage_events.csv",
+    "third_candidate_profile": "outputs/automatic_controls_v23/third_candidate_profile.csv",
+    "third_candidate_pressure": "outputs/automatic_controls_v23/third_candidate_pressure.csv",
+    "candidate_political_landscape": "outputs/automatic_controls_v23/candidate_political_landscape.csv",
+    "mega_issue_intensity": "outputs/automatic_controls_v23/mega_issue_intensity.csv",
+    "mega_issue_taxonomy": "outputs/automatic_controls_v23/mega_issue_taxonomy.csv",
+    "economic_slot_alignment": "outputs/automatic_controls_v23/economic_slot_alignment.csv",
+    "housing_slot_alignment": "outputs/automatic_controls_v23/housing_slot_alignment.csv",
+    "party_lineage_transitions": "data/raw/party_lineage_transitions.csv",
+    "generation_weights": "outputs/automatic_controls_v23/election_generation_weights.csv",
+    "candidate_political_profiles": "outputs/automatic_controls_v23/candidate_political_profiles.csv",
+    "withdrawal_transfer_registry": "outputs/automatic_controls_v23/withdrawal_transfer_registry.csv",
+    "behavioral_party_lineage_transitions_shadow": "outputs/automatic_controls_v22/party_lineage_transitions_behavioral.csv"
+  }
+}
