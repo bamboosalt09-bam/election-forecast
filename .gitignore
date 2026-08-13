@@ -12,6 +12,7 @@ __pycache__/
 .venv-stance/
 build/
 dist/
+tmp/
 
 # Local editors and operating-system files.
 .DS_Store
