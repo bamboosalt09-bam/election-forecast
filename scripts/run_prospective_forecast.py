@@ -844,12 +844,19 @@ def run(version: str = "v23") -> Path:
         output_dir / "prospective_predictions.csv",
         index=False,
         encoding="utf-8-sig",
+        lineterminator="\n",
     )
     national.to_csv(
-        output_dir / "national_summary.csv", index=False, encoding="utf-8-sig"
+        output_dir / "national_summary.csv",
+        index=False,
+        encoding="utf-8-sig",
+        lineterminator="\n",
     )
     manifest.to_csv(
-        output_dir / "input_manifest.csv", index=False, encoding="utf-8-sig"
+        output_dir / "input_manifest.csv",
+        index=False,
+        encoding="utf-8-sig",
+        lineterminator="\n",
     )
     run_manifest = {
         "schema": "prospective_presidential_forecast_v1",
@@ -886,6 +893,7 @@ def run(version: str = "v23") -> Path:
     (output_dir / "run_manifest.json").write_text(
         json.dumps(run_manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     return output_dir
 
