@@ -32,6 +32,17 @@ EXPECTED_SELECTION_STEPS = (
 )
 FORBIDDEN_ELECTION = "pres_" + "2025"
 DATA_ROOTS = (ROOT / "data", ROOT / "presidential_issue_engine" / "fixed_dataset")
+FORECAST_ONLY_ROOTS = (
+    ROOT / "data" / "raw" / "official_sources" / "assembly_pres_2025_context",
+    ROOT / "data" / "raw" / "official_sources" / "assembly_pres_2025_minutes",
+)
+FORECAST_ONLY_FILES = {
+    ROOT / "data" / "raw" / "official_sources" / "pres_2025_candidate_registry.csv"
+}
+NONACTIVE_DATA_ROOTS = (
+    ROOT / "data" / "raw" / "official_sources" / "cache",
+    ROOT / "data" / "raw" / "official_sources" / "checkpoints",
+)
 REPORT_ROOTS = (
     ROOT / "presidential_issue_engine" / "report" / "tables",
     ROOT / "presidential_issue_engine" / "report" / "through2022_rederived",
@@ -58,6 +69,17 @@ AUTO_SEED_OUTPUTS = (
     ROOT / "data" / "raw" / "auto_issue_seed" / "mega_issue_attribution.csv",
 )
 SPARSE_AUTO_SEED_OUTPUTS = {"mega_issue_attribution.csv"}
+FORECAST_ONLY_FORBIDDEN_COLUMNS = {
+    "actual_vote_share",
+    "candidate_votes",
+    "error",
+    "mae",
+    "mean_vote_share",
+    "pred",
+    "vote_share",
+    "votes",
+    "winner",
+}
 
 
 def require(condition: bool, message: str) -> None:
@@ -379,10 +401,72 @@ def audit_active_csv_rows() -> int:
         if not base.exists():
             continue
         for path in sorted(base.rglob("*.csv")):
+            if path in FORECAST_ONLY_FILES or any(
+                path.is_relative_to(root) for root in FORECAST_ONLY_ROOTS
+            ) or any(
+                path.is_relative_to(root) for root in NONACTIVE_DATA_ROOTS
+            ):
+                continue
             with path.open("r", encoding="utf-8-sig", newline="") as handle:
                 for row in csv.reader(handle):
                     checked += 1
                     require(FORBIDDEN_ELECTION not in row, f"Forbidden election row: {path}")
+    return checked
+
+
+def audit_forecast_only_context() -> int:
+    """Validate isolated 2025 inputs without treating their presence as training use."""
+
+    cutoff = date.fromisoformat(engine.ELECTION_DATES[FORBIDDEN_ELECTION]) - timedelta(days=1)
+    for root in FORECAST_ONLY_ROOTS:
+        manifest_path = root / "manifest.json"
+        require(manifest_path.exists(), f"Missing forecast-only manifest: {root}")
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        require(
+            manifest.get("status") == "forecast_only_not_scored",
+            f"Forecast-only source is not isolated from scoring: {root}",
+        )
+        require(
+            manifest.get("target_election") == FORBIDDEN_ELECTION,
+            f"Forecast-only source targets an unexpected election: {root}",
+        )
+        require(
+            manifest.get("outcome_columns_read") == []
+            and manifest.get("pres_2025_outcome_used") is False
+            and manifest.get("performance_metrics_computed") is False,
+            f"Forecast-only source does not certify outcome exclusion: {root}",
+        )
+        if "forecast_cutoff" in manifest:
+            require(
+                date.fromisoformat(str(manifest["forecast_cutoff"])) == cutoff,
+                f"Forecast-only source has an unexpected cutoff: {root}",
+            )
+    checked = 0
+    forecast_csvs = sorted(
+        [path for root in FORECAST_ONLY_ROOTS for path in root.glob("*.csv")]
+        + list(FORECAST_ONLY_FILES)
+    )
+    for path in forecast_csvs:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            forbidden = sorted(set(reader.fieldnames or ()) & FORECAST_ONLY_FORBIDDEN_COLUMNS)
+            require(not forbidden, f"Forecast-only input contains outcome columns: {path}")
+            for row in reader:
+                checked += 1
+                election_id = row.get("election_id", "").strip()
+                if election_id:
+                    require(
+                        election_id == FORBIDDEN_ELECTION,
+                        f"Forecast-only input contains a mixed election: {path}",
+                    )
+                available = row.get("available_date", "").strip()
+                eligible = row.get("model_eligible_at_cutoff", "").strip().lower()
+                if available and date.fromisoformat(available) > cutoff:
+                    in_model_context = path.is_relative_to(FORECAST_ONLY_ROOTS[0])
+                    require(
+                        not in_model_context or eligible in {"false", "0"},
+                        f"Forecast-only model input exceeds D-1 without quarantine: {path}",
+                    )
     return checked
 
 
@@ -419,11 +503,13 @@ def audit_report_scope() -> int:
 def main() -> None:
     audit_engine_scope()
     data_rows = audit_active_csv_rows()
+    forecast_only_rows = audit_forecast_only_context()
     report_rows = audit_report_scope()
     print("[through-2022 weight-selection audit: PASS]")
     print(f"scored_elections={','.join(EXPECTED_SCORED)}")
     print(f"rolling_warmup={','.join(EXPECTED_ROLLING_WARMUP)}")
     print(f"active_csv_rows_checked={data_rows}")
+    print(f"forecast_only_rows_checked={forecast_only_rows}")
     print(f"report_rows_checked={report_rows}")
 
 
