@@ -44,11 +44,11 @@
   "final_model_slot_assignment": [
     {
       "slot": "A",
-      "candidate_name": "김문수"
+      "candidate_name": "이재명"
     },
     {
       "slot": "B",
-      "candidate_name": "이재명"
+      "candidate_name": "김문수"
     },
     {
       "slot": "C",
@@ -56,69 +56,35 @@
     }
   ],
   "candidate_strength_projection": {
-    "method": "ridge_projection_to_speech_derived_candidate_weight",
-    "training_elections": [
-      "pres_2002",
-      "pres_2007",
-      "pres_2012",
-      "pres_2017",
-      "pres_2022"
-    ],
+    "method": "direct_speech_derived_candidate_context",
+    "training_elections": [],
     "target_outcomes_used": false,
     "polling_used": false,
-    "ridge_alpha": 1.0,
-    "feature_names": [
-      "log_attention",
-      "attention_share",
-      "is_nonmajor_slot"
-    ],
-    "training_rows": 12,
-    "feature_mean": [
-      1.5282083341515618,
-      0.3490609887978962,
-      0.16666666666666666
-    ],
-    "feature_scale": [
-      0.6769721908244719,
-      0.1919017457586985,
-      0.37267799624996495
-    ],
-    "coefficients_intercept_first": [
-      0.5557442034842723,
-      0.05487629192771169,
-      -0.02842938310281094,
-      -0.05431674390742435
-    ],
+    "source": "data/raw/official_sources/assembly_pres_2025_context/candidate_context_v2/candidate_vote_conversion_context.csv",
     "projected_candidates": [
-      {
-        "candidate_id": "pres_2025_kim_moonsu",
-        "candidate_name": "김문수",
-        "slot": "B",
-        "mentions": 1520.828776,
-        "emphasis_volume": 2.6425596897379457,
-        "attention_share": 0.5066945092296824,
-        "candidate_weight": 0.5375909803842877,
-        "confidence": 0.7504596981578231
-      },
       {
         "candidate_id": "pres_2025_lee_jaemyung",
         "candidate_name": "이재명",
         "slot": "A",
-        "mentions": 1415.737278,
-        "emphasis_volume": 2.4599549411091126,
-        "attention_share": 0.47168117581329644,
-        "candidate_weight": 0.5386089750331702,
-        "confidence": 0.7504596981578231
+        "candidate_weight": 0.5777125222681936,
+        "confidence": 0.7765408362586529,
+        "available_date": "2025-06-02"
+      },
+      {
+        "candidate_id": "pres_2025_kim_moonsu",
+        "candidate_name": "김문수",
+        "slot": "B",
+        "candidate_weight": 0.4983638395340927,
+        "confidence": 0.7338379586965041,
+        "available_date": "2025-06-02"
       },
       {
         "candidate_id": "pres_2025_lee_junseok",
         "candidate_name": "이준석",
         "slot": "C",
-        "mentions": 60.00475,
-        "emphasis_volume": 0.1042629755861497,
-        "attention_share": 0.01999178200235447,
-        "candidate_weight": 0.36719925515901664,
-        "confidence": 0.7504596981578231
+        "candidate_weight": 0.4560782605632817,
+        "confidence": 0.6743399265515677,
+        "available_date": "2025-06-02"
       }
     ]
   },

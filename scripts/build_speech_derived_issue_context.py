@@ -44,6 +44,25 @@ DEFAULT_MATCHES = (
     / "assembly_speaker_issue_matches_15_22.csv"
 )
 DEFAULT_OUTPUT = ROOT / "outputs" / "speech_derived_issue_context_v1"
+FORECAST_CONTEXT_DIR = (
+    ROOT / "data" / "raw" / "official_sources" / "assembly_pres_2025_context"
+)
+FORECAST_LINKS = FORECAST_CONTEXT_DIR / "model_candidate_issue_link.csv"
+FORECAST_SALIENCE = FORECAST_CONTEXT_DIR / "model_issue_salience.csv"
+ACTIVE_HISTORY_DIR = ROOT / "data" / "raw"
+PRES_2025_BALLOT_TO_SLOT = {1: "A", 2: "B", 4: "C"}
+FORBIDDEN_OUTCOME_COLUMNS = {
+    "actual",
+    "actual_vote_share",
+    "candidate_votes",
+    "error",
+    "mae",
+    "mean_vote_share",
+    "pred",
+    "vote_share",
+    "votes",
+    "winner",
+}
 FORBIDDEN_MANUAL_SEEDS = {
     (ROOT / "data" / "raw" / "candidate_issue_profile.csv").resolve(),
     (ROOT / "data" / "raw" / "mega_issue_attribution.csv").resolve(),
@@ -103,10 +122,74 @@ def _write(frame: pd.DataFrame, path: Path) -> None:
     frame.to_csv(path, index=False, encoding="utf-8-sig")
 
 
+def _forecast_candidate_registry(path: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
+    raw = pd.read_csv(path, encoding="utf-8-sig")
+    forbidden = sorted(set(raw.columns) & FORBIDDEN_OUTCOME_COLUMNS)
+    if forbidden:
+        raise RuntimeError(f"candidate registry contains outcome columns: {forbidden}")
+    required = {
+        "election_id",
+        "candidate_id",
+        "candidate_name",
+        "party_name",
+        "ballot_number",
+        "available_date",
+    }
+    missing = sorted(required - set(raw.columns))
+    if missing:
+        raise ValueError(f"candidate registry missing columns: {missing}")
+    raw = raw.copy()
+    raw["ballot_number"] = pd.to_numeric(raw["ballot_number"], errors="raise").astype(int)
+    raw = raw.loc[raw["ballot_number"].isin(PRES_2025_BALLOT_TO_SLOT)].copy()
+    raw["slot"] = raw["ballot_number"].map(PRES_2025_BALLOT_TO_SLOT)
+    raw["is_active_slot"] = True
+    if len(raw) != len(PRES_2025_BALLOT_TO_SLOT) or raw["slot"].nunique() != 3:
+        raise RuntimeError("candidate registry must contain ballots 1, 2, and 4 exactly once")
+    observed = pd.to_datetime(raw["available_date"], errors="coerce")
+    cutoff = pd.to_datetime(raw["election_id"].map(ELECTION_DATES)) - pd.Timedelta(days=1)
+    if observed.isna().any() or cutoff.isna().any() or observed.gt(cutoff).any():
+        raise RuntimeError("candidate registry is not fully available by forecast cutoff")
+    candidates = raw[
+        ["election_id", "slot", "candidate_name", "party_name", "is_active_slot"]
+    ].copy()
+    return raw, candidates
+
+
+def _forecast_issue_inputs(
+    registry: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    links = pd.read_csv(FORECAST_LINKS, encoding="utf-8-sig")
+    salience = pd.read_csv(FORECAST_SALIENCE, encoding="utf-8-sig")
+    for name, frame in (("candidate links", links), ("salience", salience)):
+        forbidden = sorted(set(frame.columns) & FORBIDDEN_OUTCOME_COLUMNS)
+        if forbidden:
+            raise RuntimeError(f"forecast {name} contains outcome columns: {forbidden}")
+    links = links.merge(
+        registry[["candidate_id", "slot"]],
+        on="candidate_id",
+        how="inner",
+        validate="many_to_one",
+    )
+    links = links[
+        [
+            "election_id",
+            "slot",
+            "issue_name",
+            "mentions",
+            "emphasis_volume",
+            "emphasis_within",
+            "available_date",
+        ]
+    ].copy()
+    return links, salience
+
+
 def _build_context_impl(
     output_dir: Path = DEFAULT_OUTPUT,
     assembly_matches: Path = DEFAULT_MATCHES,
     elections: tuple[str, ...] = DEFAULT_ELECTIONS,
+    candidates: Path | None = None,
+    speaker_profile: Path | None = None,
 ) -> dict[str, object]:
     """Build all descendants without reading either manual issue seed CSV."""
 
@@ -115,30 +198,45 @@ def _build_context_impl(
     if not assembly_matches.exists():
         raise FileNotFoundError(f"Assembly issue matches not found: {assembly_matches}")
 
-    links = pd.read_csv(LINKS, encoding="utf-8-sig")
-    salience = pd.read_csv(SALIENCE, encoding="utf-8-sig")
+    candidate_source = CANDIDATES
     character = pd.read_csv(CHARACTER, encoding="utf-8-sig")
-    candidates = pd.read_csv(
-        CANDIDATES,
-        usecols=[
-            "election_id",
-            "slot",
-            "candidate_name",
-            "party_name",
-            "is_active_slot",
-        ],
-        encoding="utf-8-sig",
-    )
-    candidates = candidates.drop_duplicates(["election_id", "slot"])
+    if candidates is None:
+        links_path = LINKS
+        salience_path = SALIENCE
+        links = pd.read_csv(links_path, encoding="utf-8-sig")
+        salience = pd.read_csv(salience_path, encoding="utf-8-sig")
+        candidate_frame = pd.read_csv(
+            candidate_source,
+            usecols=[
+                "election_id",
+                "slot",
+                "candidate_name",
+                "party_name",
+                "is_active_slot",
+            ],
+            encoding="utf-8-sig",
+        )
+    else:
+        links_path = FORECAST_LINKS
+        salience_path = FORECAST_SALIENCE
+        candidate_source = Path(candidates).resolve()
+        registry, candidate_frame = _forecast_candidate_registry(candidate_source)
+        links, salience = _forecast_issue_inputs(registry)
+        elections = tuple(sorted(candidate_frame["election_id"].astype(str).unique()))
+    candidate_frame = candidate_frame.drop_duplicates(["election_id", "slot"])
+    seed_dir = output_dir / "auto_issue_seed"
+    candidate_registry_path = seed_dir / "candidate_registry.csv"
+    candidate_links_path = seed_dir / "candidate_issue_link.csv"
+    _write(candidate_frame, candidate_registry_path)
+    _write(links, candidate_links_path)
     outputs = build_outputs(
         links,
         salience,
         character,
-        candidates,
+        candidate_frame,
         ELECTION_DATES,
         elections,
     )
-    seed_dir = output_dir / "auto_issue_seed"
     for name, frame in outputs.items():
         _write(frame, seed_dir / name)
 
@@ -152,7 +250,12 @@ def _build_context_impl(
     with patched(
         [
             (posture, "MATCHES", assembly_matches),
+            *(([(posture, "SPEAKER_PROFILE", Path(speaker_profile).resolve())]) if speaker_profile else []),
+            (speech_builder, "RESULTS", candidate_registry_path),
+            (speech_builder, "CANDIDATE_ISSUES", candidate_links_path),
             (speech_builder, "CANDIDATE_PROFILE", profile_path),
+            (tone_builder, "RESULTS", candidate_registry_path),
+            (tone_builder, "CANDIDATE_ISSUES", candidate_links_path),
             (tone_builder, "CANDIDATE_PROFILE", profile_path),
             (tone_builder, "MEGA_ATTRIBUTION", attribution_path),
         ]
@@ -165,6 +268,8 @@ def _build_context_impl(
     with patched(
         [
             (treatment_builder, "CANDIDATE_PROFILE", profile_path),
+            (treatment_builder, "RESULTS", candidate_registry_path),
+            (treatment_builder, "CANDIDATE_ISSUES", candidate_links_path),
             (treatment_builder, "MEGA_ATTRIBUTION", attribution_path),
             (treatment_builder, "PARTY_CONTEXT", speech_path),
             (treatment_builder, "PARTY_TONE_GAP", tone_path),
@@ -183,7 +288,9 @@ def _build_context_impl(
         conversion = conversion_builder.build()
     _write(conversion, conversion_path)
 
-    sources = [LINKS, SALIENCE, CHARACTER, CANDIDATES, assembly_matches]
+    sources = [links_path, salience_path, CHARACTER, candidate_source, assembly_matches]
+    if speaker_profile is not None:
+        sources.append(Path(speaker_profile).resolve())
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "elections": list(elections),
@@ -251,11 +358,19 @@ def build_context(
     output_dir: Path = DEFAULT_OUTPUT,
     assembly_matches: Path = DEFAULT_MATCHES,
     elections: tuple[str, ...] = DEFAULT_ELECTIONS,
+    candidates: Path | None = None,
+    speaker_profile: Path | None = None,
 ) -> dict[str, object]:
     """Build context and enforce a complete manual-seed ancestry guard."""
 
     with track_csv_inputs() as records:
-        result = _build_context_impl(output_dir, assembly_matches, elections)
+        result = _build_context_impl(
+            output_dir,
+            assembly_matches,
+            elections,
+            candidates,
+            speaker_profile,
+        )
     forbidden_read = sorted(str(path) for path in FORBIDDEN_MANUAL_SEEDS.intersection(records))
     if forbidden_read:
         raise RuntimeError(
@@ -288,8 +403,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--assembly-matches", type=Path, default=DEFAULT_MATCHES)
+    parser.add_argument("--candidates", type=Path, default=None)
+    parser.add_argument("--speaker-profile", type=Path, default=None)
     args = parser.parse_args()
-    result = build_context(args.output_dir, args.assembly_matches)
+    result = build_context(
+        args.output_dir,
+        args.assembly_matches,
+        candidates=args.candidates,
+        speaker_profile=args.speaker_profile,
+    )
     print(json.dumps(result["manifest"], ensure_ascii=False, indent=2))
 
 

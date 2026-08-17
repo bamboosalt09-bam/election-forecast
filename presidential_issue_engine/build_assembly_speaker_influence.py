@@ -24,6 +24,7 @@ from presidential_issue_engine.point_in_time import (  # noqa: E402
     cutoff_dates_as_strings,
     filter_observed_by_election,
 )
+from presidential_issue_engine.election_scope import ELECTION_DATES  # noqa: E402
 
 DEFAULT_MATCHES = ROOT / "outputs/assembly_speaker_issue_matches_15_22.csv"
 FALLBACK_15TH_MATCHES = ROOT / "outputs/15th_assembly_conversion/issue_phrase_extraction/15th_assembly_issue_phrase_matches.csv"
@@ -59,14 +60,6 @@ SIDO_ALIASES = {
 CONSERVATIVE_HOME = {"sido_26", "sido_27", "sido_31", "sido_47", "sido_48"}
 LIBERAL_HOME = {"sido_29", "sido_45", "sido_46"}
 SWING_REGIONS = {"sido_11", "sido_28", "sido_30", "sido_36", "sido_41", "sido_42", "sido_43", "sido_44", "sido_49"}
-ELECTION_DATES = {
-    "pres_2002": "2002-12-19",
-    "pres_2007": "2007-12-19",
-    "pres_2012": "2012-12-19",
-    "pres_2017": "2017-05-09",
-    "pres_2022": "2022-03-09",
-}
-
 
 def _read_csv(path: Path) -> pd.DataFrame:
     """Read a UTF-8/CP949 CSV with string-preserving defaults."""

@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from presidential_issue_engine.point_in_time import cutoff_dates_as_strings, filter_available_by_election  # noqa: E402
+from presidential_issue_engine.election_scope import ELECTION_DATES  # noqa: E402
 
 from assembly_bloc_issue_posture import (  # noqa: E402
     diagnostics_for,
@@ -33,14 +34,6 @@ RESULTS = ROOT / "presidential_issue_engine/fixed_dataset/presidential_results_s
 CANDIDATE_ISSUES = ROOT / "data/candidate_issue_link.csv"
 CANDIDATE_PROFILE = ROOT / "data/raw/candidate_issue_profile.csv"
 OUTPUT = ROOT / "data/raw/candidate_party_speech_context.csv"
-
-ELECTION_DATES = {
-    "pres_2002": "2002-12-19",
-    "pres_2007": "2007-12-19",
-    "pres_2012": "2012-12-19",
-    "pres_2017": "2017-05-09",
-    "pres_2022": "2022-03-09",
-}
 
 RISK_ISSUES = {"corruption_integrity", "family_legal_risk", "gaffe_event"}
 MAJOR_BLOCS = {"국민의힘", "더불어민주당", "보수정당계", "민주당계"}

@@ -1,0 +1,39 @@
+{
+  "schema": "pres_2025_speaker_issue_match_slice_v1",
+  "status": "forecast_only_not_scored",
+  "target_election": "pres_2025",
+  "source": {
+    "path": "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
+    "rows": 48588,
+    "sha256": "5381ea34d0081ed4bb838ea2c2ba6a2721c745a94c510d4143994bf4a576a4e4"
+  },
+  "selection": {
+    "assembly_daesu": 22,
+    "meeting_date_start": "2025-03-05",
+    "meeting_date_end": "2025-06-02",
+    "available_date_max": "2025-06-02",
+    "availability_policy": "official PDF CreationDate plus one full day; missing availability fails closed"
+  },
+  "output": {
+    "path": "data/raw/official_sources/assembly_pres_2025_context/pres_2025_speaker_issue_matches.csv",
+    "rows": 2446,
+    "first_meeting_date": "2025-03-05",
+    "last_meeting_date": "2025-05-08",
+    "unique_speakers": 147,
+    "sha256": "a607f30b67da00a68a9e34c8834e865949b9744fc1ddc6ef6cebbec1fefba12f"
+  },
+  "historical_invariance": {
+    "elections": [
+      "pres_2002",
+      "pres_2007",
+      "pres_2012",
+      "pres_2017",
+      "pres_2022"
+    ],
+    "rows": 195758,
+    "all_cells_equal_after_outer_zip_prefix_normalization": true,
+    "reference_sha256": "98d100d28e901d736f36592650fe6902a1c30241b7cfd0ff4ad1258700b3d663"
+  },
+  "outcome_columns_used": [],
+  "performance_metrics_computed": false
+}

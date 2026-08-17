@@ -1,0 +1,159 @@
+{
+  "schema_version": "speech_derived_candidate_context_v2",
+  "elections": [
+    "pres_2025"
+  ],
+  "manual_seed_ancestry_allowed": false,
+  "manual_seed_files_read": [],
+  "outcome_fields_used": [],
+  "candidate_registry_columns_used": [
+    "election_id",
+    "slot",
+    "candidate_name",
+    "party_name",
+    "is_active_slot"
+  ],
+  "association_formula": "geomean(candidate emphasis percentile, election salience percentile, issue evidence-coverage percentile), union explicit target confidence",
+  "direction_formula": "target_signed_evidence / target_absolute_evidence for explicit person, party, or government targets only",
+  "confidence_formula": "explicit target-attribution confidence times sign consistency; otherwise unsigned issue-quality/evidence geomean",
+  "sources": {
+    "data/raw/official_sources/assembly_pres_2025_context/model_candidate_issue_link.csv": {
+      "bytes": 11520,
+      "sha256": "68d4537846722d251d059a9fb5a8ed6f7d7a9fb322bc5f1084ecf74734aed440"
+    },
+    "data/raw/official_sources/assembly_pres_2025_context/model_issue_salience.csv": {
+      "bytes": 298491,
+      "sha256": "f1688998f5090d6325fde1813b8063880b772925ed1cc6fc05de8ff39685523d"
+    },
+    "data/raw/assembly_issue_character_overlay.csv": {
+      "bytes": 106114,
+      "sha256": "561b36dc9ace5c445e64f9fc4f3f9f43971a23496f31a5d9ea24cdaf637b7316"
+    },
+    "data/raw/official_sources/pres_2025_candidate_registry.csv": {
+      "bytes": 2081,
+      "sha256": "27cead6ccd7baac0e370c00c4fb37a8c0d24e77bf0ae9bd551561f44491350e8"
+    },
+    "outputs/pres_2025_speech_reextract/assembly_speaker_issue_matches_15_22.csv": {
+      "bytes": 122258533,
+      "sha256": "f0464b6c80b1733927644a624669a7663a4ce78de681b3e5c0a78f0f4f455d2f"
+    },
+    "outputs/pres_2025_speech_reextract/assembly_speaker_influence.csv": {
+      "bytes": 1244815,
+      "sha256": "5c0ce8bce83eb90d488d40ee6722ce901db1db9fe9c057ba6ec6f6c2cd9e0ae8"
+    }
+  },
+  "outputs": {
+    "candidate_issue_profile.csv": 57,
+    "mega_issue_axis.csv": 3,
+    "mega_issue_attribution.csv": 0,
+    "candidate_party_speech_context.csv": 16,
+    "candidate_party_tone_gap.csv": 16,
+    "candidate_public_treatment.csv": 16,
+    "candidate_vote_conversion_context.csv": 16,
+    "automatic_third_candidate_profile.csv": 1
+  },
+  "candidate_role_schema_version": "speech_derived_candidate_role_v1",
+  "manual_third_candidate_profile_allowed": false,
+  "manual_third_candidate_profile_read_count": 0,
+  "forbidden_manual_seed_read_count": 0,
+  "candidate_role_formula": "equal mean of level-rank bridges for serious contender, legitimacy, organization, party support, and coalition stability",
+  "candidate_role_outcome_fields_used": [],
+  "forbidden_manual_input_paths": [
+    "data/raw/candidate_issue_profile.csv",
+    "data/raw/mega_issue_attribution.csv",
+    "data/raw/third_candidate_profile.csv"
+  ],
+  "complete_csv_inputs": {
+    "data/raw/assembly_issue_character_overlay.csv": {
+      "bytes": 106114,
+      "sha256": "561b36dc9ace5c445e64f9fc4f3f9f43971a23496f31a5d9ea24cdaf637b7316"
+    },
+    "data/raw/candidate_party_speech_context.csv": {
+      "bytes": 4631,
+      "sha256": "36f9a64907b96b71e428ed4b99e0e739f3dfd6aac7d2ea4c01bcaeab453f582a"
+    },
+    "data/raw/candidate_party_tone_gap.csv": {
+      "bytes": 11335,
+      "sha256": "b5fac796e925421fd41c1e3c28a30df14b658cf2fcd6e81cc3cb9a3b4e144a91"
+    },
+    "data/raw/candidate_political_landscape.csv": {
+      "bytes": 3452,
+      "sha256": "4263c55e95b5e1b05c89bcad8a2e7b83e58171aaf11340e7049931add5fd6cc0"
+    },
+    "data/raw/candidate_public_treatment.csv": {
+      "bytes": 4773,
+      "sha256": "11b48ad0aa54706aa1eb93fd427cd16e4c11ddb1d9be9a1b90275bcaaf766599"
+    },
+    "data/raw/candidate_vote_conversion_context.csv": {
+      "bytes": 4404,
+      "sha256": "c2a9418929b0d61e5eabc2bdbd6868ce39fb8c384cab8db32ef8bf5ca5496a2a"
+    },
+    "data/raw/official_sources/assembly_pres_2025_context/model_candidate_issue_link.csv": {
+      "bytes": 11520,
+      "sha256": "68d4537846722d251d059a9fb5a8ed6f7d7a9fb322bc5f1084ecf74734aed440"
+    },
+    "data/raw/official_sources/assembly_pres_2025_context/model_issue_salience.csv": {
+      "bytes": 298491,
+      "sha256": "f1688998f5090d6325fde1813b8063880b772925ed1cc6fc05de8ff39685523d"
+    },
+    "data/raw/official_sources/pres_2025_candidate_registry.csv": {
+      "bytes": 2081,
+      "sha256": "27cead6ccd7baac0e370c00c4fb37a8c0d24e77bf0ae9bd551561f44491350e8"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/auto_candidate_role/empty_third_profile.csv": {
+      "bytes": 140,
+      "sha256": "7de4a46a5ccc93b617d5197a05c1867306d0798a60e951d9f5e28c740888971f"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/auto_candidate_role/third_candidate_profile.csv": {
+      "bytes": 720,
+      "sha256": "1bbff81f9501ea7fb347f34d40253ff889ba244e242c1fa54b697d5c2bcb7796"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/auto_issue_seed/candidate_issue_link.csv": {
+      "bytes": 4669,
+      "sha256": "dd775106fdef5c1dd79fae98a89a8107a88f5fc2d7de92b047c7b3fa9721761c"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/auto_issue_seed/candidate_issue_profile.csv": {
+      "bytes": 26590,
+      "sha256": "023c302b765a8dfcf15a0817dd017524724ef84291f5e9efbade59842a91e5e5"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/auto_issue_seed/candidate_registry.csv": {
+      "bytes": 191,
+      "sha256": "30757de4784d74ea681037586c998e6a1cb287b3bd5851db9002e62ae364703c"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/auto_issue_seed/mega_issue_attribution.csv": {
+      "bytes": 105,
+      "sha256": "eaaf8d441d7a5d4fdd1641cdf3152f2fb597c7fc83717cbf37f69d0414b53b2a"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/candidate_party_speech_context.csv": {
+      "bytes": 1339,
+      "sha256": "9b4ece706a2c53a01f46fc4442730aab8b11f8aab00dd30e55eeedf35cfddf2a"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/candidate_party_tone_gap.csv": {
+      "bytes": 2229,
+      "sha256": "d8e51792d973eb07c315eb345262516dea68e4c0b68e1ab855a7d5e99dc50fc0"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/candidate_public_treatment.csv": {
+      "bytes": 1400,
+      "sha256": "409a0016caf407434131c4445f3d8c339dad780111e1ebc30f5109804fe75b8c"
+    },
+    "outputs/pres_2025_speech_derived_candidate_context/candidate_vote_conversion_context.csv": {
+      "bytes": 1253,
+      "sha256": "a9a2e8a467b0e542c685b18f5dd0b2bdbb644bfa10c2c6f6c379aa0083ad22d9"
+    },
+    "outputs/pres_2025_speech_reextract/assembly_speaker_influence.csv": {
+      "bytes": 1244815,
+      "sha256": "5c0ce8bce83eb90d488d40ee6722ce901db1db9fe9c057ba6ec6f6c2cd9e0ae8"
+    },
+    "outputs/pres_2025_speech_reextract/assembly_speaker_issue_matches_15_22.csv": {
+      "bytes": 122258533,
+      "sha256": "f0464b6c80b1733927644a624669a7663a4ce78de681b3e5c0a78f0f4f455d2f"
+    }
+  },
+  "history_preservation": {
+    "mode": "byte_prefix_preserved_append_only",
+    "source_directory": "data/raw",
+    "target_elections": [
+      "pres_2025"
+    ]
+  }
+}

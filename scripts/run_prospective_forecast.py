@@ -73,7 +73,10 @@ FOOTPRINT_BASE = (
 )
 PARTY_TRANSITIONS = ROOT / "data/raw/party_lineage_transitions.csv"
 CANDIDATE_LINK_HISTORY = ROOT / "data/candidate_issue_link.csv"
-CANDIDATE_CONVERSION_HISTORY = ROOT / "data/raw/candidate_vote_conversion_context.csv"
+FORECAST_CANDIDATE_CONTEXT_DIR = CONTEXT_DIR / "candidate_context_v2"
+CANDIDATE_CONVERSION_HISTORY = (
+    FORECAST_CANDIDATE_CONTEXT_DIR / "candidate_vote_conversion_context.csv"
+)
 
 OUTPUT_COLUMNS = (
     "election_id",
@@ -187,19 +190,66 @@ def _candidate_strength_context(
     selected: pd.DataFrame,
     candidate_link: pd.DataFrame,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
-    """Project the existing speech-derived candidate-weight scale to 2025.
+    """Load direct 2025 candidate context or use the historical ridge fallback.
 
-    The historical target is the frozen, outcome-free candidate weight rather
-    than vote share.  A small ridge model maps issue-link attention to that
-    scale and is fitted only on elections through 2022.  This is a deployment
-    adapter for an input that is unavailable in the compact D-1 context, not a
-    new election-outcome model.
+    Direct rows take precedence when all selected candidates have point-in-time
+    context. Otherwise, a small ridge model maps issue-link attention to the
+    frozen, outcome-free candidate-weight scale using elections through 2022.
+    Neither path fits or reads the forecast-election result.
     """
 
-    historical_link = pd.read_csv(CANDIDATE_LINK_HISTORY, encoding="utf-8-sig")
     historical_context = pd.read_csv(
         CANDIDATE_CONVERSION_HISTORY, encoding="utf-8-sig"
     )
+    direct = historical_context.loc[
+        historical_context["election_id"].astype(str).eq(TARGET_ELECTION)
+    ].copy()
+    selected_names = set(selected["candidate_name"].astype(str))
+    direct_names = set(direct["candidate_name"].astype(str))
+    if len(direct) == len(selected) and direct_names == selected_names:
+        observed = pd.to_datetime(direct["available_date"], errors="coerce")
+        if observed.isna().any() or observed.gt(pd.Timestamp(FORECAST_CUTOFF)).any():
+            raise RuntimeError("direct candidate context is not available by forecast cutoff")
+        direct = direct.drop(columns=["slot"]).merge(
+            selected[["candidate_id", "candidate_name", "slot"]],
+            on="candidate_name",
+            how="inner",
+            validate="one_to_one",
+        )
+        direct = direct.reindex(columns=[*historical_context.columns, "candidate_id"])
+        combined = pd.concat(
+            [
+                historical_context.loc[
+                    ~historical_context["election_id"].astype(str).eq(TARGET_ELECTION)
+                ],
+                direct[historical_context.columns],
+            ],
+            ignore_index=True,
+        )
+        try:
+            context_source = str(CANDIDATE_CONVERSION_HISTORY.relative_to(ROOT)).replace("\\", "/")
+        except ValueError:
+            context_source = str(CANDIDATE_CONVERSION_HISTORY)
+        diagnostics = {
+            "method": "direct_speech_derived_candidate_context",
+            "training_elections": [],
+            "target_outcomes_used": False,
+            "polling_used": False,
+            "source": context_source,
+            "projected_candidates": direct[
+                [
+                    "candidate_id",
+                    "candidate_name",
+                    "slot",
+                    "candidate_weight",
+                    "confidence",
+                    "available_date",
+                ]
+            ].to_dict("records"),
+        }
+        return combined, diagnostics
+
+    historical_link = pd.read_csv(CANDIDATE_LINK_HISTORY, encoding="utf-8-sig")
 
     def aggregate(
         frame: pd.DataFrame,
@@ -643,6 +693,30 @@ def _execute_existing_pipeline(
                         "CANDIDATE_VOTE_CONVERSION_CONTEXT",
                         str(sources["candidate_context"]),
                     ),
+                    (
+                        engine,
+                        "CANDIDATE_PARTY_SPEECH_CONTEXT",
+                        str(
+                            FORECAST_CANDIDATE_CONTEXT_DIR
+                            / "candidate_party_speech_context.csv"
+                        ),
+                    ),
+                    (
+                        engine,
+                        "CANDIDATE_PARTY_TONE_GAP",
+                        str(
+                            FORECAST_CANDIDATE_CONTEXT_DIR
+                            / "candidate_party_tone_gap.csv"
+                        ),
+                    ),
+                    (
+                        engine,
+                        "CANDIDATE_PUBLIC_TREATMENT",
+                        str(
+                            FORECAST_CANDIDATE_CONTEXT_DIR
+                            / "candidate_public_treatment.csv"
+                        ),
+                    ),
                 ]
             )
         with patching.patched(source_attributes):
@@ -772,7 +846,7 @@ def _input_manifest(
         OUTER_CONFIG,
         DEPLOYMENT_CONFIG,
         CANDIDATE_LINK_HISTORY,
-        CANDIDATE_CONVERSION_HISTORY,
+        *sorted(FORECAST_CANDIDATE_CONTEXT_DIR.glob("*.csv")),
         PARTY_TRANSITIONS,
         ROOT / "data/raw/official_sources/nec_assembly_district_history.csv",
         ROOT / active.nested.engine.SALIENCE,

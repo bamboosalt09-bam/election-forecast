@@ -26,6 +26,7 @@ from scripts import build_speech_derived_issue_context as issue_builder  # noqa:
 
 DEFAULT_OUTPUT = ROOT / "outputs" / "speech_derived_candidate_context_v2"
 POLITICAL_LANDSCAPE = ROOT / "data" / "raw" / "candidate_political_landscape.csv"
+ACTIVE_HISTORY_DIR = ROOT / "data" / "raw"
 FORBIDDEN_MANUAL_INPUTS = {
     *issue_builder.FORBIDDEN_MANUAL_SEEDS,
     (ROOT / "data" / "raw" / "third_candidate_profile.csv").resolve(),
@@ -48,9 +49,33 @@ def _empty_third_profile(path: Path) -> None:
     issue_builder._write(pd.DataFrame(columns=columns), path)
 
 
+def _prepend_frozen_history(
+    history_path: Path,
+    target: pd.DataFrame,
+    output_path: Path,
+) -> None:
+    """Preserve the through-2022 CSV bytes and append forecast-only rows."""
+
+    history = pd.read_csv(history_path, encoding="utf-8-sig", nrows=0)
+    if list(history.columns) != list(target.columns):
+        raise RuntimeError(f"history schema differs for {history_path.name}")
+    payload = history_path.read_bytes()
+    if payload and not payload.endswith((b"\n", b"\r")):
+        payload += b"\n"
+    target_bytes = target.to_csv(
+        index=False,
+        header=False,
+        lineterminator="\n",
+    ).encode("utf-8")
+    output_path.write_bytes(payload + target_bytes)
+
+
 def build_context(
     output_dir: Path = DEFAULT_OUTPUT,
     assembly_matches: Path = issue_builder.DEFAULT_MATCHES,
+    candidates: Path | None = None,
+    speaker_profile: Path | None = None,
+    preserve_history_dir: Path | None = None,
 ) -> dict[str, object]:
     """Build v2 and reject any read of manual issue or third-candidate priors."""
 
@@ -72,6 +97,8 @@ def build_context(
                 output_dir,
                 assembly_matches,
                 issue_builder.DEFAULT_ELECTIONS,
+                candidates,
+                speaker_profile,
             )
 
         speech = pd.read_csv(result["speech"], encoding="utf-8-sig")
@@ -112,6 +139,21 @@ def build_context(
             conversion = conversion_builder.build()
         issue_builder._write(conversion, result["conversion"])
 
+        if preserve_history_dir is not None:
+            preserve_history_dir = Path(preserve_history_dir).resolve()
+            for key, result_key in [
+                ("candidate_party_speech_context.csv", "speech"),
+                ("candidate_party_tone_gap.csv", "tone"),
+                ("candidate_public_treatment.csv", "treatment"),
+                ("candidate_vote_conversion_context.csv", "conversion"),
+            ]:
+                target_frame = pd.read_csv(result[result_key], encoding="utf-8-sig")
+                _prepend_frozen_history(
+                    preserve_history_dir / key,
+                    target_frame,
+                    result[result_key],
+                )
+
     forbidden_reads = sorted(FORBIDDEN_MANUAL_INPUTS.intersection(records))
     if forbidden_reads:
         raise RuntimeError(
@@ -147,7 +189,29 @@ def build_context(
         }
     )
     manifest["outputs"]["automatic_third_candidate_profile.csv"] = len(profile)
-    manifest["outputs"]["candidate_vote_conversion_context.csv"] = len(conversion)
+    for filename, result_key in [
+        ("candidate_party_speech_context.csv", "speech"),
+        ("candidate_party_tone_gap.csv", "tone"),
+        ("candidate_public_treatment.csv", "treatment"),
+        ("candidate_vote_conversion_context.csv", "conversion"),
+    ]:
+        manifest["outputs"][filename] = len(
+            pd.read_csv(result[result_key], encoding="utf-8-sig")
+        )
+    if preserve_history_dir is not None:
+        history_source = Path(preserve_history_dir).resolve()
+        history_source_display = (
+            str(history_source.relative_to(ROOT)).replace("\\", "/")
+            if history_source.is_relative_to(ROOT)
+            else str(history_source)
+        )
+        manifest["history_preservation"] = {
+            "mode": "byte_prefix_preserved_append_only",
+            "source_directory": history_source_display,
+            "target_elections": sorted(
+                set(conversion["election_id"].astype(str))
+            ),
+        }
     manifest_path = output_dir / "lineage_manifest.json"
     manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
@@ -164,8 +228,17 @@ def main() -> None:
     parser.add_argument(
         "--assembly-matches", type=Path, default=issue_builder.DEFAULT_MATCHES
     )
+    parser.add_argument("--candidates", type=Path, default=None)
+    parser.add_argument("--speaker-profile", type=Path, default=None)
+    parser.add_argument("--preserve-history-dir", type=Path, default=None)
     args = parser.parse_args()
-    result = build_context(args.output_dir, args.assembly_matches)
+    result = build_context(
+        args.output_dir,
+        args.assembly_matches,
+        candidates=args.candidates,
+        speaker_profile=args.speaker_profile,
+        preserve_history_dir=args.preserve_history_dir,
+    )
     print(json.dumps(result["manifest"], ensure_ascii=False, indent=2))
 
 

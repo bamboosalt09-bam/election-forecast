@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "cutoff": "2025-06-02",
+  "files": {
+    "candidate_party_speech_context.csv": {
+      "history_exact_byte_prefix": true,
+      "target_rows": 3,
+      "available_date_max": "2025-06-02",
+      "dates_at_or_before_cutoff": true,
+      "forbidden_outcome_columns": [],
+      "sha256": "dc6294e40ebcd0a22949be0a5f9bf374e8a38ff707c9b0d9f2c80f2e09e0ed35"
+    },
+    "candidate_party_tone_gap.csv": {
+      "history_exact_byte_prefix": true,
+      "target_rows": 3,
+      "available_date_max": "2025-06-02",
+      "dates_at_or_before_cutoff": true,
+      "forbidden_outcome_columns": [],
+      "sha256": "4e6f58ab4e1a0224d50464f3934e8ef8a07e1d496fa4392b0ceb253adf000746"
+    },
+    "candidate_public_treatment.csv": {
+      "history_exact_byte_prefix": true,
+      "target_rows": 3,
+      "available_date_max": "2025-06-02",
+      "dates_at_or_before_cutoff": true,
+      "forbidden_outcome_columns": [],
+      "sha256": "5ad5f4e79365c4cfa29b99defbb484d146a6c005107833ebafcca91095a2702f"
+    },
+    "candidate_vote_conversion_context.csv": {
+      "history_exact_byte_prefix": true,
+      "target_rows": 3,
+      "available_date_max": "2025-06-02",
+      "dates_at_or_before_cutoff": true,
+      "forbidden_outcome_columns": [],
+      "sha256": "aed3a1aee4bb6aa22b1e5406954875c078b90d45f6c18ba8303cdd4f906b500e"
+    }
+  }
+}

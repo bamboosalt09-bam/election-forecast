@@ -67,3 +67,46 @@ def test_v24_requires_human_promoted_config(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(prospective, "V24_CONFIG", tmp_path / "missing.json")
     with pytest.raises(RuntimeError, match="no human-promoted config"):
         prospective._config_path("v24")
+
+
+def test_candidate_strength_prefers_direct_speech_context(monkeypatch, tmp_path) -> None:
+    context = tmp_path / "candidate_vote_conversion_context.csv"
+    rows = []
+    for election_id, name, slot, weight in [
+        ("pres_2022", "old", "A", 0.4),
+        ("pres_2025", "candidate_a", "A", 0.7),
+        ("pres_2025", "candidate_b", "B", 0.6),
+        ("pres_2025", "candidate_c", "C", 0.3),
+    ]:
+        rows.append(
+            {
+                "election_id": election_id,
+                "slot": slot,
+                "candidate_name": name,
+                "candidate_weight": weight,
+                "confidence": 0.5,
+                "available_date": "2025-06-02" if election_id == "pres_2025" else "2022-03-08",
+            }
+        )
+    pd.DataFrame(rows).to_csv(context, index=False)
+    monkeypatch.setattr(prospective, "CANDIDATE_CONVERSION_HISTORY", context)
+    selected = pd.DataFrame(
+        {
+            "candidate_id": ["id_b", "id_a", "id_c"],
+            "candidate_name": ["candidate_b", "candidate_a", "candidate_c"],
+            "slot": ["A", "B", "C"],
+        }
+    )
+
+    combined, diagnostics = prospective._candidate_strength_context(
+        selected,
+        pd.DataFrame(),
+    )
+
+    assert diagnostics["method"] == "direct_speech_derived_candidate_context"
+    target = combined.loc[combined["election_id"].eq("pres_2025")]
+    assert target.set_index("candidate_name")["slot"].to_dict() == {
+        "candidate_b": "A",
+        "candidate_a": "B",
+        "candidate_c": "C",
+    }

@@ -10,6 +10,10 @@
 *.csv -text
 *.json -text
 
+# Forecast context CSVs preserve audited byte prefixes and source hashes.
+data/raw/official_sources/assembly_pres_2025_context/candidate_context_v2/*.csv -text -diff
+data/raw/official_sources/assembly_pres_2025_context/pres_2025_speaker_issue_matches.csv -text -diff
+
 # Binary formats must never receive line-ending conversion.
 *.joblib binary
 *.xlsx binary
