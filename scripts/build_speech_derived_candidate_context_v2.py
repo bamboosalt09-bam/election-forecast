@@ -20,12 +20,19 @@ from presidential_issue_engine.speech_derived_candidate_roles import (  # noqa: 
     SCHEMA_VERSION as ROLE_SCHEMA_VERSION,
     build_automatic_third_candidate_profile,
 )
+from presidential_issue_engine.speech_landscape_builder import (  # noqa: E402
+    build_landscape_from_issue_links,
+    load_axis_map,
+)
 from scripts import build_candidate_public_treatment as treatment_builder  # noqa: E402
 from scripts import build_speech_derived_issue_context as issue_builder  # noqa: E402
 
 
 DEFAULT_OUTPUT = ROOT / "outputs" / "speech_derived_candidate_context_v2"
 POLITICAL_LANDSCAPE = ROOT / "data" / "raw" / "candidate_political_landscape.csv"
+POLITICAL_LANDSCAPE_AXIS = (
+    ROOT / "data" / "raw" / "political_landscape_issue_axis.csv"
+)
 ACTIVE_HISTORY_DIR = ROOT / "data" / "raw"
 FORBIDDEN_MANUAL_INPUTS = {
     *issue_builder.FORBIDDEN_MANUAL_SEEDS,
@@ -103,7 +110,27 @@ def build_context(
 
         speech = pd.read_csv(result["speech"], encoding="utf-8-sig")
         treatment = pd.read_csv(result["treatment"], encoding="utf-8-sig")
-        landscape = pd.read_csv(POLITICAL_LANDSCAPE, encoding="utf-8-sig")
+        if candidates is None:
+            landscape = pd.read_csv(POLITICAL_LANDSCAPE, encoding="utf-8-sig")
+        else:
+            issue_link = pd.read_csv(
+                result["seed_dir"] / "candidate_issue_link.csv",
+                encoding="utf-8-sig",
+            )
+            candidate_metadata = pd.read_csv(
+                result["seed_dir"] / "candidate_registry.csv",
+                encoding="utf-8-sig",
+            )[["election_id", "slot", "candidate_name"]]
+            landscape = build_landscape_from_issue_links(
+                issue_link,
+                candidate_metadata,
+                load_axis_map(POLITICAL_LANDSCAPE_AXIS),
+                available_date_by_election={"pres_2025": "2025-06-02"},
+            )
+            issue_builder._write(
+                landscape,
+                output_dir / "candidate_political_landscape.csv",
+            )
         profile = build_automatic_third_candidate_profile(
             speech,
             treatment,
@@ -189,6 +216,8 @@ def build_context(
         }
     )
     manifest["outputs"]["automatic_third_candidate_profile.csv"] = len(profile)
+    if candidates is not None:
+        manifest["outputs"]["candidate_political_landscape.csv"] = len(landscape)
     for filename, result_key in [
         ("candidate_party_speech_context.csv", "speech"),
         ("candidate_party_tone_gap.csv", "tone"),
@@ -213,11 +242,14 @@ def build_context(
             ),
         }
     manifest_path = output_dir / "lineage_manifest.json"
-    manifest_path.write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+    manifest_path.write_bytes(
+        (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode(
+            "utf-8"
+        )
     )
     result["third_profile"] = automatic_profile
+    if candidates is not None:
+        result["landscape"] = output_dir / "candidate_political_landscape.csv"
     result["manifest"] = manifest
     return result
 

@@ -233,6 +233,15 @@ def build_keyword_inputs() -> tuple[
     return keyword_maps, term_weights, issue_boosts, context_rules
 
 
+def normalized_source_file(value: object) -> str:
+    """Remove only the outer archive-directory prefix from a workbook key."""
+
+    text = str(value or "").replace("\\", "/")
+    if text.startswith("trash_dataset/"):
+        return text[len("trash_dataset/") :]
+    return text
+
+
 def completed_source_files(out_path: Path) -> set[str]:
     if not out_path.exists() or out_path.stat().st_size == 0:
         return set()
@@ -240,7 +249,10 @@ def completed_source_files(out_path: Path) -> set[str]:
         frame = pd.read_csv(out_path, usecols=["source_file"], dtype=str)
     except Exception:  # noqa: BLE001 - corrupt/incomplete resume file should not hide work
         return set()
-    return set(frame["source_file"].dropna().astype(str).unique())
+    return {
+        normalized_source_file(value)
+        for value in frame["source_file"].dropna().astype(str).unique()
+    }
 
 
 def extract_matches(
@@ -249,6 +261,7 @@ def extract_matches(
     max_workbooks: int | None = None,
     resume: bool = True,
     window_mode: str = "campaign",
+    assemblies: set[str] | None = None,
 ) -> None:
     keyword_maps, term_weights, issue_boosts, context_rules = build_keyword_inputs()
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -262,12 +275,19 @@ def extract_matches(
         if write_header:
             writer.writeheader()
         for workbook_idx, (name, data) in enumerate(iter_workbooks_from_source(source), 1):
+            source_name = normalized_source_file(name)
             if max_workbooks is not None and workbook_idx > max_workbooks:
                 break
-            if name in done_sources:
+            if source_name in done_sources:
                 print(f"[{workbook_idx}] skip-completed {name[:100]}", flush=True)
                 continue
-            assembly_daesu = assembly_daesu_from_name(name)
+            assembly_daesu = assembly_daesu_from_name(source_name)
+            if assemblies and assembly_daesu not in assemblies:
+                print(
+                    f"[{workbook_idx}] skip-unrequested-assembly {name[:100]}",
+                    flush=True,
+                )
+                continue
             if assembly_daesu and assembly_daesu not in MODEL_ASSEMBLIES:
                 print(
                     f"[{workbook_idx}] skip-out-of-scope-assembly {name[:100]}",
@@ -307,7 +327,7 @@ def extract_matches(
                                 "election_id": election_id,
                                 "assembly_daesu": assembly_daesu,
                                 "source_sheet": "",
-                                "source_file": name,
+                                "source_file": source_name,
                                 "source_row_id": row_idx,
                                 "meeting_date": d.isoformat(),
                                 "period": _week(d),
@@ -523,6 +543,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-extract", action="store_true")
     parser.add_argument("--no-resume", action="store_true")
     parser.add_argument("--window-mode", choices=["continuous", "campaign"], default="campaign")
+    parser.add_argument(
+        "--assemblies",
+        nargs="+",
+        default=None,
+        help="Optional Assembly terms to parse, for example: --assemblies 22",
+    )
     return parser.parse_args()
 
 
@@ -536,6 +562,7 @@ def main() -> None:
             args.max_workbooks,
             resume=not args.no_resume,
             window_mode=args.window_mode,
+            assemblies=set(args.assemblies) if args.assemblies else None,
         )
     if not args.skip_pres_2025_supplement and args.pres_2025_supplement.exists():
         convert_pres_2025_official_supplement(

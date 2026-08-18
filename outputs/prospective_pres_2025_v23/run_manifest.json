@@ -44,11 +44,11 @@
   "final_model_slot_assignment": [
     {
       "slot": "A",
-      "candidate_name": "이재명"
+      "candidate_name": "김문수"
     },
     {
       "slot": "B",
-      "candidate_name": "김문수"
+      "candidate_name": "이재명"
     },
     {
       "slot": "C",
@@ -66,24 +66,24 @@
         "candidate_id": "pres_2025_lee_jaemyung",
         "candidate_name": "이재명",
         "slot": "A",
-        "candidate_weight": 0.5777125222681936,
-        "confidence": 0.7765408362586529,
+        "candidate_weight": 0.592953929963068,
+        "confidence": 0.8362232369122443,
         "available_date": "2025-06-02"
       },
       {
         "candidate_id": "pres_2025_kim_moonsu",
         "candidate_name": "김문수",
         "slot": "B",
-        "candidate_weight": 0.4983638395340927,
-        "confidence": 0.7338379586965041,
+        "candidate_weight": 0.5955216016034715,
+        "confidence": 0.8105682368544662,
         "available_date": "2025-06-02"
       },
       {
         "candidate_id": "pres_2025_lee_junseok",
         "candidate_name": "이준석",
         "slot": "C",
-        "candidate_weight": 0.4560782605632817,
-        "confidence": 0.6743399265515677,
+        "candidate_weight": 0.4903364197129536,
+        "confidence": 0.6921614138365897,
         "available_date": "2025-06-02"
       }
     ]
@@ -93,5 +93,13 @@
   "performance_metrics_computed": false,
   "pres_2025_outcome_present": false,
   "assembly_context_manifest_sha256": "873a5bdae1a5d3dd7284253a98d473ee0b867f43e98fcf312c8ca9caec4c8264",
-  "assembly_context_certification": "forecast_only_not_scored"
+  "assembly_context_certification": "forecast_only_not_scored",
+  "candidate_context_lineage_manifest_sha256": "f722601aa99b211a862503f59ecfd34684347bd78227a1e4ec3f6c8f3a4ac2a8",
+  "candidate_political_landscape_sha256": "137b9ce9c2ca9149259f3b18605426fedb94713b7733e39ecc05ab903c4d4b35",
+  "third_candidate_profile_sha256": "72ffd6f7ecf24cfb7e411459e248590824039ea80ce1aa1e30c2e0397c38da71",
+  "candidate_issue_profile_sha256": "ef89fc9f1c94ac641e56ad496629f847fc1fb4a6fef5bb2a48dee30d8c9c6784",
+  "mega_issue_axis_sha256": "8f2a4a91ea917c318f470551a5ea27c51ac5acc9cf94b0ed7125a1f27c73db96",
+  "mega_issue_attribution_sha256": "76ce3c897ef015c9d1d1aeb086699adf6e95af648a4c15888c7cbe07abe448ef",
+  "assembly22_roster_manifest_sha256": "b3959bdd4f833fd7d0ae9060f28aa54aa270738b61bbdd0f780a102f78204347",
+  "assembly_speaker_profile_sha256": "2de094609499dbacd7bc2fc47e02cc344aabed9c172e024e36b9fbe3ae22fdf8"
 }

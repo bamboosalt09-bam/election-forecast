@@ -109,6 +109,26 @@ only while assembling the forecast target. Its candidate-strength method is
 therefore `direct_speech_derived_candidate_context`; the 12-row ridge adapter
 remains a fallback for missing direct context.
 
+### Intermediate-chain correction (2026-08-18)
+
+A later end-to-end audit found that the first direct-context run still omitted
+three generated target inputs from the final runtime and discarded explicit
+directional evidence during representation conversion. It also used incomplete
+22nd-Assembly party metadata. The corrected path now:
+
+- aligns the 2025 speaker slice to the official 22nd-Assembly term roster;
+- converts existing signed target evidence into the issue-character overlay;
+- derives and connects the 2025 political landscape and third-candidate profile;
+- connects the target automatic candidate issue profile, mega axis, and mega
+  attribution to both instances of the unchanged V23 engine;
+- lists only active runtime inputs in `input_manifest.csv`.
+
+The archive extraction itself was rechecked. All six 22nd-Assembly workbook
+classes end before the 2025 campaign window, so the official supplement's
+2,446 eligible rows are the complete campaign-window source rather than an
+accidentally truncated archive result. Details and stage-by-stage unscored
+outputs are in `docs/PRES_2025_INTERMEDIATE_CHAIN_CORRECTION_20260818.md`.
+
 ## Reproduction
 
 ```powershell

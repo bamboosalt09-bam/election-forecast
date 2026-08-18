@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import sys
 from contextlib import contextmanager
 from pathlib import Path
@@ -49,6 +50,9 @@ FORECAST_CONTEXT_DIR = (
 )
 FORECAST_LINKS = FORECAST_CONTEXT_DIR / "model_candidate_issue_link.csv"
 FORECAST_SALIENCE = FORECAST_CONTEXT_DIR / "model_issue_salience.csv"
+FORECAST_CANDIDATE_TARGET_CONTEXT = (
+    FORECAST_CONTEXT_DIR / "candidate_target_context_weekly.csv"
+)
 ACTIVE_HISTORY_DIR = ROOT / "data" / "raw"
 PRES_2025_BALLOT_TO_SLOT = {1: "A", 2: "B", 4: "C"}
 FORBIDDEN_OUTCOME_COLUMNS = {
@@ -119,7 +123,8 @@ def _sha256(path: Path) -> str:
 
 def _write(frame: pd.DataFrame, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    frame.to_csv(path, index=False, encoding="utf-8-sig")
+    payload = frame.to_csv(index=False, lineterminator="\n").encode("utf-8-sig")
+    path.write_bytes(payload)
 
 
 def _forecast_candidate_registry(path: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -184,6 +189,176 @@ def _forecast_issue_inputs(
     return links, salience
 
 
+def _bounded_log(value: float, cap: float = 20.0) -> float:
+    """Use the active stance-overlay evidence saturation without new tuning."""
+
+    if value <= 0.0:
+        return 0.0
+    return float(min(math.log1p(value) / math.log1p(cap), 1.0))
+
+
+def _forecast_character_overlay(
+    registry: pd.DataFrame,
+    salience: pd.DataFrame,
+    assembly_matches: Path,
+    target_context_path: Path = FORECAST_CANDIDATE_TARGET_CONTEXT,
+) -> pd.DataFrame:
+    """Compile the target-attribution fields already emitted by the extractor.
+
+    The forecast extraction chain stores explicit attack/defence evidence in
+    ``candidate_target_context_weekly.csv``.  The generic historical builder
+    expects the same evidence in issue-character-overlay columns.  This bridge
+    only changes representation: it reuses the reliability equation from
+    ``stance_explanatory_overlay`` and does not introduce a forecast weight,
+    threshold, or outcome input.
+    """
+
+    target = pd.read_csv(target_context_path, encoding="utf-8-sig")
+    matches = pd.read_csv(assembly_matches, encoding="utf-8-sig")
+    required_target = {
+        "election_id",
+        "candidate_id",
+        "issue_name",
+        "sentence_count",
+        "weighted_mentions",
+        "signed_weight",
+        "absolute_directional_weight",
+        "source_target_type",
+        "source_observed_available_date",
+    }
+    missing = sorted(required_target - set(target.columns))
+    if missing:
+        raise ValueError(f"forecast target context missing columns: {missing}")
+    required_matches = {
+        "election_id",
+        "issue_name",
+        "speaker",
+        "committee",
+        "meeting_date",
+    }
+    missing = sorted(required_matches - set(matches.columns))
+    if missing:
+        raise ValueError(f"forecast Assembly matches missing columns: {missing}")
+
+    target = target.merge(
+        registry[["candidate_id", "slot"]],
+        on="candidate_id",
+        how="inner",
+        validate="many_to_one",
+    )
+    target = target.loc[target["election_id"].astype(str).eq("pres_2025")].copy()
+    for column in (
+        "sentence_count",
+        "weighted_mentions",
+        "signed_weight",
+        "absolute_directional_weight",
+    ):
+        target[column] = pd.to_numeric(target[column], errors="coerce").fillna(0.0)
+    target["directional"] = target["absolute_directional_weight"].gt(0.0)
+    target["directional_sentence_count"] = target["sentence_count"].where(
+        target["directional"], 0.0
+    )
+    target["directional_weighted_mentions"] = target["weighted_mentions"].where(
+        target["directional"], 0.0
+    )
+    target["directional_source_type"] = target["source_target_type"].where(
+        target["directional"], ""
+    )
+
+    def source_types(values: pd.Series) -> str:
+        return "|".join(sorted({str(value) for value in values if str(value).strip()}))
+
+    attribution = target.groupby(
+        ["election_id", "slot", "issue_name"], as_index=False
+    ).agg(
+        link_evidence_count=("directional_sentence_count", "sum"),
+        directional_weighted_mentions=("directional_weighted_mentions", "sum"),
+        target_signed_evidence=("signed_weight", "sum"),
+        target_absolute_evidence=("absolute_directional_weight", "sum"),
+        target_source_types=("directional_source_type", source_types),
+        link_available_date=("source_observed_available_date", "max"),
+    )
+    attribution["link_evidence_count"] = attribution["link_evidence_count"].astype(int)
+    mass = attribution["target_absolute_evidence"]
+    attribution["target_directional_balance"] = (
+        attribution["target_signed_evidence"] / mass.where(mass.gt(0.0))
+    ).fillna(0.0).clip(-1.0, 1.0)
+    attribution["link_consistency"] = (
+        attribution["target_signed_evidence"].abs() / mass.where(mass.gt(0.0))
+    ).fillna(0.0).clip(0.0, 1.0)
+    mean_confidence = (
+        mass / attribution["directional_weighted_mentions"].where(
+            attribution["directional_weighted_mentions"].gt(0.0)
+        )
+    ).fillna(0.0).clip(0.0, 1.0)
+    evidence_saturation = attribution["link_evidence_count"].map(_bounded_log)
+    attribution["target_attribution_confidence"] = (
+        0.65 * attribution["link_consistency"] + 0.35 * evidence_saturation
+    ) * mean_confidence
+    attribution["link_reliability"] = attribution[
+        "target_attribution_confidence"
+    ]
+
+    matches = matches.loc[
+        matches["election_id"].astype(str).eq("pres_2025")
+    ].copy()
+    issue = matches.groupby(["election_id", "issue_name"], as_index=False).agg(
+        issue_evidence_count=("issue_name", "size"),
+        issue_speaker_count=("speaker", "nunique"),
+        issue_committee_count=("committee", "nunique"),
+        issue_available_date=("meeting_date", "max"),
+    )
+    issue["issue_confidence_quality"] = 0.0
+
+    elections = registry[["election_id", "slot"]].drop_duplicates()
+    issues = salience[["election_id", "issue_name", "available_date"]].copy()
+    issues = issues.groupby(["election_id", "issue_name"], as_index=False).agg(
+        salience_available_date=("available_date", "max")
+    )
+    overlay = issues.merge(elections, on="election_id", how="inner")
+    overlay = overlay.merge(issue, on=["election_id", "issue_name"], how="left")
+    overlay = overlay.merge(
+        attribution,
+        on=["election_id", "slot", "issue_name"],
+        how="left",
+    )
+    numeric = [
+        "issue_evidence_count",
+        "issue_speaker_count",
+        "issue_committee_count",
+        "issue_confidence_quality",
+        "link_evidence_count",
+        "link_consistency",
+        "link_reliability",
+        "target_signed_evidence",
+        "target_absolute_evidence",
+        "target_directional_balance",
+        "target_attribution_confidence",
+    ]
+    for column in numeric:
+        overlay[column] = pd.to_numeric(
+            overlay.get(column, 0.0), errors="coerce"
+        ).fillna(0.0)
+    overlay["target_source_types"] = overlay.get(
+        "target_source_types", ""
+    ).fillna("")
+    overlay["available_date"] = pd.concat(
+        [
+            pd.to_datetime(overlay["issue_available_date"], errors="coerce"),
+            pd.to_datetime(overlay["salience_available_date"], errors="coerce"),
+            pd.to_datetime(overlay["link_available_date"], errors="coerce"),
+        ],
+        axis=1,
+    ).max(axis=1).dt.strftime("%Y-%m-%d")
+    cutoff = pd.Timestamp("2025-06-02")
+    observed = pd.to_datetime(overlay["available_date"], errors="coerce")
+    if observed.isna().any() or observed.gt(cutoff).any():
+        raise RuntimeError("forecast character overlay violates the D-1 cutoff")
+    return overlay.sort_values(["election_id", "issue_name", "slot"]).reset_index(
+        drop=True
+    )
+
+
 def _build_context_impl(
     output_dir: Path = DEFAULT_OUTPUT,
     assembly_matches: Path = DEFAULT_MATCHES,
@@ -199,8 +374,8 @@ def _build_context_impl(
         raise FileNotFoundError(f"Assembly issue matches not found: {assembly_matches}")
 
     candidate_source = CANDIDATES
-    character = pd.read_csv(CHARACTER, encoding="utf-8-sig")
     if candidates is None:
+        character = pd.read_csv(CHARACTER, encoding="utf-8-sig")
         links_path = LINKS
         salience_path = SALIENCE
         links = pd.read_csv(links_path, encoding="utf-8-sig")
@@ -222,13 +397,20 @@ def _build_context_impl(
         candidate_source = Path(candidates).resolve()
         registry, candidate_frame = _forecast_candidate_registry(candidate_source)
         links, salience = _forecast_issue_inputs(registry)
+        character = _forecast_character_overlay(
+            registry,
+            salience,
+            assembly_matches,
+        )
         elections = tuple(sorted(candidate_frame["election_id"].astype(str).unique()))
     candidate_frame = candidate_frame.drop_duplicates(["election_id", "slot"])
     seed_dir = output_dir / "auto_issue_seed"
     candidate_registry_path = seed_dir / "candidate_registry.csv"
     candidate_links_path = seed_dir / "candidate_issue_link.csv"
+    character_overlay_path = seed_dir / "issue_character_overlay.csv"
     _write(candidate_frame, candidate_registry_path)
     _write(links, candidate_links_path)
+    _write(character, character_overlay_path)
     outputs = build_outputs(
         links,
         salience,
@@ -288,7 +470,11 @@ def _build_context_impl(
         conversion = conversion_builder.build()
     _write(conversion, conversion_path)
 
-    sources = [links_path, salience_path, CHARACTER, candidate_source, assembly_matches]
+    sources = [links_path, salience_path, candidate_source, assembly_matches]
+    if candidates is None:
+        sources.append(CHARACTER)
+    else:
+        sources.append(FORECAST_CANDIDATE_TARGET_CONTEXT)
     if speaker_profile is not None:
         sources.append(Path(speaker_profile).resolve())
     manifest = {
@@ -329,6 +515,7 @@ def _build_context_impl(
             "candidate_issue_profile.csv": len(outputs["candidate_issue_profile.csv"]),
             "mega_issue_axis.csv": len(outputs["mega_issue_axis.csv"]),
             "mega_issue_attribution.csv": len(outputs["mega_issue_attribution.csv"]),
+            "issue_character_overlay.csv": len(character),
             "candidate_party_speech_context.csv": len(speech),
             "candidate_party_tone_gap.csv": len(tone),
             "candidate_public_treatment.csv": len(treatment),

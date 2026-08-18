@@ -13,6 +13,26 @@
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
 
+## Corrected 2025 prospective chain (2026-08-18)
+
+An end-to-end input audit corrected three forecast-only integration defects:
+incomplete 22nd-Assembly speaker-party mapping, dropped explicit target
+direction, and omission of generated 2025 landscape/third-candidate/automatic
+issue-seed files from the final runtime. No V23 formula, coefficient, config,
+active pointer, or historical output was changed.
+
+The corrected unscored national output is Kim Moon-soo `40.0938%`, Lee
+Jae-myung `37.0492%`, and Lee Jun-seok `22.8571%`, using 2022 valid-vote volume
+for regional aggregation. The run manifest retains `outcome_columns_used: []`,
+`performance_metrics_computed: false`, and `pres_2025_outcome_present: false`.
+Do not compare these values with the realized 2025 result.
+
+The remaining high third-candidate share is now diagnosed as a V23 structural
+calibration limitation: the slot-free preliminary Ridge begins near an equal
+three-way split, and the existing absolute candidate-scale controls do not
+fully offset it. Any correction belongs in a separately measured V24 change.
+See `docs/PRES_2025_INTERMEDIATE_CHAIN_CORRECTION_20260818.md`.
+
 ## 2025 forecast-only Assembly context (2026-08-10)
 
 The requested 2025 pre-election minutes supplement is complete against the

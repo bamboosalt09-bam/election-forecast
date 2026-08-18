@@ -1,0 +1,5 @@
+﻿election_id,mega_event,issue_name,target_type,target,polarity,weight,available_date,confidence,notes
+pres_2025,assembly_speech_welfare_pension,welfare_pension,candidate_slot,A,1.0,0.8723783338732468,2025-05-20,0.4378107522263601,Explicit Assembly target evidence; deterministic source-derived
+pres_2025,assembly_speech_welfare_pension,welfare_pension,candidate_slot,B,1.0,0.9087545792906869,2025-05-20,0.4378107522263601,Explicit Assembly target evidence; deterministic source-derived
+pres_2025,assembly_speech_external_shock,external_shock,candidate_slot,A,1.0,0.8728807245884174,2025-05-20,0.4378107522263601,Explicit Assembly target evidence; deterministic source-derived
+pres_2025,assembly_speech_external_shock,external_shock,candidate_slot,B,-1.0,0.8879811985681472,2025-05-20,0.5045931035275556,Explicit Assembly target evidence; deterministic source-derived

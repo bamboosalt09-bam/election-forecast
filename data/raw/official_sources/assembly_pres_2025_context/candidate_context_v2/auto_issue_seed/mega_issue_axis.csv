@@ -1,0 +1,4 @@
+﻿election_id,mega_event,primary_issue,secondary_issue,axis_weight,regime_axis_weight,available_date,activation_method,notes
+pres_2025,assembly_speech_welfare_pension,welfare_pension,,0.7488196430505395,0.0,2025-04-24,speech_derived_issue_profile_v1,Unsigned Assembly salience/evidence axis; no outcome fields
+pres_2025,assembly_speech_economy_growth,economy_growth,,0.6987444180325121,0.0,2025-05-08,speech_derived_issue_profile_v1,Unsigned Assembly salience/evidence axis; no outcome fields
+pres_2025,assembly_speech_external_shock,external_shock,,0.6484257721884132,0.0,2025-05-08,speech_derived_issue_profile_v1,Unsigned Assembly salience/evidence axis; no outcome fields

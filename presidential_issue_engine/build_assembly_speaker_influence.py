@@ -622,6 +622,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--matches", type=Path, default=DEFAULT_MATCHES)
     parser.add_argument("--roster15", type=Path, default=DEFAULT_ROSTER15)
     parser.add_argument("--roster", type=Path, default=DEFAULT_ROSTER)
+    parser.add_argument(
+        "--roster-extra",
+        type=Path,
+        action="append",
+        default=[],
+        help="Additional term roster to append before member-history enrichment",
+    )
     parser.add_argument("--member-history", type=Path, default=DEFAULT_MEMBER_HISTORY)
     parser.add_argument("--speaker-out", type=Path, default=DEFAULT_PROFILE_OUT)
     parser.add_argument("--issue-out", type=Path, default=DEFAULT_ISSUE_OUT)
@@ -637,6 +644,12 @@ def main() -> None:
     matches = _read_csv(matches_path)
     roster15 = _read_csv(args.roster15)
     roster = _read_csv(args.roster) if args.roster.exists() else pd.DataFrame()
+    for extra_roster in args.roster_extra:
+        if not extra_roster.exists():
+            raise FileNotFoundError(f"extra roster not found: {extra_roster}")
+        roster = pd.concat(
+            [roster, _read_csv(extra_roster)], ignore_index=True, sort=False
+        )
     if args.member_history.exists():
         member_history = _read_csv(args.member_history)
         roster = pd.concat([roster, member_history], ignore_index=True, sort=False)
@@ -654,7 +667,9 @@ def main() -> None:
         (args.diagnostics_out, diagnostics),
     ]:
         path.parent.mkdir(parents=True, exist_ok=True)
-        frame.to_csv(path, index=False, encoding="utf-8-sig")
+        path.write_bytes(
+            frame.to_csv(index=False, lineterminator="\n").encode("utf-8-sig")
+        )
         try:
             display_path = path.resolve().relative_to(ROOT)
         except ValueError:

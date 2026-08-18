@@ -77,6 +77,15 @@ FORECAST_CANDIDATE_CONTEXT_DIR = CONTEXT_DIR / "candidate_context_v2"
 CANDIDATE_CONVERSION_HISTORY = (
     FORECAST_CANDIDATE_CONTEXT_DIR / "candidate_vote_conversion_context.csv"
 )
+FORECAST_CANDIDATE_LANDSCAPE = (
+    FORECAST_CANDIDATE_CONTEXT_DIR / "candidate_political_landscape.csv"
+)
+FORECAST_THIRD_CANDIDATE_PROFILE = (
+    FORECAST_CANDIDATE_CONTEXT_DIR
+    / "auto_candidate_role"
+    / "third_candidate_profile.csv"
+)
+FORECAST_ISSUE_SEED_DIR = FORECAST_CANDIDATE_CONTEXT_DIR / "auto_issue_seed"
 
 OUTPUT_COLUMNS = (
     "election_id",
@@ -429,6 +438,79 @@ def _prospective_sources(
     candidate_context, candidate_context_diagnostics = _candidate_strength_context(
         selected, candidate_link
     )
+    historical_landscape = pd.read_csv(
+        AUTOMATIC_DIR / "candidate_political_landscape.csv",
+        encoding="utf-8-sig",
+    )
+    target_landscape = pd.read_csv(
+        FORECAST_CANDIDATE_LANDSCAPE,
+        encoding="utf-8-sig",
+    )
+    target_landscape = target_landscape.loc[
+        target_landscape["election_id"].astype(str).eq(TARGET_ELECTION)
+    ].copy()
+    if set(target_landscape["candidate_name"].astype(str)) != set(
+        selected["candidate_name"].astype(str)
+    ):
+        raise RuntimeError("forecast candidate landscape does not match selected candidates")
+    combined_landscape = pd.concat(
+        [
+            historical_landscape.loc[
+                ~historical_landscape["election_id"].astype(str).eq(TARGET_ELECTION)
+            ],
+            target_landscape[historical_landscape.columns],
+        ],
+        ignore_index=True,
+    )
+    historical_third_profile = pd.read_csv(
+        AUTOMATIC_DIR / "third_candidate_profile.csv",
+        encoding="utf-8-sig",
+    )
+    target_third_profile = pd.read_csv(
+        FORECAST_THIRD_CANDIDATE_PROFILE,
+        encoding="utf-8-sig",
+    )
+    target_third_profile = target_third_profile.loc[
+        target_third_profile["election_id"].astype(str).eq(TARGET_ELECTION)
+    ].copy()
+    combined_third_profile = pd.concat(
+        [
+            historical_third_profile.loc[
+                ~historical_third_profile["election_id"].astype(str).eq(
+                    TARGET_ELECTION
+                )
+            ],
+            target_third_profile[historical_third_profile.columns],
+        ],
+        ignore_index=True,
+    )
+    combined_issue_seeds: dict[str, pd.DataFrame] = {}
+    for filename in (
+        "candidate_issue_profile.csv",
+        "mega_issue_axis.csv",
+        "mega_issue_attribution.csv",
+    ):
+        historical_seed = pd.read_csv(
+            ROOT / "data/raw/auto_issue_seed" / filename,
+            encoding="utf-8-sig",
+        )
+        target_seed = pd.read_csv(
+            FORECAST_ISSUE_SEED_DIR / filename,
+            encoding="utf-8-sig",
+        )
+        target_seed = target_seed.loc[
+            target_seed["election_id"].astype(str).eq(TARGET_ELECTION)
+        ].copy()
+        combined_issue_seeds[filename] = pd.concat(
+            [
+                historical_seed.loc[
+                    ~historical_seed["election_id"].astype(str).eq(TARGET_ELECTION)
+                ],
+                target_seed,
+            ],
+            ignore_index=True,
+            sort=False,
+        )
 
     outer = pd.read_csv(OUTER_CONFIG, encoding="utf-8-sig")
     deployment = json.loads(DEPLOYMENT_CONFIG.read_text(encoding="utf-8"))["config"]
@@ -452,6 +534,11 @@ def _prospective_sources(
         "salience": temp / "issue_salience_through_cutoff.csv",
         "link": temp / "candidate_issue_link_through_cutoff.csv",
         "candidate_context": temp / "candidate_vote_conversion_context.csv",
+        "political_landscape": temp / "candidate_political_landscape.csv",
+        "third_candidate_profile": temp / "third_candidate_profile.csv",
+        "candidate_issue_profile": temp / "candidate_issue_profile.csv",
+        "mega_issue_axis": temp / "mega_issue_axis.csv",
+        "mega_issue_attribution": temp / "mega_issue_attribution.csv",
         "outer_config": temp / "nested_outer_with_prospective_target.csv",
     }
     for key, frame in (
@@ -459,6 +546,14 @@ def _prospective_sources(
         ("salience", combined_salience),
         ("link", combined_link),
         ("candidate_context", candidate_context),
+        ("political_landscape", combined_landscape),
+        ("third_candidate_profile", combined_third_profile),
+        ("candidate_issue_profile", combined_issue_seeds["candidate_issue_profile.csv"]),
+        ("mega_issue_axis", combined_issue_seeds["mega_issue_axis.csv"]),
+        (
+            "mega_issue_attribution",
+            combined_issue_seeds["mega_issue_attribution.csv"],
+        ),
         ("outer_config", outer),
     ):
         frame.to_csv(paths[key], index=False, encoding="utf-8-sig")
@@ -695,6 +790,31 @@ def _execute_existing_pipeline(
                     ),
                     (
                         engine,
+                        "CANDIDATE_POLITICAL_LANDSCAPE",
+                        str(sources["political_landscape"]),
+                    ),
+                    (
+                        engine,
+                        "THIRD_CANDIDATE_PROFILE",
+                        str(sources["third_candidate_profile"]),
+                    ),
+                    (
+                        engine,
+                        "AUTO_CANDIDATE_ISSUE_PROFILE",
+                        str(sources["candidate_issue_profile"]),
+                    ),
+                    (
+                        engine,
+                        "AUTO_MEGA_ISSUE_AXIS",
+                        str(sources["mega_issue_axis"]),
+                    ),
+                    (
+                        engine,
+                        "AUTO_MEGA_ISSUE_ATTRIBUTION",
+                        str(sources["mega_issue_attribution"]),
+                    ),
+                    (
+                        engine,
                         "CANDIDATE_PARTY_SPEECH_CONTEXT",
                         str(
                             FORECAST_CANDIDATE_CONTEXT_DIR
@@ -773,6 +893,7 @@ def _execute_existing_pipeline(
                 (active.nested, "ELECTIONS", all_elections),
                 (active.nested.base_eval, "ALLOWED_ELECTIONS", all_elections),
                 (active.nested, "CONFIG_PATH", sources["outer_config"]),
+                (active, "CANDIDATE_ISSUE_PROFILE", sources["candidate_issue_profile"]),
                 (
                     active.fully_nested_policy,
                     "deployment_stage_from_completed_folds",
@@ -840,13 +961,25 @@ def _input_manifest(
         CONTEXT_DIR / "model_issue_salience.csv",
         CONTEXT_DIR / "model_candidate_issue_link.csv",
         CONTEXT_DIR / "manifest.json",
+        CONTEXT_DIR / "assembly22_speaker_roster.csv",
+        CONTEXT_DIR / "assembly22_speaker_roster.manifest.json",
+        CONTEXT_DIR / "assembly_speaker_influence_pres_2025.csv",
+        CONTEXT_DIR / "assembly_speaker_influence_pres_2025_diagnostics.csv",
         RESULTS,
         HISTORY,
         REGIONS,
         OUTER_CONFIG,
         DEPLOYMENT_CONFIG,
         CANDIDATE_LINK_HISTORY,
-        *sorted(FORECAST_CANDIDATE_CONTEXT_DIR.glob("*.csv")),
+        FORECAST_CANDIDATE_CONTEXT_DIR / "candidate_party_speech_context.csv",
+        FORECAST_CANDIDATE_CONTEXT_DIR / "candidate_party_tone_gap.csv",
+        FORECAST_CANDIDATE_CONTEXT_DIR / "candidate_public_treatment.csv",
+        FORECAST_CANDIDATE_CONTEXT_DIR / "candidate_vote_conversion_context.csv",
+        FORECAST_CANDIDATE_LANDSCAPE,
+        FORECAST_THIRD_CANDIDATE_PROFILE,
+        FORECAST_ISSUE_SEED_DIR / "candidate_issue_profile.csv",
+        FORECAST_ISSUE_SEED_DIR / "mega_issue_axis.csv",
+        FORECAST_ISSUE_SEED_DIR / "mega_issue_attribution.csv",
         PARTY_TRANSITIONS,
         ROOT / "data/raw/official_sources/nec_assembly_district_history.csv",
         ROOT / active.nested.engine.SALIENCE,
@@ -963,6 +1096,30 @@ def run(version: str = "v23") -> Path:
         "pres_2025_outcome_present": False,
         "assembly_context_manifest_sha256": _sha256(CONTEXT_DIR / "manifest.json"),
         "assembly_context_certification": context_manifest.get("status"),
+        "candidate_context_lineage_manifest_sha256": _sha256(
+            FORECAST_CANDIDATE_CONTEXT_DIR / "lineage_manifest.json"
+        ),
+        "candidate_political_landscape_sha256": _sha256(
+            FORECAST_CANDIDATE_LANDSCAPE
+        ),
+        "third_candidate_profile_sha256": _sha256(
+            FORECAST_THIRD_CANDIDATE_PROFILE
+        ),
+        "candidate_issue_profile_sha256": _sha256(
+            FORECAST_ISSUE_SEED_DIR / "candidate_issue_profile.csv"
+        ),
+        "mega_issue_axis_sha256": _sha256(
+            FORECAST_ISSUE_SEED_DIR / "mega_issue_axis.csv"
+        ),
+        "mega_issue_attribution_sha256": _sha256(
+            FORECAST_ISSUE_SEED_DIR / "mega_issue_attribution.csv"
+        ),
+        "assembly22_roster_manifest_sha256": _sha256(
+            CONTEXT_DIR / "assembly22_speaker_roster.manifest.json"
+        ),
+        "assembly_speaker_profile_sha256": _sha256(
+            CONTEXT_DIR / "assembly_speaker_influence_pres_2025.csv"
+        ),
     }
     (output_dir / "run_manifest.json").write_text(
         json.dumps(run_manifest, ensure_ascii=False, indent=2) + "\n",

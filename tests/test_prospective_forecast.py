@@ -48,6 +48,11 @@ def test_committed_prospective_output_is_forecast_only() -> None:
         output / "prospective_predictions.csv", encoding="utf-8-sig"
     )
     manifest = json.loads((output / "run_manifest.json").read_text(encoding="utf-8"))
+    inputs = set(
+        pd.read_csv(output / "input_manifest.csv", encoding="utf-8-sig")["path"]
+        .astype(str)
+        .tolist()
+    )
 
     assert predictions.columns.tolist() == list(prospective.OUTPUT_COLUMNS)
     assert len(predictions) == 51
@@ -61,6 +66,17 @@ def test_committed_prospective_output_is_forecast_only() -> None:
     assert manifest["outcome_columns_used"] == []
     assert manifest["performance_metrics_computed"] is False
     assert manifest["pres_2025_outcome_present"] is False
+    assert "candidate_context_lineage_manifest_sha256" in manifest
+    assert "assembly22_roster_manifest_sha256" in manifest
+    assert {
+        "data/raw/official_sources/assembly_pres_2025_context/candidate_context_v2/candidate_political_landscape.csv",
+        "data/raw/official_sources/assembly_pres_2025_context/candidate_context_v2/auto_candidate_role/third_candidate_profile.csv",
+        "data/raw/official_sources/assembly_pres_2025_context/candidate_context_v2/auto_issue_seed/candidate_issue_profile.csv",
+        "data/raw/official_sources/assembly_pres_2025_context/candidate_context_v2/auto_issue_seed/mega_issue_axis.csv",
+        "data/raw/official_sources/assembly_pres_2025_context/candidate_context_v2/auto_issue_seed/mega_issue_attribution.csv",
+    }.issubset(inputs)
+    assert not any("automatic_third_candidate_pressure.csv" in path for path in inputs)
+    assert not any("model_mega_issue_" in path for path in inputs)
 
 
 def test_v24_requires_human_promoted_config(monkeypatch, tmp_path) -> None:
@@ -110,3 +126,4 @@ def test_candidate_strength_prefers_direct_speech_context(monkeypatch, tmp_path)
         "candidate_a": "B",
         "candidate_c": "C",
     }
+    assert diagnostics["target_outcomes_used"] is False
