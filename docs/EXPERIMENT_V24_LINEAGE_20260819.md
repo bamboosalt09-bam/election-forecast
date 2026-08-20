@@ -137,8 +137,35 @@ otherwise. On the panel it fired on twelve regions of 2002 and left 2007, 2012,
 
 An equivalent gate-based trigger (`third_competitiveness_gate < 0.20`) produces
 identical retrospective numbers. Lineage is preferred because it classifies the
-2007 independent correctly without a special exemption, because it is an a
-priori fact rather than a derived score, and because it carries no threshold.
+2007 independent correctly without a special exemption, and because it is an a
+priori fact rather than a derived score.
+
+### Trigger basis: defection share where a party exists
+
+The binary flag cannot rank vehicles inside a class. Cross-term name matching in
+`data/assembly_roster.csv` recovers the carry-in for every party-backed third
+candidate in the panel, and the ordering is monotone in the outcome:
+
+| Election | Vehicle | Major-party carry-in | Share of chamber | Vote share | Share over party base |
+|---|---|---:|---:|---:|---:|
+| 2002 | 민주노동당 | 0 of 0 | 0.00% | 3.9% | 0.43 |
+| 2022 | 정의당 | 0 of 6 | 0.00% | 2.4% | 0.22 |
+| 2025 | 개혁신당 | 4 mid-term | 1.33% | 8.3% | 0.78 |
+| 2017 | 국민의당 | 11 of 38 | 3.67% | 21.4% | 1.43 |
+
+The trigger therefore uses the defection share whenever the candidate carries a
+party, and falls back to the binary flag only where the share is undefined —
+the two independents, 이회창 2007 and 강지원 2012.
+
+The floor is `0.02` of the chamber. The scored panel anchors only `0.00` and
+`0.0367`, so every floor inside that interval reproduces it exactly; the panel
+cannot settle where inside the interval the line belongs. The midpoint is used,
+which places 개혁신당 at `0.0133` below the floor. A floor of `0.01` would exempt
+it instead. This is the one choice in V24 that the retrospective cannot
+adjudicate, and it is recorded as such rather than presented as calibrated.
+
+Measured both ways, the scored panel is identical: macro regional `3.998`, macro
+level `2.466`, winner `4/5`.
 
 ## Performance
 

@@ -35,6 +35,12 @@ LINEAGE_TABLE = ROOT / "presidential_issue_engine" / "fixed_dataset" / "v24" / "
 
 _TRUE = {"1", "true", "yes", "y"}
 
+# Share of the chamber that must have defected into the vehicle for it to count as
+# having received major-party mass. The V24 scored panel anchors only 0.00 and
+# 0.0367 (국민의당 2016, eleven of three hundred), so any floor inside that gap
+# reproduces the panel exactly; the midpoint is used.
+DEFAULT_DEFECTION_FLOOR = 0.02
+
 
 def load_lineage(path: Path | str | None = None) -> pd.DataFrame:
     """Return the declared third-candidate lineage table."""
@@ -48,14 +54,49 @@ def load_lineage(path: Path | str | None = None) -> pd.DataFrame:
     frame["major_split_lineage"] = (
         frame["major_split_lineage"].astype(str).str.strip().str.lower().isin(_TRUE)
     )
+    if "has_party" in frame.columns:
+        frame["has_party"] = frame["has_party"].astype(str).str.strip().str.lower().isin(_TRUE)
+    else:
+        frame["has_party"] = True
     return frame
 
 
-def self_founded_elections(lineage: pd.DataFrame) -> set[str]:
-    """Elections whose third candidate lacks major-party split lineage."""
+def self_founded_elections(
+    lineage: pd.DataFrame,
+    *,
+    defection_floor: float | None = DEFAULT_DEFECTION_FLOOR,
+) -> set[str]:
+    """Elections whose third candidate did not receive major-party mass.
 
-    weak = lineage.loc[~lineage["major_split_lineage"]]
-    return set(weak["election_id"].astype(str))
+    When the candidate carries a party, the test is the share of the chamber
+    that defected into that vehicle. When the candidate has no party the
+    defection share is undefined, so the documented ``major_split_lineage``
+    flag decides instead: 이회창 2007 carries 한나라당 leadership lineage
+    without a party, 강지원 2012 carries none.
+
+    Passing ``defection_floor=None`` falls back to the binary flag throughout.
+    """
+
+    weak: set[str] = set()
+    for row in lineage.itertuples(index=False):
+        election_id = str(row.election_id)
+        has_party = bool(getattr(row, "has_party", True))
+        seats = pd.to_numeric(pd.Series([getattr(row, "defection_seats", None)]), errors="coerce").iloc[0]
+        size = pd.to_numeric(pd.Series([getattr(row, "assembly_size", None)]), errors="coerce").iloc[0]
+        usable = (
+            defection_floor is not None
+            and has_party
+            and pd.notna(seats)
+            and pd.notna(size)
+            and size > 0
+        )
+        if usable:
+            if float(seats) / float(size) < defection_floor:
+                weak.add(election_id)
+            continue
+        if not row.major_split_lineage:
+            weak.add(election_id)
+    return weak
 
 
 def apply_lineage_ceiling(
@@ -66,6 +107,7 @@ def apply_lineage_ceiling(
     lineage: pd.DataFrame | None = None,
     ceiling_column: str = "direct_party_recent_base",
     slot_column: str = "slot",
+    defection_floor: float | None = DEFAULT_DEFECTION_FLOOR,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Cap self-founded third candidates at their own direct party evidence.
 
@@ -73,7 +115,7 @@ def apply_lineage_ceiling(
     """
 
     lineage = load_lineage() if lineage is None else lineage
-    weak = self_founded_elections(lineage)
+    weak = self_founded_elections(lineage, defection_floor=defection_floor)
     out = frame.copy()
     out[output_column] = pd.to_numeric(out[prediction_column], errors="coerce")
     audit_rows: list[dict[str, object]] = []
