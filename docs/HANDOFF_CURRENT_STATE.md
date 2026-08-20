@@ -1,17 +1,45 @@
 # Current State Handoff
 
-> Authoritative current state: `docs/FINAL_MODEL_V23_20260802.md`. Sections
-> below the current V23 summary preserve historical experiment decisions and
-> must not be read as active-version pointers.
+> Authoritative current state: `docs/FINAL_MODEL_V24_20260820.md`. The active
+> pointer is `data/config/current_presidential_model.json`; V23 is the immutable
+> rollback model. Dated sections below preserve the state and terminology that
+> applied when each experiment was recorded and must not be read as current
+> active-version pointers.
 
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_strict_nested_v23_unified_withdrawal_generation`
-- rolling warmup: 1997
+- active policy: `active_v24_structural_residual_pre_2025`
+- rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
+
+## Active V24 promotion (2026-08-20)
+
+V24 is the frozen current model. It retains the V23 numerical base configuration
+and adds its ballot-faithful three-way scope, uniform 1%p scored floor,
+third-candidate lineage ceiling, strong-incumbent-veto response, and weak
+same-lane refusal layer through `scripts/run_active_presidential_model_v24.py`.
+
+- prediction rows: `232`
+- regional `contest_votes` weighted, equal-election MAE: `2.7697878398%p`
+- national candidate, equal-election MAE: `1.0756680504%p`
+- winner accuracy: `4/5`
+- canonical prediction SHA-256:
+  `edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a`
+- V23 rollback SHA-256:
+  `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`
+- full regression suite: `595 passed`
+- exact temporary-directory reproduction: PASS
+- public V24 audit and GitHub boundary audit: PASS
+- post-2022 outcomes used: false
+
+The national candidate predictive-interval artifact reports 50%, 80%, 90%,
+and 95% historical chronological intervals. Its calibration contains only four
+target elections and eleven candidate outcomes, so it is not an untouched
+holdout or a future coverage guarantee. The official V24 promotion does not
+include the unfinished 2025 prospective runner or its local output.
 
 ## Corrected 2025 prospective chain (2026-08-18)
 

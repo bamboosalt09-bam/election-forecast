@@ -165,7 +165,7 @@ Two evaluations are reported separately:
    effective gain is `0.04` in every fold. `strict_preference_gain_by_fold.csv` records the
    raw selection and `preference_gain_by_fold.csv` records the effective active value.
    Weighted macro MAE is `4.613162%p` for the historical nested learner described here;
-   current V23 metrics are reported separately.
+   current active-model metrics are reported separately.
 2. Fixed structural experiment: the same weak `0.04` gain is applied to every frozen outer
    prediction after the fact. Weighted macro MAE is `4.593551%p`, a `0.034217%p` improvement
    over baseline, but this is not a strict nested selection estimate.

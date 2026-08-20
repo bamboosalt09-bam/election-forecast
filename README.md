@@ -77,7 +77,7 @@ V24는 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested R
 python scripts/run_prospective_forecast.py --version v23
 ```
 
-이 러너는 동결 V23 코드와 2025-06-02(D-1)까지 공개된 후보 명부·국회 발언 맥락만 사용합니다. 2025 실제 결과를 읽거나 성능지표를 계산하지 않으며, 입력 파일의 SHA-256과 결과정보 미사용 선언을 `run_manifest.json`에 기록합니다. V24는 사람이 승격한 설정 파일이 존재할 때만 실행할 수 있습니다.
+이 러너는 보존된 V23 시연 코드와 2025-06-02(D-1)까지 공개된 후보 명부·국회 발언 맥락만 사용합니다. 2025 실제 결과를 읽거나 성능지표를 계산하지 않으며, 입력 파일의 SHA-256과 결과정보 미사용 선언을 `run_manifest.json`에 기록합니다. 공식 역사 모델은 V24로 승격됐지만 V24용 2025 전향 실행은 아직 검증·최종화되지 않았으므로 이 보존 시연과 구분합니다.
 
 ![2025 D-1 전향 예측](presidential_issue_engine/poster_figures/13_prospective_forecast_v23.png)
 
