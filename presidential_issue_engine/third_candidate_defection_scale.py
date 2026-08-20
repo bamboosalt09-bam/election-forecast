@@ -1,9 +1,9 @@
 """Continuous split strength for a third candidate's vehicle.
 
 The binary ``major_split_lineage`` flag separates the V24 scored panel cleanly,
-but it cannot rank vehicles inside a class. 개혁신당 (four incumbents) and
-국민의당 (a large 새정치민주연합 split) both sit in 제3지대 while their
-presidential outcomes differ by a factor of roughly three.
+but it cannot rank vehicles inside a class: 개혁신당 and 국민의당 both normalise
+to 제3지대 although one was formed by four defecting incumbents and the other by
+a large 새정치민주연합 split.
 
 This module expresses split strength continuously as the number of sitting
 members of the National Assembly who left a governing or main opposition party
@@ -14,17 +14,21 @@ size of that Assembly:
 
 Data status
 -----------
-Only the twenty-first Assembly records mid-term affiliation changes in the
-repository, so ``defection_seats`` is repo-derivable for 개혁신당 alone.
-``data/assembly_roster.csv`` stores the affiliation held at election time and
-therefore misses the December-2015 to February-2016 departures that produced
-국민의당; a founding roster from an external source is required for the earlier
-rows. Those rows carry ``defection_seats_source = needs_source`` and are
-returned as missing rather than guessed.
+Two derivations are available. Cross-term name matching in
+``data/assembly_roster.csv`` counts winners under the new vehicle who held a
+major-party seat in the preceding Assembly, which covers 민주노동당, 정의당, and
+국민의당. ``data/raw/assembly_member_history.csv`` records mid-term affiliation
+for the twenty-first Assembly, which covers 개혁신당. Every party-backed third
+candidate from 2002 onward therefore has a derived count.
 
-Because the series is incomplete before 2020, this module is diagnostic only.
-It is not wired into the V24 forecast, which uses the binary flag in
-``third_candidate_lineage_constraint``.
+Roster coverage begins at the sixteenth Assembly, so 통일국민당 1992 and
+국민신당 1997 remain ``needs_source`` and are returned as missing rather than
+guessed; both are warmup-only and do not enter scoring. Independents carry
+``no_party`` because a seat count cannot express personal lineage — 이회창 2007
+has zero party-level carry-in alongside a strong 한나라당 leadership lineage.
+
+The module reports coverage and scale; the ceiling in
+``third_candidate_lineage_constraint`` consumes the same table directly.
 """
 
 from __future__ import annotations

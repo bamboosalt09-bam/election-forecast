@@ -144,13 +144,13 @@ priori fact rather than a derived score.
 
 The binary flag cannot rank vehicles inside a class. Cross-term name matching in
 `data/assembly_roster.csv` recovers the carry-in for every party-backed third
-candidate in the panel, and the ordering is monotone in the outcome:
+candidate in the scored panel, and it orders them monotonically with the scored
+outcome:
 
 | Election | Vehicle | Major-party carry-in | Share of chamber | Vote share | Share over party base |
 |---|---|---:|---:|---:|---:|
 | 2002 | 민주노동당 | 0 of 0 | 0.00% | 3.9% | 0.43 |
 | 2022 | 정의당 | 0 of 6 | 0.00% | 2.4% | 0.22 |
-| 2025 | 개혁신당 | 4 mid-term | 1.33% | 8.3% | 0.78 |
 | 2017 | 국민의당 | 11 of 38 | 3.67% | 21.4% | 1.43 |
 
 The trigger therefore uses the defection share whenever the candidate carries a
@@ -158,14 +158,25 @@ party, and falls back to the binary flag only where the share is undefined —
 the two independents, 이회창 2007 and 강지원 2012.
 
 The floor is `0.02` of the chamber. The scored panel anchors only `0.00` and
-`0.0367`, so every floor inside that interval reproduces it exactly; the panel
-cannot settle where inside the interval the line belongs. The midpoint is used,
-which places 개혁신당 at `0.0133` below the floor. A floor of `0.01` would exempt
-it instead. This is the one choice in V24 that the retrospective cannot
-adjudicate, and it is recorded as such rather than presented as calibrated.
+`0.0367`, so every floor strictly inside that interval reproduces the panel
+exactly and the retrospective cannot distinguish them. The midpoint of the
+interval is used. No forecast-only election enters this choice.
 
-Measured both ways, the scored panel is identical: macro regional `3.998`, macro
-level `2.466`, winner `4/5`.
+Measured across the interval the scored panel is identical: macro regional
+`3.998`, macro level `2.466`, winner `4/5`.
+
+`pres_2025` appears in the lineage table as a forecast-only input row carrying
+pre-election facts only — four 국민의힘 incumbents held 개혁신당 affiliation
+mid-term in the twenty-first Assembly, a share of `0.0133`. Its realised result
+is not read here and must not be used to argue where the floor belongs.
+
+### Scope correction
+
+An earlier revision of this document tabulated the 2025 realised share beside
+the scored rows and argued the floor by reference to it. That is stage selection
+against a forecast-only election and is forbidden by the project scope rule. The
+table above now contains scored rows only, and the floor is justified from the
+scored anchors alone. The parameter value did not change; the justification did.
 
 ## Performance
 
