@@ -49,27 +49,32 @@
     {
       "path": "outputs/active_presidential_nested_v24/nested_predictions.csv",
       "bytes": 664866,
-      "sha256": "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a"
+      "sha256": "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a",
+      "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v24/summary.json",
       "bytes": 8924,
-      "sha256": "baef22dac8620ac8cfffac8a079e4467b6e1064559dff93cc510e6610658dcb4"
+      "sha256": "baef22dac8620ac8cfffac8a079e4467b6e1064559dff93cc510e6610658dcb4",
+      "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v24/input_manifest.csv",
       "bytes": 4991,
-      "sha256": "0c5a507b0812dd0f9bb2ce926ec1a80c938973fced3199c7bcd0f45547f34fa3"
+      "sha256": "0c5a507b0812dd0f9bb2ce926ec1a80c938973fced3199c7bcd0f45547f34fa3",
+      "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v24/predictive_interval_manifest.json",
       "bytes": 2588,
-      "sha256": "bb26f16a4577d89f59ba1ea0882af2ffcf7b33c85629c9d26f54b71ef82fff9c"
+      "sha256": "bb26f16a4577d89f59ba1ea0882af2ffcf7b33c85629c9d26f54b71ef82fff9c",
+      "hash_mode": "raw_bytes"
     },
     {
       "path": "docs/EXPERIMENT_V24_LINEAGE_20260819.md",
       "bytes": 24669,
-      "sha256": "634eccf238c0a5be41e4e9432b45d9289233c7e9d244627146bc21e880fc9f51"
+      "sha256": "634eccf238c0a5be41e4e9432b45d9289233c7e9d244627146bc21e880fc9f51",
+      "hash_mode": "normalized_text_lf"
     }
   ]
 }

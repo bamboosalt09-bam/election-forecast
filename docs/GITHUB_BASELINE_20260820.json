@@ -19,7 +19,7 @@
     "data/config/current_presidential_model.json": "1ba04b0b0b3174815f01d60f40d1ab4c8d566d393e0e70058520dd693c311f4c",
     "outputs/active_presidential_nested_v23/finalization_manifest.json": "7e9b7c23a5b38f438c1cb7fadaff2735909ef75eb7254ae3236791d7d637c3a4",
     "outputs/active_presidential_nested_v23/nested_predictions.csv": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
-    "outputs/active_presidential_nested_v24/finalization_manifest.json": "4c2f5b7733ce0f37c0fa57d2b447eb70df2189052d1e4ba4bf49d89bc3d4963a",
+    "outputs/active_presidential_nested_v24/finalization_manifest.json": "09c25ceb6623c96e392cf726dac79912f1c340b9b96a315ada6ff53caae9f00c",
     "outputs/active_presidential_nested_v24/nested_predictions.csv": "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a"
   },
   "verified_at_promotion": {

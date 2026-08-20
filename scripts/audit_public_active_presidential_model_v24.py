@@ -34,6 +34,15 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _artifact_sha256(path: Path, hash_mode: str) -> str:
+    content = path.read_bytes()
+    if hash_mode == "normalized_text_lf":
+        content = content.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    elif hash_mode != "raw_bytes":
+        raise RuntimeError(f"unknown finalization hash mode: {hash_mode}")
+    return hashlib.sha256(content).hexdigest()
+
+
 def _audit_rollback() -> dict[str, object]:
     _require(_sha256(V23_PREDICTIONS) == V23_SHA256, "V23 rollback prediction drift")
     return {"v23_rollback_sha256": V23_SHA256}
@@ -180,7 +189,11 @@ def _audit_finalization() -> dict[str, object]:
     for record in manifest["artifacts"]:
         artifact = ROOT / record["path"]
         _require(artifact.is_file(), f"finalized artifact missing: {record['path']}")
-        _require(_sha256(artifact) == record["sha256"], f"finalized artifact drift: {record['path']}")
+        hash_mode = str(record.get("hash_mode", "raw_bytes"))
+        _require(
+            _artifact_sha256(artifact, hash_mode) == record["sha256"],
+            f"finalized artifact drift: {record['path']}",
+        )
     return {"finalized_artifacts": len(manifest["artifacts"])}
 
 

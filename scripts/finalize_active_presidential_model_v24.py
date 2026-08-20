@@ -15,20 +15,35 @@ OLD_BASELINE = ROOT / "docs" / "GITHUB_BASELINE_20260810.json"
 NEW_BASELINE = ROOT / "docs" / "GITHUB_BASELINE_20260820.json"
 V23_SHA256 = "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b"
 V24_SHA256 = "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a"
+NORMALIZED_TEXT_PREFIXES = (
+    ".github/",
+    "data/config/",
+    "docs/",
+    "presidential_issue_engine/",
+    "scripts/",
+    "tests/",
+)
 
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _normalized_text_bytes(path: Path) -> bytes:
+    return path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+
+
 def _record(relative: str) -> dict[str, object]:
     path = ROOT / relative
     if not path.is_file():
         raise RuntimeError(f"finalization artifact missing: {relative}")
+    normalized = relative.replace("\\", "/").startswith(NORMALIZED_TEXT_PREFIXES)
+    content = _normalized_text_bytes(path) if normalized else path.read_bytes()
     return {
         "path": relative.replace("\\", "/"),
-        "bytes": path.stat().st_size,
-        "sha256": _sha256(path),
+        "bytes": len(content),
+        "sha256": hashlib.sha256(content).hexdigest(),
+        "hash_mode": "normalized_text_lf" if normalized else "raw_bytes",
     }
 
 
