@@ -12,6 +12,7 @@ import argparse
 from contextlib import contextmanager
 import hashlib
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -43,8 +44,12 @@ from presidential_issue_engine.forecast_only_inputs import (  # noqa: E402
 )
 from presidential_issue_engine.point_in_time import forecast_cutoff  # noqa: E402
 from scripts import build_preliminary_slot_assignments as assignment_builder  # noqa: E402
+from scripts import build_speech_derived_candidate_context_v2 as context_builder  # noqa: E402
+from scripts import build_speech_derived_issue_context as issue_context_builder  # noqa: E402
 from scripts import evaluate_speech_derived_issue_context as patching  # noqa: E402
 from scripts import run_active_presidential_model as active  # noqa: E402
+from scripts import run_active_presidential_model_v24 as active_v24  # noqa: E402
+from scripts import run_active_presidential_model_v25 as active_v25  # noqa: E402
 
 
 TARGET_ELECTION = "pres_2025"
@@ -63,7 +68,8 @@ OUTER_CONFIG = (
 )
 DEPLOYMENT_CONFIG = ROOT / "data/config/through2022_rederived_layers.json"
 V23_CONFIG = ROOT / "data/config/active_presidential_model_v23.json"
-V24_CONFIG = ROOT / "data/config/active_presidential_model_v24.json"
+V24_CONFIG = active_v24.CONFIG_PATH
+V25_CONFIG = active_v25.CONFIG_PATH
 V23_ASSIGNMENTS = (
     ROOT / "outputs/preliminary_slot_assignment_v23/candidate_slot_assignments_v2.csv"
 )
@@ -86,6 +92,8 @@ FORECAST_THIRD_CANDIDATE_PROFILE = (
     / "third_candidate_profile.csv"
 )
 FORECAST_ISSUE_SEED_DIR = FORECAST_CANDIDATE_CONTEXT_DIR / "auto_issue_seed"
+EXPLICIT_TARGET_CONTEXT = CONTEXT_DIR / "explicit_target_context_weekly.csv"
+CANDIDATE_TARGET_CONTEXT = CONTEXT_DIR / "candidate_target_context_weekly.csv"
 
 OUTPUT_COLUMNS = (
     "election_id",
@@ -94,6 +102,55 @@ OUTPUT_COLUMNS = (
     "candidate_name",
     "predicted_share",
 )
+
+V24_POSTPROCESS_ORDER = (
+    "strong_incumbent_veto",
+    "third_candidate_lineage_ceiling",
+    "weak_same_lane_refusal",
+)
+
+V24_AUDIT_COLUMNS = {
+    "strong_incumbent_veto": (
+        "election_id",
+        "region_id",
+        "beneficiary_slot",
+        "burdened_slot",
+        "projected_margin",
+        "government_rejection_strength",
+        "dominance_activation",
+        "regime_certainty",
+        "veto_rate",
+        "base_runner_core_floor",
+        "rupture_floor_activation",
+        "theoretical_floor",
+        "effective_runner_floor",
+        "runner_flexible_mass",
+        "transfer",
+    ),
+    "third_candidate_lineage_ceiling": (
+        "election_id",
+        "region_id",
+        "candidate_name",
+        "before",
+        "ceiling",
+        "excess_redistributed",
+    ),
+    "weak_same_lane_refusal": (
+        "election_id",
+        "region_id",
+        "donor_slot",
+        "recipient_slots",
+        "candidate_ballot_recent_base",
+        "floor_mode",
+        "recipient_weight_mode",
+        "protected_floor",
+        "before",
+        "reservoir",
+        "gain",
+        "transfer",
+        "after",
+    ),
+}
 
 
 def _sha256(path: Path) -> str:
@@ -105,17 +162,46 @@ def _sha256(path: Path) -> str:
 
 
 def _config_path(version: str) -> Path:
-    path = V23_CONFIG if version == "v23" else V24_CONFIG
+    paths = {"v23": V23_CONFIG, "v24": V24_CONFIG, "v25": V25_CONFIG}
+    if version not in paths:
+        raise ValueError(f"unsupported prospective model version: {version}")
+    path = paths[version]
     if not path.exists():
         try:
             display_path = path.relative_to(ROOT)
         except ValueError:
             display_path = path
-        raise RuntimeError(
-            f"{version} has no human-promoted config at {display_path}; "
-            "V24 ablations are measurement-only and cannot be selected automatically"
-        )
+        raise RuntimeError(f"{version} model config is unavailable at {display_path}")
     return path
+
+
+def _historical_results_path(version: str) -> Path:
+    return (
+        active_v24.V24_DATA / "presidential_results_standardized.csv"
+        if version in {"v24", "v25"}
+        else RESULTS
+    )
+
+
+def _historical_conversion_path(version: str) -> Path:
+    if version in {"v24", "v25"}:
+        return active_v24.V24_DATA / "candidate_vote_conversion_context.csv"
+    return CANDIDATE_CONVERSION_HISTORY
+
+
+def _historical_speech_context_path(version: str) -> Path:
+    if version in {"v24", "v25"}:
+        return active_v24.V24_DATA / "candidate_party_speech_context.csv"
+    return FORECAST_CANDIDATE_CONTEXT_DIR / "candidate_party_speech_context.csv"
+
+
+def _runtime_policy_path(version: str, declared_config_path: Path) -> Path:
+    if version in {"v23", "v25"}:
+        return declared_config_path
+    defaults = active.load_policy.__defaults__ or ()
+    if not defaults:
+        raise RuntimeError("active policy loader has no default runtime path")
+    return Path(defaults[0])
 
 
 def _validate_registry(frame: pd.DataFrame, cutoff: pd.Timestamp) -> pd.DataFrame:
@@ -140,6 +226,34 @@ def _validate_registry(frame: pd.DataFrame, cutoff: pd.Timestamp) -> pd.DataFram
     if out["available_date"].isna().any() or out["available_date"].gt(cutoff).any():
         raise RuntimeError("candidate registry is not fully available by forecast cutoff")
     return out
+
+
+def _assert_target_input_coverage(
+    selected: pd.DataFrame,
+    salience: pd.DataFrame,
+    candidate_link: pd.DataFrame,
+    cutoff: pd.Timestamp,
+) -> None:
+    if salience.empty:
+        raise RuntimeError("forecast issue salience is empty")
+    selected_ids = set(selected["candidate_id"].astype(str))
+    linked_ids = set(candidate_link["candidate_id"].astype(str))
+    missing = sorted(selected_ids - linked_ids)
+    if missing:
+        raise RuntimeError(f"selected candidates lack issue-link rows: {missing}")
+    for name, frame in (("salience", salience), ("candidate_link", candidate_link)):
+        available = pd.to_datetime(frame["available_date"], errors="coerce")
+        if available.isna().any() or available.gt(cutoff).any():
+            raise RuntimeError(f"forecast {name} crosses the D-1 cutoff")
+    selected_link = candidate_link.loc[
+        candidate_link["candidate_id"].astype(str).isin(selected_ids)
+    ]
+    directional = pd.to_numeric(
+        selected_link.get("emphasis_within", pd.Series(dtype=float)),
+        errors="coerce",
+    ).fillna(0.0)
+    if not directional.abs().gt(0.0).any():
+        raise RuntimeError("selected candidates have no signed issue-link evidence")
 
 
 def _select_model_candidates(
@@ -195,9 +309,236 @@ def _select_model_candidates(
     return selected
 
 
+def _augment_current_government_context(
+    version: str,
+    registry: pd.DataFrame,
+    selected: pd.DataFrame,
+    base_candidate_link: pd.DataFrame,
+    output_dir: Path,
+) -> tuple[pd.DataFrame, Path, dict[str, object]]:
+    """Link current-Assembly government evidence to the prior winner's nominee.
+
+    The explicit-target extractor deliberately leaves ``government`` rows
+    unassigned because it does not read election results.  At forecast time the
+    governing party is nevertheless observable from the latest *prior*
+    presidential result.  This bridge makes that PIT-safe identity link, while
+    leaving every model formula and coefficient untouched.
+    """
+
+    cutoff = pd.Timestamp(FORECAST_CUTOFF)
+    results = pd.read_csv(_historical_results_path(version), encoding="utf-8-sig")
+    prior_elections = sorted(
+        {
+            str(election_id)
+            for election_id in results["election_id"].astype(str).unique()
+            if election_id in ELECTION_DATES
+            and pd.Timestamp(ELECTION_DATES[election_id])
+            < pd.Timestamp(ELECTION_DATES[TARGET_ELECTION])
+        },
+        key=lambda election_id: pd.Timestamp(ELECTION_DATES[election_id]),
+    )
+    if not prior_elections:
+        raise RuntimeError("no prior presidential result can identify the government")
+    prior_election = prior_elections[-1]
+    prior = results.loc[results["election_id"].astype(str).eq(prior_election)].copy()
+    prior["votes"] = pd.to_numeric(prior["votes"], errors="raise")
+    winner = (
+        prior.groupby(["candidate_name", "party_name"], as_index=False)["votes"]
+        .sum()
+        .sort_values(["votes", "candidate_name"], ascending=[False, True])
+        .iloc[0]
+    )
+    governing_party = str(winner["party_name"])
+    nominee = selected.loc[selected["party_name"].astype(str).eq(governing_party)].copy()
+    if len(nominee) != 1:
+        raise RuntimeError(
+            "latest prior presidential winner party does not identify exactly one "
+            "selected 2025 candidate"
+        )
+    nominee_row = nominee.iloc[0]
+    registry_nominee = registry.loc[
+        registry["candidate_id"].astype(str).eq(str(nominee_row["candidate_id"]))
+    ]
+    if len(registry_nominee) != 1:
+        raise RuntimeError("governing nominee is not unique in the candidate registry")
+    registry_nominee_row = registry_nominee.iloc[0]
+
+    explicit = pd.read_csv(EXPLICIT_TARGET_CONTEXT, encoding="utf-8-sig")
+    observed = pd.to_datetime(explicit["available_date"], errors="coerce")
+    if observed.isna().any() or observed.gt(cutoff).any():
+        raise RuntimeError("explicit government context crosses the D-1 cutoff")
+    assembly_number = pd.to_numeric(explicit["assembly_daesu"], errors="raise")
+    current_assembly = int(assembly_number.max())
+    government = explicit.loc[
+        explicit["target_type"].astype(str).eq("government")
+        & assembly_number.eq(current_assembly)
+    ].copy()
+    if government.empty:
+        raise RuntimeError("current Assembly has no explicit government target evidence")
+
+    candidate_target = pd.read_csv(CANDIDATE_TARGET_CONTEXT, encoding="utf-8-sig")
+    existing_government = candidate_target["source_target_type"].astype(str).eq(
+        "government"
+    )
+    if existing_government.any():
+        raise RuntimeError("candidate target context already contains government links")
+    registry_available = pd.Timestamp(registry_nominee_row["available_date"])
+    government["candidate_id"] = str(registry_nominee_row["candidate_id"])
+    government["candidate_name"] = str(registry_nominee_row["candidate_name"])
+    government["candidate_party_name"] = str(registry_nominee_row["party_name"])
+    government["candidate_ballot_number"] = int(registry_nominee_row["ballot_number"])
+    government["candidate_registry_available_date"] = registry_available.strftime(
+        "%Y-%m-%d"
+    )
+    government["candidate_link_eligible"] = True
+    government["candidate_linkage_basis"] = (
+        "current_assembly_government_to_latest_prior_presidential_winner_party"
+    )
+    government["source_target_type"] = government["target_type"]
+    government["source_target_name"] = government["target_name"]
+    government["source_observed_available_date"] = government["available_date"]
+    government["available_date"] = pd.concat(
+        [
+            pd.to_datetime(government["available_date"], errors="raise"),
+            pd.Series(registry_available, index=government.index),
+        ],
+        axis=1,
+    ).max(axis=1).dt.strftime("%Y-%m-%d")
+    government = government.reindex(columns=candidate_target.columns)
+    augmented_target = pd.concat(
+        [candidate_target, government], ignore_index=True, sort=False
+    )
+
+    # Government-target rows describe the incumbent administration, not the
+    # nominee's own speech attention or personal candidate strength. Keep the
+    # original person/party candidate link for candidate-level features, and
+    # expose the augmented target table only to the issue-character bridge.
+    # Rebuilding this link from ``augmented_target`` counted 11k+ government
+    # sentences as nominee attention and contaminated the preliminary tier.
+    selected_ids = set(selected["candidate_id"].astype(str))
+    model_link = base_candidate_link.loc[
+        base_candidate_link["candidate_id"].astype(str).isin(selected_ids)
+    ].copy()
+    if set(model_link["candidate_id"].astype(str)) != selected_ids:
+        raise RuntimeError("person/party candidate link coverage drifted")
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    target_path = output_dir / "candidate_target_context_weekly.csv"
+    link_path = output_dir / "model_candidate_issue_link.csv"
+    augmented_target.to_csv(
+        target_path, index=False, encoding="utf-8-sig", lineterminator="\n"
+    )
+    model_link.to_csv(
+        link_path, index=False, encoding="utf-8-sig", lineterminator="\n"
+    )
+    directional = pd.to_numeric(
+        government["absolute_directional_weight"], errors="coerce"
+    ).fillna(0.0)
+    diagnostics = {
+        "method": "current_assembly_government_to_latest_prior_winner_party",
+        "prior_election": prior_election,
+        "prior_winner_candidate": str(winner["candidate_name"]),
+        "prior_winner_party": governing_party,
+        "mapped_candidate_id": str(registry_nominee_row["candidate_id"]),
+        "mapped_candidate_name": str(registry_nominee_row["candidate_name"]),
+        "mapped_slot": str(nominee_row["slot"]),
+        "current_assembly": current_assembly,
+        "government_aggregate_rows": int(len(government)),
+        "government_sentence_count": int(
+            pd.to_numeric(government["sentence_count"], errors="coerce").fillna(0).sum()
+        ),
+        "directional_aggregate_rows": int(directional.gt(0.0).sum()),
+        "signed_weight": float(
+            pd.to_numeric(government["signed_weight"], errors="coerce").fillna(0.0).sum()
+        ),
+        "absolute_directional_weight": float(directional.sum()),
+        "candidate_attention_source_types": ["person", "party"],
+        "government_evidence_destination": "issue_character_burden_only",
+        "government_rows_excluded_from_candidate_attention": int(len(government)),
+        "candidate_issue_link_rows": int(len(model_link)),
+        "target_outcomes_used": False,
+        "prior_outcome_used_only_for_governing_party_identity": True,
+        "forecast_cutoff": FORECAST_CUTOFF,
+    }
+    return model_link, target_path, diagnostics
+
+
+def _build_target_candidate_context(
+    temp: Path,
+    registry: pd.DataFrame,
+    selected: pd.DataFrame,
+    candidate_link: pd.DataFrame,
+    *,
+    version: str,
+) -> tuple[pd.DataFrame, dict[str, Path], dict[str, object]]:
+    augmented_link, target_context_path, diagnostics = (
+        _augment_current_government_context(
+            version,
+            registry,
+            selected,
+            candidate_link,
+            temp / "government_linked_inputs",
+        )
+    )
+    link_path = target_context_path.parent / "model_candidate_issue_link.csv"
+    ballot_to_slot = {
+        int(row.ballot_number): str(row.slot)
+        for row in selected[["ballot_number", "slot"]].itertuples(index=False)
+    }
+    if set(ballot_to_slot.values()) != {"A", "B", "C"}:
+        raise RuntimeError("selected candidates do not define exactly three model slots")
+    output_dir = temp / "candidate_context_v2"
+    with issue_context_builder.patched(
+        [
+            (issue_context_builder, "FORECAST_LINKS", link_path),
+            (
+                issue_context_builder,
+                "FORECAST_CANDIDATE_TARGET_CONTEXT",
+                target_context_path,
+            ),
+            (issue_context_builder, "PRES_2025_BALLOT_TO_SLOT", ballot_to_slot),
+        ]
+    ):
+        built = context_builder.build_context(
+            output_dir=output_dir,
+            assembly_matches=issue_context_builder.DEFAULT_MATCHES,
+            candidates=REGISTRY,
+            speaker_profile=(
+                CONTEXT_DIR / "assembly_speaker_influence_pres_2025.csv"
+            ),
+        )
+    paths = {
+        "context_dir": output_dir,
+        "candidate_context": Path(built["conversion"]),
+        "candidate_party_speech_context": Path(built["speech"]),
+        "candidate_party_tone_gap": Path(built["tone"]),
+        "candidate_public_treatment": Path(built["treatment"]),
+        "political_landscape": output_dir / "candidate_political_landscape.csv",
+        "third_candidate_profile": (
+            output_dir / "auto_candidate_role" / "third_candidate_profile.csv"
+        ),
+        "candidate_issue_profile": Path(built["profile"]),
+        "mega_issue_axis": Path(built["axis"]),
+        "mega_issue_attribution": Path(built["attribution"]),
+    }
+    diagnostics["model_slot_by_ballot"] = {
+        str(ballot): slot for ballot, slot in sorted(ballot_to_slot.items())
+    }
+    diagnostics["generated_context_output_rows"] = built["manifest"]["outputs"]
+    diagnostics["generated_context_sha256"] = {
+        key: _sha256(path)
+        for key, path in paths.items()
+        if key != "context_dir"
+    }
+    return augmented_link, paths, diagnostics
+
+
 def _candidate_strength_context(
     selected: pd.DataFrame,
     candidate_link: pd.DataFrame,
+    *,
+    historical_context_path: Path | None = None,
+    target_context_path: Path | None = None,
 ) -> tuple[pd.DataFrame, dict[str, object]]:
     """Load direct 2025 candidate context or use the historical ridge fallback.
 
@@ -207,11 +548,15 @@ def _candidate_strength_context(
     Neither path fits or reads the forecast-election result.
     """
 
-    historical_context = pd.read_csv(
-        CANDIDATE_CONVERSION_HISTORY, encoding="utf-8-sig"
-    )
-    direct = historical_context.loc[
-        historical_context["election_id"].astype(str).eq(TARGET_ELECTION)
+    history_path = historical_context_path or CANDIDATE_CONVERSION_HISTORY
+    historical_context = pd.read_csv(history_path, encoding="utf-8-sig")
+    historical_context = historical_context.loc[
+        ~historical_context["election_id"].astype(str).eq(TARGET_ELECTION)
+    ].copy()
+    direct_context_path = target_context_path or CANDIDATE_CONVERSION_HISTORY
+    target_context = pd.read_csv(direct_context_path, encoding="utf-8-sig")
+    direct = target_context.loc[
+        target_context["election_id"].astype(str).eq(TARGET_ELECTION)
     ].copy()
     selected_names = set(selected["candidate_name"].astype(str))
     direct_names = set(direct["candidate_name"].astype(str))
@@ -228,17 +573,15 @@ def _candidate_strength_context(
         direct = direct.reindex(columns=[*historical_context.columns, "candidate_id"])
         combined = pd.concat(
             [
-                historical_context.loc[
-                    ~historical_context["election_id"].astype(str).eq(TARGET_ELECTION)
-                ],
+                historical_context,
                 direct[historical_context.columns],
             ],
             ignore_index=True,
         )
         try:
-            context_source = str(CANDIDATE_CONVERSION_HISTORY.relative_to(ROOT)).replace("\\", "/")
+            context_source = str(direct_context_path.relative_to(ROOT)).replace("\\", "/")
         except ValueError:
-            context_source = str(CANDIDATE_CONVERSION_HISTORY)
+            context_source = "generated_prospective_candidate_context"
         diagnostics = {
             "method": "direct_speech_derived_candidate_context",
             "training_elections": [],
@@ -374,12 +717,59 @@ def _candidate_strength_context(
     return combined, diagnostics
 
 
+def _combine_historical_and_target_rows(
+    historical_path: Path,
+    target_path: Path,
+    *,
+    selected: pd.DataFrame,
+) -> pd.DataFrame:
+    historical = pd.read_csv(historical_path, encoding="utf-8-sig")
+    historical = historical.loc[
+        ~historical["election_id"].astype(str).eq(TARGET_ELECTION)
+    ].copy()
+    target = pd.read_csv(target_path, encoding="utf-8-sig")
+    target = target.loc[target["election_id"].astype(str).eq(TARGET_ELECTION)].copy()
+    expected = set(selected["candidate_name"].astype(str))
+    observed = set(target["candidate_name"].astype(str))
+    if observed != expected:
+        raise RuntimeError(
+            f"target context candidate coverage mismatch: expected={sorted(expected)}, "
+            f"observed={sorted(observed)}"
+        )
+    missing = sorted(set(historical.columns) - set(target.columns))
+    if missing:
+        raise RuntimeError(f"target context is missing historical columns: {missing}")
+    return pd.concat(
+        [historical, target.reindex(columns=historical.columns)],
+        ignore_index=True,
+        sort=False,
+    )
+
+
 def _prospective_sources(
     temp: Path,
+    registry: pd.DataFrame,
     selected: pd.DataFrame,
     salience: pd.DataFrame,
     candidate_link: pd.DataFrame,
+    *,
+    version: str,
 ) -> tuple[dict[str, Path], dict[str, object]]:
+    candidate_link, target_context_paths, government_link_diagnostics = (
+        _build_target_candidate_context(
+            temp,
+            registry,
+            selected,
+            candidate_link,
+            version=version,
+        )
+    )
+    _assert_target_input_coverage(
+        selected,
+        salience,
+        candidate_link,
+        pd.Timestamp(FORECAST_CUTOFF),
+    )
     regions = pd.read_csv(REGIONS, encoding="utf-8-sig")
     skeleton = selected.merge(regions, how="cross")
     skeleton["election_id"] = TARGET_ELECTION
@@ -403,7 +793,10 @@ def _prospective_sources(
         ]
     ]
     results = pd.concat(
-        [pd.read_csv(RESULTS, encoding="utf-8-sig"), skeleton],
+        [
+            pd.read_csv(_historical_results_path(version), encoding="utf-8-sig"),
+            skeleton,
+        ],
         ignore_index=True,
     )
 
@@ -436,14 +829,22 @@ def _prospective_sources(
     historical_link = pd.read_csv(ROOT / active.nested.engine.LINK)
     combined_link = pd.concat([historical_link, link], ignore_index=True)
     candidate_context, candidate_context_diagnostics = _candidate_strength_context(
-        selected, candidate_link
+        selected,
+        candidate_link,
+        historical_context_path=_historical_conversion_path(version),
+        target_context_path=target_context_paths["candidate_context"],
+    )
+    combined_speech_context = _combine_historical_and_target_rows(
+        _historical_speech_context_path(version),
+        target_context_paths["candidate_party_speech_context"],
+        selected=selected,
     )
     historical_landscape = pd.read_csv(
         AUTOMATIC_DIR / "candidate_political_landscape.csv",
         encoding="utf-8-sig",
     )
     target_landscape = pd.read_csv(
-        FORECAST_CANDIDATE_LANDSCAPE,
+        target_context_paths["political_landscape"],
         encoding="utf-8-sig",
     )
     target_landscape = target_landscape.loc[
@@ -467,12 +868,20 @@ def _prospective_sources(
         encoding="utf-8-sig",
     )
     target_third_profile = pd.read_csv(
-        FORECAST_THIRD_CANDIDATE_PROFILE,
+        target_context_paths["third_candidate_profile"],
         encoding="utf-8-sig",
     )
     target_third_profile = target_third_profile.loc[
         target_third_profile["election_id"].astype(str).eq(TARGET_ELECTION)
     ].copy()
+    expected_third = set(
+        selected.loc[selected["slot"].astype(str).eq("C"), "candidate_name"].astype(str)
+    )
+    observed_third = set(target_third_profile["candidate_name"].astype(str))
+    if observed_third != expected_third:
+        raise RuntimeError(
+            "forecast third-candidate profile does not match the selected C candidate"
+        )
     combined_third_profile = pd.concat(
         [
             historical_third_profile.loc[
@@ -495,12 +904,21 @@ def _prospective_sources(
             encoding="utf-8-sig",
         )
         target_seed = pd.read_csv(
-            FORECAST_ISSUE_SEED_DIR / filename,
+            target_context_paths[filename.removesuffix(".csv")],
             encoding="utf-8-sig",
         )
         target_seed = target_seed.loc[
             target_seed["election_id"].astype(str).eq(TARGET_ELECTION)
         ].copy()
+        if target_seed.empty:
+            raise RuntimeError(f"forecast issue seed is empty: {filename}")
+        if filename == "candidate_issue_profile.csv":
+            observed_candidates = set(target_seed["candidate_name"].astype(str))
+            expected_candidates = set(selected["candidate_name"].astype(str))
+            if observed_candidates != expected_candidates:
+                raise RuntimeError(
+                    "forecast candidate issue profile does not cover selected candidates"
+                )
         combined_issue_seeds[filename] = pd.concat(
             [
                 historical_seed.loc[
@@ -534,6 +952,9 @@ def _prospective_sources(
         "salience": temp / "issue_salience_through_cutoff.csv",
         "link": temp / "candidate_issue_link_through_cutoff.csv",
         "candidate_context": temp / "candidate_vote_conversion_context.csv",
+        "candidate_party_speech_context": temp / "candidate_party_speech_context.csv",
+        "candidate_party_tone_gap": temp / "candidate_party_tone_gap.csv",
+        "candidate_public_treatment": temp / "candidate_public_treatment.csv",
         "political_landscape": temp / "candidate_political_landscape.csv",
         "third_candidate_profile": temp / "third_candidate_profile.csv",
         "candidate_issue_profile": temp / "candidate_issue_profile.csv",
@@ -546,6 +967,21 @@ def _prospective_sources(
         ("salience", combined_salience),
         ("link", combined_link),
         ("candidate_context", candidate_context),
+        ("candidate_party_speech_context", combined_speech_context),
+        (
+            "candidate_party_tone_gap",
+            pd.read_csv(
+                target_context_paths["candidate_party_tone_gap"],
+                encoding="utf-8-sig",
+            ),
+        ),
+        (
+            "candidate_public_treatment",
+            pd.read_csv(
+                target_context_paths["candidate_public_treatment"],
+                encoding="utf-8-sig",
+            ),
+        ),
         ("political_landscape", combined_landscape),
         ("third_candidate_profile", combined_third_profile),
         ("candidate_issue_profile", combined_issue_seeds["candidate_issue_profile.csv"]),
@@ -557,20 +993,27 @@ def _prospective_sources(
         ("outer_config", outer),
     ):
         frame.to_csv(paths[key], index=False, encoding="utf-8-sig")
-    return paths, candidate_context_diagnostics
+    return paths, {
+        "candidate_strength": candidate_context_diagnostics,
+        "government_context_link": government_link_diagnostics,
+    }
 
 
-def _prior_region_volume() -> pd.Series:
-    results = pd.read_csv(RESULTS, encoding="utf-8-sig")
+def _prior_region_volume(version: str = "v23") -> pd.Series:
+    results = pd.read_csv(_historical_results_path(version), encoding="utf-8-sig")
     prior = results.loc[results["election_id"].eq("pres_2022")].copy()
     return pd.to_numeric(prior["votes"], errors="coerce").fillna(0.0).groupby(
         prior["region_id"]
     ).sum()
 
 
-def _target_base(target: pd.DataFrame, historical_base: pd.DataFrame) -> pd.DataFrame:
+def _target_base(
+    target: pd.DataFrame,
+    historical_base: pd.DataFrame,
+    version: str = "v23",
+) -> pd.DataFrame:
     out = target.copy()
-    prior_volume = _prior_region_volume()
+    prior_volume = _prior_region_volume(version)
     out["contest_votes"] = out["region_id"].map(prior_volume).fillna(0.0)
     out["actual"] = np.nan
     out["official_pred"] = np.nan
@@ -756,16 +1199,117 @@ def _v23_runtime(config_path: Path, selected: pd.DataFrame) -> Iterator[None]:
         yield
 
 
+@contextmanager
+def _model_runtime(
+    version: str,
+    config_path: Path,
+    selected: pd.DataFrame,
+) -> Iterator[None]:
+    """Install the exact promoted historical runtime for the requested version."""
+
+    if version == "v23":
+        with _v23_runtime(config_path, selected):
+            yield
+        return
+
+    if version == "v25":
+        with active_v25.corrected_runtime(
+            active,
+            assignment_builder,
+            active.nested,
+            active.nested.base_eval,
+            repairs=active_v25.RUNTIME_REPAIRS,
+        ):
+            yield
+        return
+
+    exclusions = active_v24.scored_exclusions()
+    engines = {
+        active.nested.engine,
+        active.assignment_builder.engine,
+        active.nested.base_eval.engine,
+        assignment_builder.engine,
+    }
+    attributes: list[tuple[object, str, object]] = [
+        (active, "CONFIG_PATH", config_path),
+        (
+            active.nested,
+            "ASSIGNMENT_PATH",
+            active_v24.V24_DATA / "candidate_slot_assignments_v2.csv",
+        ),
+        (active.nested.base_eval, "BASELINE_PATH", active_v24.V24_BASELINE),
+    ]
+    for engine in engines:
+        attributes.extend(
+            [
+                (
+                    engine,
+                    "RESULTS",
+                    str(active_v24.V24_DATA / "presidential_results_standardized.csv"),
+                ),
+                (
+                    engine,
+                    "COALITION_EVENTS",
+                    str(active_v24.V24_DATA / "coalition_events.csv"),
+                ),
+                # The official V24 wrapper leaves the generic registry empty so
+                # the ballot-faithful empty coalition table remains authoritative.
+                (engine, "WITHDRAWAL_TRANSFER_REGISTRY", ""),
+                (
+                    engine,
+                    "CANDIDATE_PARTY_SPEECH_CONTEXT",
+                    str(active_v24.V24_DATA / "candidate_party_speech_context.csv"),
+                ),
+                (
+                    engine,
+                    "CANDIDATE_VOTE_CONVERSION_CONTEXT",
+                    str(active_v24.V24_DATA / "candidate_vote_conversion_context.csv"),
+                ),
+                (
+                    engine,
+                    "_load_scored_contest_scope_exclusions",
+                    lambda _excluded=exclusions: set(_excluded),
+                ),
+            ]
+        )
+
+    original_rows = assignment_builder._all_ballot_rows
+    original_redistribution = assignment_builder._apply_withdrawal_redistribution
+    active_v24.install_ballot_patches(assignment_builder)
+    try:
+        with patching.patched(attributes):
+            yield
+    finally:
+        assignment_builder._all_ballot_rows = original_rows
+        assignment_builder._apply_withdrawal_redistribution = original_redistribution
+
+
 def _execute_existing_pipeline(
+    version: str,
     config_path: Path,
     sources: dict[str, Path],
     selected: pd.DataFrame,
-) -> tuple[pd.DataFrame, pd.DataFrame]:
+) -> tuple[
+    pd.DataFrame,
+    pd.DataFrame,
+    pd.DataFrame,
+    pd.DataFrame,
+    dict[str, pd.DataFrame],
+    dict[str, object],
+]:
     all_elections = (*SCORED_ELECTIONS, TARGET_ELECTION)
     engines = {active.nested.engine, active.assignment_builder.engine}
     captures: dict[str, pd.DataFrame] = {}
 
-    with _v23_runtime(config_path, selected):
+    # The promoted runner assembles both the rolling rows and the electorate
+    # base inside strict_input_policy().  Building either frame before entering
+    # that context silently re-enables undated curated sensitivity inputs and
+    # changes the frozen historical Ridge chain.  Keep the prospective target
+    # under the identical boundary as well.
+    with _model_runtime(version, config_path, selected), active.strict_input_policy():
+        strict_key = active.nested.engine.STRICT_UNDATED_CURATED_INPUTS_ENV
+        if os.environ.get(strict_key) != "1":
+            raise RuntimeError("prospective assembly escaped strict input policy")
         historical_full = active.nested._prepare_rows()
         historical_base = active.nested._base_layer_frame(
             require_frozen_reproduction=False
@@ -816,26 +1360,17 @@ def _execute_existing_pipeline(
                     (
                         engine,
                         "CANDIDATE_PARTY_SPEECH_CONTEXT",
-                        str(
-                            FORECAST_CANDIDATE_CONTEXT_DIR
-                            / "candidate_party_speech_context.csv"
-                        ),
+                        str(sources["candidate_party_speech_context"]),
                     ),
                     (
                         engine,
                         "CANDIDATE_PARTY_TONE_GAP",
-                        str(
-                            FORECAST_CANDIDATE_CONTEXT_DIR
-                            / "candidate_party_tone_gap.csv"
-                        ),
+                        str(sources["candidate_party_tone_gap"]),
                     ),
                     (
                         engine,
                         "CANDIDATE_PUBLIC_TREATMENT",
-                        str(
-                            FORECAST_CANDIDATE_CONTEXT_DIR
-                            / "candidate_public_treatment.csv"
-                        ),
+                        str(sources["candidate_public_treatment"]),
                     ),
                 ]
             )
@@ -844,6 +1379,22 @@ def _execute_existing_pipeline(
             target = target.loc[target["election_id"].eq(TARGET_ELECTION)].copy()
             if len(target) != 51:
                 raise RuntimeError(f"expected 51 prospective rows, found {len(target)}")
+            target_feature_columns = [
+                "election_id",
+                "region_id",
+                "slot",
+                "candidate_name",
+                *active.nested.BASE_PREDICTORS,
+                "candidate_weight",
+            ]
+            missing_features = [
+                column for column in target_feature_columns if column not in target.columns
+            ]
+            if missing_features:
+                raise RuntimeError(
+                    f"prospective target lacks frozen Ridge inputs: {missing_features}"
+                )
+            target_feature_audit = target[target_feature_columns].copy()
             assignment_attributes = [
                 (assignment_builder, "ELECTIONS", all_elections),
                 (active.assignment_builder, "ELECTIONS", all_elections),
@@ -853,9 +1404,25 @@ def _execute_existing_pipeline(
             target_assignments = assignments.loc[
                 assignments["election_id"].eq(TARGET_ELECTION)
             ].copy()
+            target_feature_audit = target_feature_audit.merge(
+                target_assignments[
+                    [
+                        "election_id",
+                        "candidate_name",
+                        "assigned_slot",
+                        "preliminary_mean_share",
+                        "pre_withdrawal_mean_share",
+                        "post_withdrawal_mean_share",
+                        "withdrawal_event_applied",
+                    ]
+                ],
+                on=["election_id", "candidate_name"],
+                how="left",
+                validate="many_to_one",
+            )
             full = _target_full(target, historical_full, target_assignments)
             base = pd.concat(
-                [historical_base, _target_base(target, historical_base)],
+                [historical_base, _target_base(target, historical_base, version)],
                 ignore_index=True,
                 sort=False,
             )
@@ -877,6 +1444,35 @@ def _execute_existing_pipeline(
                 del stage_by_election, election_order
                 return "structural_mega_shock_regime", {}
 
+            original_attach_layers = active.nested._attach_layers
+
+            def attach_layers_with_coverage_diagnostics(base_frame, outer_frame):
+                outer_keys = outer_frame[
+                    ["election_id", "region_id", "join_slot"]
+                ].drop_duplicates()
+                coverage = base_frame[
+                    ["election_id", "region_id", "slot"]
+                ].merge(
+                    outer_keys,
+                    left_on=["election_id", "region_id", "slot"],
+                    right_on=["election_id", "region_id", "join_slot"],
+                    how="left",
+                    indicator=True,
+                )
+                missing = coverage.loc[
+                    coverage["_merge"].eq("left_only"),
+                    ["election_id", "region_id", "slot"],
+                ]
+                if not missing.empty:
+                    raise RuntimeError(
+                        "shadow prediction coverage is incomplete: "
+                        + json.dumps(
+                            missing.head(20).to_dict("records"),
+                            ensure_ascii=False,
+                        )
+                    )
+                return original_attach_layers(base_frame, outer_frame)
+
             runtime_attributes = [
                 (active, "regenerate_issue_seeds", lambda: None),
                 (active, "regenerate_assignments", lambda: None),
@@ -890,6 +1486,7 @@ def _execute_existing_pipeline(
                     lambda require_frozen_reproduction=False: base,
                 ),
                 (active.nested, "_metrics", no_score),
+                (active.nested, "_attach_layers", attach_layers_with_coverage_diagnostics),
                 (active.nested, "ELECTIONS", all_elections),
                 (active.nested.base_eval, "ALLOWED_ELECTIONS", all_elections),
                 (active.nested, "CONFIG_PATH", sources["outer_config"]),
@@ -902,7 +1499,10 @@ def _execute_existing_pipeline(
             ]
             try:
                 with patching.patched(runtime_attributes):
-                    active.run(output_dir=Path(tempfile.gettempdir()) / "prospective_sink")
+                    active.run(
+                        output_dir=Path(tempfile.gettempdir()) / "prospective_sink",
+                        rejection_beneficiary_routing_enabled=version in {"v24", "v25"},
+                    )
             finally:
                 active._atomic_csv = original_atomic_csv
 
@@ -910,11 +1510,130 @@ def _execute_existing_pipeline(
     input_manifest = captures.get("input_manifest.csv", pd.DataFrame())
     if predictions is None:
         raise RuntimeError("existing pipeline did not emit prospective predictions")
+    v24_audits: dict[str, pd.DataFrame] = {}
+    historical_reproduction: dict[str, object] = {
+        "required": False,
+        "passed": True,
+        "rows": 0,
+        "maximum_absolute_difference": 0.0,
+    }
+    if version in {"v24", "v25"}:
+        from presidential_issue_engine import strong_incumbent_veto
+        from presidential_issue_engine import third_candidate_lineage_constraint
+        from presidential_issue_engine import weak_same_lane_refusal
+
+        predictions["v24_pre_extension_pred"] = predictions["layer_pred"]
+        predictions, all_v24_veto = (
+            strong_incumbent_veto.apply_strong_incumbent_veto(predictions)
+        )
+        predictions["v24_post_strong_veto_pred"] = predictions["layer_pred"]
+        predictions, all_v24_lineage = (
+            third_candidate_lineage_constraint.apply_lineage_ceiling(
+                predictions
+            )
+        )
+        predictions["v24_post_lineage_ceiling_pred"] = predictions[
+            "layer_pred"
+        ]
+        predictions, all_v24_refusal = (
+            weak_same_lane_refusal.apply_weak_same_lane_refusal(predictions)
+        )
+        predictions["v24_post_weak_lane_refusal_pred"] = predictions[
+            "layer_pred"
+        ]
+        all_audits = {
+            "strong_incumbent_veto": all_v24_veto,
+            "third_candidate_lineage_ceiling": all_v24_lineage,
+            "weak_same_lane_refusal": all_v24_refusal,
+        }
+        v24_audits = {
+            name: frame.loc[
+                frame["election_id"].astype(str).eq(TARGET_ELECTION)
+            ].copy()
+            if "election_id" in frame.columns
+            else frame.iloc[0:0].copy()
+            for name, frame in all_audits.items()
+        }
+
+        canonical_output = (
+            active_v25.DEFAULT_OUTPUT if version == "v25" else active_v24.DEFAULT_OUTPUT
+        )
+        canonical = pd.read_csv(
+            canonical_output / "nested_predictions.csv",
+            encoding="utf-8-sig",
+            low_memory=False,
+        )
+        reproduced = predictions.loc[
+            predictions["election_id"].astype(str).ne(TARGET_ELECTION)
+        ].copy()
+        keys = ["election_id", "region_id", "source_slot"]
+        canonical_keys = canonical[keys].astype(str)
+        reproduced_keys = reproduced[keys].astype(str)
+        if set(map(tuple, canonical_keys.to_numpy())) != set(
+            map(tuple, reproduced_keys.to_numpy())
+        ):
+            raise RuntimeError("prospective harness changed the frozen V24 row keys")
+        expected = canonical[keys + ["layer_pred"]].copy()
+        observed = reproduced[keys + ["layer_pred"]].copy()
+        compared = expected.merge(
+            observed,
+            on=keys,
+            how="inner",
+            validate="one_to_one",
+            suffixes=("_canonical", "_prospective_harness"),
+        )
+        difference = (
+            pd.to_numeric(compared["layer_pred_canonical"], errors="raise")
+            - pd.to_numeric(
+                compared["layer_pred_prospective_harness"], errors="raise"
+            )
+        ).abs()
+        maximum_difference = float(difference.max()) if len(difference) else 0.0
+        if not np.allclose(difference.to_numpy(float), 0.0, rtol=0.0, atol=1e-12):
+            debug_dir = ROOT / "outputs" / f"prospective_pres_2025_{version}"
+            debug_dir.mkdir(parents=True, exist_ok=True)
+            predictions.to_csv(
+                debug_dir / "rejected_historical_harness_debug.csv",
+                index=False,
+                encoding="utf-8-sig",
+                lineterminator="\n",
+            )
+            compared["absolute_difference"] = difference
+            largest = compared.nlargest(8, "absolute_difference")[
+                [
+                    *keys,
+                    "layer_pred_canonical",
+                    "layer_pred_prospective_harness",
+                    "absolute_difference",
+                ]
+            ]
+            raise RuntimeError(
+                f"prospective harness does not reproduce frozen {version.upper()} history: "
+                f"maximum absolute difference={maximum_difference:.16g}; "
+                + json.dumps(largest.to_dict("records"), ensure_ascii=False)
+            )
+        historical_reproduction = {
+            "required": True,
+            "passed": True,
+            "rows": int(len(compared)),
+            "maximum_absolute_difference": maximum_difference,
+            "canonical_predictions_sha256": _sha256(
+                canonical_output / "nested_predictions.csv"
+            ),
+        }
+
     target_predictions = predictions.loc[
         predictions["election_id"].eq(TARGET_ELECTION)
     ].copy()
+    if (
+        "candidate_name" not in target_predictions.columns
+        and "candidate_name_x" in target_predictions.columns
+    ):
+        target_predictions["candidate_name"] = target_predictions["candidate_name_x"]
+    target_predictions["predicted_share"] = target_predictions["layer_pred"]
+    stage_audit = _safe_stage_audit(target_predictions)
     target_predictions = target_predictions.rename(
-        columns={"source_slot": "slot", "layer_pred": "predicted_share"}
+        columns={"source_slot": "slot"}
     )
     name_column = (
         "candidate_name_x"
@@ -923,11 +1642,39 @@ def _execute_existing_pipeline(
     )
     target_predictions = target_predictions.rename(columns={name_column: "candidate_name"})
     target_predictions = target_predictions.loc[:, ~target_predictions.columns.duplicated()]
-    return target_predictions[list(OUTPUT_COLUMNS)], input_manifest
+    return (
+        target_predictions[list(OUTPUT_COLUMNS)],
+        input_manifest,
+        stage_audit,
+        target_feature_audit,
+        v24_audits,
+        historical_reproduction,
+    )
 
 
-def _national_summary(predictions: pd.DataFrame) -> pd.DataFrame:
-    volume = _prior_region_volume()
+def _safe_stage_audit(frame: pd.DataFrame) -> pd.DataFrame:
+    """Retain model diagnostics while excluding every outcome-shaped field."""
+
+    out = frame.copy()
+    if "pred" in out.columns:
+        out = out.rename(columns={"pred": "base_stage_prediction"})
+    forbidden = []
+    for column in out.columns:
+        folded = str(column).casefold()
+        if (
+            folded in FORBIDDEN_OUTCOME_COLUMNS
+            or "actual" in folded
+            or "error" in folded
+            or "mae" in folded
+            or folded == "winner"
+        ):
+            forbidden.append(column)
+    out = out.drop(columns=forbidden, errors="ignore")
+    return out.loc[:, ~out.columns.duplicated()].copy()
+
+
+def _national_summary(predictions: pd.DataFrame, version: str = "v23") -> pd.DataFrame:
+    volume = _prior_region_volume(version)
     work = predictions.copy()
     work["prior_election_vote_weight"] = work["region_id"].map(volume).fillna(0.0)
     rows: list[dict[str, object]] = []
@@ -954,18 +1701,22 @@ def _national_summary(predictions: pd.DataFrame) -> pd.DataFrame:
 def _input_manifest(
     captured: pd.DataFrame,
     config_path: Path,
+    version: str,
 ) -> pd.DataFrame:
     explicit = [
         config_path,
+        _runtime_policy_path(version, config_path),
         REGISTRY,
         CONTEXT_DIR / "model_issue_salience.csv",
         CONTEXT_DIR / "model_candidate_issue_link.csv",
+        EXPLICIT_TARGET_CONTEXT,
+        CANDIDATE_TARGET_CONTEXT,
         CONTEXT_DIR / "manifest.json",
         CONTEXT_DIR / "assembly22_speaker_roster.csv",
         CONTEXT_DIR / "assembly22_speaker_roster.manifest.json",
         CONTEXT_DIR / "assembly_speaker_influence_pres_2025.csv",
         CONTEXT_DIR / "assembly_speaker_influence_pres_2025_diagnostics.csv",
-        RESULTS,
+        _historical_results_path(version),
         HISTORY,
         REGIONS,
         OUTER_CONFIG,
@@ -983,7 +1734,35 @@ def _input_manifest(
         PARTY_TRANSITIONS,
         ROOT / "data/raw/official_sources/nec_assembly_district_history.csv",
         ROOT / active.nested.engine.SALIENCE,
+        ROOT / "scripts/build_speech_derived_issue_context.py",
+        ROOT / "scripts/build_speech_derived_candidate_context_v2.py",
+        ROOT / "scripts/build_candidate_party_speech_context.py",
     ]
+    if version in {"v24", "v25"}:
+        explicit.extend(
+            [
+                active_v24.V24_BASELINE,
+                active_v24.V24_DATA / "candidate_slot_assignments_v2.csv",
+                active_v24.V24_DATA / "coalition_events.csv",
+                active_v24.V24_DATA / "candidate_party_speech_context.csv",
+                active_v24.V24_DATA / "candidate_vote_conversion_context.csv",
+                active_v24.V24_DATA / "scored_contest_scope.csv",
+                active_v24.V24_DATA / "third_candidate_lineage.csv",
+                ROOT / "scripts/run_active_presidential_model_v24.py",
+                ROOT / "presidential_issue_engine/strong_incumbent_veto.py",
+                ROOT
+                / "presidential_issue_engine/third_candidate_lineage_constraint.py",
+                ROOT / "presidential_issue_engine/weak_same_lane_refusal.py",
+            ]
+        )
+        if version == "v25":
+            explicit.extend(
+                [
+                    ROOT / "scripts/run_active_presidential_model_v25.py",
+                    active_v25.DEFAULT_OUTPUT / "nested_predictions.csv",
+                    active_v25.DEFAULT_OUTPUT / "summary.json",
+                ]
+            )
     rows = []
     if not captured.empty and {"path", "bytes", "sha256"}.issubset(captured.columns):
         rows.extend(captured[["path", "bytes", "sha256"]].to_dict("records"))
@@ -1018,15 +1797,45 @@ def run(version: str = "v23") -> Path:
     selected = _select_model_candidates(
         registry, candidate_link, active.nested.engine
     )
+    _assert_target_input_coverage(selected, salience, candidate_link, cutoff)
+    if version in {"v24", "v25"}:
+        from presidential_issue_engine import third_candidate_lineage_constraint
+
+        lineage = third_candidate_lineage_constraint.load_lineage()
+        target_lineage = lineage.loc[
+            lineage["election_id"].astype(str).eq(TARGET_ELECTION)
+        ].copy()
+        expected_third = set(
+            selected.loc[
+                selected["slot"].astype(str).eq("C"), "candidate_name"
+            ].astype(str)
+        )
+        if set(target_lineage["candidate_name"].astype(str)) != expected_third:
+            raise RuntimeError("V24 lineage table does not match the selected C candidate")
+        lineage_date = pd.to_datetime(target_lineage["available_date"], errors="coerce")
+        if lineage_date.isna().any() or lineage_date.gt(cutoff).any():
+            raise RuntimeError("V24 lineage evidence crosses the D-1 cutoff")
 
     output_dir = ROOT / "outputs" / f"prospective_pres_2025_{version}"
     output_dir.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="prospective_pres_2025_") as temp_dir:
         sources, candidate_context_diagnostics = _prospective_sources(
-            Path(temp_dir), selected, salience, candidate_link
+            Path(temp_dir),
+            registry,
+            selected,
+            salience,
+            candidate_link,
+            version=version,
         )
-        predictions, captured_manifest = _execute_existing_pipeline(
-            config_path, sources, selected
+        (
+            predictions,
+            captured_manifest,
+            stage_audit,
+            target_feature_audit,
+            v24_audits,
+            historical_reproduction,
+        ) = (
+            _execute_existing_pipeline(version, config_path, sources, selected)
         )
 
     forbidden_output = {
@@ -1044,9 +1853,21 @@ def run(version: str = "v23") -> Path:
         1.0,
     ):
         raise RuntimeError("prospective regional shares do not sum to one")
+    government_columns = {
+        "government_evidence_count",
+        "government_evidence_weight",
+        "government_rejection_strength",
+    }
+    if not government_columns.issubset(stage_audit.columns):
+        raise RuntimeError("prospective stage audit lacks government-evidence fields")
+    government_evidence = stage_audit[list(government_columns)].apply(
+        pd.to_numeric, errors="coerce"
+    ).fillna(0.0)
+    if not government_evidence.to_numpy(float).any():
+        raise RuntimeError("current-government Assembly evidence did not reach the model")
 
-    national = _national_summary(predictions)
-    manifest = _input_manifest(captured_manifest, config_path)
+    national = _national_summary(predictions, version)
+    manifest = _input_manifest(captured_manifest, config_path, version)
     predictions.to_csv(
         output_dir / "prospective_predictions.csv",
         index=False,
@@ -1065,6 +1886,28 @@ def run(version: str = "v23") -> Path:
         encoding="utf-8-sig",
         lineterminator="\n",
     )
+    stage_audit.to_csv(
+        output_dir / "prediction_stage_audit.csv",
+        index=False,
+        encoding="utf-8-sig",
+        lineterminator="\n",
+    )
+    target_feature_audit.to_csv(
+        output_dir / "target_feature_audit.csv",
+        index=False,
+        encoding="utf-8-sig",
+        lineterminator="\n",
+    )
+    for name, audit in v24_audits.items():
+        schema = list(V24_AUDIT_COLUMNS[name])
+        extra = [column for column in audit.columns if column not in schema]
+        audit = audit.reindex(columns=[*schema, *extra])
+        audit.to_csv(
+            output_dir / f"{name}_audit.csv",
+            index=False,
+            encoding="utf-8-sig",
+            lineterminator="\n",
+        )
     run_manifest = {
         "schema": "prospective_presidential_forecast_v1",
         "status": "forecast_only_not_scored",
@@ -1073,6 +1916,16 @@ def run(version: str = "v23") -> Path:
         "forecast_cutoff": FORECAST_CUTOFF,
         "config_path": config_path.relative_to(ROOT).as_posix(),
         "config_sha256": _sha256(config_path),
+        "runtime_policy_path": _runtime_policy_path(
+            version, config_path
+        ).relative_to(ROOT).as_posix(),
+        "runtime_policy_sha256": _sha256(
+            _runtime_policy_path(version, config_path)
+        ),
+        "runtime_policy_matches_declared_config": (
+            _runtime_policy_path(version, config_path).resolve()
+            == config_path.resolve()
+        ),
         "training_scored_elections": list(SCORED_ELECTIONS),
         "training_latest_election": "pres_2022",
         "candidate_selection": selected[
@@ -1089,31 +1942,33 @@ def run(version: str = "v23") -> Path:
         "final_model_slot_assignment": predictions[
             ["slot", "candidate_name"]
         ].drop_duplicates().sort_values("slot").to_dict("records"),
-        "candidate_strength_projection": candidate_context_diagnostics,
+        "candidate_strength_projection": candidate_context_diagnostics[
+            "candidate_strength"
+        ],
+        "government_context_link": candidate_context_diagnostics[
+            "government_context_link"
+        ],
         "national_region_weight_source": "pres_2022_valid_vote_volume",
         "outcome_columns_used": [],
         "performance_metrics_computed": False,
         "pres_2025_outcome_present": False,
+        "model_selection_performed": False,
+        "model_parameters_changed": False,
+        "frozen_historical_reproduction": historical_reproduction,
+        "prediction_stage_audit_rows": int(len(stage_audit)),
+        "target_feature_audit_rows": int(len(target_feature_audit)),
+        "target_feature_columns": target_feature_audit.columns.tolist(),
+        "v24_postprocess_order": list(V24_POSTPROCESS_ORDER)
+        if version in {"v24", "v25"}
+        else [],
+        "v24_postprocess_audit_rows": {
+            name: int(len(frame)) for name, frame in v24_audits.items()
+        },
         "assembly_context_manifest_sha256": _sha256(CONTEXT_DIR / "manifest.json"),
         "assembly_context_certification": context_manifest.get("status"),
-        "candidate_context_lineage_manifest_sha256": _sha256(
-            FORECAST_CANDIDATE_CONTEXT_DIR / "lineage_manifest.json"
-        ),
-        "candidate_political_landscape_sha256": _sha256(
-            FORECAST_CANDIDATE_LANDSCAPE
-        ),
-        "third_candidate_profile_sha256": _sha256(
-            FORECAST_THIRD_CANDIDATE_PROFILE
-        ),
-        "candidate_issue_profile_sha256": _sha256(
-            FORECAST_ISSUE_SEED_DIR / "candidate_issue_profile.csv"
-        ),
-        "mega_issue_axis_sha256": _sha256(
-            FORECAST_ISSUE_SEED_DIR / "mega_issue_axis.csv"
-        ),
-        "mega_issue_attribution_sha256": _sha256(
-            FORECAST_ISSUE_SEED_DIR / "mega_issue_attribution.csv"
-        ),
+        "generated_candidate_context_sha256": candidate_context_diagnostics[
+            "government_context_link"
+        ]["generated_context_sha256"],
         "assembly22_roster_manifest_sha256": _sha256(
             CONTEXT_DIR / "assembly22_speaker_roster.manifest.json"
         ),
@@ -1131,7 +1986,7 @@ def run(version: str = "v23") -> Path:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--version", choices=("v23", "v24"), default="v23")
+    parser.add_argument("--version", choices=("v23", "v24", "v25"), default="v23")
     args = parser.parse_args()
     output_dir = run(args.version)
     print(output_dir.relative_to(ROOT).as_posix())

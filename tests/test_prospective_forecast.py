@@ -32,7 +32,7 @@ def test_target_base_preserves_merged_candidate_names(monkeypatch) -> None:
     monkeypatch.setattr(
         prospective,
         "_prior_region_volume",
-        lambda: pd.Series({"sido_11": 100.0}),
+        lambda version="v23": pd.Series({"sido_11": 100.0}),
     )
 
     result = prospective._target_base(target, historical)
@@ -79,10 +79,177 @@ def test_committed_prospective_output_is_forecast_only() -> None:
     assert not any("model_mega_issue_" in path for path in inputs)
 
 
-def test_v24_requires_human_promoted_config(monkeypatch, tmp_path) -> None:
-    monkeypatch.setattr(prospective, "V24_CONFIG", tmp_path / "missing.json")
-    with pytest.raises(RuntimeError, match="no human-promoted config"):
-        prospective._config_path("v24")
+def test_v24_prospective_output_runs_every_promoted_extension() -> None:
+    output = prospective.ROOT / "outputs/prospective_pres_2025_v24"
+    predictions = pd.read_csv(
+        output / "prospective_predictions.csv", encoding="utf-8-sig"
+    )
+    stages = pd.read_csv(
+        output / "prediction_stage_audit.csv",
+        encoding="utf-8-sig",
+        low_memory=False,
+    )
+    features = pd.read_csv(
+        output / "target_feature_audit.csv",
+        encoding="utf-8-sig",
+    )
+    manifest = json.loads((output / "run_manifest.json").read_text(encoding="utf-8"))
+    inputs = set(
+        pd.read_csv(output / "input_manifest.csv", encoding="utf-8-sig")["path"]
+        .astype(str)
+        .tolist()
+    )
+
+    assert len(predictions) == 51
+    assert len(stages) == 51
+    assert len(features) == 51
+    assert np.allclose(
+        predictions.groupby(["election_id", "region_id"])["predicted_share"].sum(),
+        1.0,
+    )
+    assert manifest["version"] == "v24"
+    assert manifest["forecast_cutoff"] == "2025-06-02"
+    assert manifest["performance_metrics_computed"] is False
+    assert manifest["model_selection_performed"] is False
+    assert manifest["model_parameters_changed"] is False
+    assert manifest["frozen_historical_reproduction"]["required"] is True
+    assert manifest["frozen_historical_reproduction"]["passed"] is True
+    assert manifest["frozen_historical_reproduction"]["rows"] == 232
+    assert (
+        manifest["frozen_historical_reproduction"][
+            "maximum_absolute_difference"
+        ]
+        <= 1e-12
+    )
+    assert manifest["target_feature_audit_rows"] == 51
+    assert set(prospective.active.nested.BASE_PREDICTORS).issubset(features.columns)
+    assert features[list(prospective.active.nested.BASE_PREDICTORS)].notna().all().all()
+    assert features["candidate_weight"].notna().all()
+    assert features["assigned_slot"].notna().all()
+    assert (
+        manifest["government_context_link"]["government_evidence_destination"]
+        == "issue_character_burden_only"
+    )
+    assert manifest["government_context_link"]["candidate_attention_source_types"] == [
+        "person",
+        "party",
+    ]
+    assert manifest["v24_postprocess_order"] == list(
+        prospective.V24_POSTPROCESS_ORDER
+    )
+    assert manifest["v24_postprocess_audit_rows"] == {
+        "strong_incumbent_veto": 0,
+        "third_candidate_lineage_ceiling": 17,
+        "weak_same_lane_refusal": 17,
+    }
+    government_fields = stages[
+        [
+            "government_evidence_count",
+            "government_evidence_weight",
+            "government_rejection_strength",
+        ]
+    ].apply(pd.to_numeric, errors="coerce").fillna(0.0)
+    assert government_fields.to_numpy(float).any()
+    assert manifest["government_context_link"]["prior_election"] == "pres_2022"
+    assert manifest["government_context_link"]["current_assembly"] == 22
+    assert manifest["government_context_link"]["target_outcomes_used"] is False
+    assert manifest["government_context_link"]["directional_aggregate_rows"] > 0
+    assert {
+        "v24_pre_extension_pred",
+        "v24_post_strong_veto_pred",
+        "v24_post_lineage_ceiling_pred",
+        "v24_post_weak_lane_refusal_pred",
+    }.issubset(stages.columns)
+    assert {
+        "presidential_issue_engine/fixed_dataset/v24/third_candidate_lineage.csv",
+        "presidential_issue_engine/strong_incumbent_veto.py",
+        "presidential_issue_engine/third_candidate_lineage_constraint.py",
+        "presidential_issue_engine/weak_same_lane_refusal.py",
+        "data/raw/official_sources/assembly_pres_2025_context/explicit_target_context_weekly.csv",
+        "data/raw/official_sources/assembly_pres_2025_context/candidate_target_context_weekly.csv",
+    }.issubset(inputs)
+
+
+def test_v24_uses_the_promoted_wrapper_and_versioned_history() -> None:
+    assert prospective._config_path("v24") == prospective.active_v24.CONFIG_PATH
+    assert prospective._historical_results_path("v24") == (
+        prospective.active_v24.V24_DATA / "presidential_results_standardized.csv"
+    )
+    assert prospective.V24_POSTPROCESS_ORDER == (
+        "strong_incumbent_veto",
+        "third_candidate_lineage_ceiling",
+        "weak_same_lane_refusal",
+    )
+
+
+def test_v25_prospective_output_reproduces_bounded_historical_runtime() -> None:
+    output = prospective.ROOT / "outputs/prospective_pres_2025_v25"
+    predictions = pd.read_csv(
+        output / "prospective_predictions.csv", encoding="utf-8-sig"
+    )
+    manifest = json.loads((output / "run_manifest.json").read_text(encoding="utf-8"))
+    weak_audit = pd.read_csv(
+        output / "weak_same_lane_refusal_audit.csv", encoding="utf-8-sig"
+    )
+
+    assert len(predictions) == 51
+    assert np.allclose(
+        predictions.groupby(["election_id", "region_id"])["predicted_share"].sum(),
+        1.0,
+    )
+    assert manifest["version"] == "v25"
+    assert manifest["runtime_policy_matches_declared_config"] is True
+    assert manifest["outcome_columns_used"] == []
+    assert manifest["performance_metrics_computed"] is False
+    assert manifest["pres_2025_outcome_present"] is False
+    assert manifest["model_selection_performed"] is False
+    assert manifest["model_parameters_changed"] is False
+    assert manifest["frozen_historical_reproduction"]["passed"] is True
+    assert manifest["frozen_historical_reproduction"]["rows"] == 232
+    assert (
+        manifest["frozen_historical_reproduction"]["maximum_absolute_difference"]
+        <= 1e-12
+    )
+    assert set(weak_audit["recipient_weight_mode"].astype(str)) == {
+        "prediction_tilted"
+    }
+    assert manifest["v24_postprocess_audit_rows"] == {
+        "strong_incumbent_veto": 0,
+        "third_candidate_lineage_ceiling": 17,
+        "weak_same_lane_refusal": 17,
+    }
+
+
+def test_v25_prospective_runtime_keeps_rejected_third_candidate_rebind_off() -> None:
+    assert "third_candidate_inputs" not in prospective.active_v25.RUNTIME_REPAIRS
+    assert prospective._config_path("v25") == prospective.active_v25.CONFIG_PATH
+    assert prospective._historical_results_path("v25") == (
+        prospective.active_v24.V24_DATA / "presidential_results_standardized.csv"
+    )
+    assert prospective._runtime_policy_path(
+        "v25", prospective.active_v25.CONFIG_PATH
+    ) == prospective.active_v25.CONFIG_PATH
+
+
+def test_stage_audit_removes_outcome_shaped_columns() -> None:
+    frame = pd.DataFrame(
+        {
+            "election_id": ["pres_2025"],
+            "pred": [0.4],
+            "layer_pred": [0.5],
+            "actual": [np.nan],
+            "votes": [0.0],
+            "row_mae": [np.nan],
+        }
+    )
+
+    result = prospective._safe_stage_audit(frame)
+
+    assert "base_stage_prediction" in result.columns
+    assert "layer_pred" in result.columns
+    assert "actual" not in result.columns
+    assert "votes" not in result.columns
+    assert "row_mae" not in result.columns
 
 
 def test_candidate_strength_prefers_direct_speech_context(monkeypatch, tmp_path) -> None:

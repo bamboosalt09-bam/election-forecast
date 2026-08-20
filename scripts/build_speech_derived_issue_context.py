@@ -201,7 +201,7 @@ def _forecast_character_overlay(
     registry: pd.DataFrame,
     salience: pd.DataFrame,
     assembly_matches: Path,
-    target_context_path: Path = FORECAST_CANDIDATE_TARGET_CONTEXT,
+    target_context_path: Path | None = None,
 ) -> pd.DataFrame:
     """Compile the target-attribution fields already emitted by the extractor.
 
@@ -213,6 +213,7 @@ def _forecast_character_overlay(
     threshold, or outcome input.
     """
 
+    target_context_path = target_context_path or FORECAST_CANDIDATE_TARGET_CONTEXT
     target = pd.read_csv(target_context_path, encoding="utf-8-sig")
     matches = pd.read_csv(assembly_matches, encoding="utf-8-sig")
     required_target = {

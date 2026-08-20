@@ -1,23 +1,47 @@
 # Current State Handoff
 
-> Authoritative current state: `docs/FINAL_MODEL_V24_20260820.md`. The active
-> pointer is `data/config/current_presidential_model.json`; V23 is the immutable
-> rollback model. Dated sections below preserve the state and terminology that
+> Authoritative current state: `docs/FINAL_MODEL_V25_20260821.md`. The active
+> pointer is `data/config/current_presidential_model.json`; V24 and V23 are immutable
+> rollback models. Dated sections below preserve the state and terminology that
 > applied when each experiment was recorded and must not be read as current
 > active-version pointers.
 
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_v24_structural_residual_pre_2025`
+- active policy: `active_v25_bounded_runtime_repair_pre_2025`
 - rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
 
-## Active V24 promotion (2026-08-20)
+## Active V25 promotion (2026-08-21)
 
-V24 is the frozen current model. It retains the V23 numerical base configuration
+V25 is the frozen current model. It repairs the V24 runner's accidental bypass
+of promoted V23 runtime bindings while preserving V24's accepted
+`prediction_tilted` weak-C route and the generic third-candidate
+profile/pressure paths used by that route.
+
+- prediction rows: `232`
+- regional `contest_votes` weighted, equal-election MAE: `2.7739432320%p`
+- national candidate, equal-election MAE: `0.9896196355%p`
+- winner accuracy: `4/5`
+- canonical prediction SHA-256:
+  `218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b`
+- V24 rollback SHA-256:
+  `edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a`
+- V23 rollback SHA-256:
+  `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`
+- full regression suite: `601 passed`
+- post-2022 outcomes used: false
+
+The V25 D-1 prospective run reproduces all 232 frozen historical rows before
+emitting 51 target rows and computes no performance metric. See
+`docs/PRES_2025_V25_STRICT_PROSPECTIVE_20260821.md`.
+
+## Superseded V24 promotion record (2026-08-20)
+
+V24 was the frozen current model at this dated checkpoint. It retains the V23 numerical base configuration
 and adds its ballot-faithful three-way scope, uniform 1%p scored floor,
 third-candidate lineage ceiling, strong-incumbent-veto response, and weak
 same-lane refusal layer through `scripts/run_active_presidential_model_v24.py`.
