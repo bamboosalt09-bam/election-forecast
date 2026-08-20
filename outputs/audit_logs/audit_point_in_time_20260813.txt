@@ -1,0 +1,10 @@
+[strict PIT audit: PASS]
+manifest_files=24
+manifest_rows=1685
+indicator_rows=19476
+bloc_history_rows=5925
+bloc_history_elections=64
+assembly_matches_present=0
+assembly_match_rows=0
+seniority_rows_checked=952
+outcome_invariance_rows_checked=215

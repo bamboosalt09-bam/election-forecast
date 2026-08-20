@@ -1,0 +1,4 @@
+﻿election_id,slot,candidate_name,predicted_share,region_weight_source
+pres_2025,A,김문수,0.4009378018835885,pres_2022_valid_vote_volume
+pres_2025,B,이재명,0.37049150795551805,pres_2022_valid_vote_volume
+pres_2025,C,이준석,0.22857069016089354,pres_2022_valid_vote_volume

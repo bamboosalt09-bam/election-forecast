@@ -1,0 +1,32 @@
+{
+  "schema": "forecast_baseline_summary_v1",
+  "elections": 5,
+  "weighting": "contest_votes within election; equal weight across elections",
+  "uniform_national_swing_is_oracle_aided": true,
+  "macro_mae_pp": {
+    "model": 3.367898678474699,
+    "persistence": 13.011470607394397,
+    "uniform_national_swing": 8.86104408733107,
+    "national_uniform": 10.17726985249979
+  },
+  "skill_tests": {
+    "vs_persistence": {
+      "n": 5,
+      "mean": 0.6264349232417576,
+      "sd": 0.382199279373542,
+      "t_statistic": 3.664975701012274,
+      "p_value_two_sided": 0.021485937939530995,
+      "ci95_low": 0.15187183790420805,
+      "ci95_high": 1.1009980085793072
+    },
+    "vs_uniform_national_swing": {
+      "n": 5,
+      "mean": 0.531319965502466,
+      "sd": 0.2964413684459271,
+      "t_statistic": 4.007765740978451,
+      "p_value_two_sided": 0.016026304900305755,
+      "ci95_low": 0.16323939072490096,
+      "ci95_high": 0.8994005402800309
+    }
+  }
+}

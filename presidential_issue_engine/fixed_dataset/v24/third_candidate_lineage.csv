@@ -1,0 +1,9 @@
+election_id,slot,candidate_name,party_name,has_party,major_split_lineage,defection_seats,assembly_size,defection_seats_source,available_date,source_note
+pres_1992,C,정주영,통일국민당,True,False,,299,needs_source,1992-12-17,roster coverage starts at the 16th Assembly so the 14th-Assembly carry-in cannot be derived here
+pres_1997,C,이인제,국민신당,True,True,,299,needs_source,1997-12-17,roster coverage starts at the 16th Assembly so the 15th-Assembly carry-in cannot be derived here
+pres_2002,C,권영길,민주노동당,True,False,0,273,roster_cross_term,2002-12-18,16th-Assembly 민주노동당 seats: 0; no major-party incumbent carried in
+pres_2007,C,이회창,무소속,False,True,,299,no_party,2007-12-18,ran without a party; party-level carry-in is undefined and the binary flag records the 한나라당 leadership lineage
+pres_2012,C,강지원,무소속,False,False,,299,no_party,2012-12-18,unaffiliated individual candidacy with no party organisation
+pres_2017,C,안철수,국민의당,True,True,11,300,roster_cross_term,2017-05-08,20th-Assembly 국민의당 winners who held a major-party seat in the 19th Assembly: 11 of 38
+pres_2022,C,심상정,정의당,True,False,0,300,roster_cross_term,2022-03-08,21st-Assembly 정의당 winners who held a major-party seat in the 20th Assembly: 0 of 6
+pres_2025,C,이준석,개혁신당,True,False,4,300,member_history_midterm,2025-06-02,21st-Assembly incumbents holding 개혁신당 affiliation mid-term: 4 (pre-election defection from 국민의힘)

@@ -1,0 +1,6 @@
+[through-2022 weight-selection audit: PASS]
+scored_elections=pres_2002,pres_2007,pres_2012,pres_2017,pres_2022
+rolling_warmup=pres_1997
+active_csv_rows_checked=454006
+forecast_only_rows_checked=64369
+report_rows_checked=2410

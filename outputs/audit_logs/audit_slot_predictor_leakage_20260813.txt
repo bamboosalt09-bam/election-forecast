@@ -1,0 +1,33 @@
+                      predictor_set                                                                                                                                    predictors  predictor_count  nested_regional_weighted_macro_mae_pp  nested_national_equal_election_macro_mae_pp  pres_2012_regional_weighted_mae_pp  pres_2012_national_mae_pp
+              active_all_predictors slot_A|slot_B|issue_advantage|rif|partisan_prior|slotA_prior|slotB_prior|landscape_bloc_alignment|landscape_centrist|landscape_inferred_prior               10                               4.672144                                     3.517153                            6.441174                   6.433915
+        without_direct_slot_dummies               issue_advantage|rif|partisan_prior|slotA_prior|slotB_prior|landscape_bloc_alignment|landscape_centrist|landscape_inferred_prior                8                               6.369388                                     5.515553                            2.020654                   1.106826
+without_all_slot_derived_predictors                                       issue_advantage|rif|partisan_prior|landscape_bloc_alignment|landscape_centrist|landscape_inferred_prior                6                               6.573215                                     5.952917                            2.304735                   1.736745
+
+election_id slot  actual_pct
+  pres_2002    A   51.217049
+  pres_2007    A   54.140335
+  pres_2012    A   51.773282
+  pres_2017    A   47.475871
+  pres_2022    A   50.379627
+
+{
+  "scope": {
+    "scored_elections": [
+      "pres_2002",
+      "pres_2007",
+      "pres_2012",
+      "pres_2017",
+      "pres_2022"
+    ],
+    "post_2022_outcomes_used": false,
+    "purpose": "post-hoc leakage audit; not an untouched model selection run"
+  },
+  "slot_a_winner_rate": 1.0,
+  "slot_a_winner_count": 5,
+  "scored_election_count": 5,
+  "legacy_frozen_reproduction_max_abs": 0.012971225269975406,
+  "legacy_frozen_reproduction_required": false,
+  "active_model_old_slot_predictors_used": false,
+  "active_model_target_excluded_from_fit": true,
+  "conclusion": "A is the realized winner in every scored election, so direct A/B slot predictors are outcome-aligned and are not defensible forecast inputs."
+}

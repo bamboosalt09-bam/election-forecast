@@ -1,0 +1,6 @@
+﻿variant,target_election,tuning_elections,preference_gain,terrain_anchor_gain,regional_accent_gain,regional_accent_signal_width,target_excluded_from_tuning
+slot_free_hierarchy_no_neutral,pres_2002,,0.0,0.0,0.0,0.1,True
+slot_free_hierarchy_no_neutral,pres_2007,pres_2002,0.0,0.0,0.0,0.1,True
+slot_free_hierarchy_no_neutral,pres_2012,pres_2002|pres_2007,0.04,0.0,0.0,0.1,True
+slot_free_hierarchy_no_neutral,pres_2017,pres_2002|pres_2007|pres_2012,0.04,0.0,0.0,0.1,True
+slot_free_hierarchy_no_neutral,pres_2022,pres_2002|pres_2007|pres_2012|pres_2017,0.04,0.0,0.0,0.1,True

@@ -1,0 +1,6 @@
+[active V23 audit: PASS]
+active_manifest_files=50
+automatic_rows_checked=43
+attention_rows_checked=1
+active_prediction_rows=199
+outcome_invariance_rows_checked=215

@@ -83,6 +83,52 @@ The forecast-only loader is
 It verifies output hashes, rejects outcome fields, and reapplies the central
 point-in-time filter before returning salience and candidate-link frames.
 
+## Candidate conversion history fill
+
+The 16th-22nd Assembly workbook archive ends on 2024-12-31. Its historical
+speaker-issue extraction was rerun and reproduced all 195,758 rows for the five
+scored elections after normalizing the outer ZIP wrapper path. The 2025 segment
+therefore comes from the official minutes supplement rather than from the
+workbook archive.
+
+To keep the candidate conversion layer methodologically aligned with the
+historical campaign extracts, the supplement is restricted further to the
+2025 D-90 meeting window and the conservative D-1 availability rule. This
+produces 2,446 speaker-issue rows from 2025-03-05 through 2025-05-08. The
+text-free match slice and its selection manifest are tracked at:
+
+- `data/raw/official_sources/assembly_pres_2025_context/pres_2025_speaker_issue_matches.csv`
+- `data/raw/official_sources/assembly_pres_2025_context/speaker_issue_match_manifest.json`
+
+The four candidate-context tables preserve the frozen through-2022 files as an
+exact byte prefix and append three `pres_2025` rows. They live under
+`data/raw/official_sources/assembly_pres_2025_context/candidate_context_v2/`
+instead of replacing `data/raw/`, because the latter is part of the active V23
+historical audit boundary. The prospective runner patches these four files
+only while assembling the forecast target. Its candidate-strength method is
+therefore `direct_speech_derived_candidate_context`; the 12-row ridge adapter
+remains a fallback for missing direct context.
+
+### Intermediate-chain correction (2026-08-18)
+
+A later end-to-end audit found that the first direct-context run still omitted
+three generated target inputs from the final runtime and discarded explicit
+directional evidence during representation conversion. It also used incomplete
+22nd-Assembly party metadata. The corrected path now:
+
+- aligns the 2025 speaker slice to the official 22nd-Assembly term roster;
+- converts existing signed target evidence into the issue-character overlay;
+- derives and connects the 2025 political landscape and third-candidate profile;
+- connects the target automatic candidate issue profile, mega axis, and mega
+  attribution to both instances of the unchanged V23 engine;
+- lists only active runtime inputs in `input_manifest.csv`.
+
+The archive extraction itself was rechecked. All six 22nd-Assembly workbook
+classes end before the 2025 campaign window, so the official supplement's
+2,446 eligible rows are the complete campaign-window source rather than an
+accidentally truncated archive result. Details and stage-by-stage unscored
+outputs are in `docs/PRES_2025_INTERMEDIATE_CHAIN_CORRECTION_20260818.md`.
+
 ## Reproduction
 
 ```powershell
@@ -91,6 +137,34 @@ python scripts\collect_pres_2025_official_minutes.py
 python scripts\build_pres_2025_assembly_context.py `
   --source "<EXTERNAL_CORPUS>\assembly_stance_rows_15_22.csv" `
   --supplement-source "data\raw\official_sources\assembly_pres_2025_minutes\assembly_stance_rows_2025_h1.csv"
+
+python scripts\extract_assembly_speaker_issue_matches.py `
+  --source "<EXTERNAL_CORPUS>\trash_dataset.zip" `
+  --matches-15 "<EXTERNAL_CORPUS>\15th_assembly_issue_phrase_matches.csv" `
+  --out "outputs\pres_2025_speech_reextract\assembly_speaker_issue_matches_16_22.csv" `
+  --pres-2025-supplement "data\raw\official_sources\assembly_pres_2025_minutes\assembly_stance_rows_2025_h1.csv" `
+  --pres-2025-out "outputs\pres_2025_speech_reextract\assembly_speaker_issue_matches_pres_2025.csv" `
+  --combined-out "outputs\pres_2025_speech_reextract\assembly_speaker_issue_matches_15_22.csv" `
+  --member-history-source "<EXTERNAL_CORPUS>\historical_assembly_members.csv" `
+  --member-history-out "outputs\pres_2025_speech_reextract\assembly_member_history.csv"
+
+python -m presidential_issue_engine.build_assembly_speaker_influence `
+  --matches "outputs\pres_2025_speech_reextract\assembly_speaker_issue_matches_15_22.csv" `
+  --member-history "outputs\pres_2025_speech_reextract\assembly_member_history.csv" `
+  --speaker-out "outputs\pres_2025_speech_reextract\assembly_speaker_influence.csv" `
+  --issue-out "outputs\pres_2025_speech_reextract\assembly_issue_speaker_weighted.csv" `
+  --scope-out "outputs\pres_2025_speech_reextract\issue_scope_weights_speaker.csv" `
+  --conversion-out "outputs\pres_2025_speech_reextract\issue_vote_conversion_speaker.csv" `
+  --diagnostics-out "outputs\pres_2025_speech_reextract\assembly_speaker_influence_diagnostics.csv"
+
+python scripts\build_speech_derived_candidate_context_v2.py `
+  --output-dir "outputs\pres_2025_speech_derived_candidate_context" `
+  --assembly-matches "outputs\pres_2025_speech_reextract\assembly_speaker_issue_matches_15_22.csv" `
+  --candidates "data\raw\official_sources\pres_2025_candidate_registry.csv" `
+  --speaker-profile "outputs\pres_2025_speech_reextract\assembly_speaker_influence.csv" `
+  --preserve-history-dir "data\raw"
+
+python scripts\run_prospective_forecast.py --version v23
 
 python scripts\audit_pres_2025_demo_boundary.py
 python scripts\audit_active_presidential_model_v23.py

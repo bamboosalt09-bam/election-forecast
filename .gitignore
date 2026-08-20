@@ -48,6 +48,8 @@ data/issue_salience_all.csv
 outputs/*
 !outputs/active_presidential_nested_v23/
 !outputs/active_presidential_nested_v23/**
+!outputs/active_presidential_nested_v24/
+!outputs/active_presidential_nested_v24/**
 !outputs/automatic_controls_v22/
 !outputs/automatic_controls_v22/**
 !outputs/automatic_controls_v23/
@@ -60,6 +62,18 @@ outputs/*
 !outputs/preliminary_slot_assignment_v23/**
 !outputs/unified_exact_lineage_v21/
 !outputs/unified_exact_lineage_v21/**
+!outputs/forecast_baselines/
+!outputs/forecast_baselines/**
+!outputs/audit_logs/
+!outputs/audit_logs/**
+!outputs/v24_defect_ablation/
+!outputs/v24_defect_ablation/**
+!outputs/v24_structural_residual_hypotheses/
+!outputs/v24_structural_residual_hypotheses/**
+!outputs/v24_floor_recalibration_hypotheses/
+!outputs/v24_floor_recalibration_hypotheses/**
+!outputs/prospective_pres_2025_*/
+!outputs/prospective_pres_2025_*/**
 
 # Keep only the gated experiment run used by the active V23 reproduction audit.
 !outputs/automatic_controls_v23_ablation_v3/

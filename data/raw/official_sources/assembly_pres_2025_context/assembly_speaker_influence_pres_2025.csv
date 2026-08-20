@@ -1,0 +1,148 @@
+﻿assembly_daesu,election_id,speaker_clean,roster_name,member_id,speaker_party,speaker_bloc,mandate_type,district,district_sido,district_bloc_type,term_count,seniority_weight,institutional_role,role_weight,meeting_weight,national_signal_weight,local_signal_weight,cross_region_signal_weight,base_mobilization_weight,mapping_confidence,notes
+22,pres_2025,강선우,강선우,6854,더불어민주당,더불어민주당,district,서울 강서구갑,sido_11,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,강인선,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,강종석,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,강희업,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,곽현준,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,권영관,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,권영진,권영진,6743,국민의힘,국민의힘,district,대구 달서구병,sido_27,home_turf,2,1.05,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,권재한,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,권칠승,권칠승,6585,더불어민주당,더불어민주당,district,경기 화성시병,sido_41,swing,3,1.1,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김건,김건,6822,국민의미래,국민의미래,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김규철,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김기웅,김기웅,6840,국민의힘,국민의힘,district,대구 중구남구,sido_27,home_turf,1,1.0,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김남근,김남근,6757,더불어민주당,더불어민주당,district,서울 성북구을,sido_11,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김남희,김남희,6807,더불어민주당,더불어민주당,district,경기 광명시을,sido_41,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김도읍,김도읍,6588,국민의힘,국민의힘,district,부산 강서구,sido_26,home_turf,4,1.15,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김미애,김미애,6589,국민의힘,국민의힘,district,부산 해운대구을,sido_26,home_turf,2,1.05,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김사우,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김상욱,김상욱,6843,국민의힘,국민의힘,district,울산 남구갑,sido_31,home_turf,1,1.0,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김석기,김석기,6594,국민의힘,국민의힘,district,경북 경주시,sido_47,home_turf,3,1.1,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김선민,김선민,6783,조국혁신당,조국혁신당,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김수경,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김영배,김영배,6600,더불어민주당,더불어민주당,district,서울 성북구갑,sido_11,swing,3,1.1,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김영호,김영호,0,더불어민주당,더불어민주당,district,서울 서대문구을,sido_11,swing,3,1.1,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김용균,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김용민,김용민,6603,더불어민주당,더불어민주당,district,경기 남양주시병,sido_41,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김용진,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김우영,김우영,6787,더불어민주당,더불어민주당,district,서울 은평구을,sido_11,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김우정,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김윤,김윤,6818,더불어민주연합,더불어민주연합,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김은혜,황규선,6761,한나라당,국민의힘,district,경기 이천,sido_41,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김은희,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김정재,김정재,6606,국민의힘,국민의힘,district,경북 포항시북구,sido_47,home_turf,3,1.1,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김주이,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김준형,김준형,6754,조국혁신당,조국혁신당,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김지준,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김태호,김태호,6657,국민의힘,국민의힘,district,경남 양산시을,sido_48,home_turf,6,1.2,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김한규,김한규,6659,더불어민주당,더불어민주당,district,제주 제주시을,sido_49,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김현,김현,6737,더불어민주당,더불어민주당,district,경기 안산시을,sido_41,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,김홍균,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,김희정,김희정,6729,국민의힘,국민의힘,district,부산 연제구,sido_26,home_turf,3,1.1,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,남인순,남인순,6663,더불어민주당,더불어민주당,district,서울 송파구병,sido_11,swing,4,1.15,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,문금주,문금주,6565,더불어민주당,더불어민주당,district,전남 고흥군보성군장흥군강진군,sido_46,home_turf,1,1.0,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,문대림,문대림,6749,더불어민주당,더불어민주당,district,제주 제주시갑,sido_49,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,문성모,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,문인석,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,문진석,홍사덕,6666,무소속,무소속,district,서울 강남을,sido_11,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,민병덕,민병덕,6668,더불어민주당,더불어민주당,district,경기 안양시동안구갑,sido_41,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,민홍철,홍사덕,6669,무소속,무소속,district,서울 강남을,sido_11,swing,4,1.15,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,박민규,박민규,6804,더불어민주당,더불어민주당,district,서울 관악구갑,sido_11,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,박범계,박범계,6676,더불어민주당,더불어민주당,district,대전 서구을,sido_30,swing,4,1.15,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,박범수,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,박용갑,박용갑,6857,더불어민주당,더불어민주당,district,대전 중구,sido_30,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,박용선,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,박은정,박은정,6779,조국혁신당,조국혁신당,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,박재유,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,박정수,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,박정훈,박정훈,6765,국민의힘,국민의힘,district,서울 송파구갑,sido_11,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,박주민,박주민,6691,더불어민주당,더불어민주당,district,서울 은평구갑,sido_11,swing,3,1.1,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,박준수,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,박준태,함종한,6568,신한국당,국민의힘,district,원주시갑,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,박희승,황승민,6796,한나라당,국민의힘,proportional,전국구,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,백선희,백선희,6864,조국혁신당,조국혁신당,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,백원국,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,변철환,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,복기왕,복기왕,6728,더불어민주당,더불어민주당,district,충남 아산시갑,sido_44,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,서미화,서미화,6772,더불어민주연합,더불어민주연합,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,서범수,서범수,6708,국민의힘,국민의힘,district,울산 울주군,sido_31,home_turf,2,1.05,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,서영교,서영교,6711,더불어민주당,더불어민주당,district,서울 중랑구갑,sido_11,swing,4,1.15,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,서천호,서천호,6745,국민의힘,국민의힘,district,경남 사천시남해군하동군,sido_48,home_turf,1,1.0,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,손명수,손명수,6831,더불어민주당,더불어민주당,district,경기 용인시을,sido_41,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,송기헌,송기헌,6720,더불어민주당,더불어민주당,district,강원 원주시을,sido_42,swing,3,1.1,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,송명달,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,송석준,송석준,6721,국민의힘,국민의힘,district,경기 이천시,sido_41,swing,3,1.1,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,신영숙,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,안태준,안태준,6842,더불어민주당,더불어민주당,district,경기 광주시을,sido_41,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,엄태영,엄태영,6701,국민의힘,국민의힘,district,충북 제천시단양군,sido_43,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,염태영,염태영,6834,더불어민주당,더불어민주당,district,경기 수원시무,sido_41,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,오영렬,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,위성락,위성락,6776,더불어민주연합,더불어민주연합,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,유경만,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,유병석,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,유용원,유용원,6571,국민의미래,국민의미래,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,윤재옥,윤재옥,6679,국민의힘,국민의힘,district,대구 달서구을,sido_27,home_turf,4,1.15,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,윤종군,윤종군,6845,더불어민주당,더불어민주당,district,경기 안성시,sido_41,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,윤종오,윤종오,6744,진보당,진보당,district,울산 북구,sido_31,hostile,2,1.05,unknown,0.8,1.0,0.42857142857142855,0.5714285714285714,0.35,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,윤준병,윤준병,6677,더불어민주당,더불어민주당,district,전북 정읍시고창군,sido_45,home_turf,2,1.05,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,윤후덕,윤후덕,6672,더불어민주당,더불어민주당,district,경기 파주시갑,sido_41,swing,4,1.15,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이개호,이개호,6670,더불어민주당,더불어민주당,district,전남 담양군함평군영광군장성군,sido_46,home_turf,4,1.15,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이기일,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이달희,이달희,6767,국민의미래,국민의미래,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이병진,이병진,6826,더불어민주당,더불어민주당,district,경기 평택시을,sido_41,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이복우,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이상덕,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이상주,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이성권,이성권,6727,국민의힘,국민의힘,district,부산 사하구갑,sido_26,home_turf,2,1.05,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이소영,이소영,6684,더불어민주당,더불어민주당,district,경기 의왕시과천시,sido_41,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이수진,이수진,6664,더불어민주당,더불어민주당,district,경기 성남시중원구,sido_41,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이스란,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이승묵,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이승열,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이연희,황성균,6789,한나라당,국민의힘,district,사천시,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이옥순,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이용선,이용선,6660,더불어민주당,더불어민주당,district,서울 양천구을,sido_11,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이재강,이재강,6775,더불어민주당,더불어민주당,district,경기 의정부시을,sido_41,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이재정,이재정,6653,더불어민주당,더불어민주당,district,경기 안양시동안구을,sido_41,swing,4,1.15,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이정헌,이정헌,6774,더불어민주당,더불어민주당,district,서울 광진구갑,sido_11,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이주영,함석재,6560,자민련,제3지대,district,충남 천안시,sido_44,swing,6,1.2,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이주한,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이지민,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이창윤,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,이춘석,이춘석,6742,더불어민주당,더불어민주당,district,전북 익산시갑,sido_45,home_turf,4,1.15,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,이해숙,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,인요한,인요한,6773,국민의미래,국민의미래,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,임명현,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,임상섭,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,임요업,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,임재금,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,임종수,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,장경태,장경태,6643,더불어민주당,더불어민주당,district,서울 동대문구을,sido_11,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,장상만,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,장철민,장철민,6641,더불어민주당,더불어민주당,district,대전 동구,sido_30,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,전진숙,전진숙,6752,더불어민주당,더불어민주당,district,광주 북구을,sido_29,home_turf,1,1.0,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,정경훈,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,정점식,정점식,6635,국민의힘,국민의힘,district,경남 통영시고성군,sido_48,home_turf,3,1.1,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,정준호,정준호,6839,더불어민주당,더불어민주당,district,광주 북구갑,sido_29,home_turf,1,1.0,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,정청래,정청래,6634,더불어민주당,더불어민주당,district,서울 마포구을,sido_11,swing,4,1.15,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,정환철,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,조규홍,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,조배숙,조배숙,6731,국민의미래,국민의미래,proportional,비례대표,,national_list,5,1.2,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,조인철,조인철,6829,더불어민주당,더불어민주당,district,광주 서구갑,sido_29,home_turf,1,1.0,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,조정식,조정식,6628,더불어민주당,더불어민주당,district,경기 시흥시을,sido_41,swing,6,1.2,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,조태열,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,주종완,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,진현환,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,차지호,차지호,6851,더불어민주당,더불어민주당,district,경기 오산시,sido_41,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,최선영,,0,,,district,,,unknown,2,1.05,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,최성지,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,최용호,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,최창익,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,최형두,최형두,6620,국민의힘,국민의힘,district,경남 창원시마산합포구,sido_48,home_turf,2,1.05,unknown,0.8,1.0,0.38095238095238093,0.6190476190476191,0.0,0.3,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,하무진,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,한정애,한정애,6616,더불어민주당,더불어민주당,district,서울 강서구병,sido_11,swing,4,1.15,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,한준호,현경대,6615,신한국당,국민의힘,district,제주,sido_49,swing,2,1.05,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,한지아,한지아,6766,국민의미래,국민의미래,proportional,비례대표,,national_list,1,1.0,unknown,0.8,1.0,0.85,0.15,0.0,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,허나윤,,0,,,district,,,unknown,1,1.0,unknown,0.8,1.0,0.4,0.6,0.0,0.0,0.45,role inferred from transcript speaker label
+22,pres_2025,홍기원,허화평,6610,무소속,무소속,district,경북 포항 북구,sido_47,hostile,2,1.05,unknown,0.8,1.0,0.42857142857142855,0.5714285714285714,0.35,0.0,0.9,speaker matched to Assembly roster/member history
+22,pres_2025,황정아,황정아,6821,더불어민주당,더불어민주당,district,대전 유성구을,sido_30,swing,1,1.0,unknown,0.8,1.0,0.4,0.6,0.2,0.0,0.9,speaker matched to Assembly roster/member history

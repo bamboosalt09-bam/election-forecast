@@ -1,0 +1,6 @@
+﻿target_election,selection_training_elections,responsive_training_elections,responsive_training_count,default_gain,raw_selected_gain,selection_reliability,selected_gain,target_excluded_from_selection,prior_macro_mae_gain_0.40,prior_macro_mae_gain_0.50,prior_macro_mae_gain_0.60,prior_macro_mae_gain_0.70
+pres_2002,,,0,0.5,0.5,0.0,0.5,True,,,,
+pres_2007,pres_2002,,0,0.5,0.5,0.0,0.5,True,,,,
+pres_2012,pres_2002|pres_2007,pres_2007,1,0.5,0.7,0.5,0.6,True,4.615192433421818,4.407426986825596,4.2213388376315475,4.065342204794323
+pres_2017,pres_2002|pres_2007|pres_2012,pres_2007|pres_2012,2,0.5,0.7,0.6666666666666666,0.6333333333333333,True,3.950123627569362,3.8194342365550162,3.7031981955621354,3.607024768739269
+pres_2022,pres_2002|pres_2007|pres_2012|pres_2017,pres_2007|pres_2012|pres_2017,3,0.5,0.7,0.75,0.6499999999999999,True,4.0840899420094585,3.935546286411034,3.80643675972447,3.698414655440623

@@ -8,16 +8,35 @@ another modeling step.
 from __future__ import annotations
 
 from pathlib import Path
+import sys
 
-import matplotlib
+try:
+    import matplotlib
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+    matplotlib.use("Agg")
+    import matplotlib.font_manager as font_manager
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+except ModuleNotFoundError as exc:
+    matplotlib = None
+    font_manager = None
+    plt = None
+    FancyArrowPatch = None
+    FancyBboxPatch = None
+    MATPLOTLIB_IMPORT_ERROR = exc
+else:
+    MATPLOTLIB_IMPORT_ERROR = None
+
+import pandas as pd
 
 
 OUT = Path(__file__).resolve().parent / "poster_figures"
 OUT.mkdir(parents=True, exist_ok=True)
+ROOT = Path(__file__).resolve().parents[1]
+NESTED_PREDICTIONS = ROOT / "outputs" / "active_presidential_nested_v23" / "nested_predictions.csv"
+REGIONS = Path(__file__).resolve().parent / "fixed_dataset" / "regions_master.csv"
+BASELINE_BY_ELECTION = ROOT / "outputs" / "forecast_baselines" / "baseline_by_election.csv"
+PROSPECTIVE_DIR = ROOT / "outputs" / "prospective_pres_2025_{version}"
 
 NAVY = "#1f3b6f"
 BLUE = "#2e86de"
@@ -72,8 +91,31 @@ VARIABLE_IMPORTANCE = [
 ]
 
 
+def _require_viz() -> None:
+    if MATPLOTLIB_IMPORT_ERROR is not None:
+        raise SystemExit(
+            'Visualization dependencies are missing. Install them with: pip install -e ".[viz]"'
+        ) from MATPLOTLIB_IMPORT_ERROR
+
+
 def setup_style() -> None:
-    plt.rcParams["font.family"] = ["Malgun Gothic", "DejaVu Sans"]
+    preferred_fonts = [
+        "Malgun Gothic",
+        "AppleGothic",
+        "NanumGothic",
+        "Noto Sans CJK KR",
+    ]
+    installed = {font.name for font in font_manager.fontManager.ttflist}
+    selected = next((font for font in preferred_fonts if font in installed), None)
+    if selected is None:
+        print(
+            "WARNING: No supported Korean font was found; Korean labels may render incorrectly. "
+            "Install Malgun Gothic, AppleGothic, NanumGothic, or Noto Sans CJK KR.",
+            file=sys.stderr,
+        )
+        plt.rcParams["font.family"] = ["DejaVu Sans"]
+    else:
+        plt.rcParams["font.family"] = [selected, "DejaVu Sans"]
     plt.rcParams["axes.unicode_minus"] = False
     plt.rcParams["figure.facecolor"] = "white"
     plt.rcParams["axes.facecolor"] = "white"
@@ -258,7 +300,158 @@ def rolling_by_election() -> plt.Figure:
     return fig
 
 
+def regional_pred_vs_actual(election_id: str) -> plt.Figure:
+    predictions = pd.read_csv(NESTED_PREDICTIONS, encoding="utf-8-sig")
+    regions = pd.read_csv(REGIONS, encoding="utf-8-sig")[["region_id", "region_name"]]
+    election = predictions.loc[predictions["election_id"].eq(election_id)].merge(
+        regions,
+        on="region_id",
+        how="left",
+        validate="many_to_one",
+    )
+    if election.empty:
+        raise ValueError(f"no V23 predictions found for {election_id}")
+    if election["region_name"].isna().any():
+        missing = sorted(election.loc[election["region_name"].isna(), "region_id"].unique())
+        raise ValueError(f"unknown region ids in {election_id}: {missing}")
+
+    slots = sorted(election["slot"].unique())
+    fig, axes = plt.subplots(
+        1,
+        len(slots),
+        figsize=(6.2 * len(slots), 8.2),
+        sharex=True,
+        squeeze=False,
+    )
+    name_column = "candidate_name_x" if "candidate_name_x" in election.columns else "candidate_name"
+    for axis, slot in zip(axes[0], slots):
+        rows = election.loc[election["slot"].eq(slot)].sort_values("actual", ascending=True)
+        positions = range(len(rows))
+        axis.barh(
+            [position - 0.18 for position in positions],
+            rows["layer_pred"] * 100.0,
+            height=0.34,
+            color=BLUE,
+            label="예측",
+        )
+        axis.barh(
+            [position + 0.18 for position in positions],
+            rows["actual"] * 100.0,
+            height=0.34,
+            color=GRAY,
+            label="실제",
+        )
+        axis.set_yticks(list(positions), rows["region_name"])
+        axis.set_xlim(0, 100)
+        axis.grid(axis="x", alpha=0.25)
+        candidate = str(rows[name_column].iloc[0])
+        axis.set_title(f"{slot} · {candidate}", fontsize=13, fontweight="bold", color=NAVY)
+        axis.set_xlabel("득표율 (%)")
+    axes[0][0].legend(loc="lower right")
+    fig.suptitle(
+        f"{election_id.removeprefix('pres_')} 대선 지역별 예측과 실제",
+        fontsize=18,
+        fontweight="bold",
+        color=NAVY,
+        y=1.01,
+    )
+    fig.tight_layout()
+    return fig
+
+
+def baseline_comparison() -> plt.Figure:
+    baseline = pd.read_csv(BASELINE_BY_ELECTION, encoding="utf-8-sig")
+    metrics = [
+        ("V23 모델", "model_mae_pp"),
+        ("직전 대선 유지", "persistence_mae_pp"),
+        ("전국 균일 스윙", "uniform_national_swing_mae_pp"),
+        ("전국 득표율 균일", "national_uniform_mae_pp"),
+    ]
+    labels = [label for label, _ in metrics]
+    values = [float(baseline[column].mean()) for _, column in metrics]
+    skill_persistence = 1.0 - values[0] / values[1]
+    skill_swing = 1.0 - values[0] / values[2]
+    annotations = [
+        "활성 모델",
+        f"모델 skill {skill_persistence:+.1%}",
+        f"모델 skill {skill_swing:+.1%}",
+        "실제 전국값 사용",
+    ]
+
+    fig, ax = plt.subplots(figsize=(11.2, 5.8))
+    bars = ax.bar(labels, values, color=[RED, GRAY, BLUE, GREEN])
+    ax.set_ylabel("선거 동일가중 지역 MAE (%p)")
+    ax.set_title("V23과 기준선 비교", fontsize=18, fontweight="bold", color=NAVY, pad=14)
+    ax.grid(axis="y", alpha=0.25)
+    ax.tick_params(axis="x", labelrotation=8)
+    for bar, value, annotation in zip(bars, values, annotations):
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            value + 0.25,
+            f"{value:.2f}%p\n{annotation}",
+            ha="center",
+            va="bottom",
+            fontsize=10,
+        )
+    ax.set_ylim(0, max(values) * 1.22)
+    fig.tight_layout()
+    return fig
+
+
+def prospective_forecast(version: str = "v23") -> plt.Figure:
+    path = Path(str(PROSPECTIVE_DIR).format(version=version)) / "prospective_predictions.csv"
+    predictions = pd.read_csv(path, encoding="utf-8-sig")
+    regions = pd.read_csv(REGIONS, encoding="utf-8-sig")[["region_id", "region_name"]]
+    frame = predictions.merge(
+        regions,
+        on="region_id",
+        how="left",
+        validate="many_to_one",
+    )
+    if frame.empty or frame["region_name"].isna().any():
+        raise ValueError(f"invalid prospective prediction input: {path}")
+
+    slots = sorted(frame["slot"].astype(str).unique())
+    fig, axes = plt.subplots(
+        1,
+        len(slots),
+        figsize=(6.2 * len(slots), 8.2),
+        sharex=True,
+        squeeze=False,
+    )
+    colors = [BLUE, RED, GREEN]
+    for axis, slot, color in zip(axes[0], slots, colors):
+        rows = frame.loc[frame["slot"].astype(str).eq(slot)].sort_values(
+            "predicted_share", ascending=True
+        )
+        axis.barh(
+            rows["region_name"],
+            rows["predicted_share"] * 100.0,
+            color=color,
+        )
+        axis.set_xlim(0, 100)
+        axis.grid(axis="x", alpha=0.25)
+        candidate = str(rows["candidate_name"].iloc[0])
+        axis.set_title(
+            f"{slot} · {candidate}",
+            fontsize=13,
+            fontweight="bold",
+            color=NAVY,
+        )
+        axis.set_xlabel("예측 득표율 (%)")
+    fig.suptitle(
+        f"2025 대선 전향 예측 ({version})\n예측 시점 2025-06-02 (D-1), 실제 결과 미사용",
+        fontsize=18,
+        fontweight="bold",
+        color=NAVY,
+        y=1.02,
+    )
+    fig.tight_layout()
+    return fig
+
+
 def main() -> None:
+    _require_viz()
     setup_style()
     figures = {
         "01_model_mae_ladder": mae_ladder(),
@@ -267,6 +460,12 @@ def main() -> None:
         "04_variable_importance": variable_importance(),
         "05_research_flow": research_flow(),
         "06_rolling_by_election": rolling_by_election(),
+        **{
+            f"07_regional_pred_vs_actual_{election_id}": regional_pred_vs_actual(election_id)
+            for election_id in ("pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022")
+        },
+        "12_baseline_comparison": baseline_comparison(),
+        "13_prospective_forecast_v23": prospective_forecast("v23"),
     }
     for name, fig in figures.items():
         save(fig, name)

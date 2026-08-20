@@ -159,9 +159,13 @@ regional turnout history still has zero rows, so no turnout effect is claimed.
 
 Two evaluations are reported separately:
 
-1. Capped strict nested learner: gains are selected only from earlier scored folds on a
-   declared `0.00..0.04` grid. It uses zero for 2002/2007 and `0.04` for 2012 onward.
-   Weighted macro MAE is `4.613162%p`.
+1. Capped strict nested learner: raw fold selection uses only earlier scored elections on a
+   declared `0.00..0.04` grid. The raw selection is zero for 2002/2007 and `0.04` for 2012
+   onward. The active execution then applies its declared universal floor of `0.04`, so the
+   effective gain is `0.04` in every fold. `strict_preference_gain_by_fold.csv` records the
+   raw selection and `preference_gain_by_fold.csv` records the effective active value.
+   Weighted macro MAE is `4.613162%p` for the historical nested learner described here;
+   current active-model metrics are reported separately.
 2. Fixed structural experiment: the same weak `0.04` gain is applied to every frozen outer
    prediction after the fact. Weighted macro MAE is `4.593551%p`, a `0.034217%p` improvement
    over baseline, but this is not a strict nested selection estimate.

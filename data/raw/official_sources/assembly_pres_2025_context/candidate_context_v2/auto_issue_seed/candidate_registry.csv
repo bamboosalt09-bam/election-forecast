@@ -1,0 +1,4 @@
+﻿election_id,slot,candidate_name,party_name,is_active_slot
+pres_2025,A,이재명,더불어민주당,True
+pres_2025,B,김문수,국민의힘,True
+pres_2025,C,이준석,개혁신당,True

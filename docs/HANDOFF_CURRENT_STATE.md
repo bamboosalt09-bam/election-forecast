@@ -1,17 +1,65 @@
 # Current State Handoff
 
-> Authoritative current state: `docs/FINAL_MODEL_V23_20260802.md`. Sections
-> below the current V23 summary preserve historical experiment decisions and
-> must not be read as active-version pointers.
+> Authoritative current state: `docs/FINAL_MODEL_V24_20260820.md`. The active
+> pointer is `data/config/current_presidential_model.json`; V23 is the immutable
+> rollback model. Dated sections below preserve the state and terminology that
+> applied when each experiment was recorded and must not be read as current
+> active-version pointers.
 
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_strict_nested_v23_unified_withdrawal_generation`
-- rolling warmup: 1997
+- active policy: `active_v24_structural_residual_pre_2025`
+- rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
+
+## Active V24 promotion (2026-08-20)
+
+V24 is the frozen current model. It retains the V23 numerical base configuration
+and adds its ballot-faithful three-way scope, uniform 1%p scored floor,
+third-candidate lineage ceiling, strong-incumbent-veto response, and weak
+same-lane refusal layer through `scripts/run_active_presidential_model_v24.py`.
+
+- prediction rows: `232`
+- regional `contest_votes` weighted, equal-election MAE: `2.7697878398%p`
+- national candidate, equal-election MAE: `1.0756680504%p`
+- winner accuracy: `4/5`
+- canonical prediction SHA-256:
+  `edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a`
+- V23 rollback SHA-256:
+  `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`
+- full regression suite: `595 passed`
+- exact temporary-directory reproduction: PASS
+- public V24 audit and GitHub boundary audit: PASS
+- post-2022 outcomes used: false
+
+The national candidate predictive-interval artifact reports 50%, 80%, 90%,
+and 95% historical chronological intervals. Its calibration contains only four
+target elections and eleven candidate outcomes, so it is not an untouched
+holdout or a future coverage guarantee. The official V24 promotion does not
+include the unfinished 2025 prospective runner or its local output.
+
+## Corrected 2025 prospective chain (2026-08-18)
+
+An end-to-end input audit corrected three forecast-only integration defects:
+incomplete 22nd-Assembly speaker-party mapping, dropped explicit target
+direction, and omission of generated 2025 landscape/third-candidate/automatic
+issue-seed files from the final runtime. No V23 formula, coefficient, config,
+active pointer, or historical output was changed.
+
+The corrected unscored national output is Kim Moon-soo `40.0938%`, Lee
+Jae-myung `37.0492%`, and Lee Jun-seok `22.8571%`, using 2022 valid-vote volume
+for regional aggregation. The run manifest retains `outcome_columns_used: []`,
+`performance_metrics_computed: false`, and `pres_2025_outcome_present: false`.
+Do not compare these values with the realized 2025 result.
+
+The remaining high third-candidate share is now diagnosed as a V23 structural
+calibration limitation: the slot-free preliminary Ridge begins near an equal
+three-way split, and the existing absolute candidate-scale controls do not
+fully offset it. Any correction belongs in a separately measured V24 change.
+See `docs/PRES_2025_INTERMEDIATE_CHAIN_CORRECTION_20260818.md`.
 
 ## 2025 forecast-only Assembly context (2026-08-10)
 

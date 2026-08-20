@@ -24,6 +24,7 @@ from presidential_issue_engine.point_in_time import (  # noqa: E402
     cutoff_dates_as_strings,
     filter_observed_by_election,
 )
+from presidential_issue_engine.election_scope import ELECTION_DATES  # noqa: E402
 
 DEFAULT_MATCHES = ROOT / "outputs/assembly_speaker_issue_matches_15_22.csv"
 FALLBACK_15TH_MATCHES = ROOT / "outputs/15th_assembly_conversion/issue_phrase_extraction/15th_assembly_issue_phrase_matches.csv"
@@ -59,14 +60,6 @@ SIDO_ALIASES = {
 CONSERVATIVE_HOME = {"sido_26", "sido_27", "sido_31", "sido_47", "sido_48"}
 LIBERAL_HOME = {"sido_29", "sido_45", "sido_46"}
 SWING_REGIONS = {"sido_11", "sido_28", "sido_30", "sido_36", "sido_41", "sido_42", "sido_43", "sido_44", "sido_49"}
-ELECTION_DATES = {
-    "pres_2002": "2002-12-19",
-    "pres_2007": "2007-12-19",
-    "pres_2012": "2012-12-19",
-    "pres_2017": "2017-05-09",
-    "pres_2022": "2022-03-09",
-}
-
 
 def _read_csv(path: Path) -> pd.DataFrame:
     """Read a UTF-8/CP949 CSV with string-preserving defaults."""
@@ -629,6 +622,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--matches", type=Path, default=DEFAULT_MATCHES)
     parser.add_argument("--roster15", type=Path, default=DEFAULT_ROSTER15)
     parser.add_argument("--roster", type=Path, default=DEFAULT_ROSTER)
+    parser.add_argument(
+        "--roster-extra",
+        type=Path,
+        action="append",
+        default=[],
+        help="Additional term roster to append before member-history enrichment",
+    )
     parser.add_argument("--member-history", type=Path, default=DEFAULT_MEMBER_HISTORY)
     parser.add_argument("--speaker-out", type=Path, default=DEFAULT_PROFILE_OUT)
     parser.add_argument("--issue-out", type=Path, default=DEFAULT_ISSUE_OUT)
@@ -644,6 +644,12 @@ def main() -> None:
     matches = _read_csv(matches_path)
     roster15 = _read_csv(args.roster15)
     roster = _read_csv(args.roster) if args.roster.exists() else pd.DataFrame()
+    for extra_roster in args.roster_extra:
+        if not extra_roster.exists():
+            raise FileNotFoundError(f"extra roster not found: {extra_roster}")
+        roster = pd.concat(
+            [roster, _read_csv(extra_roster)], ignore_index=True, sort=False
+        )
     if args.member_history.exists():
         member_history = _read_csv(args.member_history)
         roster = pd.concat([roster, member_history], ignore_index=True, sort=False)
@@ -661,7 +667,9 @@ def main() -> None:
         (args.diagnostics_out, diagnostics),
     ]:
         path.parent.mkdir(parents=True, exist_ok=True)
-        frame.to_csv(path, index=False, encoding="utf-8-sig")
+        path.write_bytes(
+            frame.to_csv(index=False, lineterminator="\n").encode("utf-8-sig")
+        )
         try:
             display_path = path.resolve().relative_to(ROOT)
         except ValueError:

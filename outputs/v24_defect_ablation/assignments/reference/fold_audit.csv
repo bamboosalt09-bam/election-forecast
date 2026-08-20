@@ -1,0 +1,6 @@
+﻿target_election,training_elections,train_rows,test_rows,candidate_count,target_rows_used_for_fit,target_outcome_columns_passed_to_assignment,residual_sigma,region_weight_source
+pres_2002,pres_1997,48,48,3,0,False,0.12308512462162884,immediately_prior_presidential_votes_or_equal_warmup
+pres_2007,pres_1997|pres_2002,96,48,3,0,False,0.13980119107096248,immediately_prior_presidential_votes_or_equal_warmup
+pres_2012,pres_1997|pres_2002|pres_2007,144,51,3,0,False,0.13512719930555742,immediately_prior_presidential_votes_or_equal_warmup
+pres_2017,pres_1997|pres_2002|pres_2007|pres_2012,195,51,3,0,False,0.1395933183716576,immediately_prior_presidential_votes_or_equal_warmup
+pres_2022,pres_1997|pres_2002|pres_2007|pres_2012|pres_2017,246,51,3,0,False,0.13420324709108022,immediately_prior_presidential_votes_or_equal_warmup

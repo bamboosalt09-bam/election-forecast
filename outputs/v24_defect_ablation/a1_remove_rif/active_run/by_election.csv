@@ -1,0 +1,6 @@
+﻿variant,election_id,regional_weighted_mae_pp,rows,national_candidate_mae_pp
+fully_nested_postprocess,pres_2002,3.98164116001174,32,3.322039828338108
+fully_nested_postprocess,pres_2007,4.48259311003254,48,1.563431130641933
+fully_nested_postprocess,pres_2012,2.781167300122623,34,0.2513881504079246
+fully_nested_postprocess,pres_2017,4.063129059506461,51,2.6347798970670198
+fully_nested_postprocess,pres_2022,1.3659500055467266,34,0.17286679061480625

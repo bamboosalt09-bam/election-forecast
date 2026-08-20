@@ -7,14 +7,17 @@ versus cross-party tone, and third-candidate profile priors.
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 try:
+    from presidential_issue_engine.election_scope import ELECTION_DATES
     from presidential_issue_engine.point_in_time import cutoff_dates_as_strings
 except ModuleNotFoundError:  # supports direct script execution
+    from election_scope import ELECTION_DATES
     from point_in_time import cutoff_dates_as_strings
 
 
@@ -26,14 +29,6 @@ CANDIDATE_PARTY_TONE_GAP = RAW / "candidate_party_tone_gap.csv"
 CANDIDATE_PUBLIC_TREATMENT = RAW / "candidate_public_treatment.csv"
 THIRD_CANDIDATE_PROFILE = RAW / "third_candidate_profile.csv"
 OUT = RAW / "candidate_vote_conversion_context.csv"
-
-ELECTION_DATES = {
-    "pres_2002": "2002-12-19",
-    "pres_2007": "2007-12-19",
-    "pres_2012": "2012-12-19",
-    "pres_2017": "2017-05-09",
-    "pres_2022": "2022-03-09",
-}
 
 KEYS = ["election_id", "slot", "candidate_name"]
 
@@ -353,10 +348,41 @@ def build() -> pd.DataFrame:
 
 
 def main() -> None:
-    OUT.parent.mkdir(parents=True, exist_ok=True)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input-dir", type=Path, default=RAW)
+    parser.add_argument("--third-candidate-profile", type=Path, default=None)
+    parser.add_argument("--out", type=Path, default=OUT)
+    parser.add_argument("--target-election", default=None)
+    parser.add_argument("--preserve-history-from", type=Path, default=None)
+    args = parser.parse_args()
+
+    global CANDIDATE_PARTY_SPEECH_CONTEXT
+    global CANDIDATE_PARTY_TONE_GAP
+    global CANDIDATE_PUBLIC_TREATMENT
+    global THIRD_CANDIDATE_PROFILE
+    CANDIDATE_PARTY_SPEECH_CONTEXT = args.input_dir / "candidate_party_speech_context.csv"
+    CANDIDATE_PARTY_TONE_GAP = args.input_dir / "candidate_party_tone_gap.csv"
+    CANDIDATE_PUBLIC_TREATMENT = args.input_dir / "candidate_public_treatment.csv"
+    THIRD_CANDIDATE_PROFILE = (
+        args.third_candidate_profile
+        if args.third_candidate_profile is not None
+        else args.input_dir / "third_candidate_profile.csv"
+    )
+
     out = build()
-    out.to_csv(OUT, index=False, encoding="utf-8")
-    print(f"[write] {OUT} rows={len(out)}")
+    if args.target_election:
+        target = out.loc[out["election_id"].astype(str).eq(args.target_election)].copy()
+        if args.preserve_history_from is not None:
+            history = _read(args.preserve_history_from)
+            history = history.loc[
+                ~history["election_id"].astype(str).eq(args.target_election)
+            ].copy()
+            out = pd.concat([history, target], ignore_index=True)
+        else:
+            out = target
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    out.to_csv(args.out, index=False, encoding="utf-8")
+    print(f"[write] {args.out} rows={len(out)}")
     if not out.empty:
         summary = out.groupby("election_id")[["candidate_weight", "wasted_vote_resistance", "conversion_capacity"]].mean()
         print(summary.round(4).to_string())

@@ -1,0 +1,80 @@
+{
+  "schema": "presidential_model_promotion_v1",
+  "created_at_local": "2026-08-20T23:34:56.504706+09:00",
+  "status": "promoted_frozen_pre_2025_evaluation",
+  "active_version": "v24",
+  "predecessor": "v23",
+  "review_decision": "explicit_user_authorized_pointer_promotion",
+  "post_2022_outcomes_used": false,
+  "point_metrics": {
+    "variant": "v24_structural_residual",
+    "regional_equal_election_macro_mae_pp": 2.7697878398093887,
+    "national_equal_election_macro_mae_pp": 1.075668050363226,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "panel_comparison_warning": "V24 has 232 rows after restoring weak third candidates; V23 has 199 rows. Headline differences are not a clean same-panel ablation.",
+  "accepted_scope": [
+    "uniform_1pp_scored_floor",
+    "ballot_faithful_withdrawal_slots",
+    "continuous_nonmajor_organization_strength",
+    "third_candidate_lineage_ceiling",
+    "strong_incumbent_veto",
+    "weak_same_lane_refusal_with_1pp_theoretical_floor"
+  ],
+  "interval_record": {
+    "type": "predictive_interval_not_coefficient_confidence_interval",
+    "levels": [
+      0.5,
+      0.8,
+      0.9,
+      0.95
+    ],
+    "residual_scale": 1.0,
+    "scale_policy": "fixed_unscaled_not_selected_on_coverage",
+    "candidate_outcomes": 11,
+    "status": "historical_chronological_calibration"
+  },
+  "manual_selection_disclosure": {
+    "strict_nested_postprocess_selection": false,
+    "candidate_numeric_parameters_historically_development_selected": true,
+    "untouched_historical_holdout": false
+  },
+  "rollback": {
+    "version": "v23",
+    "prediction_sha256": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
+    "finalization_manifest": "outputs/active_presidential_nested_v23/finalization_manifest.json"
+  },
+  "artifacts": [
+    {
+      "path": "outputs/active_presidential_nested_v24/nested_predictions.csv",
+      "bytes": 664866,
+      "sha256": "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v24/summary.json",
+      "bytes": 8924,
+      "sha256": "baef22dac8620ac8cfffac8a079e4467b6e1064559dff93cc510e6610658dcb4",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v24/input_manifest.csv",
+      "bytes": 4991,
+      "sha256": "0c5a507b0812dd0f9bb2ce926ec1a80c938973fced3199c7bcd0f45547f34fa3",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v24/predictive_interval_manifest.json",
+      "bytes": 2588,
+      "sha256": "bb26f16a4577d89f59ba1ea0882af2ffcf7b33c85629c9d26f54b71ef82fff9c",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "docs/EXPERIMENT_V24_LINEAGE_20260819.md",
+      "bytes": 24669,
+      "sha256": "634eccf238c0a5be41e4e9432b45d9289233c7e9d244627146bc21e880fc9f51",
+      "hash_mode": "normalized_text_lf"
+    }
+  ]
+}

@@ -32,8 +32,12 @@
     "outputs/automatic_controls_v23/",
     "outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation/active_run/",
     "outputs/footprint_candidate_base_v9/",
+    "outputs/forecast_baselines/",
+    "outputs/audit_logs/",
     "outputs/preliminary_slot_assignment/",
     "outputs/preliminary_slot_assignment_v23/",
+    "outputs/prospective_pres_2025_v23/",
+    "outputs/v24_defect_ablation/",
     "outputs/unified_exact_lineage_v21/"
   ]
 }

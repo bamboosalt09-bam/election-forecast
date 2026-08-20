@@ -25,7 +25,14 @@ from presidential_issue_engine.region_bloc_prior import normalize_bloc  # noqa: 
 
 MATCHES = ROOT / "outputs/assembly_speaker_issue_matches_15_22.csv"
 SPEAKER_PROFILE = ROOT / "data/raw/assembly_speaker_influence.csv"
-ELECTION_ORDER = ["pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022"]
+ELECTION_ORDER = [
+    "pres_2002",
+    "pres_2007",
+    "pres_2012",
+    "pres_2017",
+    "pres_2022",
+    "pres_2025",
+]
 
 
 def prior_election_rows(frame: pd.DataFrame, election_id: str) -> pd.DataFrame:

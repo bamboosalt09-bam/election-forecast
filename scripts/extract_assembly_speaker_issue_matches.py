@@ -22,6 +22,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "src"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
@@ -48,6 +50,11 @@ DEFAULT_OUT = ROOT / "outputs/assembly_speaker_issue_matches_16_22.csv"
 DEFAULT_COMBINED_OUT = ROOT / "outputs/assembly_speaker_issue_matches_15_22.csv"
 DEFAULT_HISTORY_SOURCE = DOWNLOADS / "\uc5ed\ub300\uad6d\ud68c\uc758\uc6d0\uc778\uc801\uc0ac\ud56d.csv"
 DEFAULT_HISTORY_OUT = ROOT / "data/raw/assembly_member_history.csv"
+DEFAULT_2025_SUPPLEMENT = (
+    ROOT
+    / "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv"
+)
+DEFAULT_2025_OUT = ROOT / "outputs/assembly_speaker_issue_matches_pres_2025.csv"
 
 KEYWORDS = ROOT / "presidential_issue_engine/fixed_dataset/issue_keywords.csv"
 CAMPAIGN_TERMS = ROOT / "presidential_issue_engine/fixed_dataset/campaign_issue_terms.csv"
@@ -67,6 +74,7 @@ ELECTION_DATES = {
     "pres_2012": pd.Timestamp("2012-12-19"),
     "pres_2017": pd.Timestamp("2017-05-09"),
     "pres_2022": pd.Timestamp("2022-03-09"),
+    "pres_2025": pd.Timestamp("2025-06-03"),
 }
 ELECTION_CUTOFFS = {
     "pres_2002": (pd.Timestamp("1996-01-01"), pd.Timestamp("2002-12-18")),
@@ -74,15 +82,22 @@ ELECTION_CUTOFFS = {
     "pres_2012": (pd.Timestamp("2007-12-20"), pd.Timestamp("2012-12-18")),
     "pres_2017": (pd.Timestamp("2012-12-20"), pd.Timestamp("2017-05-08")),
     "pres_2022": (pd.Timestamp("2017-05-10"), pd.Timestamp("2022-03-08")),
+    "pres_2025": (pd.Timestamp("2022-03-10"), pd.Timestamp("2025-06-02")),
 }
 ELECTION_IDS = tuple(ELECTION_DATES)
 ELECTION_TO_ASSEMBLY = {
     "pres_2002": "16",
     "pres_2007": "17",
-    "pres_2012": "18",
+    "pres_2012": "19",
     "pres_2017": "20",
     "pres_2022": "21",
+    "pres_2025": "21|22",
 }
+MODEL_ASSEMBLIES = frozenset(
+    assembly
+    for value in ELECTION_TO_ASSEMBLY.values()
+    for assembly in value.split("|")
+)
 
 OUTPUT_COLUMNS = [
     "election_id",
@@ -101,6 +116,19 @@ OUTPUT_COLUMNS = [
     "matched_term_count",
     "text_length",
 ]
+
+FORBIDDEN_OUTCOME_COLUMN_TOKENS = (
+    "actual",
+    "vote_share",
+    "votes",
+    "rank",
+    "winner",
+    "elected",
+    "result",
+    "\ub4dd\ud45c",
+    "\ub2f9\uc120",
+    "\uc21c\uc704",
+)
 
 
 def _read_csv(path: Path) -> pd.DataFrame:
@@ -132,6 +160,11 @@ def election_for_date(value: object, window_mode: str = "continuous") -> str:
         if start <= ts <= end:
             return election_id
     return ""
+
+
+def assembly_allowed_for_election(assembly_daesu: str, election_id: str) -> bool:
+    allowed = set(ELECTION_TO_ASSEMBLY.get(election_id, "").split("|"))
+    return bool(assembly_daesu and assembly_daesu in allowed)
 
 
 def iter_workbooks_from_source(source: Path) -> Iterable[tuple[str, bytes]]:
@@ -200,6 +233,15 @@ def build_keyword_inputs() -> tuple[
     return keyword_maps, term_weights, issue_boosts, context_rules
 
 
+def normalized_source_file(value: object) -> str:
+    """Remove only the outer archive-directory prefix from a workbook key."""
+
+    text = str(value or "").replace("\\", "/")
+    if text.startswith("trash_dataset/"):
+        return text[len("trash_dataset/") :]
+    return text
+
+
 def completed_source_files(out_path: Path) -> set[str]:
     if not out_path.exists() or out_path.stat().st_size == 0:
         return set()
@@ -207,7 +249,10 @@ def completed_source_files(out_path: Path) -> set[str]:
         frame = pd.read_csv(out_path, usecols=["source_file"], dtype=str)
     except Exception:  # noqa: BLE001 - corrupt/incomplete resume file should not hide work
         return set()
-    return set(frame["source_file"].dropna().astype(str).unique())
+    return {
+        normalized_source_file(value)
+        for value in frame["source_file"].dropna().astype(str).unique()
+    }
 
 
 def extract_matches(
@@ -215,7 +260,8 @@ def extract_matches(
     out_path: Path,
     max_workbooks: int | None = None,
     resume: bool = True,
-    window_mode: str = "continuous",
+    window_mode: str = "campaign",
+    assemblies: set[str] | None = None,
 ) -> None:
     keyword_maps, term_weights, issue_boosts, context_rules = build_keyword_inputs()
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -229,19 +275,36 @@ def extract_matches(
         if write_header:
             writer.writeheader()
         for workbook_idx, (name, data) in enumerate(iter_workbooks_from_source(source), 1):
+            source_name = normalized_source_file(name)
             if max_workbooks is not None and workbook_idx > max_workbooks:
                 break
-            if name in done_sources:
+            if source_name in done_sources:
                 print(f"[{workbook_idx}] skip-completed {name[:100]}", flush=True)
                 continue
-            assembly_daesu = assembly_daesu_from_name(name)
+            assembly_daesu = assembly_daesu_from_name(source_name)
+            if assemblies and assembly_daesu not in assemblies:
+                print(
+                    f"[{workbook_idx}] skip-unrequested-assembly {name[:100]}",
+                    flush=True,
+                )
+                continue
+            if assembly_daesu and assembly_daesu not in MODEL_ASSEMBLIES:
+                print(
+                    f"[{workbook_idx}] skip-out-of-scope-assembly {name[:100]}",
+                    flush=True,
+                )
+                continue
             workbook_rows = 0
             workbook_matches = 0
+            workbook_output: list[dict[str, object]] = []
             try:
                 for row_idx, row in enumerate(iter_rows_from_xlsx(data), 1):
                     workbook_rows += 1
                     election_id = election_for_date(row.get(DATE_COL), window_mode=window_mode)
-                    if not election_id:
+                    if not election_id or not assembly_allowed_for_election(
+                        assembly_daesu,
+                        election_id,
+                    ):
                         continue
                     text = " ".join(str(row.get(column) or "") for column in _SPEECH_COLS if row.get(column))
                     if not text.strip():
@@ -259,12 +322,12 @@ def extract_matches(
                     if d is None:
                         continue
                     for issue_name, weight in issue_weights.items():
-                        writer.writerow(
+                        workbook_output.append(
                             {
                                 "election_id": election_id,
                                 "assembly_daesu": assembly_daesu,
                                 "source_sheet": "",
-                                "source_file": name,
+                                "source_file": source_name,
                                 "source_row_id": row_idx,
                                 "meeting_date": d.isoformat(),
                                 "period": _week(d),
@@ -279,6 +342,8 @@ def extract_matches(
                             }
                         )
                         workbook_matches += 1
+                writer.writerows(workbook_output)
+                handle.flush()
                 total_rows += workbook_rows
                 total_matches += workbook_matches
                 print(
@@ -290,6 +355,113 @@ def extract_matches(
                 print(f"[{workbook_idx}] skip {name[:100]} error={exc!r}", flush=True)
     action = "appended" if mode == "a" else "saved"
     print(f"{action} {total_matches} match rows from {total_rows} speech rows: {out_path}", flush=True)
+
+
+def convert_pres_2025_official_supplement(
+    source: Path,
+    out_path: Path,
+    window_mode: str = "campaign",
+) -> pd.DataFrame:
+    """Convert the official 2025 minutes supplement to the historical match schema.
+
+    The official collector already ran the same issue matcher at sentence level.
+    This adapter only applies the central D-1 availability rule and reshapes its
+    output; it does not infer or hand-enter any issue or candidate signal.
+    """
+
+    if not source.exists():
+        return pd.DataFrame(columns=OUTPUT_COLUMNS)
+    frame = _read_csv(source).fillna("")
+    lowered = {str(column).strip().lower() for column in frame.columns}
+    forbidden = sorted(
+        column
+        for column in lowered
+        if any(token in column for token in FORBIDDEN_OUTCOME_COLUMN_TOKENS)
+    )
+    if forbidden:
+        raise ValueError(f"2025 official supplement contains forbidden outcome columns: {forbidden}")
+
+    required = {
+        "election_id",
+        "assembly_daesu",
+        "source_id",
+        "source_file",
+        "source_row_id",
+        "sentence_index",
+        "meeting_date",
+        "available_date",
+        "period",
+        "committee",
+        "agenda",
+        "speaker",
+        "member_id",
+        "issue_name",
+        "issue_weight",
+        "text_excerpt",
+    }
+    missing = sorted(required - set(frame.columns))
+    if missing:
+        raise ValueError(f"2025 official supplement is missing columns: {missing}")
+
+    meeting_date = pd.to_datetime(frame["meeting_date"], errors="coerce")
+    available_date = pd.to_datetime(frame["available_date"], errors="coerce")
+    cutoff = ELECTION_DATES["pres_2025"] - pd.Timedelta(days=1)
+    eligible = (
+        frame["election_id"].eq("pres_2025")
+        & frame["assembly_daesu"].astype(str).eq("22")
+        & meeting_date.notna()
+        & available_date.notna()
+        & available_date.le(cutoff)
+    )
+    if window_mode == "campaign":
+        start, end = ELECTION_WINDOWS["pres_2025"]
+        eligible &= meeting_date.between(pd.Timestamp(start), pd.Timestamp(end))
+    else:
+        start, end = ELECTION_CUTOFFS["pres_2025"]
+        eligible &= meeting_date.between(start, end)
+
+    selected = frame.loc[eligible].copy()
+    if selected.empty:
+        raise ValueError(
+            "2025 official supplement produced no point-in-time eligible issue rows; "
+            "check its meeting_date and available_date coverage"
+        )
+    selected["issue_weight"] = pd.to_numeric(selected["issue_weight"], errors="coerce")
+    selected = selected.loc[selected["issue_weight"].notna() & selected["issue_weight"].gt(0)].copy()
+
+    out = pd.DataFrame(
+        {
+            "election_id": "pres_2025",
+            "assembly_daesu": "22",
+            "source_sheet": "official_minutes",
+            "source_file": selected["source_file"].astype(str),
+            "source_row_id": (
+                selected["source_id"].astype(str)
+                + ":"
+                + selected["source_row_id"].astype(str)
+                + ":"
+                + selected["sentence_index"].astype(str)
+            ),
+            "meeting_date": meeting_date.loc[selected.index].dt.strftime("%Y-%m-%d"),
+            "period": selected["period"].astype(str),
+            "committee": selected["committee"].astype(str),
+            "agenda": selected["agenda"].astype(str),
+            "speaker": selected["speaker"].astype(str),
+            "member_id": selected["member_id"].astype(str),
+            "issue_name": selected["issue_name"].astype(str),
+            "issue_weight": selected["issue_weight"].astype(float),
+            "matched_term_count": 1,
+            "text_length": selected["text_excerpt"].astype(str).str.len(),
+        }
+    )[OUTPUT_COLUMNS]
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out.to_csv(out_path, index=False, encoding="utf-8-sig")
+    print(
+        f"saved {len(out)} point-in-time 2025 official match rows "
+        f"({out['meeting_date'].min()}..{out['meeting_date'].max()}): {out_path}",
+        flush=True,
+    )
+    return out
 
 
 def normalize_member_history(source: Path, out_path: Path) -> pd.DataFrame:
@@ -317,7 +489,12 @@ def normalize_member_history(source: Path, out_path: Path) -> pd.DataFrame:
     return out
 
 
-def combine_with_15th(matches_15: Path, matches_16_22: Path, out_path: Path) -> None:
+def combine_with_15th(
+    matches_15: Path,
+    matches_16_22: Path,
+    out_path: Path,
+    matches_2025: Path | None = None,
+) -> None:
     frames: list[pd.DataFrame] = []
     if matches_15.exists():
         frame15 = _read_csv(matches_15)
@@ -338,6 +515,12 @@ def combine_with_15th(matches_15: Path, matches_16_22: Path, out_path: Path) -> 
             if column not in frame.columns:
                 frame[column] = ""
         frames.append(frame[OUTPUT_COLUMNS])
+    if matches_2025 is not None and matches_2025.exists():
+        frame2025 = _read_csv(matches_2025)
+        for column in OUTPUT_COLUMNS:
+            if column not in frame2025.columns:
+                frame2025[column] = ""
+        frames.append(frame2025[OUTPUT_COLUMNS])
     combined = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=OUTPUT_COLUMNS)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     combined.to_csv(out_path, index=False, encoding="utf-8-sig")
@@ -353,10 +536,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--combined-out", type=Path, default=DEFAULT_COMBINED_OUT)
     parser.add_argument("--member-history-source", type=Path, default=DEFAULT_HISTORY_SOURCE)
     parser.add_argument("--member-history-out", type=Path, default=DEFAULT_HISTORY_OUT)
+    parser.add_argument("--pres-2025-supplement", type=Path, default=DEFAULT_2025_SUPPLEMENT)
+    parser.add_argument("--pres-2025-out", type=Path, default=DEFAULT_2025_OUT)
+    parser.add_argument("--skip-pres-2025-supplement", action="store_true")
     parser.add_argument("--max-workbooks", type=int, default=None)
     parser.add_argument("--skip-extract", action="store_true")
     parser.add_argument("--no-resume", action="store_true")
-    parser.add_argument("--window-mode", choices=["continuous", "campaign"], default="continuous")
+    parser.add_argument("--window-mode", choices=["continuous", "campaign"], default="campaign")
+    parser.add_argument(
+        "--assemblies",
+        nargs="+",
+        default=None,
+        help="Optional Assembly terms to parse, for example: --assemblies 22",
+    )
     return parser.parse_args()
 
 
@@ -370,8 +562,20 @@ def main() -> None:
             args.max_workbooks,
             resume=not args.no_resume,
             window_mode=args.window_mode,
+            assemblies=set(args.assemblies) if args.assemblies else None,
         )
-    combine_with_15th(args.matches_15, args.out, args.combined_out)
+    if not args.skip_pres_2025_supplement and args.pres_2025_supplement.exists():
+        convert_pres_2025_official_supplement(
+            args.pres_2025_supplement,
+            args.pres_2025_out,
+            window_mode=args.window_mode,
+        )
+    combine_with_15th(
+        args.matches_15,
+        args.out,
+        args.combined_out,
+        None if args.skip_pres_2025_supplement else args.pres_2025_out,
+    )
 
 
 if __name__ == "__main__":

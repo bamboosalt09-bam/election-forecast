@@ -3,7 +3,8 @@
 ## Repository role
 
 This repository is the source of truth for code, tests, model configuration,
-small canonical inputs, and the frozen artifacts needed to audit active V23.
+small canonical inputs, and the frozen artifacts needed to audit active V24.
+V23 remains tracked as the immutable rollback boundary.
 OneDrive and local backup directories are recovery storage only and are not Git
 working trees.
 
@@ -16,11 +17,13 @@ working trees.
 
 ## Model lifecycle
 
-V23 is frozen. Experiments must use a new versioned output directory and must
-not overwrite V23 code, configuration, predictions, or manifests. Promotion of
-a later version requires all of the following in one pull request:
+V24 is frozen and V23 remains frozen as its rollback model. Experiments must use
+a new versioned output directory and must not overwrite either version's code,
+configuration, predictions, or manifests. Promotion of a later version requires
+all of the following in one pull request:
 
-1. a new versioned configuration and runner;
+1. a new versioned configuration and runner, or an explicitly declared frozen
+   base configuration with a versioned wrapper;
 2. strict chronological nested evaluation;
 3. point-in-time and target-outcome invariance audits;
 4. a performance report using the active metric definitions;
@@ -32,7 +35,8 @@ model selection, and pre-evaluation comparison.
 
 ## Data boundary
 
-Git tracks small canonical inputs and the frozen V23 audit bundle. It does not
+Git tracks small canonical inputs, the active V24 audit bundle, and the frozen
+V23 rollback bundle. It does not
 track full transcript corpora, API caches, virtual environments, shadow
 classifier corpora, backups, or bulk experiment outputs. Those files remain in
 external storage and are identified by source metadata and checksums when they
@@ -41,7 +45,7 @@ are required for a reproducible experiment.
 ## CI tiers
 
 The normal GitHub-hosted CI runs the repository-boundary audit, the regression
-suite, and the frozen V23 audit. Full Assembly reprocessing and large NLP
+suite, and the frozen V24 audit. Full Assembly reprocessing and large NLP
 experiments are manual jobs for a controlled local or self-hosted runner. A
 self-hosted runner must not execute untrusted pull-request code.
 
