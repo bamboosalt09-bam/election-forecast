@@ -1,0 +1,73 @@
+{
+  "schema": "active_v24_national_predictive_intervals_v1",
+  "status": "historical_chronological_calibration",
+  "model_version": "v24",
+  "interval_scope": "national_candidate_vote_share",
+  "interval_type": "predictive_interval_not_coefficient_confidence_interval",
+  "point_prediction_column": "layer_pred",
+  "residual_structure": "empirical_full_hierarchy_with_region_weight_uncertainty",
+  "residual_scale": 1.0,
+  "residual_scale_policy": "fixed_unscaled_not_selected_on_coverage",
+  "distribution": "empirical",
+  "levels": [
+    0.5,
+    0.8,
+    0.9,
+    0.95
+  ],
+  "n_sim": 50000,
+  "seed": 24820,
+  "warmup_election": "pres_2002",
+  "evaluated_elections": [
+    "pres_2007",
+    "pres_2012",
+    "pres_2017",
+    "pres_2022"
+  ],
+  "candidate_outcomes": 11,
+  "target_outcomes_used_to_construct_bounds": false,
+  "target_outcomes_used_for_historical_coverage_only": true,
+  "post_2022_outcomes_used": false,
+  "development_outcome_warning": "V24 point-model rules were developed on the through-2022 sample; coverage is historical calibration, not an untouched holdout guarantee.",
+  "input": "outputs/active_presidential_nested_v24/nested_predictions.csv",
+  "input_sha256": "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a",
+  "outputs": {
+    "intervals": "outputs/active_presidential_nested_v24/national_predictive_intervals.csv",
+    "summary": "outputs/active_presidential_nested_v24/predictive_interval_summary.csv",
+    "components": "outputs/active_presidential_nested_v24/predictive_interval_components.csv"
+  },
+  "summary": [
+    {
+      "nominal_level": 0.5,
+      "elections": 4,
+      "candidates": 11,
+      "equal_election_coverage": 0.9166666666666666,
+      "candidate_weighted_coverage": 0.9090909090909091,
+      "equal_election_mean_width_pp": 4.419635828967908
+    },
+    {
+      "nominal_level": 0.8,
+      "elections": 4,
+      "candidates": 11,
+      "equal_election_coverage": 0.9166666666666666,
+      "candidate_weighted_coverage": 0.9090909090909091,
+      "equal_election_mean_width_pp": 8.391110237865654
+    },
+    {
+      "nominal_level": 0.9,
+      "elections": 4,
+      "candidates": 11,
+      "equal_election_coverage": 0.9166666666666666,
+      "candidate_weighted_coverage": 0.9090909090909091,
+      "equal_election_mean_width_pp": 10.72982990677454
+    },
+    {
+      "nominal_level": 0.95,
+      "elections": 4,
+      "candidates": 11,
+      "equal_election_coverage": 0.9166666666666666,
+      "candidate_weighted_coverage": 0.9090909090909091,
+      "equal_election_mean_width_pp": 12.731803126741866
+    }
+  ]
+}

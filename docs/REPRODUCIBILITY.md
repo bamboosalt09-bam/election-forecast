@@ -1,69 +1,77 @@
-# Reproducibility and Frozen V23 Boundary
+# Reproducibility and Frozen V24 Boundary
 
 ## Frozen scope
 
-Active V23 is a through-2022 development model. Its runner, configuration,
-canonical inputs, predictions, and promotion records are frozen. Experiments
-must use a new versioned path and must not edit V23 in place.
+Active V24 is a through-2022 development model. Its version wrapper, V23 base
+configuration, versioned V24 inputs, predictions, interval records, and
+promotion manifests are frozen. V23 remains an immutable rollback boundary.
+Experiments must use a new versioned path and must not edit either frozen output
+directory in place.
 
-The canonical prediction artifact is:
+The canonical V24 prediction artifact is:
+
+```text
+outputs/active_presidential_nested_v24/nested_predictions.csv
+SHA-256: edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a
+```
+
+The preserved V23 rollback artifact is:
 
 ```text
 outputs/active_presidential_nested_v23/nested_predictions.csv
 SHA-256: dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b
 ```
 
-The active pointer remains `data/config/current_presidential_model.json` and
-continues to select V23. A V24 experiment is not active unless a person reviews
-it and performs a separate promotion change.
+`data/config/current_presidential_model.json` selects V24. V24 deliberately
+uses the frozen V23 JSON configuration as its base and applies its additional
+ballot, scored-scope, lineage, veto, and same-lane rules in the versioned V24
+runner. The pointer records both facts explicitly.
 
 ## Reproduce the checks
 
-Install the test and visualization extras first with
-`python -m pip install -e ".[dev,viz]"`. A public clone can then run these three
-verification commands:
+Install the test extras and run:
 
 ```bash
+python scripts/build_active_v24_predictive_intervals.py
 python scripts/audit_github_baseline.py
-python scripts/audit_public_active_presidential_model_v23.py
+python scripts/audit_public_active_presidential_model_v24.py
 python -m pytest -q
 ```
 
-The canonical local audit command is
-`python scripts/audit_active_presidential_model_v23.py`. It additionally checks
-the bytes of a frozen external input that is intentionally not redistributed
-in Git. The public wrapper checks its signed metadata record when those bytes
-are absent and otherwise runs the same V23 invariance audits.
+To reproduce the point model without overwriting the frozen output, pass a new
+directory:
 
-## Why two manifest hashes differ
+```bash
+python scripts/run_active_presidential_model_v24.py --output-dir outputs/reproduction_v24
+```
 
-`outputs/active_presidential_nested_v23/finalization_manifest.json` records the
-state at the time V23 was frozen. Its `artifacts` array contains two living
-documents, `README.md` and `docs/HANDOFF_CURRENT_STATE.md`. Those documents were
-updated after model finalization, so their current hashes differ from the
-historical values in the manifest.
+The public audit verifies local bytes when they are present. For intentionally
+unredistributed bulk inputs, it verifies the path, byte count, SHA-256 record,
+Git exclusion, and ignore rule in
+`data/raw/official_sources/external_active_inputs.json`.
 
-The other 14 artifact records match their files byte for byte. They cover the
-model specification, active pointer, configuration, runners and audit, exact
-input records, predictions, summary, and promotion record. These 14 artifacts
-are the substantive frozen model boundary.
+## Predictive intervals
 
-The two document hashes must not be rewritten in the finalization manifest.
-Preserving the original record is what makes later documentation changes
-visible and auditable; changing it after the fact would erase that evidence.
+`national_predictive_intervals.csv` contains national candidate vote-share
+predictive intervals at 50%, 80%, 90%, and 95%. They are not coefficient
+confidence intervals. For each target election from 2007 onward, the bounds use
+only point errors and regional vote-volume transitions from earlier elections.
+The target result is consulted only after the bounds are fixed to calculate
+historical coverage. The unscaled residual multiplier is fixed at 1.0 rather
+than selected against coverage.
 
-## Recorded workspace field
-
-The manifest's `workspace` field contains the local development path that was
-active at finalization. It is provenance, not a runtime requirement. It is left
-unchanged for the same reason as the historical hashes: the finalization record
-must describe the event as it occurred. All maintained code resolves paths from
-the repository root and does not require that recorded path.
+The interval evaluation contains four target elections and eleven candidate
+outcomes. It is therefore a small historical calibration record, not a promise
+of nominal future coverage. The point-model rules were themselves developed on
+the through-2022 sample, so the interval record is not an untouched holdout.
 
 ## Metric scope
 
 The primary regional metric weights candidate-region absolute errors by
 `contest_votes` within each election and then averages elections equally. The
 national metric also uses realized regional contest votes and is therefore a
-post-election aggregation diagnostic. Neither metric is an untouched holdout:
-the five scored elections are the through-2022 development sample.
+post-election aggregation diagnostic. V24 restores weak third-candidate rows,
+so its 232-row score panel is not identical to V23's 199-row panel.
+
+No 2025 result, row, or post-cutoff artifact is used in the V24 point model,
+interval fitting, interval calibration, promotion comparison, or finalization.

@@ -5,7 +5,7 @@
 
 재현 가능한 선거 예측 프레임워크와 국회 회의록 분석 파이프라인입니다.
 
-국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V23은 2022년까지의 선거만 채점·선택에 사용합니다.
+국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V24는 2022년까지의 선거만 채점·선택에 사용합니다.
 
 ## Quickstart
 
@@ -13,16 +13,16 @@
 python -m pip install -e ".[dev,viz]"
 python scripts/compute_forecast_baselines.py
 python presidential_issue_engine/make_poster_figures.py
-python scripts/audit_public_active_presidential_model_v23.py
+python scripts/audit_public_active_presidential_model_v24.py
 python -m pytest -q
 ```
 
 ## 결과 요약
 
-| 지표 | 활성 V23 |
+| 지표 | 활성 V24 |
 |---|---:|
-| 지역 `contest_votes` 가중·선거 동일가중 MAE | **3.3679%p** |
-| 전국 후보·선거 동일가중 MAE | **1.5978%p** |
+| 지역 `contest_votes` 가중·선거 동일가중 MAE | **2.7698%p** |
+| 전국 후보·선거 동일가중 MAE | **1.0757%p** |
 | 승자 적중률 | **80% (4/5)** |
 | 채점 선거 | 2002, 2007, 2012, 2017, 2022 |
 | 결과 불변성 감사 | 215/215 통과 |
@@ -49,22 +49,22 @@ python -m pytest -q
 - `presidential_issue_engine/audit_point_in_time.py --deep`: 입력 날짜, fold 범위, 목표 결과 변조 불변성 검사
 - `presidential_issue_engine/audit_weight_selection_boundary.py`: 2022년까지의 학습 경계와 격리된 2025 입력 검사
 - `scripts/audit_slot_predictor_leakage.py`: 실제 순위로 정해진 슬롯 변수를 활성 모델이 쓰지 않는지 검사
-- `scripts/audit_active_presidential_model_v23.py`: 로컬 동결 입력·산출물·프로모션 재현 검사
-- `scripts/audit_public_active_presidential_model_v23.py`: 공개 클론의 외부 입력 메타데이터 대체 검사
+- `scripts/audit_public_active_presidential_model_v24.py`: V23 롤백 경계, V24 포인터·산출물·예측구간·입력 해시 검사
 
 최신 실행 로그는 `outputs/audit_logs/`에 저장합니다. 동결 범위와 매니페스트 해석은 [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)를 참조하십시오.
 
 ### 대선 예측 엔진
 
-V23은 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. 후보의 사전 체급, 직전 선거까지의 정확 정당 계보, 지역 지형, 국회 회의록 기반 이슈 부각도, 후보 맥락, 철회·단일화 사건, 세대 구성과 거시 지표를 시점 제한 아래 결합합니다.
+V24는 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. 후보의 사전 체급, 직전 선거까지의 정확 정당 계보, 지역 지형, 국회 회의록 기반 이슈 부각도, 후보 맥락, 철회·단일화 사건, 세대 구성과 거시 지표를 시점 제한 아래 결합합니다. V23의 공통 계수를 유지하면서 실제 3자 투표지, 1%p 채점 하한, 제3후보 계보 상한과 구조적 잔차 계층을 버전 래퍼로 추가합니다.
 
-후처리 계층은 콘크리트·비판적·유동 지지층, 제3후보 경쟁력, 지역 정체성, 정권 심판과 거대 이슈 반응을 분리합니다. 모든 선거에 같은 증거 기반 규칙을 적용하며, 2025 실제 결과는 가중치 선택이나 ablation에 사용하지 않습니다. 전체 사양은 [FINAL_MODEL_V23_20260802.md](docs/FINAL_MODEL_V23_20260802.md)에 있습니다.
+후처리 계층은 콘크리트·비판적·유동 지지층, 제3후보 경쟁력, 지역 정체성, 정권 심판과 거대 이슈 반응을 분리합니다. 모든 선거에 같은 증거 기반 규칙을 적용하며, 2025 실제 결과는 가중치 선택이나 ablation에 사용하지 않습니다. 전체 사양과 개발표본 한계는 [FINAL_MODEL_V24_20260820.md](docs/FINAL_MODEL_V24_20260820.md)에 있습니다.
 
 ## 기준선 비교
 
-| 방법 | 지역 매크로 MAE | V23 skill |
+| 방법 | 지역 매크로 MAE | 비고 |
 |---|---:|---:|
-| 활성 V23 | **3.3679%p** | - |
+| 활성 V24 | **2.7698%p** | 232개 후보×지역 행 |
+| 동결 V23 | 3.3679%p | 199개 후보×지역 행 |
 | 직전 대선 동일 bloc 유지 | 13.0115%p | +62.64% 평균 |
 | 전국 균일 스윙 | 8.8610%p | +53.13% 평균 |
 | 실제 전국 득표율 균일 적용 | 10.1773%p | - |
@@ -83,9 +83,9 @@ python scripts/run_prospective_forecast.py --version v23
 
 ## 최고 회고 성능과 활성 버전
 
-17개 보존 버전의 `summary.json`을 비교하면 최저 회고 지역 MAE는 V17의 **3.2133%p**, 최저 전국 진단 MAE는 V19의 **1.4707%p**입니다. 활성 V23은 이보다 낮은 성능을 주장하지 않습니다.
+기존 17개 보존 버전과 비교할 때 V24의 지역 MAE는 **2.7698%p**, 전국 진단 MAE는 **1.0757%p**입니다. 다만 V24는 V23에서 제외됐던 약한 제3후보를 복원해 채점 패널이 199행에서 232행으로 바뀌었으므로 수치 차이를 순수한 동일표본 개선으로 해석할 수 없습니다.
 
-V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서 단일 정확 계보 원장으로 통합하면서 지역 회고 MAE가 약 **0.178%p** 악화되었고, 이는 회고 적합도보다 표현 일관성과 모든 지역에 동일한 규칙을 우선한 의도적 교환입니다. 결정 근거는 [V21 계보 통합 기록](docs/ACTIVE_V21_UNIFIED_EXACT_GENEALOGY_20260802.md)에 보존되어 있습니다. V23은 이 계보 위에서 후보·철회·세대 자동 레지스트리를 통합한 현재 동결 기준선입니다.
+V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서 단일 정확 계보 원장으로 통합하면서 지역 회고 MAE가 약 **0.178%p** 악화되었고, 이는 회고 적합도보다 표현 일관성과 모든 지역에 동일한 규칙을 우선한 의도적 교환입니다. 결정 근거는 [V21 계보 통합 기록](docs/ACTIVE_V21_UNIFIED_EXACT_GENEALOGY_20260802.md)에 보존되어 있습니다. V23은 롤백 가능한 동결 선행판이고, V24가 현재 공식 포인터입니다.
 
 ## 저장소 구조
 
@@ -96,14 +96,15 @@ V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서
 | `scripts/` | 수집, 빌드, 평가, 감사, 실행 진입점 |
 | `data/raw/` | 날짜와 출처가 있는 입력·공식자료 레지스트리 |
 | `data/config/` | 버전별 모델 설정과 활성 포인터 |
-| `outputs/active_presidential_nested_v23/` | 읽기 전용 V23 동결 산출물 |
+| `outputs/active_presidential_nested_v24/` | 읽기 전용 V24 활성 산출물과 시간순 예측구간 |
+| `outputs/active_presidential_nested_v23/` | 읽기 전용 V23 롤백 산출물 |
 | `outputs/prospective_pres_2025_v23/` | 실제 결과 없이 생성한 D-1 전향 시연 산출물 |
 | `docs/` | 설계·감사·승격·재현성 기록 |
 | `tests/` | PIT, 누수, 입력 경계, 회귀 테스트 |
 
 ## 동결 정책
 
-`outputs/active_presidential_nested_v23/`, 활성 V23 설정과 러너는 읽기 전용입니다. 모델 변경은 새 버전 경로에서 개별 ablation으로 측정하며 활성 포인터는 사람의 검토 없이는 이동하지 않습니다. 기준 예측 파일의 SHA-256은 `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`입니다.
+`outputs/active_presidential_nested_v24/`와 V23 롤백 경계는 읽기 전용입니다. 모델 변경은 새 버전 경로에서 개별 ablation으로 측정하며 활성 포인터는 사람의 검토 없이는 이동하지 않습니다. V24 기준 예측 파일의 SHA-256은 최종화 매니페스트에 기록되며, V23 롤백 파일의 SHA-256 `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`도 계속 감사합니다.
 
 ## 용도 범위
 
