@@ -3,15 +3,24 @@
 ## Status
 
 - Date: 2026-08-19
+- Updated: 2026-08-20
 - Status: new lineage, published alongside V23; V23 remains the frozen reference
 - V23 `nested_predictions.csv` SHA-256 after all V24 work:
   `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b` (unchanged)
-- Full regression suite: `568 passed`
+- Full regression suite: `592 passed`
 - Post-2022 outcomes used: none
-- Predictors, ridge alpha, gains, thresholds: identical to V23
+- Ridge predictors and alpha: identical to V23
+- New manual quantities are limited to two declared hypothesis gains, one
+  conceptual 10%p activation threshold, and a theoretical 1%p floor; none was
+  selected by metric minimisation or by an election-specific flag
+- The prediction-tilted recipient rule was promoted only after the original
+  affinity-only rule failed the retrospective winner safety gate. V24 execution
+  is outcome-blind, but this revision is retrospectively hypothesis-selected.
 
-V24 does not retune the model. It changes which rows are scored and repairs two
-representation defects that were removing evidence from the record.
+V24 does not retune the Ridge model. It changes which rows are scored, repairs
+representation defects that were removing evidence from the record, and adds
+two narrow outcome-blind residual hypotheses whose constants are declared and
+sensitivity-tested rather than optimised.
 
 ## Why a new lineage rather than a V23 revision
 
@@ -162,8 +171,167 @@ The floor is `0.02` of the chamber. The scored panel anchors only `0.00` and
 exactly and the retrospective cannot distinguish them. The midpoint of the
 interval is used. No forecast-only election enters this choice.
 
-Measured across the interval the scored panel is identical: macro regional
-`3.998`, macro level `2.466`, winner `4/5`.
+Measured across the interval the scored panel is identical. At the restored-
+routing and lineage checkpoint, before the two new residual gains, macro
+regional-row MAE is `4.013`, region-weighted macro MAE is `3.534`, macro level
+MAE is `2.360`, and winner accuracy is `4/5`.
+
+## Change 6: initial strong incumbent-veto tail
+
+V23's coefficient-free rejection-beneficiary routing is restored; an earlier
+V24 wrapper call had silently accepted the generic runner's `False` default.
+V24 then adds a narrower tail response for a government party facing an already
+decisive model-projected defeat. It activates only when all of the following are
+known from the outcome-blind forecast frame:
+
+- the government-burdened major candidate is the structural runner-up;
+- the equal-region projected gap to the dominant challenger is at least `0.10`;
+- contest-regime activation, certainty, and government-rejection strength are
+  all positive.
+
+The `0.10` cutoff is a declared structural hypothesis, not an empirically
+validated universal boundary. It is retained here so that the assumption is
+auditable rather than hidden inside election-specific tuning.
+
+The transfer rate is
+
+`0.50 * government_rejection_strength * dominance_activation * regime_certainty`.
+
+The gain is a round doubling of the initial `0.25` probe, fixed before the
+sensitivity table was evaluated. It is not the argmin of that table.
+
+Only the runner-up's mass above its conservative regime core floor can move.
+The third-candidate share is unchanged. The rule requests no result, realised
+margin, poll, or post-election field, and `pres_2025` is not used to select the
+threshold or gain.
+
+The gate fires in 33 scored regions: all 16 regions in 2007 and all 17 in 2017.
+Mean additional transfer is `0.865%p` and `0.202%p`, respectively. It remains
+off in 2002, 2012, and 2022. Against the same restored-routing and lineage
+baseline, this tail alone changes region-weighted macro MAE from `3.534` to
+`3.483` and level MAE from `2.360` to `2.235`.
+
+## Change 7: initial weak same-lane wasted-vote refusal
+
+The ordinary strategic-transfer layer depends on candidate conversion context.
+That context can be absent or conservative for a weak third candidate, leaving
+some same-camp wasted-vote pressure unexpressed. V24 adds a deliberately narrow
+hypothesis after the lineage ceiling:
+
+- only slot C candidates whose pre-election vehicle did not receive major-party
+  split mass are eligible;
+- `candidate_ballot_recent_base` is preserved as a hard lower bound;
+- only `max(prediction - candidate_ballot_recent_base, 0)` is transferable;
+- a declared quarter of that reservoir moves to A/B according to the existing
+  point-in-time political-landscape affinity, with the existing squared
+  affinity weighting;
+- major-split candidates in 2007 and 2017 are excluded.
+
+The manual gain is therefore `0.25`, interpreted as the hypothesis "one quarter
+of weak-candidate support above its concrete prior ballot base is vulnerable".
+It is not fitted. The layer fires in 15 regions of 2002 and 13 regions of 2022;
+mean transfers are `1.587%p` and `0.346%p`. It is inert in 2007, 2012, and 2017.
+No result, poll, realised margin, or forecast-only election is read by the
+transformation.
+
+### Declared-gain sensitivity record
+
+The primary pair (`strong=0.50`, `weak=0.25`) was written down before evaluation.
+The surrounding grid is diagnostic only. Region-weighted macro MAE (%p):
+
+| Strong gain / weak gain | 0.00 | 0.10 | 0.25 | 0.50 |
+|---|---:|---:|---:|---:|
+| 0.00 | 3.534 | 3.460 | 3.350 | 3.194 |
+| 0.25 | 3.508 | 3.434 | 3.324 | 3.168 |
+| **0.50 (declared)** | 3.483 | 3.408 | **3.298** | 3.143 |
+| 1.00 | 3.433 | 3.358 | 3.248 | 3.093 |
+
+The monotone surface is evidence that the declared pair is not an isolated
+historical optimum; it is not permission to move to the best corner. Every
+combination, election-level metric, and transfer row is stored under
+`outputs/v24_structural_residual_hypotheses/`, with a manifest separating
+transformation inputs from outcome fields used only for retrospective scoring.
+
+## Change 8: floor recalibration and constitutional-rupture response
+
+The first residual revision still made two retrospective states unreachable:
+
+- in 2017 the burdened candidate's mean `regime_core_floor` was `0.270`, so even
+  a transfer rate of one could not reproduce a share below that floor;
+- in 2022 the weak C candidate's `candidate_ballot_recent_base` was about
+  `0.044`, so the initial refusal layer could not approach a lower share.
+
+This is a semantic defect rather than evidence for a larger election-specific
+coefficient. A prior party or candidate level is evidence, not an inviolable
+concrete floor under a constitutional rupture or severe same-lane wasted-vote
+pressure.
+
+### 8.1 Continuous rupture-only core-floor erosion
+
+The ordinary core floor remains unchanged outside a high-intensity direct
+government shock. The erosion activation uses only existing forecast-time
+fields:
+
+```text
+rupture_activation =
+    clip(mega_issue_intensity_response - 1, 0, 1)
+  * clip(-direct_mega_score / 0.25, 0, 1)
+  * government_negative_share
+  * sqrt(government_rejection_breadth)
+
+effective_floor = min(
+    regime_core_floor,
+    max(0.01, regime_core_floor * (1 - rupture_activation))
+)
+```
+
+The `0.25` score reference already exists in `contest_regime.py`; it is not a
+new fitted value. The theoretical floor is `0.01`. The strong-veto gain is the
+declared full rejection-strength response, `1.00`.
+
+The activation is exactly zero in 2007 because its intensity is `1.0`, leaving
+the existing floor unchanged. In 2017 activation is `0.866`: the mean floor
+moves from `0.270` to `0.0368`, and mean transfer rises to `3.344%p`. No manual
+"impeachment election" flag is present. This is a large erosion of the concrete
+floor and remains a prospective-validation risk even though the response is
+continuous and outcome-blind.
+
+### 8.2 Weak-candidate theoretical floor
+
+For a weak, non-major-split C candidate, the protected floor changes from the
+entire prior candidate ballot base to a theoretical `1%p`. Half of the mass
+above that floor is declared transferable. Strong split-lineage candidates in
+2007 and 2017 remain excluded.
+
+The first declared routing sent 100% of removed mass to the candidate with
+non-zero same-lane affinity. It reduced MAE but failed the existing winner
+safety gate: 2022 flipped to B and total winner accuracy fell from `4/5` to
+`3/5`. This rejected result remains in the experiment record:
+
+| Candidate | Regional weighted MAE | Level MAE | Winner |
+|---|---:|---:|---:|
+| affinity-only declared candidate | 2.659 | 0.973 | 3/5 |
+
+The follow-up changes no gain. It removes structural zero-probability routing by
+using each major candidate's current forecast as the base allocation and tilts
+it with the existing squared affinity:
+
+```text
+recipient_weight_j = prediction_j * (1 + same_lane_affinity_j)^2
+```
+
+This keeps the same-lane candidate favoured without asserting that every weak-C
+voter must choose that candidate. The follow-up passes the winner safety gate:
+
+| Candidate | Regional weighted MAE | Level MAE | Winner |
+|---|---:|---:|---:|
+| prediction-tilted follow-up | **2.770** | **1.076** | **4/5** |
+
+All 48 combinations of strong gain, rupture erosion, weak gain, floor mode, and
+recipient mode are retained under `outputs/v24_floor_recalibration_hypotheses/`.
+Its manifest records the original declaration, its safety failure, the follow-up
+rationale, source hash, and the strict absence of 2025 from transformation and
+evaluation rows.
 
 `pres_2025` appears in the lineage table as a forecast-only input row carrying
 pre-election facts only — four 국민의힘 incumbents held 개혁신당 affiliation
@@ -180,34 +348,37 @@ scored anchors alone. The parameter value did not change; the justification did.
 
 ## Performance
 
-| Election | Candidates | Regional MAE | Level MAE | Winner |
-|---|---:|---:|---:|---|
-| 2002 | 3 | 5.260 | 3.984 | no |
-| 2007 | 3 | 4.721 | 2.353 | yes |
-| 2012 | 2 | 3.058 | 1.032 | yes |
-| 2017 | 3 | 4.259 | 3.110 | yes |
-| 2022 | 3 | 2.693 | 1.851 | yes |
-| **Macro** | | **3.998** | **2.466** | **4/5** |
+| Election | Candidates | Regional row MAE | Region-weighted MAE | Level MAE | Winner |
+|---|---:|---:|---:|---:|---|
+| 2002 | 3 | 3.377 | 2.658 | 2.240 | no |
+| 2007 | 3 | 4.833 | 4.041 | 1.121 | yes |
+| 2012 | 2 | 3.058 | 2.559 | 1.032 | yes |
+| 2017 | 3 | 3.554 | 3.339 | 0.529 | yes |
+| 2022 | 3 | 1.530 | 1.252 | 0.456 | yes |
+| **Macro** | | **3.270** | **2.770** | **1.076** | **4/5** |
 
-Without the lineage ceiling the same panel gives `4.493` and `3.072`.
+Before the V24-only veto and lineage extensions, the restored V23 postprocess
+gives region-weighted macro MAE `4.090` and level MAE `2.918` on this expanded
+panel.
 
-The V24 macro figure is not comparable with the V23 headline. On the 199 rows
-the two panels share, a same-code control gives `3.906` for V23 and `4.603` for
-V24: the number rises because the panel stops excluding the cases the model
-handles worst, and because a third candidate the model over-predicts compresses
-the two majors. Restricting the V24 panel to 2007 onward gives regional `3.683`
-and level `2.087`.
+The V24 headline still is not directly comparable with V23 because the scored
+panel changed from 199 to 232 rows. On each version's declared panel, the
+region-weighted headline moves from V23 `3.368` to V24 `2.770` (`-0.598%p`),
+while V24 adds the weak third-candidate cases that V23 excluded. The older
+regional-row figure is the equal-election macro of unweighted region rows, not the
+region-weighted metric used in V23's `summary.json`.
 
 ## Where the residual error is
 
 | Slot | Level MAE, full panel | Excluding 2002 |
 |---|---:|---:|
-| A, winner | 2.75 | 1.95 |
-| B, runner-up | 2.65 | 2.81 |
-| C, third | 2.24 | 1.66 |
+| A, winner | 1.02 | 0.44 |
+| B, runner-up | 1.31 | 0.94 |
+| C, third | 0.85 | 0.96 |
 
-Before the ceiling the same three figures are 3.32, 2.58, and 3.88, so the
-constraint removes most of the third slot's excess without touching the others.
+Before the ceiling the same three figures are 3.32, 2.58, and 3.88. The lineage
+ceiling removes the largest C excess; the later floor and rupture layers then
+change A/B and weak-C allocation explicitly, as recorded above.
 
 2002 dominates. Its only available three-way exemplars are 1992 정주영 (16.3%)
 and 1997 이인제 (19.2%), both strong, so the base assigned 권영길 16.8% against a
@@ -215,12 +386,10 @@ realised 3.9%. That is an out-of-distribution first observation rather than a
 defect: 2022 심상정, predicted 3.7% at base against 2.4% realised, shows the base
 handles a weak third candidate once one is in the record.
 
-Excluding 2002, the third slot becomes the most accurate and the runner-up the
-least. The remaining systematic bias is a compressed winner-to-runner-up gap in
-three-way contests, under-predicted by 5.3, 8.8, and 7.0 percentage points in
-2007, 2017, and 2002, and over-predicted by 2.0 and 1.2 in the two-way 2012 and
-2022. With four three-way observations, one of which reverses the sign, no
-correction can be fitted and validated on this panel.
+The final winner-to-runner gap is under-predicted by about `6.19%p` in 2002,
+`1.43%p` in 2007, and `1.08%p` in 2017. It is over-predicted by `2.06%p` in
+2012 and only `0.05%p` in 2022. The binding residual is now the 2002
+out-of-distribution fold, not a general three-way compression pattern.
 
 ## Rejected candidates
 
@@ -322,6 +491,8 @@ strong. A seat count cannot express personal lineage.
 
 ```powershell
 python scripts\run_active_presidential_model_v24.py
+python scripts\evaluate_v24_structural_residual_hypotheses.py
+python scripts\evaluate_v24_floor_recalibration_hypotheses.py
 python -m pytest -q
 ```
 
@@ -332,6 +503,12 @@ Primary artefacts:
 - `presidential_issue_engine/report/tables/v24/issue_vote_engine_nested_outer_predictions.csv`
 - `outputs/active_presidential_nested_v24/nested_predictions.csv`
 - `outputs/active_presidential_nested_v24/third_candidate_lineage_audit.csv`
+- `outputs/active_presidential_nested_v24/strong_incumbent_veto_audit.csv`
+- `outputs/active_presidential_nested_v24/weak_same_lane_refusal_audit.csv`
+- `outputs/v24_structural_residual_hypotheses/` - fixed-grid sensitivity metrics,
+  election rows, transfer audit, and input/evaluation manifest
+- `outputs/v24_floor_recalibration_hypotheses/` - 48 floor/routing variants,
+  candidate-level forecasts, transfer audit, and declaration/follow-up manifest
 
 ## Next valid step
 

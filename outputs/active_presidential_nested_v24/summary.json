@@ -31,9 +31,9 @@
   "general_regional_identity_shift_cap": 0.04,
   "general_regional_identity_outcome_fields_used": [],
   "metrics": {
-    "variant": "fully_nested_postprocess",
-    "regional_equal_election_macro_mae_pp": 4.140655282960672,
-    "national_equal_election_macro_mae_pp": 3.0238926328577493,
+    "variant": "v24_structural_residual",
+    "regional_equal_election_macro_mae_pp": 2.7697878398093887,
+    "national_equal_election_macro_mae_pp": 1.075668050363226,
     "winner_accuracy": 0.8,
     "rows": 232
   },
@@ -54,7 +54,7 @@
     "structural": 5.49049904520855,
     "structural_mega": 5.235122753848923,
     "structural_mega_shock": 4.954466877247446,
-    "structural_mega_shock_regime": 4.140655282960672
+    "structural_mega_shock_regime": 4.089585577973976
   },
   "minimum_stage_selection_elections": 0,
   "direct_mega_issue_shift": "candidate_stage_only",
@@ -81,10 +81,10 @@
   "contest_regime_swing_log_shift_cap": 0.5,
   "contest_regime_rejection_double_discount": false,
   "contest_regime_rows": 5,
-  "rejection_beneficiary_routing_enabled": false,
+  "rejection_beneficiary_routing_enabled": true,
   "rejection_beneficiary_routing_gain": null,
   "rejection_beneficiary_routing_formula": "cumulative_rejection_advantage * rejection_activation * certainty * runner flexible mass",
-  "rejection_beneficiary_routing_rows": 0,
+  "rejection_beneficiary_routing_rows": 33,
   "contest_regime_core_floor": "min_effective_direct_core_times_reliability",
   "cumulative_regime_rejection": true,
   "cumulative_rejection_formula": "negative_direction * negative_share * sqrt(min(unique_negative_issues/4,1)) * max(party_erosion_route, rupture_route) * reliability",
@@ -172,5 +172,56 @@
   "undated_region_issue_sensitivity_policy": "neutral_default_0.3",
   "historical_candidate_set_warning": "Nested execution blocks target-fold stage-selection leakage, but the stage definitions and numeric gains were historically developed on the through-2022 sample and cannot become an untouched holdout retroactively.",
   "frozen_reproduction_difference": 0.10839676255529027,
-  "frozen_reproduction_guard": "measured but not required for a versioned upstream issue-layer change"
+  "frozen_reproduction_guard": "measured but not required for a versioned upstream issue-layer change",
+  "pre_v24_extension_metrics": {
+    "variant": "fully_nested_postprocess",
+    "regional_equal_election_macro_mae_pp": 4.089585577973976,
+    "national_equal_election_macro_mae_pp": 2.9178066399430067,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "rejection_beneficiary_routing_restored_from_v23": true,
+  "strong_incumbent_veto": {
+    "applied": true,
+    "audit_rows": 33,
+    "affected_elections": [
+      "pres_2007",
+      "pres_2017"
+    ],
+    "projected_margin_threshold": 0.1,
+    "gain": 1.0,
+    "rupture_floor_erosion_enabled": true,
+    "theoretical_floor": 0.01,
+    "rupture_inputs": [
+      "mega_issue_intensity_response",
+      "direct_mega_score",
+      "government_negative_share",
+      "government_rejection_breadth"
+    ],
+    "outcome_fields_used": []
+  },
+  "third_candidate_lineage_ceiling": {
+    "applied": true,
+    "audit_rows": 12,
+    "affected_elections": [
+      "pres_2002"
+    ],
+    "defection_floor_share_of_chamber": 0.02,
+    "ceiling_column": "direct_party_recent_base"
+  },
+  "weak_same_lane_refusal": {
+    "applied": true,
+    "audit_rows": 33,
+    "affected_elections": [
+      "pres_2002",
+      "pres_2022"
+    ],
+    "gain": 0.5,
+    "affinity_power": 2.0,
+    "floor_mode": "theoretical",
+    "theoretical_floor": 0.01,
+    "recipient_weight_mode": "prediction_tilted",
+    "lineage_gate": "no_major_party_split_mass",
+    "outcome_fields_used": []
+  }
 }

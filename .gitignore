@@ -68,6 +68,10 @@ outputs/*
 !outputs/audit_logs/**
 !outputs/v24_defect_ablation/
 !outputs/v24_defect_ablation/**
+!outputs/v24_structural_residual_hypotheses/
+!outputs/v24_structural_residual_hypotheses/**
+!outputs/v24_floor_recalibration_hypotheses/
+!outputs/v24_floor_recalibration_hypotheses/**
 !outputs/prospective_pres_2025_*/
 !outputs/prospective_pres_2025_*/**
 
