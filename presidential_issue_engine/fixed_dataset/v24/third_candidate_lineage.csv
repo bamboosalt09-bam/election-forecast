@@ -1,0 +1,9 @@
+election_id,slot,candidate_name,party_name,major_split_lineage,defection_seats,defection_seats_source,available_date,source_note
+pres_1992,C,정주영,통일국민당,False,,needs_source,1992-12-17,manual config: founded 1992-01 around a business group rather than a split from a governing or main opposition party
+pres_1997,C,이인제,국민신당,True,,needs_source,1997-12-17,manual config: founded 1997-11 by a 신한국당 nomination-contest defector; incumbent join count requires a sourced founding roster
+pres_2002,C,권영길,민주노동당,False,0,manual_zero,2002-12-18,manual config: labour-movement origin; no incumbent transfer from either major party
+pres_2007,C,이회창,무소속,True,0,manual_zero,2007-12-18,manual config: ran without a party but carries direct 한나라당 leadership lineage (party chair and prior nominee); party-level defection is zero by construction
+pres_2012,C,강지원,무소속,False,0,manual_zero,2012-12-18,manual config: unaffiliated individual candidacy with no party organisation
+pres_2017,C,안철수,국민의당,True,,needs_source,2017-05-08,manual config: founded 2016-02 by 새정치민주연합 defectors; incumbent join count requires a sourced founding roster
+pres_2022,C,심상정,정의당,False,0,manual_zero,2022-03-08,manual config: progressive lineage via 통합진보당; no incumbent transfer from either major party
+pres_2025,C,이준석,개혁신당,False,4,repo_derived,2025-06-02,derived from data/raw/assembly_member_history.csv (21st Assembly current affiliation) - four incumbents held 개혁신당 affiliation mid-term
