@@ -3,16 +3,20 @@
 ## Status
 
 - Date: 2026-08-22
-- Status: measured candidate, **not promoted**; the active V25 pointer is unchanged
+- Status: measured candidate, **promoted as V26 on 2026-08-22**; see
+  `docs/FINAL_MODEL_V26_20260822.md`. The reservations in "Why this is not
+  promoted here" were not resolved by further measurement - they were
+  accepted as a decision, and they still apply to V26.
 - V23 `nested_predictions.csv` SHA-256: `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b` (unchanged)
 - V25 `nested_predictions.csv` SHA-256: `218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b` (unchanged)
 - Post-2022 outcomes used: none
 - New constants introduced: none
 - Reproduce with `python scripts/evaluate_v25_intensity_ladder.py`
 
-The candidate is two coupled changes. Both are measured here; neither is merged.
-The comparison is a development table over the same five scored elections that
-would decide promotion, so it is not an untouched holdout.
+The candidate is two coupled changes. Both are measured here, and both were
+subsequently promoted as V26. The comparison is a development table over the
+same five scored elections that decided the promotion, so it is not an
+untouched holdout.
 
 ## The defect
 
@@ -108,20 +112,23 @@ on the panel.** Raising the floors exposes the unfiltered race immediately.
 **Only the interaction helps.** Every election holds or improves, 2017 is
 preserved by construction, and national macro falls 27 %.
 
-## Why this is not promoted here
+## Reservations carried into V26
 
-Three reasons, all of which should be cleared before the active pointer moves.
+Three reasons this was held back here. The pointer was moved anyway by an
+explicit decision, so they are recorded as standing caveats rather than as
+blockers that were cleared.
 
-1. It is two coupled changes, and the second alters a scored path that is
-   currently bit-identical. Promotion means the retrospective and the forecast
-   start sharing a filter they do not share today.
+1. It is two coupled changes, and the second altered a scored path that was
+   bit-identical under V25. Under V26 the retrospective and the forecast share
+   a filter they did not share before.
 2. The combination was chosen after comparing panel metrics. The 2025 outcome
    was never read, but the five scored outcomes selected the variant, so this is
    selection on the development sample in the same sense the rest of the V24 and
    V25 record is.
 3. 2002 does not move at all and remains the worst election in the panel at
    -3.512 %p. The candidate improves the elections that were already close and
-   leaves the outlier untouched, which is the pattern to be suspicious of.
+   leaves the outlier untouched, which is the pattern to be suspicious of. This is unchanged in V26 and is the first
+   place to look next.
 
 ## What it does not do
 

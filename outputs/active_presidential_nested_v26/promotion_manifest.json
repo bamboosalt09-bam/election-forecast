@@ -1,0 +1,75 @@
+{
+  "schema": "presidential_model_promotion_v1",
+  "created_at_local": "2026-08-22T02:13:54.725330+09:00",
+  "status": "promoted_frozen_pre_2025_evaluation",
+  "active_version": "v26",
+  "predecessor": "v25",
+  "review_decision": "explicit_user_authorized_pointer_promotion",
+  "post_2022_outcomes_used": false,
+  "point_metrics": {
+    "variant": "v26_graded_mega_intensity_event_aligned",
+    "regional_equal_election_macro_mae_pp": 2.7122332621133673,
+    "national_equal_election_macro_mae_pp": 0.7209938807856904,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "accepted_scope": [
+    "graded_mega_issue_intensity_from_classifier_gate_proximity",
+    "event_class_alignment_on_the_scored_path"
+  ],
+  "rejected_scope": [
+    "margin_proportional_intensity_from_above",
+    "graded_intensity_without_event_class_alignment",
+    "target_specificity_gating_of_direct_mega_score"
+  ],
+  "selection_disclosure": "The pairing was chosen by comparing the same five scored outcomes that measure it. No 2025 outcome was read, and no constant was introduced: the ceiling, the floors and both gates already existed.",
+  "interval_record": {
+    "type": "predictive_interval_not_coefficient_confidence_interval",
+    "levels": [
+      0.5,
+      0.8,
+      0.9,
+      0.95
+    ],
+    "residual_scale": 1.0,
+    "candidate_outcomes": 11,
+    "status": "historical_chronological_calibration"
+  },
+  "rollback": {
+    "version": "v25",
+    "prediction_sha256": "218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b",
+    "finalization_manifest": "outputs/active_presidential_nested_v25/finalization_manifest.json"
+  },
+  "artifacts": [
+    {
+      "path": "outputs/active_presidential_nested_v26/nested_predictions.csv",
+      "bytes": 671518,
+      "sha256": "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/summary.json",
+      "bytes": 9089,
+      "sha256": "b51777431b643d06b6d994d285599f33c9b7a34bc41fec89a0768b0024623f40",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/input_manifest.csv",
+      "bytes": 5637,
+      "sha256": "ea33b1f72edaecebd7652974625045a5516c83a4e68ca0b54a6765e63ed8e466",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/predictive_interval_manifest.json",
+      "bytes": 2618,
+      "sha256": "a7116d05ae8990ea9e2ab0fd4e26685ac62abc8280171123eb962f38d18d0a5d",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "docs/EXPERIMENT_V25_INTENSITY_LADDER_20260822.md",
+      "bytes": 7497,
+      "sha256": "e20f5086ea711d772282ad9e8c52f1b4f127b9516aeed0ac36631b810d79f52a",
+      "hash_mode": "normalized_text_lf"
+    }
+  ]
+}

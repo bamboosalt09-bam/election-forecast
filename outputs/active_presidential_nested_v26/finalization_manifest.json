@@ -1,0 +1,225 @@
+{
+  "schema": "presidential_model_finalization_v1",
+  "created_at_local": "2026-08-22T02:13:54.772349+09:00",
+  "status": "frozen_pre_2025_evaluation",
+  "active_version": "v26",
+  "base_config_version": "v23",
+  "scored_development_elections": [
+    "pres_2002",
+    "pres_2007",
+    "pres_2012",
+    "pres_2017",
+    "pres_2022"
+  ],
+  "post_2022_outcomes_used": false,
+  "untouched_historical_holdout": false,
+  "metrics": {
+    "variant": "v26_graded_mega_intensity_event_aligned",
+    "regional_equal_election_macro_mae_pp": 2.7122332621133673,
+    "national_equal_election_macro_mae_pp": 0.7209938807856904,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "predictive_intervals": {
+    "status": "historical_chronological_calibration",
+    "levels": [
+      0.5,
+      0.8,
+      0.9,
+      0.95
+    ],
+    "residual_scale": 1.0,
+    "candidate_outcomes": 11,
+    "target_outcomes_used_to_construct_bounds": false,
+    "post_2022_outcomes_used": false
+  },
+  "verification": {
+    "v23_rollback_hash_match": true,
+    "v24_rollback_hash_match": true,
+    "v25_rollback_hash_match": true,
+    "v26_prediction_hash": "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3",
+    "public_active_v26_audit": "pass_after_finalization"
+  },
+  "artifacts": [
+    {
+      "path": "data/config/current_presidential_model.json",
+      "bytes": 1144,
+      "sha256": "554a8e6ff7726e3534ce6e3dfbdbf1aa45a85225d46ec16651c8725c40260a60",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "data/config/active_presidential_model_v23.json",
+      "bytes": 12791,
+      "sha256": "3cad2715bf224a3e43cdb569b109774ef4fd2d81c64aaf7238043195dd22cd84",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/run_current_presidential_model.py",
+      "bytes": 313,
+      "sha256": "2b948077ecfd25187414f08138e5aaa5865f5f5d50a1b3f0b239290cadc31ddc",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/run_active_presidential_model_v26.py",
+      "bytes": 3987,
+      "sha256": "c182bf47f566a8ec79fa0ccaf5010e1100771effe9fc8b8c75582705ff9d833d",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/build_automatic_controls_v26.py",
+      "bytes": 2801,
+      "sha256": "2b237adccfaf56365424a31733704bf9a6bde5c96312e6220d4970588424f819",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/build_active_v26_predictive_intervals.py",
+      "bytes": 2753,
+      "sha256": "9db0bd648a6ead614c519a33897e44b75d41ca447bfabe238bce9b9bb5b32d4a",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/audit_public_active_presidential_model_v26.py",
+      "bytes": 9007,
+      "sha256": "9aa1cbd94b0367544322d729c348d68d41e8e053dec64ddaf2ae62bffcc825aa",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/mega_issue_intensity_ladder.py",
+      "bytes": 3637,
+      "sha256": "290d3c168452253db7d4b4074ffa2a5d4f4fa2f0f77c9beb15c916172a288eaa",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/mega_issue_adjustment.py",
+      "bytes": 8449,
+      "sha256": "b7761dd7ddabcdf6cd531e521eaf599a38e4d8eb2d192d0e868f5a4685fb8088",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/automatic_controls_v22.py",
+      "bytes": 26559,
+      "sha256": "2cf32c5d6ff6b9cad84389844356014111d41f3e665d2647247a9e60312f5f07",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/v24_calibration.py",
+      "bytes": 16917,
+      "sha256": "a38cce71fc1828d9d4db581f712d14b4fda7dca3cb400ea08d6cbb78bbdcfe9d",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/strong_incumbent_veto.py",
+      "bytes": 9269,
+      "sha256": "7d6b13cbc590e1facd827f5c48943e6fcbc24017c92736acbc594533d1ca8ecf",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/third_candidate_lineage_constraint.py",
+      "bytes": 7315,
+      "sha256": "5488cc022fbf0928050de7437f7fd26d4460760ea8f976de1e1a74f4d258459f",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/weak_same_lane_refusal.py",
+      "bytes": 9990,
+      "sha256": "b4cdd30459544c6433ec376b0e5bbe6f0284d00cc4304bfa4989456985c7717a",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "docs/FINAL_MODEL_V26_20260822.md",
+      "bytes": 7172,
+      "sha256": "de70cae018c5bd8e29d337af60a34babfe31a0196463cfc10683466f22c32a50",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "docs/EXPERIMENT_V25_INTENSITY_LADDER_20260822.md",
+      "bytes": 7497,
+      "sha256": "e20f5086ea711d772282ad9e8c52f1b4f127b9516aeed0ac36631b810d79f52a",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "docs/REPRODUCIBILITY.md",
+      "bytes": 2792,
+      "sha256": "a64bf2732c4e246a6b9302b80dfb12be479194fc54d67b6d62e72923bd07f7f1",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "outputs/automatic_controls_v26/mega_issue_intensity.csv",
+      "bytes": 898,
+      "sha256": "f20505379239b6a2bae20b809e4844e1cbfc2fc07f3c80beb55cbb30bef853bc",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/input_manifest.csv",
+      "bytes": 5637,
+      "sha256": "ea33b1f72edaecebd7652974625045a5516c83a4e68ca0b54a6765e63ed8e466",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/nested_predictions.csv",
+      "bytes": 671518,
+      "sha256": "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/summary.json",
+      "bytes": 9089,
+      "sha256": "b51777431b643d06b6d994d285599f33c9b7a34bc41fec89a0768b0024623f40",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/by_election.csv",
+      "bytes": 538,
+      "sha256": "a70da30142f47c7e2cb9354291769bf85e451c26ddf973a187135fa01d206ede",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/national_predictions.csv",
+      "bytes": 2031,
+      "sha256": "3d57ea8acf628c16e10382096ab7bc91d2cb17d85af2e7c584d6dbfda3d31b2f",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/weak_same_lane_refusal_audit.csv",
+      "bytes": 6088,
+      "sha256": "4f3213715358e53e057d989af3c9258d95cffbb193ba13e117956d31726bc6ad",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/national_predictive_intervals.csv",
+      "bytes": 8954,
+      "sha256": "3a2813d620cf2e3a04c1cdb0548b8d4093a974f6d3cd032513a4d1f868e93b85",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/predictive_interval_summary.csv",
+      "bytes": 322,
+      "sha256": "dcf5b98109a0324c7d6dd4155f6bbf2e719944c85dda4766aa7a79f87301ad08",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/predictive_interval_components.csv",
+      "bytes": 897,
+      "sha256": "79b4b57fcc4f265f6cf966edbbb8312f6ac62bcde109d28dcc31faf03db70659",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/predictive_interval_manifest.json",
+      "bytes": 2618,
+      "sha256": "a7116d05ae8990ea9e2ab0fd4e26685ac62abc8280171123eb962f38d18d0a5d",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v26/promotion_manifest.json",
+      "bytes": 2782,
+      "sha256": "b9de42a7b2eef5b08480bd10b8b722be9adfcf2fdf1be581527fc7c38c664606",
+      "hash_mode": "raw_bytes"
+    }
+  ],
+  "rollback": {
+    "version": "v25",
+    "prediction_sha256": "218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b",
+    "finalization_manifest": "outputs/active_presidential_nested_v25/finalization_manifest.json"
+  },
+  "change_policy": "Do not modify V23, V24, V25, or V26 in place; use a new versioned experiment."
+}

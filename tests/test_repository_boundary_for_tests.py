@@ -95,7 +95,13 @@ def test_test_modules_do_not_read_untracked_repository_paths(source: Path) -> No
     except Exception:  # noqa: BLE001 - an unimportable module fails on its own
         module = None
 
-    candidates = {ROOT / literal for literal in LITERAL.findall(text)}
+    # A literal carrying a format placeholder is a template, not a path: it
+    # cannot be resolved statically, so it is left to the module's own guards.
+    candidates = {
+        ROOT / literal
+        for literal in LITERAL.findall(text)
+        if "{" not in literal and "}" not in literal
+    }
     if module is not None:
         candidates |= _referenced_paths(module, text)
 
@@ -138,3 +144,12 @@ def test_a_directory_counts_as_tracked_when_it_holds_tracked_files() -> None:
     assert _is_tracked(ROOT / "outputs" / "dir", tracked)
     assert _is_tracked(ROOT / "outputs" / "dir" / "file.csv", tracked)
     assert not _is_tracked(ROOT / "outputs" / "other", tracked)
+
+
+def test_a_format_template_is_not_mistaken_for_a_path() -> None:
+    """f-string templates cannot be resolved statically and must not be flagged."""
+
+    template = 'path = ROOT / f"outputs/active_presidential_nested_{version}/nested_predictions.csv"'
+    matched = LITERAL.findall(template)
+    assert matched, "the regex should still see the literal"
+    assert all("{" in literal for literal in matched), "the match is a template"
