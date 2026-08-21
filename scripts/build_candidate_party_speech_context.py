@@ -133,7 +133,11 @@ def build_context() -> pd.DataFrame:
         mapping_confidence = float(diag.get("avg_mapping_confidence", 0.0)) if not diag.empty else 0.0
         organization_strength = _organization_strength(str(candidate.party_name), bloc)
         outsider_status = 1.0 - organization_strength
-        risk_attention = float(candidate_vector.reindex(RISK_ISSUES, fill_value=0.0).sum())
+        # A set has process-randomized iteration order.  Sort before the
+        # floating-point reduction so identical inputs remain byte-reproducible.
+        risk_attention = float(
+            candidate_vector.reindex(sorted(RISK_ISSUES), fill_value=0.0).sum()
+        )
         cross_bloc_attack_pressure = risk_attention * (1.0 - 0.50 * organization_strength)
         intra_bloc_conflict_score = (1.0 - alignment) * organization_strength * 0.35 + outsider_status * 0.25
         party_elite_support_score = (

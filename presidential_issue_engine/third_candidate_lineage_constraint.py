@@ -40,6 +40,13 @@ _TRUE = {"1", "true", "yes", "y"}
 # 0.0367 (국민의당 2016, eleven of three hundred), so any floor inside that gap
 # reproduces the panel exactly; the midpoint is used.
 DEFAULT_DEFECTION_FLOOR = 0.02
+ORIGIN_LANES = {
+    "conservative",
+    "conservative_centrist",
+    "liberal",
+    "liberal_centrist",
+    "centrist",
+}
 
 
 def load_lineage(path: Path | str | None = None) -> pd.DataFrame:
@@ -58,6 +65,13 @@ def load_lineage(path: Path | str | None = None) -> pd.DataFrame:
         frame["has_party"] = frame["has_party"].astype(str).str.strip().str.lower().isin(_TRUE)
     else:
         frame["has_party"] = True
+    if "origin_lane" in frame.columns:
+        frame["origin_lane"] = frame["origin_lane"].fillna("").astype(str).str.strip()
+        invalid = sorted(set(frame["origin_lane"]) - ORIGIN_LANES - {""})
+        if invalid:
+            raise ValueError(f"third_candidate_lineage has invalid origin lanes: {invalid}")
+    else:
+        frame["origin_lane"] = ""
     return frame
 
 
@@ -144,7 +158,15 @@ def apply_lineage_ceiling(
                 {
                     "election_id": str(election_id),
                     "region_id": str(region_id),
-                    "candidate_name": str(third.get("candidate_name", pd.Series([""])).iloc[0]),
+                    "candidate_name": str(
+                        third.get(
+                            "candidate_name",
+                            third.get(
+                                "candidate_name_x",
+                                third.get("candidate_name_y", pd.Series([""])),
+                            ),
+                        ).iloc[0]
+                    ),
                     "before": current,
                     "ceiling": ceiling,
                     "excess_redistributed": excess,

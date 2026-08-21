@@ -3496,6 +3496,15 @@ def _candidate_party_tone_gap_features(base: pd.DataFrame) -> pd.DataFrame:
 def _orientation_label(row: pd.Series) -> str:
     """Classify a candidate into a broad ideological lane for split-risk checks."""
 
+    declared = str(row.get("declared_origin_lane", "")).strip()
+    if declared in {
+        "conservative",
+        "conservative_centrist",
+        "liberal",
+        "liberal_centrist",
+        "centrist",
+    }:
+        return declared
     bloc = str(row.get("bloc", ""))
     conservative = float(row.get("landscape_axis_conservative", 0.0))
     liberal = float(row.get("landscape_axis_liberal", 0.0))

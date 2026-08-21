@@ -1,23 +1,62 @@
 # Current State Handoff
 
-> Authoritative current state: `docs/FINAL_MODEL_V24_20260820.md`. The active
-> pointer is `data/config/current_presidential_model.json`; V23 is the immutable
-> rollback model. Dated sections below preserve the state and terminology that
+> Authoritative current state: `docs/FINAL_MODEL_V25_20260821.md`. The active
+> pointer is `data/config/current_presidential_model.json`; V24 and V23 are immutable
+> rollback models. Dated sections below preserve the state and terminology that
 > applied when each experiment was recorded and must not be read as current
 > active-version pointers.
 
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_v24_structural_residual_pre_2025`
+- active policy: `active_v25_bounded_runtime_repair_pre_2025`
 - rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
 
-## Active V24 promotion (2026-08-20)
+## Active V25 promotion (2026-08-21)
 
-V24 is the frozen current model. It retains the V23 numerical base configuration
+V25 is the frozen current model. It repairs the V24 runner's accidental bypass
+of promoted V23 runtime bindings while preserving V24's accepted
+`prediction_tilted` weak-C route and the generic third-candidate
+profile/pressure paths used by that route.
+
+- prediction rows: `232`
+- regional `contest_votes` weighted, equal-election MAE: `2.7739432320%p`
+- national candidate, equal-election MAE: `0.9896196355%p`
+- winner accuracy: `4/5`
+- canonical prediction SHA-256:
+  `218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b`
+- V24 rollback SHA-256:
+  `edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a`
+- V23 rollback SHA-256:
+  `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`
+- full regression suite: `607 passed`
+- post-2022 outcomes used: false
+
+The V25 D-1 prospective run reproduces all 232 frozen historical rows before
+emitting 51 target rows and computes no performance metric. See
+`docs/PRES_2025_V25_STRICT_PROSPECTIVE_20260821.md`.
+
+The prospective runner now reconstructs the sentence corpus to the same full
+speech-row granularity used by the historical Assembly matcher. This recovers
+cross-sentence regime context and produces a frequency-only
+`political_realignment / 0.75` diagnostic. Six PIT-safe official institutional
+proceedings activate the universal class-level
+`institutional_crisis / 2.0` gate. Direct shock routing is event-class aligned,
+so that crisis intensity scales `regime_change` rather than an unrelated
+`withdrawal_event`. Government evidence is retained for the incumbent-burden
+compiler but excluded from the person/party-only direct candidate profile.
+The weak-C donor uses documented party-origin lane before speech-axis
+orientation, classifying Lee Jun-seok as `conservative_centrist`. The corrected
+unscored national composition is Kim Moon-soo `37.4256%`, Lee Jae-myung
+`56.9775%`, and Lee Jun-seok `5.5969%`. These values must not be compared with
+the realised 2025 result for selection or tuning.
+
+## Superseded V24 promotion record (2026-08-20)
+
+V24 was the frozen current model at this dated checkpoint. It retains the V23 numerical base configuration
 and adds its ballot-faithful three-way scope, uniform 1%p scored floor,
 third-candidate lineage ceiling, strong-incumbent-veto response, and weak
 same-lane refusal layer through `scripts/run_active_presidential_model_v24.py`.
@@ -872,3 +911,204 @@ targets for coefficient selection.
   coefficient confidence interval or an untouched-holdout calibration.
 - Detailed record:
   `docs/EXPERIMENT_V24_INTERVAL_SCALE_REFINEMENT_20260803.md`.
+
+## Development-order caveat for the 2025 target (2026-08-21)
+
+Two corrections applied to the 2025 path on this date are defensible on their
+own evidence, but the order in which they were found is not a pre-registered
+forecast and the record should say so plainly.
+
+What was corrected:
+
+- `mega_issue_terms.csv` carried nine dedicated pres_2017 crisis terms and none
+  for pres_2025, so the institutional-crisis severity was measured with an empty
+  instrument. Eight terms were registered, all scoped to pres_2025 alone, all
+  drawn from events between 2024-12 and 2025-04 and therefore inside the D-1
+  cutoff. Historical mega-issue controls are byte-identical afterwards.
+- `weak_same_lane_refusal` applied a flat 0.50 desertion rate to every weak
+  third candidate although a continuous carry-in measure already existed. The
+  rate now falls linearly to zero at the exemption threshold already used by
+  `third_candidate_lineage_constraint`. Both anchors predate the change.
+
+Why each is defensible without reading the 2025 result: a term table with nine
+entries for one election and zero for another is a coverage defect on its face,
+and a flat rate alongside a continuous measure is an internal inconsistency on
+its face. No parameter was fitted to the realised 2025 composition, and the
+scored panel is bit-identical, including the refusal rate for 권영길 2002 and
+심상정 2022.
+
+What is not clean: the investigation began because the 2025 composition looked
+wrong, so the search direction was outcome-informed even though the fixes were
+not. A proposal to scale the crisis intensity down in proportion to the measured
+severity was raised on that basis and withdrawn once the measurement gap was
+identified, but the selection of which defects to pursue, of the 0.02 threshold,
+and of the eight registered terms all occurred after the result was known.
+
+This does not make the 2025 output a scored prediction and it must still not be
+compared with the realised result for selection or tuning. It does mean the 2025
+path carries a weaker methodological guarantee than the frozen historical panel,
+and any external claim should describe it as a corrected demonstration rather
+than an out-of-sample forecast.
+
+## The event-class alignment is forecast-only and unmeasurable on the panel (2026-08-21)
+
+Two candidate changes to the direct mega-issue attribution were tested and both
+were rejected on evidence. The measurements are recorded here because the second
+one settles a question that has been raised more than once.
+
+### Rejected: gating `direct_mega_score` by `target_specificity`
+
+`direct_mega_score` multiplies direction, association strength, confidence and
+intensity, and uses none of the five measured quality axes of the taxonomy. It
+is natural to ask whether a low-quality measurement should attribute less, and
+`target_specificity` is the axis that most directly expresses that. Adding it as
+a factor changes exactly one scored election, because it is the only one that
+reaches the attribution at all:
+
+| | regional macro | level macro | 2017 burdened candidate |
+| --- | --- | --- | --- |
+| current | 3.440 | **0.990** | **+0.030 %p** |
+| specificity-gated | 3.433 | 1.013 | +0.441 %p |
+
+The regional gain of 0.007 is noise from redistribution; the level metric gets
+worse and the single historical calibration point moves from essentially exact
+to fourteen times that error. Not adopted.
+
+### Verified: the discontinuous alignment is the correct shape
+
+`align_profile_to_event_class` keeps only issues declared compatible with the
+election's shock class. Three separate facts about it were established.
+
+**It is reached from the prospective forecast only.** `run_prospective_forecast`
+patches it in around `compile_direct_mega_scores`; the retrospective calls that
+function on the raw profile. The scored panel therefore never runs the alignment.
+
+**It is provably inert on the scored panel anyway.** Applying it to the
+retrospective reproduces every reported number bit-identically. Two independent
+reasons: the elections whose winning issue is off-class (2007 `security_nk`,
+2022 `security_nk`) sit at intensity 1.00, where `intensity_activation` is
+exactly zero, and the one election above the gate already selects an on-class
+issue. So the calibration measured on the unaligned path transfers unchanged,
+but the panel also cannot measure this component at all. It is a declared
+assumption. `tests/test_mega_issue_adjustment.py` pins both halves.
+
+**Making it continuous moves the discontinuity rather than removing it.** With a
+graded weight `lam` on off-class issues, the winner-take-all issue race flips at
+the point where the two selection scores cross:
+
+| election | on-class best | off-class best | flips at |
+| --- | --- | --- | --- |
+| 2002, 2012, 2017 | — | — | never (`lam` > 1) |
+| 2007, 2022 | 0 | 0.2318 / 0.3962 | already zero by intensity |
+| **2025** | 0.5137 | **0.8534** (`withdrawal_event`) | **`lam` = 0.602** |
+
+Every value of `lam` in [0, 1] gives an identical retrospective, so a sweep on
+the panel reports "no change, safe" while 2025 jumps at 0.602 from
+`regime_change` (score −0.3213) to `withdrawal_event` (−0.4414, rising to the
+−0.50 score cap at `lam` = 1). Downstream, `apply_direct_mega_shift` merges with
+`validate="many_to_one"`, so a second surviving issue raises rather than blends:
+the selection is a structural requirement, not a stylistic choice. A graded
+weight therefore keeps a step function and only relocates the step from a
+semantic boundary to an arbitrary crossing point, beyond which the whole shock
+transfers to an unrelated issue.
+
+Direction matters for interpreting the 2025 composition: the alignment is what
+holds slot B up, not what pushes it down. Removing it costs that candidate about
+1.6 %p. Concerns that the 2025 forecast suppresses the conservative slot too
+hard are not addressed by loosening this layer, which makes the suppression
+stronger.
+
+## What the eight registered terms actually moved (2026-08-21)
+
+The vocabulary registration was reported earlier in terms of the taxonomy axes
+and `direct_mega_score`. That understated it. Measured against `1bed9b0`, the
+last commit before the registration, the forecast moved:
+
+| | 김문수 | 이재명 | 이준석 |
+| --- | --- | --- | --- |
+| before | 47.68 | 46.72 | 5.60 |
+| after | 35.52 | 55.81 | 8.66 |
+
+Eight term rows produced a 21 %p swing, and `strong_incumbent_veto_audit.csv`
+went from zero rows to firing in all seventeen regions. The chain is a sequence
+of thresholds that all cross together once the crisis class is recognised:
+
+    shock_type            political_realignment -> institutional_crisis
+    mega_issue_intensity  0.75 -> 2.00                (SHOCK_CLASS_INTENSITY)
+    dominance_activation  0.168 -> 1.00
+    contest_regime_shift  x6, to +/-0.65              <- largest single term
+    strong_incumbent_veto inert -> 17/17 regions, -4.84 %p
+    direct_mega_score     0 -> -0.3213
+
+Decomposed on the 2025 stage audit, the base stage puts 김문수 ahead at 41.64
+against 35.17; the reversal is produced almost entirely by `contest_regime`
+at +/-0.65, which alone is 4.8 times the whole incumbent-shock stack (-0.1366),
+followed by the veto.
+
+Two things are true at once and both should be stated in any writeup. The terms
+themselves are documented pre-election facts, point-in-time valid at the D-1
+cutoff, and correcting a table that held nine crisis terms for 2017 and none for
+2025 is a coverage fix on its face; the scored panel stays bit-identical, and
+every layer that switched on is validated at 2017, which sits at +0.030 %p with
+the same layers firing. But a data-coverage fix moving a forecast by 21 %p is
+enormous leverage, and it comes from a ladder with a gap:
+`SHOCK_CLASS_INTENSITY` holds only {0.50, 0.75, 1.00, 2.00}, and
+`intensity_activation` is `(intensity - 1).clip(0, 1)`, so nothing between an
+inert shock and a fully saturated one is reachable. The model has no way to
+express a state between the near-tie it produced before and the twenty-point
+lead it produces now.
+
+The class-constant intensity is deliberate - it exists so that raw mention
+volume cannot shrink an institutional crisis back toward an ordinary campaign
+issue - so closing the gap is a design decision rather than a defect to patch,
+and it is recorded here as an open question, not a pending change.
+
+## Filling the intensity ladder: measured, and it needs the alignment (2026-08-21)
+
+The reachable intensities are {0.50, 0.75, 1.00, 2.00} and
+`intensity_activation` is `(intensity - 1).clip(0, 1)`, so a shock is either
+inert or saturated. Filling the gap was tested with a construction that adds no
+new number: the ceiling is the existing crisis level, each floor is that
+election's existing value, and the interpolant is the classifier's own gate
+ratio,
+
+    proximity = clip(min_regime_evidence / 0.65, 0, 1) * clip(accountability / 0.75, 0, 1)
+    intensity = floor + (2.00 - floor) * proximity
+
+which is exactly 1.0 for any election at or above both gates. 2017 and 2025 are
+both above, so both keep 2.00 by construction and 2017 is preserved.
+
+**A margin-proportional ladder from above is not available.** 2017 clears the
+crisis gate by 0.077 of its 0.35 range - the archetypal impeachment election
+sits essentially on the threshold, because a snap election gives the Assembly
+record a short window (15,838 source rows against 50,294 for 2002). Any scheme
+that scales intensity by measured margin collapses 2017 to 1.077. The existing
+design comment is empirically right.
+
+**The ladder alone degrades the panel by more than three times.**
+
+| | baseline | ladder | ladder + alignment |
+| --- | --- | --- | --- |
+| regional macro | 3.440 | 5.004 | **3.421** |
+| level macro | 0.990 | 3.228 | **0.721** |
+| 2007 burdened | +1.608 | +8.793 | +0.992 |
+| 2012 burdened | +0.641 | +0.127 | +0.127 |
+| 2017 burdened | +0.030 | +0.029 | +0.029 |
+| 2022 burdened | -0.251 | -11.410 | -0.190 |
+
+The cause is structural and worth recording on its own: 2007 and 2022 both have
+`security_nk` winning the issue race in a class that does not contain it, and
+the retrospective applies no event-class alignment. **The intensity gate at 1.00
+has been doing the alignment's job on the scored panel.** Raise the floor and
+the unfiltered issue race is exposed immediately. Apply both together and every
+election holds or improves, with level macro down 27 %.
+
+Two cautions before anyone promotes this. It is two coupled changes, not one,
+and the second of them alters a scored path that is currently bit-identical.
+And the combination was chosen after comparing panel metrics, which is
+selection on the scored set even though the 2025 outcome was never consulted -
+it belongs in the nested protocol, not in a direct merge.
+
+It also does nothing for the 2025 composition. 2025 sits above both gates, so
+its intensity stays at 2.00 and the forecast is unchanged; the ladder adds
+rungs below the crisis level, not between 2025 and a milder regime.

@@ -1,0 +1,55 @@
+{
+  "schema": "github_repository_baseline_v1",
+  "created_date": "2026-08-21",
+  "source_workspace": "C:\\english_folder\\poll_project",
+  "active_version": "v25",
+  "active_policy": "active_v25_bounded_runtime_repair_pre_2025",
+  "post_2022_outcomes_used": false,
+  "license": {
+    "path": "LICENSE",
+    "spdx": "Apache-2.0",
+    "normalized_sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a"
+  },
+  "required_repository_files": [
+    "NOTICE",
+    "docs/FINAL_MODEL_V25_20260821.md",
+    "scripts/audit_public_active_presidential_model_v25.py"
+  ],
+  "expected_hashes": {
+    "data/config/current_presidential_model.json": "56e291caffa83952392732be11783e6d2b7737a966f130040cca5028dcd6f1a1",
+    "outputs/active_presidential_nested_v23/nested_predictions.csv": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
+    "outputs/active_presidential_nested_v24/nested_predictions.csv": "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a",
+    "outputs/active_presidential_nested_v25/finalization_manifest.json": "6c8b7eec59ba6ce3554ba9a3950e9ea94692aa663dc0de1752819a2d152d5b55",
+    "outputs/active_presidential_nested_v25/nested_predictions.csv": "218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b"
+  },
+  "verified_at_promotion": {
+    "v25_exact_reproduction_to_same_hash": "pass",
+    "regression_suite": "601 passed",
+    "public_active_v25_audit": "pass_after_finalization",
+    "v23_rollback_hash_match": true,
+    "v24_rollback_hash_match": true,
+    "v25_prediction_hash": "218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b",
+    "prospective_historical_reproduction_rows": 232
+  },
+  "tracked_file_max_bytes": 26214400,
+  "allowed_output_prefixes": [
+    "outputs/active_presidential_nested_v23/",
+    "outputs/active_presidential_nested_v24/",
+    "outputs/active_presidential_nested_v25/",
+    "outputs/audit_logs/",
+    "outputs/automatic_controls_v22/",
+    "outputs/automatic_controls_v23/",
+    "outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation/active_run/",
+    "outputs/footprint_candidate_base_v9/",
+    "outputs/forecast_baselines/",
+    "outputs/preliminary_slot_assignment/",
+    "outputs/preliminary_slot_assignment_v23/",
+    "outputs/prospective_pres_2025_v23/",
+    "outputs/prospective_pres_2025_v24/",
+    "outputs/prospective_pres_2025_v25/",
+    "outputs/unified_exact_lineage_v21/",
+    "outputs/v24_defect_ablation/",
+    "outputs/v24_floor_recalibration_hypotheses/",
+    "outputs/v24_structural_residual_hypotheses/"
+  ]
+}

@@ -9,7 +9,9 @@ from presidential_issue_engine.weak_same_lane_refusal import (
 )
 
 
-def _lineage(*, major_split: bool = False) -> pd.DataFrame:
+def _lineage(
+    *, major_split: bool = False, origin_lane: str = ""
+) -> pd.DataFrame:
     return pd.DataFrame(
         [
             {
@@ -20,6 +22,7 @@ def _lineage(*, major_split: bool = False) -> pd.DataFrame:
                 "has_party": True,
                 "defection_seats": 0 if not major_split else 30,
                 "assembly_size": 300,
+                "origin_lane": origin_lane,
             }
         ]
     )
@@ -135,6 +138,24 @@ def test_prediction_tilted_mode_keeps_both_major_recipients_nonzero() -> None:
             > after.at["B", "weak_lane_refusal_transfer_in"]
         )
     assert set(audit["recipient_weight_mode"]) == {"prediction_tilted"}
+
+
+def test_declared_origin_lane_overrides_noisy_speech_orientation() -> None:
+    frame = _frame()
+    adjusted, audit = apply_weak_same_lane_refusal(
+        frame,
+        recipient_weight_mode="prediction_tilted",
+        lineage=_lineage(origin_lane="conservative_centrist"),
+    )
+
+    for _, region in adjusted.groupby("region_id"):
+        by_slot = region.set_index("source_slot")
+        assert (
+            by_slot.at["B", "weak_lane_refusal_transfer_in"]
+            > by_slot.at["A", "weak_lane_refusal_transfer_in"]
+        )
+    assert set(audit["declared_origin_lane"]) == {"conservative_centrist"}
+    assert set(audit["resolved_origin_lane"]) == {"conservative_centrist"}
 
 
 def test_is_inert_for_major_split_lineage() -> None:
