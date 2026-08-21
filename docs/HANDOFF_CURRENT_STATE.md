@@ -949,3 +949,71 @@ compared with the realised result for selection or tuning. It does mean the 2025
 path carries a weaker methodological guarantee than the frozen historical panel,
 and any external claim should describe it as a corrected demonstration rather
 than an out-of-sample forecast.
+
+## The event-class alignment is forecast-only and unmeasurable on the panel (2026-08-21)
+
+Two candidate changes to the direct mega-issue attribution were tested and both
+were rejected on evidence. The measurements are recorded here because the second
+one settles a question that has been raised more than once.
+
+### Rejected: gating `direct_mega_score` by `target_specificity`
+
+`direct_mega_score` multiplies direction, association strength, confidence and
+intensity, and uses none of the five measured quality axes of the taxonomy. It
+is natural to ask whether a low-quality measurement should attribute less, and
+`target_specificity` is the axis that most directly expresses that. Adding it as
+a factor changes exactly one scored election, because it is the only one that
+reaches the attribution at all:
+
+| | regional macro | level macro | 2017 burdened candidate |
+| --- | --- | --- | --- |
+| current | 3.440 | **0.990** | **+0.030 %p** |
+| specificity-gated | 3.433 | 1.013 | +0.441 %p |
+
+The regional gain of 0.007 is noise from redistribution; the level metric gets
+worse and the single historical calibration point moves from essentially exact
+to fourteen times that error. Not adopted.
+
+### Verified: the discontinuous alignment is the correct shape
+
+`align_profile_to_event_class` keeps only issues declared compatible with the
+election's shock class. Three separate facts about it were established.
+
+**It is reached from the prospective forecast only.** `run_prospective_forecast`
+patches it in around `compile_direct_mega_scores`; the retrospective calls that
+function on the raw profile. The scored panel therefore never runs the alignment.
+
+**It is provably inert on the scored panel anyway.** Applying it to the
+retrospective reproduces every reported number bit-identically. Two independent
+reasons: the elections whose winning issue is off-class (2007 `security_nk`,
+2022 `security_nk`) sit at intensity 1.00, where `intensity_activation` is
+exactly zero, and the one election above the gate already selects an on-class
+issue. So the calibration measured on the unaligned path transfers unchanged,
+but the panel also cannot measure this component at all. It is a declared
+assumption. `tests/test_mega_issue_adjustment.py` pins both halves.
+
+**Making it continuous moves the discontinuity rather than removing it.** With a
+graded weight `lam` on off-class issues, the winner-take-all issue race flips at
+the point where the two selection scores cross:
+
+| election | on-class best | off-class best | flips at |
+| --- | --- | --- | --- |
+| 2002, 2012, 2017 | — | — | never (`lam` > 1) |
+| 2007, 2022 | 0 | 0.2318 / 0.3962 | already zero by intensity |
+| **2025** | 0.5137 | **0.8534** (`withdrawal_event`) | **`lam` = 0.602** |
+
+Every value of `lam` in [0, 1] gives an identical retrospective, so a sweep on
+the panel reports "no change, safe" while 2025 jumps at 0.602 from
+`regime_change` (score −0.3213) to `withdrawal_event` (−0.4414, rising to the
+−0.50 score cap at `lam` = 1). Downstream, `apply_direct_mega_shift` merges with
+`validate="many_to_one"`, so a second surviving issue raises rather than blends:
+the selection is a structural requirement, not a stylistic choice. A graded
+weight therefore keeps a step function and only relocates the step from a
+semantic boundary to an arbitrary crossing point, beyond which the whole shock
+transfers to an unrelated issue.
+
+Direction matters for interpreting the 2025 composition: the alignment is what
+holds slot B up, not what pushes it down. Removing it costs that candidate about
+1.6 %p. Concerns that the 2025 forecast suppresses the conservative slot too
+hard are not addressed by loosening this layer, which makes the suppression
+stronger.
