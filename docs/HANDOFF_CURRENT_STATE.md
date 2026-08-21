@@ -1017,3 +1017,48 @@ holds slot B up, not what pushes it down. Removing it costs that candidate about
 1.6 %p. Concerns that the 2025 forecast suppresses the conservative slot too
 hard are not addressed by loosening this layer, which makes the suppression
 stronger.
+
+## What the eight registered terms actually moved (2026-08-21)
+
+The vocabulary registration was reported earlier in terms of the taxonomy axes
+and `direct_mega_score`. That understated it. Measured against `1bed9b0`, the
+last commit before the registration, the forecast moved:
+
+| | 김문수 | 이재명 | 이준석 |
+| --- | --- | --- | --- |
+| before | 47.68 | 46.72 | 5.60 |
+| after | 35.52 | 55.81 | 8.66 |
+
+Eight term rows produced a 21 %p swing, and `strong_incumbent_veto_audit.csv`
+went from zero rows to firing in all seventeen regions. The chain is a sequence
+of thresholds that all cross together once the crisis class is recognised:
+
+    shock_type            political_realignment -> institutional_crisis
+    mega_issue_intensity  0.75 -> 2.00                (SHOCK_CLASS_INTENSITY)
+    dominance_activation  0.168 -> 1.00
+    contest_regime_shift  x6, to +/-0.65              <- largest single term
+    strong_incumbent_veto inert -> 17/17 regions, -4.84 %p
+    direct_mega_score     0 -> -0.3213
+
+Decomposed on the 2025 stage audit, the base stage puts 김문수 ahead at 41.64
+against 35.17; the reversal is produced almost entirely by `contest_regime`
+at +/-0.65, which alone is 4.8 times the whole incumbent-shock stack (-0.1366),
+followed by the veto.
+
+Two things are true at once and both should be stated in any writeup. The terms
+themselves are documented pre-election facts, point-in-time valid at the D-1
+cutoff, and correcting a table that held nine crisis terms for 2017 and none for
+2025 is a coverage fix on its face; the scored panel stays bit-identical, and
+every layer that switched on is validated at 2017, which sits at +0.030 %p with
+the same layers firing. But a data-coverage fix moving a forecast by 21 %p is
+enormous leverage, and it comes from a ladder with a gap:
+`SHOCK_CLASS_INTENSITY` holds only {0.50, 0.75, 1.00, 2.00}, and
+`intensity_activation` is `(intensity - 1).clip(0, 1)`, so nothing between an
+inert shock and a fully saturated one is reachable. The model has no way to
+express a state between the near-tie it produced before and the twenty-point
+lead it produces now.
+
+The class-constant intensity is deliberate - it exists so that raw mention
+volume cannot shrink an institutional crisis back toward an ordinary campaign
+issue - so closing the gap is a design decision rather than a defect to patch,
+and it is recorded here as an open question, not a pending change.
