@@ -29,6 +29,12 @@ SHOCK_CLASS_LEVEL = {
     "political_realignment": 0.50,
     "diffuse_issue_environment": 0.35,
 }
+# The two evidence thresholds an election must clear to be classified as an
+# institutional crisis. Named because anything reasoning about how far an
+# election sits above or below the crisis boundary has to use the same numbers
+# the classifier uses, rather than introducing a threshold of its own.
+CRISIS_MIN_REGIME_EVIDENCE = 0.65
+CRISIS_ACCOUNTABILITY = 0.75
 SHOCK_CLASS_INTENSITY = {
     "institutional_crisis": 2.00,
     "accountability_scandal": 1.00,
@@ -87,8 +93,8 @@ def build_automatic_mega_taxonomy(
     ].min(axis=1)
     shock_type = np.select(
         [
-            minimum_regime_evidence.ge(0.65)
-            & work["accountability_component"].ge(0.75),
+            minimum_regime_evidence.ge(CRISIS_MIN_REGIME_EVIDENCE)
+            & work["accountability_component"].ge(CRISIS_ACCOUNTABILITY),
             work["accountability_component"].ge(0.80)
             & work["salience_component"].ge(0.40),
             work["salience_component"].ge(0.60)

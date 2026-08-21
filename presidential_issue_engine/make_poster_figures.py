@@ -465,7 +465,11 @@ def main() -> None:
             for election_id in ("pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022")
         },
         "12_baseline_comparison": baseline_comparison(),
+        # The v23 panel is kept because its outputs are frozen and still
+        # referenced, but the active pointer is v25 and that is the figure the
+        # README shows.
         "13_prospective_forecast_v23": prospective_forecast("v23"),
+        "14_prospective_forecast_v25": prospective_forecast("v25"),
     }
     for name, fig in figures.items():
         save(fig, name)
