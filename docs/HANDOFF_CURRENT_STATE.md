@@ -1106,9 +1106,19 @@ election holds or improves, with level macro down 27 %.
 Two cautions before anyone promotes this. It is two coupled changes, not one,
 and the second of them alters a scored path that is currently bit-identical.
 And the combination was chosen after comparing panel metrics, which is
-selection on the scored set even though the 2025 outcome was never consulted -
-it belongs in the nested protocol, not in a direct merge.
+selection on the scored set even though the 2025 outcome was never consulted.
 
 It also does nothing for the 2025 composition. 2025 sits above both gates, so
 its intensity stays at 2.00 and the forecast is unchanged; the ladder adds
 rungs below the crisis level, not between 2025 and a milder regime.
+
+**Superseded by a reproducible experiment (2026-08-22).** The candidate has
+since been run through the standard comparison as a two-by-two -
+`scripts/evaluate_v25_intensity_ladder.py`, recorded in
+`docs/EXPERIMENT_V25_INTENSITY_LADDER_20260822.md` - which confirms these
+numbers and adds one the scratch runs could not show: the alignment on its own
+is bit-identical to baseline, so the two changes are a pure interaction rather
+than two independent improvements. The classifier's gate thresholds are now
+named constants in `automatic_controls_v22`, and the ladder reuses them, so the
+claim that it introduces no new number is checkable rather than asserted. It
+remains unpromoted; the active V25 pointer is unchanged.
