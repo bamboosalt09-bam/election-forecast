@@ -156,6 +156,8 @@ def test_an_election_missing_from_the_diagnostics_keeps_its_floor() -> None:
 def test_the_scored_panel_reproduces_the_recorded_ladder() -> None:
     """The experiment record's intensity table must match what the code produces."""
 
+    if not ladder.DIAGNOSTICS.exists():
+        pytest.skip(f"classifier diagnostics not present: {ladder.DIAGNOSTICS.name}")
     diagnostics = pd.read_csv(ladder.DIAGNOSTICS, encoding="utf-8-sig")
     intensity = pd.read_csv(
         ladder.AUTOMATIC_DIR / "mega_issue_intensity.csv", encoding="utf-8-sig"
