@@ -113,8 +113,6 @@ def self_founded_elections(
     return weak
 
 
-
-
 def apply_lineage_ceiling(
     frame: pd.DataFrame,
     *,

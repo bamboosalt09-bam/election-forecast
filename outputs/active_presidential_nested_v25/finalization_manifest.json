@@ -93,14 +93,14 @@
     },
     {
       "path": "presidential_issue_engine/third_candidate_lineage_constraint.py",
-      "bytes": 6549,
-      "sha256": "5723ebdd3cdf5bfaf5c5aef367b46f6972e9d584b4c79c5403e9a1dea89677a8",
+      "bytes": 7315,
+      "sha256": "5488cc022fbf0928050de7437f7fd26d4460760ea8f976de1e1a74f4d258459f",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "presidential_issue_engine/weak_same_lane_refusal.py",
-      "bytes": 7067,
-      "sha256": "6180c1a6f4a1d6b1cdd6cebe577aeb7f03114640988baf4a0b5f91d9e75aad4d",
+      "bytes": 9990,
+      "sha256": "b4cdd30459544c6433ec376b0e5bbe6f0284d00cc4304bfa4989456985c7717a",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -124,7 +124,7 @@
     {
       "path": "outputs/active_presidential_nested_v25/input_manifest.csv",
       "bytes": 5637,
-      "sha256": "1d2bc3a4caabe41dc7fb73a542f8a5173586eb190dab4933b79a016651e5977c",
+      "sha256": "03746b610a475557836ee016740f7edd177247b77f6de44c4868079501030ab2",
       "hash_mode": "raw_bytes"
     },
     {
@@ -153,8 +153,8 @@
     },
     {
       "path": "outputs/active_presidential_nested_v25/weak_same_lane_refusal_audit.csv",
-      "bytes": 5498,
-      "sha256": "e4b6a7ccc22023584e838d7dd2401b4372e17d204ad163cc5baa2909eb40f88c",
+      "bytes": 6068,
+      "sha256": "25f6a0b94e06b036910fba22a2451077cfbf010b90691723ef4776790566ce70",
       "hash_mode": "raw_bytes"
     },
     {
@@ -184,7 +184,7 @@
     {
       "path": "outputs/active_presidential_nested_v25/promotion_manifest.json",
       "bytes": 2604,
-      "sha256": "b5fed545bd59786c163b413a77a5f554ce1f5e374fd0e4339d5d3e57ea171482",
+      "sha256": "d24d94b8a431977ba279e2ec8da8bfab0a4adb56fbb0badbf181043d90511344",
       "hash_mode": "raw_bytes"
     }
   ],
