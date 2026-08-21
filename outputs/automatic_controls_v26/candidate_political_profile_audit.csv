@@ -1,0 +1,7 @@
+﻿election_id,slot,candidate_id,candidate_name,candidate_role,profile_source,trait_evidence_weight,centrist_appeal,anti_major_party_appeal,target_outcome_used
+pres_2002,C,kwon_young_ghil,Kwon Young-ghil,final_third,current_election_structural_evidence,0.3776503168428453,0.1666666666666666,0.32175,False
+pres_2007,C,lee_hoi_chang,Lee Hoi-chang,final_third,current_election_structural_evidence,0.5886164164530889,0.3185164816851648,0.6656980850794689,False
+pres_2012,C,ahn_cheol_soo,Ahn Cheol-soo,withdrawn_preliminary,strictly_prior_assembly_attention_stature_shrunk,0.9481810828272742,0.5,0.5,False
+pres_2017,C,ahn_cheol_soo,Ahn Cheol-soo,final_third,current_election_structural_evidence,0.653317888212555,0.8303481864787281,0.7310747514215004,False
+pres_2022,C,ahn_cheol_soo,Ahn Cheol-soo,withdrawn_preliminary,strictly_prior_same_person_structural_evidence_shrunk,0.43665501702961906,0.6442481929925727,0.6008999495170703,False
+pres_2002,C,chung_mong_joon,Chung Mong-joon,withdrawn_preliminary,strictly_prior_candidate_election_history_shrunk,0.5916411057874305,0.6479102764468576,0.5887461658681146,False

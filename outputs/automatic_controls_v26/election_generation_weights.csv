@@ -1,0 +1,8 @@
+﻿election_id,young_weight,middle_weight,senior_weight,available_date,notes
+pres_1992,0.25,0.5,0.25,1990-01-01,Latest official age-turnout composition strictly before target: universal_uninformed_prior
+pres_1997,0.25,0.5,0.25,1990-01-01,Latest official age-turnout composition strictly before target: universal_uninformed_prior
+pres_2002,0.25,0.5,0.25,1990-01-01,Latest official age-turnout composition strictly before target: universal_uninformed_prior
+pres_2007,0.25,0.5,0.25,1990-01-01,Latest official age-turnout composition strictly before target: universal_uninformed_prior
+pres_2012,0.156,0.436,0.408,2008-03-09,Latest official age-turnout composition strictly before target: pres_2007
+pres_2017,0.163,0.403,0.434,2013-02-18,Latest official age-turnout composition strictly before target: pres_2012
+pres_2022,0.173,0.368,0.459,2017-09-19,Latest official age-turnout composition strictly before target: pres_2017

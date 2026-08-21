@@ -1,0 +1,219 @@
+{
+  "policy_version": "active_v25_corrected_v23_lineage_v24_structural",
+  "variant": "slot_free_hierarchy_no_neutral",
+  "status": "active",
+  "strict_nested": true,
+  "strict_nested_base": true,
+  "strict_nested_postprocess_selection": false,
+  "fixed_universal_evidence_gated_pipeline": true,
+  "strict_nested_execution": true,
+  "untouched_historical_holdout": false,
+  "target_excluded_from_each_outer_fit": true,
+  "target_excluded_from_each_stage_selection": true,
+  "post_2022_outcomes_used": false,
+  "predictor_orthogonalization_pairs": [],
+  "direct_party_center_base_gain": 0.0,
+  "direct_party_center_gain_by_election": {},
+  "regional_offset_base_gain": 0.25,
+  "regional_offset_vif_threshold": 20.0,
+  "regional_offset_gate_mode": "vif",
+  "regional_offset_gain_by_election": {
+    "pres_2002": 0.0,
+    "pres_2007": 0.0,
+    "pres_2012": 0.0,
+    "pres_2017": 0.0,
+    "pres_2022": 0.0
+  },
+  "chungcheong_identity_gain": 0.5,
+  "chungcheong_identity_shift_cap": 0.08,
+  "chungcheong_identity_outcome_fields_used": [],
+  "general_regional_identity_gain": 0.1,
+  "general_regional_identity_shift_cap": 0.04,
+  "general_regional_identity_outcome_fields_used": [],
+  "metrics": {
+    "variant": "v26_graded_mega_intensity_event_aligned",
+    "regional_equal_election_macro_mae_pp": 2.7122332621133673,
+    "national_equal_election_macro_mae_pp": 0.7209938807856904,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "transfer_adjustment_applied_after_ridge": true,
+  "legacy_outcome_aligned_slots_active": false,
+  "automatic_issue_seed_schema": "automatic_issue_interpretation_v2",
+  "automatic_issue_seed_regenerated": true,
+  "selected_stage_by_election": {
+    "pres_2002": "structural_mega_shock_regime",
+    "pres_2007": "structural_mega_shock_regime",
+    "pres_2012": "structural_mega_shock_regime",
+    "pres_2017": "structural_mega_shock_regime",
+    "pres_2022": "structural_mega_shock_regime"
+  },
+  "future_deployment_stage": "structural_mega_shock_regime",
+  "future_deployment_inner_losses": {
+    "strict_base": 6.165891085807993,
+    "structural": 5.546591247391263,
+    "structural_mega": 5.267374190517558,
+    "structural_mega_shock": 4.992300624487586,
+    "structural_mega_shock_regime": 3.952596519480823
+  },
+  "minimum_stage_selection_elections": 0,
+  "direct_mega_issue_shift": "candidate_stage_only",
+  "direct_mega_stage_nested_selected": false,
+  "direct_mega_stage_fixed_for_deployment": true,
+  "direct_mega_gain_nested_selected": false,
+  "direct_mega_gain_development_selected": true,
+  "candidate_numeric_parameters_historically_development_selected": true,
+  "direct_mega_logit_gain": 0.4,
+  "direct_mega_log_shift_cap": 0.2,
+  "direct_mega_minimum_intensity": 1.0,
+  "direct_mega_score_rows": 2,
+  "incumbent_shock_response": true,
+  "government_burden_gain": 1.0,
+  "rupture_extra_gain": 0.4,
+  "incumbent_conversion_buffer": 0.15,
+  "incumbent_shock_log_shift_cap": 0.15,
+  "government_burden_score_rows": 5,
+  "contest_regime_response": true,
+  "contest_regime_expansion_gain": 0.5,
+  "contest_regime_log_shift_cap": 0.4,
+  "contest_regime_critical_elasticity": 0.75,
+  "contest_regime_swing_elasticity": 1.25,
+  "contest_regime_swing_log_shift_cap": 0.5,
+  "contest_regime_rejection_double_discount": false,
+  "contest_regime_rows": 5,
+  "rejection_beneficiary_routing_enabled": true,
+  "rejection_beneficiary_routing_gain": null,
+  "rejection_beneficiary_routing_formula": "cumulative_rejection_advantage * rejection_activation * certainty * runner flexible mass",
+  "rejection_beneficiary_routing_rows": 33,
+  "contest_regime_core_floor": "min_effective_direct_core_times_reliability",
+  "cumulative_regime_rejection": true,
+  "cumulative_rejection_formula": "negative_direction * negative_share * sqrt(min(unique_negative_issues/4,1)) * max(party_erosion_route, rupture_route) * reliability",
+  "structural_layers_reactivated": true,
+  "structural_outer_config_overrides": {
+    "conversion_scale": 0.05,
+    "regionalism_scale": 0.15,
+    "within_bloc_transfer_scale": 0.5,
+    "within_bloc_stronghold_gain": 0.25
+  },
+  "electorate_preference_gain_floor": 0.04,
+  "terrain_anchor_policy": {
+    "source": "core_critical_swing_from_strictly_prior_party_and_candidate_ballots",
+    "reliability_field": "direct_party_reliability",
+    "reliability_multiplier": 0.5,
+    "gain_cap": 0.25,
+    "mega_shock_attenuation": true,
+    "shock_floor": 1.0
+  },
+  "regional_accent_policy": {
+    "source": "strictly_prior_direct_party_multiaxis_history",
+    "reliability_multiplier": 0.3,
+    "gain_cap": 0.2,
+    "signal_width": 0.1,
+    "core_policy": "inverse_core_share_mobility",
+    "mega_shock_attenuation": false
+  },
+  "concrete_support_policy": {
+    "eligible_lineages": [
+      "국민의힘",
+      "더불어민주당"
+    ],
+    "matching": "exact_pre_normalization_party_lineage",
+    "other_lineage_core": 0.0,
+    "other_stable_support_reclassification": "critical_support",
+    "cross_candidate_core_sharing": false
+  },
+  "strategic_lane_transfer_policy": {
+    "enabled": true,
+    "reservoir": "nonmajor_effective_critical_support",
+    "recipient_pool": "aligned_major_party_candidates",
+    "viability_source": "preliminary_expected_share",
+    "pressure_formula": "major_party_gravity * (1 - wasted_vote_resistance) * (1 - donor_preliminary_share / strongest_major_preliminary_share) * confidence * lane_clarity",
+    "affinity_power": 2.0,
+    "outcome_fields_used": []
+  },
+  "chungcheong_regional_identity_policy": {
+    "enabled": true,
+    "reservoir_source": "strictly_prior_full_election_history",
+    "routing_evidence": [
+      "footprint_candidate_regional_base",
+      "dated_pre_election_alignment",
+      "automatic_regional_party_candidate_fit"
+    ],
+    "gain": 0.5,
+    "regional_shift_cap": 0.08,
+    "half_life_years": 12.0,
+    "prior_strength": 1.5,
+    "unrouted_mass_policy": "remain_critical_or_swing",
+    "outcome_fields_used": [],
+    "automatic_alignment_schema": "automatic_regional_party_alignment_v11",
+    "superseded_by": "unified_exact_lineage_identity"
+  },
+  "general_regional_identity_policy": {
+    "enabled": true,
+    "region_scope": "non_chungcheong_with_dated_candidate_base_only",
+    "distinctiveness_source": "strictly_prior_direct_party_and_downweighted_presidential_ballots",
+    "routing_evidence": [
+      "candidate_regional_base"
+    ],
+    "donor_policy": "least_compatible_prior_regional_camp_first",
+    "gain": 0.1,
+    "regional_shift_cap": 0.04,
+    "half_life_years": 12.0,
+    "prior_strength": 1.5,
+    "outcome_fields_used": [],
+    "superseded_by": "unified_exact_lineage_identity"
+  },
+  "party_context_cohesion_policy": {
+    "mode": "supporter_retention",
+    "direct_vote_adjustment": false,
+    "core_defection_cap": 0.02,
+    "critical_defection_cap": 0.15,
+    "released_mass_allocation": "regional_pre_adjustment_prediction",
+    "candidate_conversion_direct_input": "nonparty_candidate_stature",
+    "same_orientation_use": "within_bloc_dispersion_only"
+  },
+  "undated_issue_importance_policy": "neutral_default_0.5",
+  "undated_region_issue_sensitivity_policy": "neutral_default_0.3",
+  "historical_candidate_set_warning": "Nested execution blocks target-fold stage-selection leakage, but the stage definitions and numeric gains were historically developed on the through-2022 sample and cannot become an untouched holdout retroactively.",
+  "frozen_reproduction_difference": 0.1105335098367251,
+  "frozen_reproduction_guard": "measured but not required for a versioned upstream issue-layer change",
+  "pre_v25_extension_metrics": {
+    "variant": "fully_nested_postprocess",
+    "regional_equal_election_macro_mae_pp": 3.952596519480823,
+    "national_equal_election_macro_mae_pp": 2.478812706781737,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "predecessor": "v24_with_runtime_lineage_defect",
+  "v24_runtime_lineage_defect_corrected": true,
+  "v23_runtime_repairs": [
+    "automatic_contest_response",
+    "candidate_regional_base",
+    "disable_general_identity",
+    "economic_housing_alignment",
+    "freeze_issue_seeds",
+    "generation_weights",
+    "mega_issue_inputs",
+    "policy_binding",
+    "political_landscape",
+    "regional_alignment",
+    "unified_identity",
+    "unified_prior"
+  ],
+  "preserved_v24_runtime_paths": {
+    "active_conversion_context": "data/raw/candidate_vote_conversion_context.csv",
+    "third_candidate_profile": "data/raw/third_candidate_profile.csv",
+    "third_candidate_pressure": "data/raw/third_candidate_pressure.csv",
+    "reason": "preserve accepted V24 winner-safe weak-C runtime"
+  },
+  "v24_structural_extensions": [
+    "strong_incumbent_veto",
+    "third_candidate_lineage_ceiling",
+    "weak_same_lane_refusal"
+  ],
+  "v25_extension_audit_rows": {
+    "strong_incumbent_veto": 33,
+    "third_candidate_lineage_ceiling": 12,
+    "weak_same_lane_refusal": 33
+  }
+}

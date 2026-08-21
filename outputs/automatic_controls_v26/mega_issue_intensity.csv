@@ -1,0 +1,6 @@
+﻿election_id,mega_issue_intensity,available_date,notes
+pres_2002,0.683736,2002-11-11,"Graded institutional-crisis proximity applied to the V23 class intensity; classifier gates reused, no new constant, no election outcome"
+pres_2007,1.590052,2007-12-17,"Graded institutional-crisis proximity applied to the V23 class intensity; classifier gates reused, no new constant, no election outcome"
+pres_2012,1.195804,2012-12-10,"Graded institutional-crisis proximity applied to the V23 class intensity; classifier gates reused, no new constant, no election outcome"
+pres_2017,2.0,2017-04-10,"Graded institutional-crisis proximity applied to the V23 class intensity; classifier gates reused, no new constant, no election outcome"
+pres_2022,1.575327,2022-03-07,"Graded institutional-crisis proximity applied to the V23 class intensity; classifier gates reused, no new constant, no election outcome"

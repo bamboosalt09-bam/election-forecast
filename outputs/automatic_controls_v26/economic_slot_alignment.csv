@@ -1,0 +1,14 @@
+﻿election_id,slot,economic_responsibility_score,available_date,source_note
+pres_2002,A,0.929146391963307,2002-12-18,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2002,B,-0.929146391963307,2002-12-18,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2002,C,-0.5379268585050725,2002-12-18,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2007,A,-0.7904971884380935,2007-12-18,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2007,B,0.7904971884380935,2007-12-18,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2007,C,-0.1248153455428568,2007-12-18,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2012,A,0.913728178889416,2012-12-18,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2012,B,-0.913728178889416,2012-12-18,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2017,A,-0.864937991293036,2017-05-08,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2017,B,0.864937991293036,2017-05-08,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2017,C,-0.5462766260798122,2017-05-08,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2022,A,-0.9373361074854626,2022-03-08,Automatic structural incumbent responsibility plus explicit government-target discourse evidence
+pres_2022,B,0.9373361074854626,2022-03-08,Automatic structural incumbent responsibility plus explicit government-target discourse evidence

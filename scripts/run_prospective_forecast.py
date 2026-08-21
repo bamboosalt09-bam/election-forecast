@@ -1009,7 +1009,15 @@ def _automatic_target_mega_controls(
     if semantic_gate:
         selected_shock_type = "institutional_crisis"
         selected_intensity = SHOCK_CLASS_INTENSITY[selected_shock_type]
-        semantic_adjustment_applied = True
+        # The gate asserts the class whether or not the frequency path already
+        # reached it, but the reported flag must not claim credit for a no-op:
+        # once pres_2025 crisis vocabulary is registered the frequency path
+        # arrives at the same class and intensity on its own, and a flag that
+        # still reads True hides that the gate has stopped deciding anything.
+        semantic_adjustment_applied = (
+            selected_shock_type != frequency_shock_type
+            or selected_intensity != frequency_intensity
+        )
         taxonomy.loc[:, "shock_type"] = selected_shock_type
         taxonomy.loc[:, "notes"] = (
             "Assembly speech-row rematch plus universal official-proceeding "

@@ -1122,3 +1122,51 @@ than two independent improvements. The classifier's gate thresholds are now
 named constants in `automatic_controls_v22`, and the ladder reuses them, so the
 claim that it introduces no new number is checkable rather than asserted. It
 remains unpromoted; the active V25 pointer is unchanged.
+
+## Three follow-ups closed (2026-08-22)
+
+### The semantic gate reported an adjustment it no longer makes
+
+`_automatic_target_mega_controls` set `semantic_gate_adjustment_applied = True`
+whenever the official-proceeding gate fired, without checking whether the gate
+changed the selection. Once pres_2025 crisis vocabulary was registered the
+frequency path reached `institutional_crisis` at intensity 2.00 on term
+evidence alone, so the gate began overwriting identical values while still
+reporting an adjustment. The flag now compares the selection against the
+frequency baseline, so it reads False for the current target: the gate fires
+and decides nothing. Three test assertions that pinned the old value were
+inverted with the reason recorded beside them.
+
+This is a reporting fix. `shock_type` and `mega_issue_intensity` are unchanged,
+and so is the forecast.
+
+### CI actions were pinned to a deprecated Node runtime
+
+`actions/checkout@v4` and `actions/setup-python@v5` target Node 20, which the
+runners now force onto Node 24 with a deprecation annotation on every job.
+Bumped to `@v5` and `@v6`.
+
+### The third-candidate ceiling: an earlier note here was wrong
+
+An earlier working note described 이준석's ceiling as the 제3지대 long-run base
+"contaminated" by 국민의당 2016 while ignoring 개혁신당's own record. Checking
+the pool shows that is not what happens, and the correction matters because the
+direction is the opposite of what the note implied.
+
+`assembly_2024_pr` and `assembly_2024_district` are both in the 제3지대 history,
+so the party's own most recent result is already in the base. The Seoul ceiling
+of 0.1076 is a recency-weighted aggregate over 29 elections whose components
+include `assembly_2024_pr` 0.0650, `assembly_2020_pr` 0.1070, `assembly_2016_pr`
+0.2884 and `pres_2017` 0.2274.
+
+What is true is that the ceiling sits **above every observation from 2020
+onward**, so it is a loose backstop rather than a tight estimate - and that
+makes it generous, not harsh. Tightening it would push 이준석 further down from
+8.66 %, which is the opposite direction from the concern that the third
+candidate is over-truncated.
+
+It is also barely testable. Across the scored panel the ceiling binds for
+**권영길 2002 only** - twelve regions, ceiling 0.0736 against a realised 3.92 %
+- so this component has one scored activation, the same n=1 problem the direct
+mega path has. No change is made on that basis. Recorded so the earlier note is
+not carried forward.
