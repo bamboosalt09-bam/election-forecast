@@ -58,7 +58,10 @@ def test_v25_target_mega_controls_are_pit_automatic_and_preserve_history(
         prospective.FORECAST_CUTOFF
     )
     assert diagnostics["semantic_gate"] is True
-    assert diagnostics["semantic_gate_adjustment_applied"] is True
+    # The gate fires, but with pres_2025 crisis vocabulary registered the
+    # frequency path reaches the same class on its own, so the gate decides
+    # nothing and must not report an adjustment it did not make.
+    assert diagnostics["semantic_gate_adjustment_applied"] is False
     # pres_2025 crisis vocabulary is registered in mega_issue_terms.csv, so the
     # frequency-only classification reaches the crisis class on term evidence
     # alone and the official-proceeding gate no longer decides it.
@@ -70,7 +73,7 @@ def test_v25_target_mega_controls_are_pit_automatic_and_preserve_history(
     assert diagnostics["historical_compatible_match_rows"] > 0
     assert diagnostics["target_outcomes_used"] is False
     assert audit.iloc[0]["semantic_institutional_gate"]
-    assert audit.iloc[0]["semantic_gate_adjustment_applied"]
+    assert not audit.iloc[0]["semantic_gate_adjustment_applied"]
     assert audit.iloc[0]["frequency_automatic_shock_type"] == (
         audit.iloc[0]["selected_shock_type"]
     )
@@ -410,7 +413,9 @@ def test_v25_prospective_output_reproduces_bounded_historical_runtime() -> None:
         "prediction_tilted"
     }
     assert manifest["mega_issue_controls"]["semantic_gate"] is True
-    assert manifest["mega_issue_controls"]["semantic_gate_adjustment_applied"] is True
+    # the gate fires but changes nothing once the frequency path reaches the
+    # same class on registered vocabulary alone
+    assert manifest["mega_issue_controls"]["semantic_gate_adjustment_applied"] is False
     assert (
         manifest["mega_issue_controls"]["shock_type"]
         == "institutional_crisis"

@@ -154,7 +154,7 @@
     "source_rows": 48588,
     "pit_eligible_rows": 14985,
     "semantic_gate": true,
-    "semantic_gate_adjustment_applied": true,
+    "semantic_gate_adjustment_applied": false,
     "semantic_source_rows": 1250,
     "semantic_source_meetings": 6,
     "semantic_source_speakers": 66,
