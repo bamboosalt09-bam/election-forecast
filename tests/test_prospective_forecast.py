@@ -9,10 +9,29 @@ import pytest
 from election_forecast.features.issue_matcher import IssueContextRule
 from scripts import run_prospective_forecast as prospective
 
+# Building the 2025 target context reads bulk Assembly material that is kept
+# outside Git, so these tests exercise nothing on a fresh public checkout.
+BULK_TARGET_SOURCES = (
+    prospective.ROOT
+    / "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
+    prospective.ROOT
+    / "archives/experiments/manual_seed_lineage_v17_rejected_20260728/artifacts/assembly_speaker_issue_matches_15_22.csv",
+)
+
+
+def _require_bulk_target_sources() -> None:
+    missing = [path for path in BULK_TARGET_SOURCES if not path.exists()]
+    if missing:
+        pytest.skip(
+            "bulk 2025 Assembly sources are not part of the public repository: "
+            + ", ".join(path.name for path in missing)
+        )
+
 
 def test_v25_target_mega_controls_are_pit_automatic_and_preserve_history(
     tmp_path,
 ) -> None:
+    _require_bulk_target_sources()
     paths, diagnostics = prospective._automatic_target_mega_controls(tmp_path)
     intensity = pd.read_csv(paths["mega_issue_intensity"], encoding="utf-8-sig")
     taxonomy = pd.read_csv(paths["mega_issue_taxonomy"], encoding="utf-8-sig")
@@ -138,6 +157,7 @@ def test_v25_target_mega_controls_reject_outcome_columns(monkeypatch, tmp_path) 
 def test_target_candidate_profiles_separate_government_from_direct_strength(
     tmp_path,
 ) -> None:
+    _require_bulk_target_sources()
     cutoff = pd.Timestamp(prospective.FORECAST_CUTOFF)
     registry = prospective._validate_registry(
         pd.read_csv(prospective.REGISTRY, encoding="utf-8-sig"), cutoff
