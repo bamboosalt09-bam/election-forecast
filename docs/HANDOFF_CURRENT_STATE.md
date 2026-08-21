@@ -1062,3 +1062,53 @@ The class-constant intensity is deliberate - it exists so that raw mention
 volume cannot shrink an institutional crisis back toward an ordinary campaign
 issue - so closing the gap is a design decision rather than a defect to patch,
 and it is recorded here as an open question, not a pending change.
+
+## Filling the intensity ladder: measured, and it needs the alignment (2026-08-21)
+
+The reachable intensities are {0.50, 0.75, 1.00, 2.00} and
+`intensity_activation` is `(intensity - 1).clip(0, 1)`, so a shock is either
+inert or saturated. Filling the gap was tested with a construction that adds no
+new number: the ceiling is the existing crisis level, each floor is that
+election's existing value, and the interpolant is the classifier's own gate
+ratio,
+
+    proximity = clip(min_regime_evidence / 0.65, 0, 1) * clip(accountability / 0.75, 0, 1)
+    intensity = floor + (2.00 - floor) * proximity
+
+which is exactly 1.0 for any election at or above both gates. 2017 and 2025 are
+both above, so both keep 2.00 by construction and 2017 is preserved.
+
+**A margin-proportional ladder from above is not available.** 2017 clears the
+crisis gate by 0.077 of its 0.35 range - the archetypal impeachment election
+sits essentially on the threshold, because a snap election gives the Assembly
+record a short window (15,838 source rows against 50,294 for 2002). Any scheme
+that scales intensity by measured margin collapses 2017 to 1.077. The existing
+design comment is empirically right.
+
+**The ladder alone degrades the panel by more than three times.**
+
+| | baseline | ladder | ladder + alignment |
+| --- | --- | --- | --- |
+| regional macro | 3.440 | 5.004 | **3.421** |
+| level macro | 0.990 | 3.228 | **0.721** |
+| 2007 burdened | +1.608 | +8.793 | +0.992 |
+| 2012 burdened | +0.641 | +0.127 | +0.127 |
+| 2017 burdened | +0.030 | +0.029 | +0.029 |
+| 2022 burdened | -0.251 | -11.410 | -0.190 |
+
+The cause is structural and worth recording on its own: 2007 and 2022 both have
+`security_nk` winning the issue race in a class that does not contain it, and
+the retrospective applies no event-class alignment. **The intensity gate at 1.00
+has been doing the alignment's job on the scored panel.** Raise the floor and
+the unfiltered issue race is exposed immediately. Apply both together and every
+election holds or improves, with level macro down 27 %.
+
+Two cautions before anyone promotes this. It is two coupled changes, not one,
+and the second of them alters a scored path that is currently bit-identical.
+And the combination was chosen after comparing panel metrics, which is
+selection on the scored set even though the 2025 outcome was never consulted -
+it belongs in the nested protocol, not in a direct merge.
+
+It also does nothing for the 2025 composition. 2025 sits above both gates, so
+its intensity stays at 2.00 and the forecast is unchanged; the ladder adds
+rungs below the crisis level, not between 2025 and a milder regime.
