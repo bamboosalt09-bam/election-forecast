@@ -53,6 +53,22 @@ python -m pytest -q
 
 최신 실행 로그는 `outputs/audit_logs/`에 저장합니다. 동결 범위와 매니페스트 해석은 [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)를 참조하십시오.
 
+### 입력 탐색
+
+`scripts/describe_inputs.py`는 모델 코드를 읽지 않고 입력 구조를 답합니다.
+
+```bash
+python scripts/describe_inputs.py inventory
+python scripts/describe_inputs.py check pres_2025
+python scripts/describe_inputs.py sources pres_2025
+```
+
+- `inventory`: `data/raw`의 큐레이션 표 54개를 선거 키 보유 여부와 PIT 날짜열 보유 여부로 분류
+- `check`: 한 선거가 어느 표에 행이 없는지, 채워야 할 컬럼이 무엇인지, 마감일 이후 행이 있는지. 마감일 위반이 있으면 종료 코드 1이므로 실행 전 게이트로 쓸 수 있습니다
+- `sources`: `official_sources` 원본 트리의 수집 행수 대비 PIT 통과 행수. 로더가 자체 필터링하므로 `check`는 이 트리를 위반으로 세지 않습니다
+
+새 선거를 추가할 때는 `check`가 비어 있다고 해서 설정이 잘못된 것은 아닙니다 — 전망 대상은 보통 `data/raw`가 아니라 `scripts/run_prospective_forecast.py`가 실행 시점에 생성하는 컨텍스트 경로로 공급됩니다.
+
 ### 대선 예측 엔진
 
 V25는 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. 후보의 사전 체급, 직전 선거까지의 정확 정당 계보, 지역 지형, 국회 회의록 기반 이슈 부각도, 후보 맥락, 철회·단일화 사건, 세대 구성과 거시 지표를 시점 제한 아래 결합합니다. V24의 투표지·1%p 채점 하한·구조적 잔차 계층을 유지하면서, V24 실행기가 우회했던 V23 통합 계보와 자동 제어 경로를 제한적으로 복구합니다.
