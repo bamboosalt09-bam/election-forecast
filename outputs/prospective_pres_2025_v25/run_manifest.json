@@ -132,6 +132,9 @@
       "automatic_third_candidate_profile.csv": 1,
       "candidate_political_landscape.csv": 3
     },
+    "generated_candidate_direct_profile_rows": 57,
+    "government_burden_profile_government_rows": 17,
+    "candidate_direct_profile_government_rows": 0,
     "generated_context_sha256": {
       "candidate_context": "dc2cfeb28f79e6c50d487bc54079e226b5e1627ec20feeafe690f34d08e9c9ee",
       "candidate_party_speech_context": "22afa7aac02127394d7b6693422dacbd055ee9840719b63b16287a30f88bd15d",
@@ -140,9 +143,32 @@
       "political_landscape": "137b9ce9c2ca9149259f3b18605426fedb94713b7733e39ecc05ab903c4d4b35",
       "third_candidate_profile": "2f858d34a58a047b2f29c0fe81325c8bf559d39a4330f13dcf716e76954457b9",
       "candidate_issue_profile": "93222642a3caad66ae3bcbbb6094f25df286264a4d7d540863ee69398277781c",
+      "candidate_direct_issue_profile": "5c7600dbafd2f1cfbe4a13a5dafd4f10ca6c2d4ecf862eaf9cb8b550170ab5e3",
       "mega_issue_axis": "079f38f018d5efc27c435522c1f6163e3846fc64a50e8c3a7dadf4441ab5e240",
       "mega_issue_attribution": "5e15957e516cfeb224b3c82cd8172f9ab9b9587872f6c94030be3f0b9cb833d8"
     }
+  },
+  "mega_issue_controls": {
+    "method": "historical_speech_row_rematch_with_official_institutional_event_gate",
+    "source": "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
+    "source_rows": 48588,
+    "pit_eligible_rows": 14985,
+    "semantic_gate": true,
+    "semantic_gate_adjustment_applied": true,
+    "semantic_source_rows": 1250,
+    "semantic_source_meetings": 6,
+    "semantic_source_speakers": 66,
+    "frequency_shock_type": "institutional_crisis",
+    "frequency_mega_issue_intensity": 2.0,
+    "shock_type": "institutional_crisis",
+    "mega_issue_intensity": 2.0,
+    "available_date": "2025-05-05",
+    "target_outcomes_used": false,
+    "model_parameters_changed": false,
+    "sentence_issue_rows": 14985,
+    "unique_sentence_rows": 13448,
+    "reconstructed_speech_rows": 7106,
+    "historical_compatible_match_rows": 10478
   },
   "national_region_weight_source": "pres_2022_valid_vote_volume",
   "outcome_columns_used": [],
@@ -183,7 +209,7 @@
     "weak_same_lane_refusal"
   ],
   "v24_postprocess_audit_rows": {
-    "strong_incumbent_veto": 0,
+    "strong_incumbent_veto": 17,
     "third_candidate_lineage_ceiling": 17,
     "weak_same_lane_refusal": 17
   },
@@ -197,6 +223,7 @@
     "political_landscape": "137b9ce9c2ca9149259f3b18605426fedb94713b7733e39ecc05ab903c4d4b35",
     "third_candidate_profile": "2f858d34a58a047b2f29c0fe81325c8bf559d39a4330f13dcf716e76954457b9",
     "candidate_issue_profile": "93222642a3caad66ae3bcbbb6094f25df286264a4d7d540863ee69398277781c",
+    "candidate_direct_issue_profile": "5c7600dbafd2f1cfbe4a13a5dafd4f10ca6c2d4ecf862eaf9cb8b550170ab5e3",
     "mega_issue_axis": "079f38f018d5efc27c435522c1f6163e3846fc64a50e8c3a7dadf4441ab5e240",
     "mega_issue_attribution": "5e15957e516cfeb224b3c82cd8172f9ab9b9587872f6c94030be3f0b9cb833d8"
   },

@@ -18,10 +18,60 @@ POLITICAL_SHOCK_ISSUES = frozenset(
         "withdrawal_event",
     }
 )
+EVENT_CLASS_DIRECT_ISSUES = {
+    "institutional_crisis": frozenset({"regime_change"}),
+    "accountability_scandal": frozenset(
+        {"corruption_integrity", "regime_change"}
+    ),
+    "incumbent_assessment": frozenset(
+        {"corruption_integrity", "regime_change"}
+    ),
+    "political_realignment": frozenset({"external_shock", "regime_change"}),
+}
 DEFAULT_DIRECT_MEGA_GAIN = 0.40
 DEFAULT_MINIMUM_INTENSITY = 1.0
 DEFAULT_LOG_SHIFT_CAP = 0.20
 DEFAULT_SCORE_CAP = 0.50
+
+
+def align_profile_to_event_class(
+    profile: pd.DataFrame,
+    taxonomy: pd.DataFrame,
+    election_dates: dict[str, str],
+) -> pd.DataFrame:
+    """Keep direct candidate shocks compatible with the election event class.
+
+    Election-wide intensity describes one selected event environment.  Without
+    this alignment an institutional-crisis intensity can accidentally amplify
+    an unrelated candidate withdrawal or security mention merely because it
+    has stronger attribution evidence.  Classes without a declared mapping are
+    left unchanged for backward compatibility.
+    """
+
+    required = {"election_id", "issue_name"}
+    taxonomy_required = {"election_id", "shock_type", "available_date"}
+    if (
+        profile.empty
+        or taxonomy.empty
+        or not required.issubset(profile.columns)
+        or not taxonomy_required.issubset(taxonomy.columns)
+    ):
+        return profile.copy()
+    eligible = filter_available_by_election(
+        taxonomy.copy(), election_dates, source_name="direct_mega_event_taxonomy"
+    )
+    selected = (
+        eligible.sort_values("available_date")
+        .drop_duplicates("election_id", keep="last")
+        .set_index("election_id")["shock_type"]
+        .astype(str)
+        .to_dict()
+    )
+    keep = []
+    for row in profile[["election_id", "issue_name"]].itertuples(index=False):
+        allowed = EVENT_CLASS_DIRECT_ISSUES.get(selected.get(str(row.election_id), ""))
+        keep.append(allowed is None or str(row.issue_name) in allowed)
+    return profile.loc[keep].copy()
 
 
 def compile_direct_mega_scores(

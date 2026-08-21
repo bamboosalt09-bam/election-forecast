@@ -22,6 +22,20 @@ from presidential_issue_engine.speech_derived_third_pressure import (
 
 
 SCHEMA_VERSION = "automatic_controls_v22"
+SHOCK_CLASS_LEVEL = {
+    "institutional_crisis": 1.00,
+    "accountability_scandal": 0.60,
+    "incumbent_assessment": 0.60,
+    "political_realignment": 0.50,
+    "diffuse_issue_environment": 0.35,
+}
+SHOCK_CLASS_INTENSITY = {
+    "institutional_crisis": 2.00,
+    "accountability_scandal": 1.00,
+    "incumbent_assessment": 1.00,
+    "political_realignment": 0.75,
+    "diffuse_issue_environment": 0.50,
+}
 PROFILE_FIELDS = [
     "viability",
     "centrist_appeal",
@@ -90,27 +104,13 @@ def build_automatic_mega_taxonomy(
         ],
         default="diffuse_issue_environment",
     )
-    class_level = pd.Series(shock_type, index=work.index).map(
-        {
-            "institutional_crisis": 1.00,
-            "accountability_scandal": 0.60,
-            "incumbent_assessment": 0.60,
-            "political_realignment": 0.50,
-            "diffuse_issue_environment": 0.35,
-        }
-    )
+    class_level = pd.Series(shock_type, index=work.index).map(SHOCK_CLASS_LEVEL)
     # Once the evidence crosses a semantic-class threshold, use the same
     # class-level shock scale in every election.  Raw mention volume remains
     # in the numeric taxonomy and confidence audit, but no longer shrinks an
     # institutional crisis back toward an ordinary campaign issue.
     class_intensity = pd.Series(shock_type, index=work.index).map(
-        {
-            "institutional_crisis": 2.00,
-            "accountability_scandal": 1.00,
-            "incumbent_assessment": 1.00,
-            "political_realignment": 0.75,
-            "diffuse_issue_environment": 0.50,
-        }
+        SHOCK_CLASS_INTENSITY
     )
     evidence_volume = np.clip(np.log1p(work["source_rows"]) / np.log1p(50_000), 0.0, 1.0)
     confidence = np.sqrt(evidence_volume * work["breadth_component"].clip(0.0, 1.0))

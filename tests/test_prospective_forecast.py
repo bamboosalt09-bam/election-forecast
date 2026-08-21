@@ -6,7 +6,171 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from election_forecast.features.issue_matcher import IssueContextRule
 from scripts import run_prospective_forecast as prospective
+
+
+def test_v25_target_mega_controls_are_pit_automatic_and_preserve_history(
+    tmp_path,
+) -> None:
+    paths, diagnostics = prospective._automatic_target_mega_controls(tmp_path)
+    intensity = pd.read_csv(paths["mega_issue_intensity"], encoding="utf-8-sig")
+    taxonomy = pd.read_csv(paths["mega_issue_taxonomy"], encoding="utf-8-sig")
+    audit = pd.read_csv(paths["mega_issue_taxonomy_audit"], encoding="utf-8-sig")
+    historical_intensity = pd.read_csv(
+        prospective.AUTOMATIC_DIR / "mega_issue_intensity.csv",
+        encoding="utf-8-sig",
+    )
+    historical_taxonomy = pd.read_csv(
+        prospective.AUTOMATIC_DIR / "mega_issue_taxonomy.csv",
+        encoding="utf-8-sig",
+    )
+
+    target_intensity = intensity.loc[
+        intensity["election_id"].astype(str).eq(prospective.TARGET_ELECTION)
+    ]
+    target_taxonomy = taxonomy.loc[
+        taxonomy["election_id"].astype(str).eq(prospective.TARGET_ELECTION)
+    ]
+    assert len(target_intensity) == len(target_taxonomy) == 1
+    assert target_intensity.iloc[0]["mega_issue_intensity"] == pytest.approx(2.0)
+    assert target_taxonomy.iloc[0]["shock_type"] == "institutional_crisis"
+    assert pd.Timestamp(target_intensity.iloc[0]["available_date"]) <= pd.Timestamp(
+        prospective.FORECAST_CUTOFF
+    )
+    assert diagnostics["semantic_gate"] is True
+    assert diagnostics["semantic_gate_adjustment_applied"] is True
+    # pres_2025 crisis vocabulary is registered in mega_issue_terms.csv, so the
+    # frequency-only classification reaches the crisis class on term evidence
+    # alone and the official-proceeding gate no longer decides it.
+    assert diagnostics["frequency_shock_type"] == diagnostics["shock_type"]
+    assert diagnostics["frequency_shock_type"] == "institutional_crisis"
+    assert diagnostics["frequency_mega_issue_intensity"] == pytest.approx(
+        diagnostics["mega_issue_intensity"]
+    )
+    assert diagnostics["historical_compatible_match_rows"] > 0
+    assert diagnostics["target_outcomes_used"] is False
+    assert audit.iloc[0]["semantic_institutional_gate"]
+    assert audit.iloc[0]["semantic_gate_adjustment_applied"]
+    assert audit.iloc[0]["frequency_automatic_shock_type"] == (
+        audit.iloc[0]["selected_shock_type"]
+    )
+    assert audit.iloc[0]["selected_shock_type"] == "institutional_crisis"
+    assert audit.iloc[0]["selected_mega_issue_intensity"] == pytest.approx(2.0)
+    assert audit.iloc[0]["target_match_granularity"] == (
+        "reconstructed_historical_speech_row"
+    )
+
+    pd.testing.assert_frame_equal(
+        intensity.loc[
+            ~intensity["election_id"].astype(str).eq(prospective.TARGET_ELECTION)
+        ].reset_index(drop=True),
+        historical_intensity.reset_index(drop=True),
+        check_dtype=False,
+    )
+    pd.testing.assert_frame_equal(
+        taxonomy.loc[
+            ~taxonomy["election_id"].astype(str).eq(prospective.TARGET_ELECTION)
+        ].reset_index(drop=True),
+        historical_taxonomy.reset_index(drop=True),
+        check_dtype=False,
+    )
+
+
+def test_target_mega_match_reconstructs_cross_sentence_context(
+    monkeypatch,
+) -> None:
+    target = pd.DataFrame(
+        {
+            "source_id": ["meeting", "meeting", "meeting"],
+            "source_row_id": ["row", "row", "row"],
+            "sentence_index": [1, 1, 2],
+            "period": ["2025-05-01"] * 3,
+            "speaker": ["speaker"] * 3,
+            "text_excerpt": [
+                "housing pressure",
+                "housing pressure",
+                "martial law responsibility",
+            ],
+        }
+    )
+    monkeypatch.setattr(
+        prospective.assembly_match_builder,
+        "build_keyword_inputs",
+        lambda: (
+            {prospective.TARGET_ELECTION: {"housing": ["housing"]}},
+            {prospective.TARGET_ELECTION: {}},
+            {prospective.TARGET_ELECTION: {}},
+            {
+                prospective.TARGET_ELECTION: [
+                    IssueContextRule(
+                        source_issue="housing",
+                        context_terms=("martial law",),
+                        target_issue="regime_change",
+                        target_weight=0.5,
+                    )
+                ]
+            },
+        ),
+    )
+
+    matches, diagnostics = prospective._historical_compatible_target_matches(target)
+
+    weights = matches.set_index("issue_name")["issue_weight"].to_dict()
+    assert weights == {"housing": 0.35, "regime_change": 0.175}
+    assert diagnostics == {
+        "sentence_issue_rows": 3,
+        "unique_sentence_rows": 2,
+        "reconstructed_speech_rows": 1,
+        "historical_compatible_match_rows": 2,
+    }
+
+
+def test_v25_target_mega_controls_reject_outcome_columns(monkeypatch, tmp_path) -> None:
+    source = tmp_path / "forbidden.csv"
+    pd.DataFrame({"vote_share": [0.5]}).to_csv(source, index=False)
+    monkeypatch.setattr(prospective, "OFFICIAL_2025_MINUTES", source)
+
+    with pytest.raises(RuntimeError, match="outcome columns"):
+        prospective._automatic_target_mega_controls(tmp_path)
+
+
+def test_target_candidate_profiles_separate_government_from_direct_strength(
+    tmp_path,
+) -> None:
+    cutoff = pd.Timestamp(prospective.FORECAST_CUTOFF)
+    registry = prospective._validate_registry(
+        pd.read_csv(prospective.REGISTRY, encoding="utf-8-sig"), cutoff
+    )
+    _, candidate_link, _ = prospective.load_forecast_only_assembly_inputs(
+        prospective.TARGET_ELECTION,
+        prospective.CONTEXT_DIR,
+    )
+    selected = prospective._select_model_candidates(
+        registry,
+        candidate_link,
+        prospective.active.nested.engine,
+    )
+    _, paths, diagnostics = prospective._build_target_candidate_context(
+        tmp_path,
+        registry,
+        selected,
+        candidate_link,
+        version="v25",
+    )
+    burden = pd.read_csv(paths["candidate_issue_profile"], encoding="utf-8-sig")
+    direct = pd.read_csv(
+        paths["candidate_direct_issue_profile"], encoding="utf-8-sig"
+    )
+    burden_sources = burden["target_source_types"].fillna("").astype(str)
+    direct_sources = direct["target_source_types"].fillna("").astype(str)
+
+    assert burden_sources.str.contains(r"(?:^|\|)government(?:\||$)", regex=True).any()
+    assert not direct_sources.str.contains(
+        r"(?:^|\|)government(?:\||$)", regex=True
+    ).any()
+    assert diagnostics["government_burden_profile_government_rows"] > 0
+    assert diagnostics["candidate_direct_profile_government_rows"] == 0
 
 
 def test_target_base_preserves_merged_candidate_names(monkeypatch) -> None:
@@ -204,6 +368,18 @@ def test_v25_prospective_output_reproduces_bounded_historical_runtime() -> None:
     assert manifest["pres_2025_outcome_present"] is False
     assert manifest["model_selection_performed"] is False
     assert manifest["model_parameters_changed"] is False
+    assert (
+        manifest["government_context_link"][
+            "candidate_direct_profile_government_rows"
+        ]
+        == 0
+    )
+    assert (
+        manifest["government_context_link"][
+            "government_burden_profile_government_rows"
+        ]
+        > 0
+    )
     assert manifest["frozen_historical_reproduction"]["passed"] is True
     assert manifest["frozen_historical_reproduction"]["rows"] == 232
     assert (
@@ -213,8 +389,24 @@ def test_v25_prospective_output_reproduces_bounded_historical_runtime() -> None:
     assert set(weak_audit["recipient_weight_mode"].astype(str)) == {
         "prediction_tilted"
     }
+    assert manifest["mega_issue_controls"]["semantic_gate"] is True
+    assert manifest["mega_issue_controls"]["semantic_gate_adjustment_applied"] is True
+    assert (
+        manifest["mega_issue_controls"]["shock_type"]
+        == "institutional_crisis"
+    )
+    assert manifest["mega_issue_controls"]["mega_issue_intensity"] == pytest.approx(2.0)
+    # The registered pres_2025 crisis vocabulary lets the frequency-only path
+    # reach the same class and intensity as the gated path, so the gate is a
+    # no-op for this target rather than the source of the classification.
+    controls = manifest["mega_issue_controls"]
+    assert controls["frequency_shock_type"] == controls["shock_type"]
+    assert controls["frequency_mega_issue_intensity"] == pytest.approx(
+        controls["mega_issue_intensity"]
+    )
+    assert manifest["mega_issue_controls"]["target_outcomes_used"] is False
     assert manifest["v24_postprocess_audit_rows"] == {
-        "strong_incumbent_veto": 0,
+        "strong_incumbent_veto": 17,
         "third_candidate_lineage_ceiling": 17,
         "weak_same_lane_refusal": 17,
     }

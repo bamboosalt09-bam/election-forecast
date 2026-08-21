@@ -1,0 +1,2 @@
+﻿election_id,mega_event,shock_type,severity,national_scope,persistence,polarization,target_specificity,available_date,confidence,notes
+pres_2025,assembly_regime_accountability_environment,institutional_crisis,0.8434295001156606,0.743859649122807,0.862472984575637,0.9028904825840716,0.8057809651681433,2025-05-05,0.7977633220026996,Assembly speech-row rematch plus universal official-proceeding semantic event class; no election outcome

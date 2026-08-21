@@ -4,6 +4,7 @@ import pandas as pd
 import pytest
 
 from presidential_issue_engine.mega_issue_adjustment import (
+    align_profile_to_event_class,
     apply_direct_mega_shift,
     compile_direct_mega_scores,
 )
@@ -77,6 +78,44 @@ def test_compile_selects_only_strongest_issue_above_intensity_gate() -> None:
         {"election_id": "pres_2017", "slot": "B", "issue_name": "regime_change"}
     ]
     assert scores.loc[0, "direct_mega_score"] == pytest.approx(-0.36)
+
+
+def test_institutional_crisis_does_not_amplify_unrelated_withdrawal() -> None:
+    profile = pd.concat(
+        [
+            _profile(),
+            pd.DataFrame(
+                [
+                    {
+                        "election_id": "pres_2017",
+                        "slot": "A",
+                        "issue_name": "withdrawal_event",
+                        "direction": -1.0,
+                        "association_strength": 1.0,
+                        "confidence": 1.0,
+                        "target_absolute_evidence": 100.0,
+                        "target_attribution_confidence": 1.0,
+                        "available_date": "2017-05-08",
+                    }
+                ]
+            ),
+        ],
+        ignore_index=True,
+    )
+    taxonomy = pd.DataFrame(
+        [
+            {
+                "election_id": "pres_2017",
+                "shock_type": "institutional_crisis",
+                "available_date": "2017-05-01",
+            }
+        ]
+    )
+
+    aligned = align_profile_to_event_class(profile, taxonomy, ELECTION_DATES)
+
+    selected = aligned.loc[aligned["election_id"].eq("pres_2017"), "issue_name"]
+    assert set(selected) == {"regime_change"}
 
 
 def test_compile_excludes_future_evidence() -> None:

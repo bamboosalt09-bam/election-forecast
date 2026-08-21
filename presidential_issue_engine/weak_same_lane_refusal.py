@@ -26,6 +26,45 @@ DEFAULT_RECIPIENT_WEIGHT_MODE = "prediction_tilted"
 RECIPIENT_WEIGHT_MODES = {"affinity_only", "prediction_tilted"}
 
 
+def lineage_scaled_gain(
+    election_id: str,
+    lineage: pd.DataFrame,
+    *,
+    base_gain: float = DEFAULT_GAIN,
+    exemption_scale: float | None = None,
+) -> float:
+    """Reduce the refusal rate as major-party carry-in rises.
+
+    A vehicle that absorbed sitting members of a governing or main opposition
+    party carries a weaker wasted-vote argument than one founded without any
+    such transfer, so the desertion rate should not be identical for both.
+
+    The rate falls linearly from ``base_gain`` at zero carry-in to zero at the
+    exemption threshold used by ``third_candidate_lineage_constraint``, which
+    makes the rate continuous where the weak classification itself ends. No new
+    constant is introduced: both anchors already exist in the pipeline.
+
+    Rows without a derived carry-in share - independents and the two warmup-only
+    vehicles whose founding rosters are unsourced - keep ``base_gain``.
+    """
+
+    if exemption_scale is None:
+        exemption_scale = lineage_constraint.DEFAULT_DEFECTION_FLOOR
+    if not (exemption_scale > 0.0):
+        return float(base_gain)
+    rows = lineage.loc[lineage["election_id"].astype(str).eq(str(election_id))]
+    if rows.empty:
+        return float(base_gain)
+    row = rows.iloc[0]
+    seats = pd.to_numeric(pd.Series([row.get("defection_seats")]), errors="coerce").iloc[0]
+    size = pd.to_numeric(pd.Series([row.get("assembly_size")]), errors="coerce").iloc[0]
+    has_party = str(row.get("has_party", True)).strip().lower() in {"1", "true", "yes", "y"}
+    if not has_party or pd.isna(seats) or pd.isna(size) or size <= 0:
+        return float(base_gain)
+    share = float(seats) / float(size)
+    return float(np.clip(base_gain * (1.0 - share / exemption_scale), 0.0, base_gain))
+
+
 def apply_weak_same_lane_refusal(
     frame: pd.DataFrame,
     *,
@@ -58,6 +97,17 @@ def apply_weak_same_lane_refusal(
     declared_lineage = (
         lineage_constraint.load_lineage() if lineage is None else lineage.copy()
     )
+    if "origin_lane" not in declared_lineage.columns:
+        declared_lineage["origin_lane"] = ""
+    declared_lineage["origin_lane"] = (
+        declared_lineage["origin_lane"].fillna("").astype(str).str.strip()
+    )
+    origin_lane_by_election = (
+        declared_lineage.sort_values("available_date")
+        .drop_duplicates("election_id", keep="last")
+        .set_index("election_id")["origin_lane"]
+        .to_dict()
+    )
     weak_elections = lineage_constraint.self_founded_elections(declared_lineage)
     out = frame.copy()
     for column in (
@@ -86,6 +136,11 @@ def apply_weak_same_lane_refusal(
         return out, pd.DataFrame(audit_rows)
 
     for election_id, election in out.groupby("election_id", sort=False):
+        election_gain = lineage_scaled_gain(
+            str(election_id), declared_lineage, base_gain=gain
+        )
+        if election_gain <= 0.0:
+            continue
         if str(election_id) not in weak_elections:
             continue
         for region_id, region in election.groupby("region_id", sort=False):
@@ -95,6 +150,12 @@ def apply_weak_same_lane_refusal(
                 continue
             donor_index = donor_rows.index[0]
             donor = donor_rows.iloc[0]
+            donor_for_affinity = donor.copy()
+            declared_origin_lane = str(
+                origin_lane_by_election.get(str(election_id), "")
+            )
+            if declared_origin_lane:
+                donor_for_affinity["declared_origin_lane"] = declared_origin_lane
             prediction = float(out.at[donor_index, prediction_column])
             ballot_base = float(
                 np.clip(
@@ -118,7 +179,7 @@ def apply_weak_same_lane_refusal(
 
             affinities = major_rows.apply(
                 lambda recipient: strategic_lane_transfer._same_lane_affinity(
-                    donor, recipient
+                    donor_for_affinity, recipient
                 ),
                 axis=1,
             ).clip(0.0, 1.0)
@@ -132,14 +193,14 @@ def apply_weak_same_lane_refusal(
             if float(weights.sum()) <= 0.0:
                 continue
             weights /= float(weights.sum())
-            transfer = min(gain * reservoir, prediction)
+            transfer = min(election_gain * reservoir, prediction)
             if transfer <= 0.0:
                 continue
 
             out.at[donor_index, prediction_column] -= transfer
             out.at[donor_index, "weak_lane_refusal_transfer_out"] = transfer
             out.at[donor_index, "weak_lane_refusal_reservoir"] = reservoir
-            out.at[donor_index, "weak_lane_refusal_rate"] = gain
+            out.at[donor_index, "weak_lane_refusal_rate"] = election_gain
             out.at[donor_index, "weak_lane_refusal_floor"] = protected_floor
             recipient_slots: list[str] = []
             for recipient_index, weight in weights.items():
@@ -159,10 +220,14 @@ def apply_weak_same_lane_refusal(
                     "candidate_ballot_recent_base": ballot_base,
                     "floor_mode": floor_mode,
                     "recipient_weight_mode": recipient_weight_mode,
+                    "declared_origin_lane": declared_origin_lane,
+                    "resolved_origin_lane": strategic_lane_transfer.engine._orientation_label(
+                        donor_for_affinity
+                    ),
                     "protected_floor": protected_floor,
                     "before": prediction,
                     "reservoir": reservoir,
-                    "gain": gain,
+                    "gain": election_gain,
                     "transfer": transfer,
                     "after": prediction - transfer,
                 }

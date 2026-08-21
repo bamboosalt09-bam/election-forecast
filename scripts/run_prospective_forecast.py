@@ -30,6 +30,11 @@ for path in (ROOT, ROOT / "src", ROOT / "scripts", ROOT / "presidential_issue_en
 from presidential_issue_engine import automatic_contest_response  # noqa: E402
 from presidential_issue_engine import contest_regime  # noqa: E402
 from presidential_issue_engine import unified_lineage_identity  # noqa: E402
+from presidential_issue_engine.automatic_controls_v22 import (  # noqa: E402
+    SHOCK_CLASS_INTENSITY,
+    build_automatic_mega_taxonomy,
+)
+from election_forecast.features.issue_matcher import match_issue_weights  # noqa: E402
 from presidential_issue_engine.election_scope import (  # noqa: E402
     ELECTION_DATES,
     SCORED_ELECTIONS,
@@ -43,9 +48,13 @@ from presidential_issue_engine.forecast_only_inputs import (  # noqa: E402
     load_forecast_only_assembly_inputs,
 )
 from presidential_issue_engine.point_in_time import forecast_cutoff  # noqa: E402
+from presidential_issue_engine.speech_derived_mega_intensity import (  # noqa: E402
+    build_automatic_mega_issue_intensity,
+)
 from scripts import build_preliminary_slot_assignments as assignment_builder  # noqa: E402
 from scripts import build_speech_derived_candidate_context_v2 as context_builder  # noqa: E402
 from scripts import build_speech_derived_issue_context as issue_context_builder  # noqa: E402
+from scripts import extract_assembly_speaker_issue_matches as assembly_match_builder  # noqa: E402
 from scripts import evaluate_speech_derived_issue_context as patching  # noqa: E402
 from scripts import run_active_presidential_model as active  # noqa: E402
 from scripts import run_active_presidential_model_v24 as active_v24  # noqa: E402
@@ -94,6 +103,14 @@ FORECAST_THIRD_CANDIDATE_PROFILE = (
 FORECAST_ISSUE_SEED_DIR = FORECAST_CANDIDATE_CONTEXT_DIR / "auto_issue_seed"
 EXPLICIT_TARGET_CONTEXT = CONTEXT_DIR / "explicit_target_context_weekly.csv"
 CANDIDATE_TARGET_CONTEXT = CONTEXT_DIR / "candidate_target_context_weekly.csv"
+OFFICIAL_2025_MINUTES = (
+    ROOT
+    / "data/raw/official_sources/assembly_pres_2025_minutes"
+    / "assembly_stance_rows_2025_h1.csv"
+)
+ISSUE_CONTEXT_RULES = (
+    ROOT / "presidential_issue_engine/fixed_dataset/issue_context_rules.csv"
+)
 
 OUTPUT_COLUMNS = (
     "election_id",
@@ -507,6 +524,32 @@ def _build_target_candidate_context(
                 CONTEXT_DIR / "assembly_speaker_influence_pres_2025.csv"
             ),
         )
+
+    # Candidate/party target evidence and government-responsibility evidence
+    # have different consumers.  The augmented character overlay above is
+    # retained for the incumbent-burden compiler.  Rebuild only the direct
+    # candidate profile from the original person/party target table so that a
+    # government row cannot also become candidate-strength evidence.
+    direct_output_dir = temp / "candidate_direct_context_v2"
+    with issue_context_builder.patched(
+        [
+            (issue_context_builder, "FORECAST_LINKS", link_path),
+            (
+                issue_context_builder,
+                "FORECAST_CANDIDATE_TARGET_CONTEXT",
+                CANDIDATE_TARGET_CONTEXT,
+            ),
+            (issue_context_builder, "PRES_2025_BALLOT_TO_SLOT", ballot_to_slot),
+        ]
+    ):
+        direct_built = context_builder.build_context(
+            output_dir=direct_output_dir,
+            assembly_matches=issue_context_builder.DEFAULT_MATCHES,
+            candidates=REGISTRY,
+            speaker_profile=(
+                CONTEXT_DIR / "assembly_speaker_influence_pres_2025.csv"
+            ),
+        )
     paths = {
         "context_dir": output_dir,
         "candidate_context": Path(built["conversion"]),
@@ -518,6 +561,7 @@ def _build_target_candidate_context(
             output_dir / "auto_candidate_role" / "third_candidate_profile.csv"
         ),
         "candidate_issue_profile": Path(built["profile"]),
+        "candidate_direct_issue_profile": Path(direct_built["profile"]),
         "mega_issue_axis": Path(built["axis"]),
         "mega_issue_attribution": Path(built["attribution"]),
     }
@@ -525,6 +569,36 @@ def _build_target_candidate_context(
         str(ballot): slot for ballot, slot in sorted(ballot_to_slot.items())
     }
     diagnostics["generated_context_output_rows"] = built["manifest"]["outputs"]
+    diagnostics["generated_candidate_direct_profile_rows"] = int(
+        direct_built["manifest"]["outputs"]["candidate_issue_profile.csv"]
+    )
+
+    burden_profile = pd.read_csv(paths["candidate_issue_profile"], encoding="utf-8-sig")
+    direct_profile = pd.read_csv(
+        paths["candidate_direct_issue_profile"], encoding="utf-8-sig"
+    )
+    burden_target = burden_profile.loc[
+        burden_profile["election_id"].astype(str).eq(TARGET_ELECTION)
+    ].copy()
+    direct_target = direct_profile.loc[
+        direct_profile["election_id"].astype(str).eq(TARGET_ELECTION)
+    ].copy()
+    burden_government = burden_target["target_source_types"].fillna("").astype(str).str.contains(
+        r"(?:^|\|)government(?:\||$)", regex=True
+    )
+    direct_government = direct_target["target_source_types"].fillna("").astype(str).str.contains(
+        r"(?:^|\|)government(?:\||$)", regex=True
+    )
+    if not burden_government.any():
+        raise RuntimeError("government-burden profile lost government target evidence")
+    if direct_government.any():
+        raise RuntimeError("candidate direct profile contains government target evidence")
+    diagnostics["government_burden_profile_government_rows"] = int(
+        burden_government.sum()
+    )
+    diagnostics["candidate_direct_profile_government_rows"] = int(
+        direct_government.sum()
+    )
     diagnostics["generated_context_sha256"] = {
         key: _sha256(path)
         for key, path in paths.items()
@@ -746,6 +820,287 @@ def _combine_historical_and_target_rows(
     )
 
 
+def _historical_compatible_target_matches(
+    target: pd.DataFrame,
+) -> tuple[pd.DataFrame, dict[str, int]]:
+    """Rebuild target issue matches at the historical speech-row granularity.
+
+    The 16th-22nd Assembly archive matcher receives one complete speech row.
+    The prospective stance source stores one row per issue per sentence.  Using
+    those already-collapsed issue labels directly loses context when, for
+    example, an issue term is in one sentence and impeachment or martial-law
+    responsibility language is in another sentence of the same speech.  This
+    adapter reconstructs each original speech row and runs the same matcher,
+    term weights, boosts, and context rules as the historical extractor.
+    """
+
+    required = {
+        "source_id",
+        "source_row_id",
+        "sentence_index",
+        "period",
+        "speaker",
+        "text_excerpt",
+    }
+    missing = sorted(required - set(target.columns))
+    if missing:
+        raise RuntimeError(
+            f"official target source cannot reconstruct historical matches: {missing}"
+        )
+
+    sentences = target[list(required)].copy()
+    sentences["sentence_index"] = pd.to_numeric(
+        sentences["sentence_index"], errors="coerce"
+    )
+    sentences = sentences.loc[
+        sentences["sentence_index"].notna()
+        & sentences["text_excerpt"].astype(str).str.strip().ne("")
+    ].copy()
+    sentences = (
+        sentences.sort_values(["source_id", "source_row_id", "sentence_index"])
+        .drop_duplicates(
+            ["source_id", "source_row_id", "sentence_index"], keep="first"
+        )
+        .reset_index(drop=True)
+    )
+    if sentences.empty:
+        raise RuntimeError("official target source has no reconstructable speech rows")
+
+    keyword_maps, term_weights, issue_boosts, context_rules = (
+        assembly_match_builder.build_keyword_inputs()
+    )
+    rows: list[dict[str, object]] = []
+    for _, speech in sentences.groupby(
+        ["source_id", "source_row_id"], sort=False
+    ):
+        speech = speech.sort_values("sentence_index")
+        full_text = " ".join(speech["text_excerpt"].astype(str))
+        weights = match_issue_weights(
+            full_text,
+            keyword_maps[TARGET_ELECTION],
+            term_weights=term_weights.get(TARGET_ELECTION),
+            issue_boosts=issue_boosts.get(TARGET_ELECTION),
+            context_rules=context_rules.get(TARGET_ELECTION),
+        )
+        first = speech.iloc[0]
+        for issue_name, issue_weight in weights.items():
+            rows.append(
+                {
+                    "election_id": TARGET_ELECTION,
+                    "period": first["period"],
+                    "speaker": first["speaker"],
+                    "issue_name": issue_name,
+                    "issue_weight": float(issue_weight),
+                    # Historical 16th-22nd extraction emits one issue row per
+                    # speech row and therefore uses one matched unit here.
+                    "matched_term_count": 1,
+                }
+            )
+    matches = pd.DataFrame(rows)
+    if matches.empty:
+        raise RuntimeError("historical-compatible target issue rematch is empty")
+    diagnostics = {
+        "sentence_issue_rows": int(len(target)),
+        "unique_sentence_rows": int(len(sentences)),
+        "reconstructed_speech_rows": int(
+            sentences[["source_id", "source_row_id"]].drop_duplicates().shape[0]
+        ),
+        "historical_compatible_match_rows": int(len(matches)),
+    }
+    return matches, diagnostics
+
+
+def _automatic_target_mega_controls(
+    temp: Path,
+) -> tuple[dict[str, Path], dict[str, object]]:
+    """Build V25 target shock controls from PIT-safe official proceedings.
+
+    The historical automatic controls receive complete speech rows, so the
+    target's sentence-level source is first reconstructed to that granularity.
+    A dated official institutional proceeding then supplies the same universal
+    categorical event identity used by the class-level shock scale.  Frequency
+    diagnostics remain in the audit rather than being discarded.
+    """
+
+    source = pd.read_csv(OFFICIAL_2025_MINUTES, encoding="utf-8-sig").fillna("")
+    lowered = {str(column).strip().casefold() for column in source.columns}
+    forbidden = sorted(lowered & {value.casefold() for value in FORBIDDEN_OUTCOME_COLUMNS})
+    forbidden.extend(
+        sorted(
+            column
+            for column in lowered
+            if "actual" in column or "vote_share" in column or "winner" in column
+        )
+    )
+    if forbidden:
+        raise RuntimeError(
+            f"official target mega-control source contains outcome columns: {sorted(set(forbidden))}"
+        )
+    required = {
+        "election_id",
+        "assembly_daesu",
+        "source_id",
+        "source_row_id",
+        "sentence_index",
+        "meeting_date",
+        "available_date",
+        "period",
+        "speaker",
+        "committee",
+        "agenda",
+        "issue_name",
+        "issue_weight",
+        "text_excerpt",
+    }
+    missing = sorted(required - set(source.columns))
+    if missing:
+        raise RuntimeError(f"official target mega-control source is missing: {missing}")
+
+    meeting = pd.to_datetime(source["meeting_date"], errors="coerce")
+    available = pd.to_datetime(source["available_date"], errors="coerce")
+    cutoff = pd.Timestamp(FORECAST_CUTOFF)
+    election_date = pd.Timestamp(ELECTION_DATES[TARGET_ELECTION])
+    eligible = (
+        source["election_id"].astype(str).eq(TARGET_ELECTION)
+        & source["assembly_daesu"].astype(str).eq("22")
+        & meeting.notna()
+        & available.notna()
+        & meeting.lt(election_date)
+        & available.le(cutoff)
+    )
+    target = source.loc[eligible].copy()
+    if target.empty:
+        raise RuntimeError("official target mega-control source has no PIT-eligible rows")
+
+    matches, match_diagnostics = _historical_compatible_target_matches(target)
+    _, diagnostics = build_automatic_mega_issue_intensity(matches, ELECTION_DATES)
+    taxonomy, intensity, audit = build_automatic_mega_taxonomy(diagnostics)
+    if len(taxonomy) != 1 or len(intensity) != 1:
+        raise RuntimeError("automatic target mega controls did not produce one target row")
+
+    rules = pd.read_csv(ISSUE_CONTEXT_RULES, encoding="utf-8-sig").fillna("")
+    mega_rules = rules.loc[
+        rules["rule_id"].astype(str).str.startswith("mega_")
+        & rules["target_issue"].astype(str).eq("regime_change")
+    ].copy()
+    crisis_terms = sorted(
+        {
+            term.strip()
+            for value in mega_rules["context_terms"].astype(str)
+            for term in value.split("|")
+            if term.strip()
+        }
+    )
+    if not crisis_terms:
+        raise RuntimeError("automatic target mega-control vocabulary is empty")
+    title = target["committee"].astype(str) + " " + target["agenda"].astype(str)
+    title_has_crisis = title.apply(lambda value: any(term in value for term in crisis_terms))
+    institutional_markers = ("국정조사", "특별위원회", "탄핵소추", "헌법재판")
+    title_is_official_proceeding = title.apply(
+        lambda value: any(marker in value for marker in institutional_markers)
+    )
+    institutional = target.loc[title_has_crisis & title_is_official_proceeding].copy()
+    semantic_gate = not institutional.empty
+    frequency_shock_type = str(taxonomy.iloc[0]["shock_type"])
+    frequency_intensity = float(intensity.iloc[0]["mega_issue_intensity"])
+    selected_shock_type = frequency_shock_type
+    selected_intensity = frequency_intensity
+    semantic_adjustment_applied = False
+    if semantic_gate:
+        selected_shock_type = "institutional_crisis"
+        selected_intensity = SHOCK_CLASS_INTENSITY[selected_shock_type]
+        semantic_adjustment_applied = True
+        taxonomy.loc[:, "shock_type"] = selected_shock_type
+        taxonomy.loc[:, "notes"] = (
+            "Assembly speech-row rematch plus universal official-proceeding "
+            "semantic event class; no election outcome"
+        )
+        intensity.loc[:, "mega_issue_intensity"] = selected_intensity
+        intensity.loc[:, "notes"] = (
+            "Universal institutional-crisis class intensity after historical-"
+            "compatible Assembly speech-row rematch"
+        )
+
+    audit["frequency_automatic_shock_type"] = frequency_shock_type
+    audit["frequency_automatic_mega_issue_intensity"] = frequency_intensity
+    audit["selected_shock_type"] = selected_shock_type
+    audit["selected_mega_issue_intensity"] = selected_intensity
+    audit["semantic_institutional_gate"] = semantic_gate
+    audit["semantic_gate_adjustment_applied"] = semantic_adjustment_applied
+    audit["semantic_source_rows"] = int(len(institutional))
+    audit["semantic_source_meetings"] = int(institutional["source_id"].nunique())
+    audit["semantic_source_speakers"] = int(institutional["speaker"].nunique())
+    audit["semantic_vocabulary_source"] = ISSUE_CONTEXT_RULES.relative_to(ROOT).as_posix()
+    for key, value in match_diagnostics.items():
+        audit[key] = value
+    audit["target_match_granularity"] = "reconstructed_historical_speech_row"
+    audit["outcome_columns_used"] = ""
+
+    historical_intensity = pd.read_csv(
+        AUTOMATIC_DIR / "mega_issue_intensity.csv", encoding="utf-8-sig"
+    )
+    historical_taxonomy = pd.read_csv(
+        AUTOMATIC_DIR / "mega_issue_taxonomy.csv", encoding="utf-8-sig"
+    )
+    combined_intensity = pd.concat(
+        [
+            historical_intensity.loc[
+                ~historical_intensity["election_id"].astype(str).eq(TARGET_ELECTION)
+            ],
+            intensity.reindex(columns=historical_intensity.columns),
+        ],
+        ignore_index=True,
+    )
+    combined_taxonomy = pd.concat(
+        [
+            historical_taxonomy.loc[
+                ~historical_taxonomy["election_id"].astype(str).eq(TARGET_ELECTION)
+            ],
+            taxonomy.reindex(columns=historical_taxonomy.columns),
+        ],
+        ignore_index=True,
+    )
+    for name, frame in {
+        "mega_issue_intensity": combined_intensity,
+        "mega_issue_taxonomy": combined_taxonomy,
+    }.items():
+        target_rows = frame.loc[frame["election_id"].astype(str).eq(TARGET_ELECTION)]
+        dates = pd.to_datetime(target_rows["available_date"], errors="coerce")
+        if len(target_rows) != 1 or dates.isna().any() or dates.gt(cutoff).any():
+            raise RuntimeError(f"{name} failed target coverage or PIT validation")
+
+    paths = {
+        "mega_issue_intensity": temp / "mega_issue_intensity.csv",
+        "mega_issue_taxonomy": temp / "mega_issue_taxonomy.csv",
+        "mega_issue_taxonomy_audit": temp / "mega_issue_taxonomy_audit.csv",
+    }
+    combined_intensity.to_csv(paths["mega_issue_intensity"], index=False, encoding="utf-8-sig")
+    combined_taxonomy.to_csv(paths["mega_issue_taxonomy"], index=False, encoding="utf-8-sig")
+    audit.to_csv(paths["mega_issue_taxonomy_audit"], index=False, encoding="utf-8-sig")
+    metadata = {
+        "method": (
+            "historical_speech_row_rematch_with_official_institutional_event_gate"
+        ),
+        "source": OFFICIAL_2025_MINUTES.relative_to(ROOT).as_posix(),
+        "source_rows": int(len(source)),
+        "pit_eligible_rows": int(len(target)),
+        "semantic_gate": semantic_gate,
+        "semantic_gate_adjustment_applied": semantic_adjustment_applied,
+        "semantic_source_rows": int(len(institutional)),
+        "semantic_source_meetings": int(institutional["source_id"].nunique()),
+        "semantic_source_speakers": int(institutional["speaker"].nunique()),
+        "frequency_shock_type": frequency_shock_type,
+        "frequency_mega_issue_intensity": frequency_intensity,
+        "shock_type": selected_shock_type,
+        "mega_issue_intensity": selected_intensity,
+        "available_date": str(intensity.iloc[0]["available_date"]),
+        "target_outcomes_used": False,
+        "model_parameters_changed": False,
+        **match_diagnostics,
+    }
+    return paths, metadata
+
+
 def _prospective_sources(
     temp: Path,
     registry: pd.DataFrame,
@@ -755,6 +1110,16 @@ def _prospective_sources(
     *,
     version: str,
 ) -> tuple[dict[str, Path], dict[str, object]]:
+    mega_control_paths: dict[str, Path] = {}
+    mega_control_diagnostics: dict[str, object] = {
+        "method": "historical_runtime_default",
+        "target_outcomes_used": False,
+        "model_parameters_changed": False,
+    }
+    if version == "v25":
+        mega_control_paths, mega_control_diagnostics = (
+            _automatic_target_mega_controls(temp)
+        )
     candidate_link, target_context_paths, government_link_diagnostics = (
         _build_target_candidate_context(
             temp,
@@ -930,6 +1295,35 @@ def _prospective_sources(
             sort=False,
         )
 
+    historical_direct_profile = pd.read_csv(
+        ROOT / "data/raw/auto_issue_seed/candidate_issue_profile.csv",
+        encoding="utf-8-sig",
+    )
+    target_direct_profile = pd.read_csv(
+        target_context_paths["candidate_direct_issue_profile"],
+        encoding="utf-8-sig",
+    )
+    target_direct_profile = target_direct_profile.loc[
+        target_direct_profile["election_id"].astype(str).eq(TARGET_ELECTION)
+    ].copy()
+    direct_government = target_direct_profile["target_source_types"].fillna("").astype(str).str.contains(
+        r"(?:^|\|)government(?:\||$)", regex=True
+    )
+    if target_direct_profile.empty or direct_government.any():
+        raise RuntimeError("forecast direct candidate profile is empty or government-linked")
+    combined_direct_profile = pd.concat(
+        [
+            historical_direct_profile.loc[
+                ~historical_direct_profile["election_id"].astype(str).eq(
+                    TARGET_ELECTION
+                )
+            ],
+            target_direct_profile,
+        ],
+        ignore_index=True,
+        sort=False,
+    )
+
     outer = pd.read_csv(OUTER_CONFIG, encoding="utf-8-sig")
     deployment = json.loads(DEPLOYMENT_CONFIG.read_text(encoding="utf-8"))["config"]
     target_config = {column: np.nan for column in outer.columns}
@@ -958,10 +1352,12 @@ def _prospective_sources(
         "political_landscape": temp / "candidate_political_landscape.csv",
         "third_candidate_profile": temp / "third_candidate_profile.csv",
         "candidate_issue_profile": temp / "candidate_issue_profile.csv",
+        "candidate_direct_issue_profile": temp / "candidate_direct_issue_profile.csv",
         "mega_issue_axis": temp / "mega_issue_axis.csv",
         "mega_issue_attribution": temp / "mega_issue_attribution.csv",
         "outer_config": temp / "nested_outer_with_prospective_target.csv",
     }
+    paths.update(mega_control_paths)
     for key, frame in (
         ("results", results),
         ("salience", combined_salience),
@@ -985,6 +1381,7 @@ def _prospective_sources(
         ("political_landscape", combined_landscape),
         ("third_candidate_profile", combined_third_profile),
         ("candidate_issue_profile", combined_issue_seeds["candidate_issue_profile.csv"]),
+        ("candidate_direct_issue_profile", combined_direct_profile),
         ("mega_issue_axis", combined_issue_seeds["mega_issue_axis.csv"]),
         (
             "mega_issue_attribution",
@@ -996,6 +1393,7 @@ def _prospective_sources(
     return paths, {
         "candidate_strength": candidate_context_diagnostics,
         "government_context_link": government_link_diagnostics,
+        "mega_issue_controls": mega_control_diagnostics,
     }
 
 
@@ -1151,7 +1549,12 @@ def _v23_runtime(config_path: Path, selected: pd.DataFrame) -> Iterator[None]:
     def load_selected_policy(path=config_path):
         return original_load(config_path)
 
-    engines = {active.nested.engine, active.assignment_builder.engine}
+    engines = {
+        active.nested.engine,
+        active.assignment_builder.engine,
+        active.nested.base_eval.engine,
+        assignment_builder.engine,
+    }
     attributes: list[tuple[object, str, object]] = [
         (active, "CONFIG_PATH", config_path),
         (active, "load_policy", load_selected_policy),
@@ -1298,7 +1701,12 @@ def _execute_existing_pipeline(
     dict[str, object],
 ]:
     all_elections = (*SCORED_ELECTIONS, TARGET_ELECTION)
-    engines = {active.nested.engine, active.assignment_builder.engine}
+    engines = {
+        active.nested.engine,
+        active.assignment_builder.engine,
+        active.nested.base_eval.engine,
+        assignment_builder.engine,
+    }
     captures: dict[str, pd.DataFrame] = {}
 
     # The promoted runner assembles both the rolling rows and the electorate
@@ -1315,6 +1723,10 @@ def _execute_existing_pipeline(
             require_frozen_reproduction=False
         )
         source_attributes: list[tuple[object, str, object]] = []
+        if "mega_issue_intensity" in sources:
+            source_attributes.append(
+                (active, "MEGA_ISSUE_INTENSITY", sources["mega_issue_intensity"])
+            )
         for engine in engines:
             source_attributes.extend(
                 [
@@ -1374,6 +1786,21 @@ def _execute_existing_pipeline(
                     ),
                 ]
             )
+            if "mega_issue_intensity" in sources:
+                source_attributes.extend(
+                    [
+                        (
+                            engine,
+                            "ENHANCED_MEGA_ISSUE_INTENSITY",
+                            str(sources["mega_issue_intensity"]),
+                        ),
+                        (
+                            engine,
+                            "MEGA_ISSUE_TAXONOMY",
+                            str(sources["mega_issue_taxonomy"]),
+                        ),
+                    ]
+                )
         with patching.patched(source_attributes):
             target = active.nested.engine.assemble()
             target = target.loc[target["election_id"].eq(TARGET_ELECTION)].copy()
@@ -1497,6 +1924,49 @@ def _execute_existing_pipeline(
                     no_deployment_losses,
                 ),
             ]
+
+            direct_profile = pd.read_csv(
+                sources["candidate_direct_issue_profile"], encoding="utf-8-sig"
+            )
+            direct_taxonomy = pd.read_csv(
+                sources.get(
+                    "mega_issue_taxonomy",
+                    AUTOMATIC_DIR / "mega_issue_taxonomy.csv",
+                ),
+                encoding="utf-8-sig",
+            )
+            event_aligned_direct_profile = (
+                active.mega_issue_adjustment.align_profile_to_event_class(
+                    direct_profile,
+                    direct_taxonomy,
+                    ELECTION_DATES,
+                )
+            )
+            original_compile_direct_mega_scores = (
+                active.mega_issue_adjustment.compile_direct_mega_scores
+            )
+
+            def compile_candidate_only_direct_mega_scores(
+                profile,
+                intensity,
+                election_dates,
+                **kwargs,
+            ):
+                del profile
+                return original_compile_direct_mega_scores(
+                    event_aligned_direct_profile,
+                    intensity,
+                    election_dates,
+                    **kwargs,
+                )
+
+            runtime_attributes.append(
+                (
+                    active.mega_issue_adjustment,
+                    "compile_direct_mega_scores",
+                    compile_candidate_only_direct_mega_scores,
+                )
+            )
             try:
                 with patching.patched(runtime_attributes):
                     active.run(
@@ -1712,6 +2182,8 @@ def _input_manifest(
         EXPLICIT_TARGET_CONTEXT,
         CANDIDATE_TARGET_CONTEXT,
         CONTEXT_DIR / "manifest.json",
+        OFFICIAL_2025_MINUTES,
+        ISSUE_CONTEXT_RULES,
         CONTEXT_DIR / "assembly22_speaker_roster.csv",
         CONTEXT_DIR / "assembly22_speaker_roster.manifest.json",
         CONTEXT_DIR / "assembly_speaker_influence_pres_2025.csv",
@@ -1737,6 +2209,13 @@ def _input_manifest(
         ROOT / "scripts/build_speech_derived_issue_context.py",
         ROOT / "scripts/build_speech_derived_candidate_context_v2.py",
         ROOT / "scripts/build_candidate_party_speech_context.py",
+        ROOT / "scripts/extract_assembly_speaker_issue_matches.py",
+        ROOT / "scripts/run_prospective_forecast.py",
+        ROOT / "src/election_forecast/features/issue_matcher.py",
+        ROOT / "presidential_issue_engine/automatic_controls_v22.py",
+        ROOT / "presidential_issue_engine/speech_derived_mega_intensity.py",
+        ROOT / "presidential_issue_engine/mega_issue_adjustment.py",
+        ROOT / "presidential_issue_engine/issue_vote_engine.py",
     ]
     if version in {"v24", "v25"}:
         explicit.extend(
@@ -1818,6 +2297,7 @@ def run(version: str = "v23") -> Path:
 
     output_dir = ROOT / "outputs" / f"prospective_pres_2025_{version}"
     output_dir.mkdir(parents=True, exist_ok=True)
+    mega_control_outputs: dict[str, pd.DataFrame] = {}
     with tempfile.TemporaryDirectory(prefix="prospective_pres_2025_") as temp_dir:
         sources, candidate_context_diagnostics = _prospective_sources(
             Path(temp_dir),
@@ -1837,6 +2317,18 @@ def run(version: str = "v23") -> Path:
         ) = (
             _execute_existing_pipeline(version, config_path, sources, selected)
         )
+        if "mega_issue_intensity" in sources:
+            for key in (
+                "mega_issue_intensity",
+                "mega_issue_taxonomy",
+                "mega_issue_taxonomy_audit",
+            ):
+                frame = pd.read_csv(sources[key], encoding="utf-8-sig")
+                if "election_id" in frame.columns:
+                    frame = frame.loc[
+                        frame["election_id"].astype(str).eq(TARGET_ELECTION)
+                    ].copy()
+                mega_control_outputs[key] = frame
 
     forbidden_output = {
         column
@@ -1898,6 +2390,13 @@ def run(version: str = "v23") -> Path:
         encoding="utf-8-sig",
         lineterminator="\n",
     )
+    for name, frame in mega_control_outputs.items():
+        frame.to_csv(
+            output_dir / f"prospective_{name}.csv",
+            index=False,
+            encoding="utf-8-sig",
+            lineterminator="\n",
+        )
     for name, audit in v24_audits.items():
         schema = list(V24_AUDIT_COLUMNS[name])
         extra = [column for column in audit.columns if column not in schema]
@@ -1947,6 +2446,9 @@ def run(version: str = "v23") -> Path:
         ],
         "government_context_link": candidate_context_diagnostics[
             "government_context_link"
+        ],
+        "mega_issue_controls": candidate_context_diagnostics[
+            "mega_issue_controls"
         ],
         "national_region_weight_source": "pres_2022_valid_vote_volume",
         "outcome_columns_used": [],

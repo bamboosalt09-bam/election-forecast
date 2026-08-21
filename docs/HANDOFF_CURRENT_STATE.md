@@ -32,12 +32,27 @@ profile/pressure paths used by that route.
   `edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a`
 - V23 rollback SHA-256:
   `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`
-- full regression suite: `601 passed`
+- full regression suite: `607 passed`
 - post-2022 outcomes used: false
 
 The V25 D-1 prospective run reproduces all 232 frozen historical rows before
 emitting 51 target rows and computes no performance metric. See
 `docs/PRES_2025_V25_STRICT_PROSPECTIVE_20260821.md`.
+
+The prospective runner now reconstructs the sentence corpus to the same full
+speech-row granularity used by the historical Assembly matcher. This recovers
+cross-sentence regime context and produces a frequency-only
+`political_realignment / 0.75` diagnostic. Six PIT-safe official institutional
+proceedings activate the universal class-level
+`institutional_crisis / 2.0` gate. Direct shock routing is event-class aligned,
+so that crisis intensity scales `regime_change` rather than an unrelated
+`withdrawal_event`. Government evidence is retained for the incumbent-burden
+compiler but excluded from the person/party-only direct candidate profile.
+The weak-C donor uses documented party-origin lane before speech-axis
+orientation, classifying Lee Jun-seok as `conservative_centrist`. The corrected
+unscored national composition is Kim Moon-soo `37.4256%`, Lee Jae-myung
+`56.9775%`, and Lee Jun-seok `5.5969%`. These values must not be compared with
+the realised 2025 result for selection or tuning.
 
 ## Superseded V24 promotion record (2026-08-20)
 
@@ -896,3 +911,41 @@ targets for coefficient selection.
   coefficient confidence interval or an untouched-holdout calibration.
 - Detailed record:
   `docs/EXPERIMENT_V24_INTERVAL_SCALE_REFINEMENT_20260803.md`.
+
+## Development-order caveat for the 2025 target (2026-08-21)
+
+Two corrections applied to the 2025 path on this date are defensible on their
+own evidence, but the order in which they were found is not a pre-registered
+forecast and the record should say so plainly.
+
+What was corrected:
+
+- `mega_issue_terms.csv` carried nine dedicated pres_2017 crisis terms and none
+  for pres_2025, so the institutional-crisis severity was measured with an empty
+  instrument. Eight terms were registered, all scoped to pres_2025 alone, all
+  drawn from events between 2024-12 and 2025-04 and therefore inside the D-1
+  cutoff. Historical mega-issue controls are byte-identical afterwards.
+- `weak_same_lane_refusal` applied a flat 0.50 desertion rate to every weak
+  third candidate although a continuous carry-in measure already existed. The
+  rate now falls linearly to zero at the exemption threshold already used by
+  `third_candidate_lineage_constraint`. Both anchors predate the change.
+
+Why each is defensible without reading the 2025 result: a term table with nine
+entries for one election and zero for another is a coverage defect on its face,
+and a flat rate alongside a continuous measure is an internal inconsistency on
+its face. No parameter was fitted to the realised 2025 composition, and the
+scored panel is bit-identical, including the refusal rate for 권영길 2002 and
+심상정 2022.
+
+What is not clean: the investigation began because the 2025 composition looked
+wrong, so the search direction was outcome-informed even though the fixes were
+not. A proposal to scale the crisis intensity down in proportion to the measured
+severity was raised on that basis and withdrawn once the measurement gap was
+identified, but the selection of which defects to pursue, of the 0.02 threshold,
+and of the eight registered terms all occurred after the result was known.
+
+This does not make the 2025 output a scored prediction and it must still not be
+compared with the realised result for selection or tuning. It does mean the 2025
+path carries a weaker methodological guarantee than the frozen historical panel,
+and any external claim should describe it as a corrected demonstration rather
+than an out-of-sample forecast.
