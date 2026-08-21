@@ -44,12 +44,11 @@ from presidential_issue_engine.automatic_controls_v22 import (  # noqa: E402
 )
 
 AUTOMATIC_DIR = ROOT / "outputs" / "automatic_controls_v23"
-DIAGNOSTICS = (
-    ROOT
-    / "outputs"
-    / "speech_derived_mega_intensity_v5"
-    / "mega_issue_intensity_diagnostics.csv"
-)
+# The classifier components are also written to the v22 taxonomy audit, which is
+# a canonical tracked output; the speech-derived diagnostics carry the identical
+# four columns but live outside the tracked output allowlist, so reading the
+# audit keeps this script reproducible from a clean clone.
+DIAGNOSTICS = ROOT / "outputs" / "automatic_controls_v22" / "mega_issue_taxonomy_audit.csv"
 OUTPUT_DIR = ROOT / "outputs" / "v25_intensity_ladder"
 MIRROR_DIR = ROOT / "outputs" / "_v25_intensity_ladder_mirror"
 CRISIS_INTENSITY = float(SHOCK_CLASS_INTENSITY["institutional_crisis"])
