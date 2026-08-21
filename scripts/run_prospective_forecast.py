@@ -2102,9 +2102,13 @@ def _execute_existing_pipeline(
         target_predictions["candidate_name"] = target_predictions["candidate_name_x"]
     target_predictions["predicted_share"] = target_predictions["layer_pred"]
     stage_audit = _safe_stage_audit(target_predictions)
-    target_predictions = target_predictions.rename(
-        columns={"source_slot": "slot"}
-    )
+    # ``rename`` alone leaves two columns named ``slot`` - the preliminary
+    # assignment and the renamed registry slot - and the duplicate drop below
+    # keeps the first, silently discarding the rename. Every structural layer
+    # keys on ``source_slot``, so the reported label must be that one.
+    target_predictions = target_predictions.drop(
+        columns=["slot"], errors="ignore"
+    ).rename(columns={"source_slot": "slot"})
     name_column = (
         "candidate_name_x"
         if "candidate_name_x" in target_predictions.columns

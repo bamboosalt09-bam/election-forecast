@@ -47,11 +47,11 @@
   "final_model_slot_assignment": [
     {
       "slot": "A",
-      "candidate_name": "김문수"
+      "candidate_name": "이재명"
     },
     {
       "slot": "B",
-      "candidate_name": "이재명"
+      "candidate_name": "김문수"
     },
     {
       "slot": "C",
