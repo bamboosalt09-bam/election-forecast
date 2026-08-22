@@ -31,7 +31,20 @@ DEFAULT_THEORETICAL_FLOOR = 0.01
 # ``absolute`` lets the shock set one nationwide erosion in vote terms and lets
 # each region resist it out of its own depth. Shock magnitude then sizes the
 # push and regional core depth decides how much actually moves.
-FLOOR_EROSION_MODES = {"proportional", "absolute"}
+# ``layered`` draws the transfer from the electorate layers in order rather
+# than from one undifferentiated pool. contest_regime already separates them -
+# critical support responds at 0.75 and swing at 1.25 - while the veto lumps
+# concrete, critical and swing together above an eroded floor and applies one
+# rate to all of it. In 대구 2017 that let it take 0.0527 from a candidate whose
+# non-core mass was 0.0083, pulling the prediction to 0.4274 beneath his own
+# concrete core of 0.4584.
+FLOOR_EROSION_MODES = {"proportional", "absolute", "layered"}
+CRITICAL_ELASTICITY = 0.75
+SWING_ELASTICITY = 1.25
+# How much of the rupture-eroded core the veto may actually draw on, in
+# ``layered`` mode. 1.0 reproduces the undifferentiated behaviour; 0.0
+# protects concrete support outright. Both endpoints are measured.
+DEFAULT_CORE_EROSION_RESISTANCE = 1.0
 DEFAULT_FLOOR_EROSION_MODE = "proportional"
 DEFAULT_RUPTURE_FLOOR_EROSION_ENABLED = True
 RUPTURE_SCORE_REFERENCE = 0.25
@@ -48,6 +61,7 @@ def apply_strong_incumbent_veto(
     rupture_floor_erosion_enabled: bool = DEFAULT_RUPTURE_FLOOR_EROSION_ENABLED,
     theoretical_floor: float = DEFAULT_THEORETICAL_FLOOR,
     floor_erosion_mode: str = DEFAULT_FLOOR_EROSION_MODE,
+    core_erosion_resistance: float = DEFAULT_CORE_EROSION_RESISTANCE,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Apply a bounded incumbent-veto tail and return a per-region audit."""
 
@@ -241,8 +255,37 @@ def apply_strong_incumbent_veto(
                 max(theoretical_floor, eroded_floor),
             )
             out.at[runner_index, "strong_veto_effective_floor"] = effective_floor
-            flexible = max(runner_prediction - effective_floor, 0.0)
-            transfer = min(rate * flexible, runner_prediction)
+            if floor_erosion_mode == "layered":
+                critical_mass = float(
+                    np.clip(
+                        pd.to_numeric(
+                            out.at[runner_index, "critical_support_raw"], errors="coerce"
+                        ),
+                        0.0,
+                        None,
+                    )
+                    if "critical_support_raw" in out.columns
+                    else 0.0
+                )
+                above_core = max(runner_prediction - base_runner_floor, 0.0)
+                critical_available = min(critical_mass, above_core)
+                swing_available = max(above_core - critical_available, 0.0)
+                # The core yields only what the rupture eroded, and the two
+                # mobile layers respond at the elasticities contest_regime
+                # already uses. Protecting the core outright was measured and
+                # is worse: the veto's total transfer is load-bearing for the
+                # national levels, so removing most of it breaks them.
+                core_available = max(base_runner_floor - effective_floor, 0.0) * float(
+                    np.clip(core_erosion_resistance, 0.0, 1.0)
+                )
+                flexible = (
+                    swing_available * SWING_ELASTICITY
+                    + critical_available * CRITICAL_ELASTICITY
+                    + core_available
+                )
+            else:
+                flexible = max(runner_prediction - effective_floor, 0.0)
+            transfer = min(rate * flexible, max(runner_prediction - theoretical_floor, 0.0))
             if transfer <= 0.0:
                 continue
             out.at[runner_index, prediction_column] -= transfer
