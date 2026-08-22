@@ -3,6 +3,7 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
+from presidential_issue_engine import strong_incumbent_veto
 from presidential_issue_engine.strong_incumbent_veto import (
     DEFAULT_GAIN,
     apply_strong_incumbent_veto,
@@ -122,3 +123,25 @@ def test_requires_no_outcome_columns() -> None:
 
     assert not adjusted.empty
     assert not audit.empty
+
+
+def test_unknown_floor_erosion_mode_is_rejected() -> None:
+    frame = pd.DataFrame(
+        {
+            "election_id": ["pres_2017"] * 2,
+            "region_id": ["sido_11"] * 2,
+            "source_slot": ["A", "B"],
+            "layer_pred": [0.5, 0.5],
+        }
+    )
+    with pytest.raises(ValueError, match="floor erosion mode"):
+        strong_incumbent_veto.apply_strong_incumbent_veto(
+            frame, floor_erosion_mode="nonsense"
+        )
+
+
+def test_the_shipped_default_is_still_proportional_erosion() -> None:
+    """The absolute mode is measured and unadopted; the default must not drift."""
+
+    assert strong_incumbent_veto.DEFAULT_FLOOR_EROSION_MODE == "proportional"
+    assert strong_incumbent_veto.FLOOR_EROSION_MODES == {"proportional", "absolute"}

@@ -105,3 +105,81 @@ def test_defection_scale_reports_missing_rather_than_guessing() -> None:
     unsourced = report.loc[report["defection_seats_source"].isin({"needs_source", "no_party"})]
     assert not unsourced.empty
     assert unsourced["defection_scale"].isna().all()
+
+
+def test_unknown_recipient_mode_is_rejected() -> None:
+    frame = pd.DataFrame(
+        {
+            "election_id": ["pres_2002"] * 3,
+            "region_id": ["sido_11"] * 3,
+            "slot": ["A", "B", "C"],
+            "candidate_name": ["노무현", "이회창", "권영길"],
+            "layer_pred": [0.45, 0.40, 0.15],
+            "direct_party_recent_base": [0.50, 0.45, 0.05],
+        }
+    )
+    with pytest.raises(ValueError, match="recipient mode"):
+        constraint.apply_lineage_ceiling(frame, recipient_weight_mode="nonsense")
+
+
+def test_reference_mode_splits_the_excess_at_the_untouched_column() -> None:
+    """The whole point is that an earlier layer's tilt must not decide the split."""
+
+    frame = pd.DataFrame(
+        {
+            "election_id": ["pres_2002"] * 3,
+            "region_id": ["sido_11"] * 3,
+            "slot": ["A", "B", "C"],
+            "candidate_name": ["노무현", "이회창", "권영길"],
+            # a previous layer has already tilted the two majors far apart
+            "layer_pred": [0.20, 0.65, 0.15],
+            # their own standing before any postprocess is even
+            "anchored_pred": [0.40, 0.40, 0.20],
+            "direct_party_recent_base": [0.50, 0.45, 0.05],
+        }
+    )
+    live, _ = constraint.apply_lineage_ceiling(frame, recipient_weight_mode="live")
+    reference, _ = constraint.apply_lineage_ceiling(
+        frame, recipient_weight_mode="reference"
+    )
+
+    excess = 0.15 - 0.05
+    # live inherits the tilt: B takes 0.65/0.85 of the excess
+    assert live.loc[live.slot.eq("B"), "layer_pred"].iloc[0] == pytest.approx(
+        0.65 + excess * (0.65 / 0.85)
+    )
+    # reference splits evenly, because anchored_pred is even
+    assert reference.loc[reference.slot.eq("A"), "layer_pred"].iloc[0] == pytest.approx(
+        0.20 + excess / 2
+    )
+    assert reference.loc[reference.slot.eq("B"), "layer_pred"].iloc[0] == pytest.approx(
+        0.65 + excess / 2
+    )
+    # both conserve the contest and cap the third candidate identically
+    for adjusted in (live, reference):
+        assert adjusted["layer_pred"].sum() == pytest.approx(1.0)
+        assert adjusted.loc[adjusted.slot.eq("C"), "layer_pred"].iloc[0] == pytest.approx(0.05)
+
+
+def test_reference_mode_falls_back_rather_than_skipping_the_cap() -> None:
+    """A missing reference must not leave the third candidate above its ceiling."""
+
+    frame = pd.DataFrame(
+        {
+            "election_id": ["pres_2002"] * 3,
+            "region_id": ["sido_11"] * 3,
+            "slot": ["A", "B", "C"],
+            "candidate_name": ["노무현", "이회창", "권영길"],
+            "layer_pred": [0.45, 0.40, 0.15],
+            "direct_party_recent_base": [0.50, 0.45, 0.05],
+        }
+    )
+    adjusted, audit = constraint.apply_lineage_ceiling(
+        frame, recipient_weight_mode="reference"
+    )
+    assert adjusted.loc[adjusted.slot.eq("C"), "layer_pred"].iloc[0] == pytest.approx(0.05)
+    assert audit.iloc[0]["recipient_weight_mode"] == "reference"
+
+
+def test_the_shipped_default_is_still_the_live_split() -> None:
+    assert constraint.DEFAULT_RECIPIENT_WEIGHT_MODE == "live"

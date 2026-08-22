@@ -21,6 +21,18 @@ DEFAULT_PROJECTED_MARGIN_THRESHOLD = 0.10
 # does not select these values.
 DEFAULT_GAIN = 1.00
 DEFAULT_THEORETICAL_FLOOR = 0.01
+# How a constitutional rupture erodes the burdened candidate's core floor.
+#
+# ``proportional`` multiplies each region's floor by the same election-level
+# rate, so the absolute mass released scales with core depth: in 2017 the rate
+# is 0.866 nationwide, 경북 releases 0.418 and 강원 0.289. The region with the
+# deepest core gives up the most vote, which inverts what a core is for.
+#
+# ``absolute`` lets the shock set one nationwide erosion in vote terms and lets
+# each region resist it out of its own depth. Shock magnitude then sizes the
+# push and regional core depth decides how much actually moves.
+FLOOR_EROSION_MODES = {"proportional", "absolute"}
+DEFAULT_FLOOR_EROSION_MODE = "proportional"
 DEFAULT_RUPTURE_FLOOR_EROSION_ENABLED = True
 RUPTURE_SCORE_REFERENCE = 0.25
 MAJOR_SLOTS = {"A", "B"}
@@ -35,9 +47,12 @@ def apply_strong_incumbent_veto(
     gain: float = DEFAULT_GAIN,
     rupture_floor_erosion_enabled: bool = DEFAULT_RUPTURE_FLOOR_EROSION_ENABLED,
     theoretical_floor: float = DEFAULT_THEORETICAL_FLOOR,
+    floor_erosion_mode: str = DEFAULT_FLOOR_EROSION_MODE,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Apply a bounded incumbent-veto tail and return a per-region audit."""
 
+    if floor_erosion_mode not in FLOOR_EROSION_MODES:
+        raise ValueError(f"unknown floor erosion mode: {floor_erosion_mode}")
     required = {
         "election_id",
         "region_id",
@@ -194,6 +209,18 @@ def apply_strong_incumbent_veto(
         if rate <= 0.0:
             continue
 
+        # One erosion in vote terms for the whole election, taken from the
+        # typical regional core rather than from each region's own depth.
+        reference_floor = float(
+            np.clip(
+                pd.to_numeric(
+                    election.get("regime_core_floor", pd.Series(0.0, index=election.index)),
+                    errors="coerce",
+                ).fillna(0.0).mean(),
+                0.0,
+                1.0,
+            )
+        )
         for region_id, region in election.groupby("region_id", sort=False):
             dominant = region.index[region[slot_column].astype(str).eq(dominant_slot)]
             runner = region.index[region[slot_column].astype(str).eq(runner_slot)]
@@ -205,7 +232,10 @@ def apply_strong_incumbent_veto(
             base_runner_floor = float(
                 np.clip(out.at[runner_index, "regime_core_floor"], 0.0, 1.0)
             )
-            eroded_floor = base_runner_floor * (1.0 - rupture_floor_activation)
+            if floor_erosion_mode == "absolute":
+                eroded_floor = base_runner_floor - rupture_floor_activation * reference_floor
+            else:
+                eroded_floor = base_runner_floor * (1.0 - rupture_floor_activation)
             effective_floor = min(
                 base_runner_floor,
                 max(theoretical_floor, eroded_floor),

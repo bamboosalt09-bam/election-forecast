@@ -40,6 +40,20 @@ _TRUE = {"1", "true", "yes", "y"}
 # 0.0367 (국민의당 2016, eleven of three hundred), so any floor inside that gap
 # reproduces the panel exactly; the midpoint is used.
 DEFAULT_DEFECTION_FLOOR = 0.02
+# How the excess taken off the third candidate is split between the two majors.
+#
+# ``live`` splits at the prediction as it stands when the ceiling runs, which is
+# whatever an earlier postprocess left behind. That makes the ceiling's output
+# depend on the layers before it: on the 2025 target the strong incumbent veto
+# widens the two-major gap from 7.80 to 17.48 points, and the ceiling then hands
+# the recovered mass out at that widened ratio, adding a further 3.18.
+#
+# ``reference`` splits at a column no postprocess writes to, so the ceiling
+# redistributes at the two majors' own standing rather than at a ratio a
+# previous layer produced.
+RECIPIENT_WEIGHT_MODES = {"live", "reference"}
+DEFAULT_RECIPIENT_WEIGHT_MODE = "live"
+DEFAULT_RECIPIENT_REFERENCE_COLUMN = "anchored_pred"
 ORIGIN_LANES = {
     "conservative",
     "conservative_centrist",
@@ -122,12 +136,16 @@ def apply_lineage_ceiling(
     ceiling_column: str = "direct_party_recent_base",
     slot_column: str = "slot",
     defection_floor: float | None = DEFAULT_DEFECTION_FLOOR,
+    recipient_weight_mode: str = DEFAULT_RECIPIENT_WEIGHT_MODE,
+    recipient_reference_column: str = DEFAULT_RECIPIENT_REFERENCE_COLUMN,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Cap self-founded third candidates at their own direct party evidence.
 
     Returns the adjusted frame and a per-region audit of every applied cap.
     """
 
+    if recipient_weight_mode not in RECIPIENT_WEIGHT_MODES:
+        raise ValueError(f"unknown lineage recipient mode: {recipient_weight_mode}")
     lineage = load_lineage() if lineage is None else lineage
     weak = self_founded_elections(lineage, defection_floor=defection_floor)
     out = frame.copy()
@@ -148,12 +166,24 @@ def apply_lineage_ceiling(
             if not (ceiling > 0.0) or current <= ceiling:
                 continue
             excess = current - ceiling
-            weights = out.loc[majors.index, output_column]
+            live = out.loc[majors.index, output_column]
+            weights = live
+            if recipient_weight_mode == "reference":
+                # Fall back to the live split rather than skipping the cap: an
+                # absent or degenerate reference must not leave the third
+                # candidate above its own ceiling.
+                if recipient_reference_column in out.columns:
+                    candidate = pd.to_numeric(
+                        out.loc[majors.index, recipient_reference_column],
+                        errors="coerce",
+                    )
+                    if candidate.notna().all() and float(candidate.sum()) > 0.0:
+                        weights = candidate
             total = float(weights.sum())
             if total <= 0.0:
                 continue
             out.at[index, output_column] = ceiling
-            out.loc[majors.index, output_column] = weights + excess * (weights / total)
+            out.loc[majors.index, output_column] = live + excess * (weights / total)
             audit_rows.append(
                 {
                     "election_id": str(election_id),
@@ -170,6 +200,7 @@ def apply_lineage_ceiling(
                     "before": current,
                     "ceiling": ceiling,
                     "excess_redistributed": excess,
+                    "recipient_weight_mode": recipient_weight_mode,
                 }
             )
 
