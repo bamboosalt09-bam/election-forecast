@@ -33,6 +33,7 @@ runtime and adds the fixed gain-1 core-weighted regional dispersion layer.
 ## Reproduce the checks
 
 ```bash
+python -m pip install -e ".[dev,reproduce-v27]"
 python scripts/run_active_presidential_model_v27.py --output-dir outputs/reproduction_v27
 python scripts/verify_v27_clean_reproduction.py
 python scripts/build_active_v27_predictive_intervals.py
@@ -49,6 +50,11 @@ must have identical shape, column order and categorical values; numeric values
 must agree within an absolute `1e-12` tolerance. The rebuilt byte hash is also
 reported because CSV serialization can differ across operating systems and
 dependency builds.
+
+Exact V27 regeneration uses Python 3.13 and the `reproduce-v27` optional
+dependency set. The ordinary package remains usable on Python 3.11+, but those
+broader dependency combinations are supported for use and testing rather than
+claimed as frozen numerical build environments.
 The recorded independent-clone run is in
 `docs/V27_CLEAN_CLONE_VERIFICATION_20260822.md`.
 
