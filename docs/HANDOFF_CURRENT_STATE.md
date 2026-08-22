@@ -1,7 +1,7 @@
 # Current State Handoff
 
-> Authoritative current state: `docs/FINAL_MODEL_V25_20260821.md`. The active
-> pointer is `data/config/current_presidential_model.json`; V24 and V23 are immutable
+> Authoritative current state: `docs/FINAL_MODEL_V27_20260822.md`. The active
+> pointer is `data/config/current_presidential_model.json`; V26 through V23 are immutable
 > rollback models. Dated sections below preserve the state and terminology that
 > applied when each experiment was recorded and must not be read as current
 > active-version pointers.
@@ -9,15 +9,15 @@
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_v25_bounded_runtime_repair_pre_2025`
+- active policy: `active_v27_core_weighted_party_regional_dispersion`
 - rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
 
-## Active V25 promotion (2026-08-21)
+## Superseded V25 promotion (2026-08-21)
 
-V25 is the frozen current model. It repairs the V24 runner's accidental bypass
+V25 was the frozen current model at this dated checkpoint. It repairs the V24 runner's accidental bypass
 of promoted V23 runtime bindings while preserving V24's accepted
 `prediction_tilted` weak-C route and the generic third-candidate
 profile/pressure paths used by that route.
@@ -1121,7 +1121,9 @@ is bit-identical to baseline, so the two changes are a pure interaction rather
 than two independent improvements. The classifier's gate thresholds are now
 named constants in `automatic_controls_v22`, and the ladder reuses them, so the
 claim that it introduces no new number is checkable rather than asserted. It
-remains unpromoted; the active V25 pointer is unchanged.
+remained unpromoted at that checkpoint and the active V25 pointer was
+unchanged. The paired change was later promoted as V26 and is inherited by
+current V27.
 
 ## Three follow-ups closed (2026-08-22)
 
@@ -1170,3 +1172,23 @@ It is also barely testable. Across the scored panel the ceiling binds for
 - so this component has one scored activation, the same n=1 problem the direct
 mega path has. No change is made on that basis. Recorded so the earlier note is
 not carried forward.
+
+## V27 regional-polarization promotion (2026-08-22)
+
+V27 promotes the gain-1 core-weighted inherited party-regional dispersion
+layer over frozen V26. It expands only the fitted logit dispersion missing
+relative to `recent_bloc_base`, multiplied by
+`core_voting_mass * direct_party_reliability`, then restores candidate national
+levels and regional compositions.
+
+- regional weighted equal-election MAE: 2.7122 -> 2.6139 %p
+- national candidate equal-election MAE: 0.7210 -> 0.7210 %p
+- winner accuracy: 4/5 unchanged
+- V27 SHA-256: `f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b`
+- V26 rollback: `9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3`
+
+Gain 3 was the development-panel optimum and was explicitly rejected. Gain 1
+is promoted because the evidenced concrete share retains its proportional part
+of inherited regional width. The 2025 runner uses pres_2022 regional vote
+volumes, preserves the existing national forecast exactly, and remains a
+corrected demonstration rather than genuine OOS evidence.

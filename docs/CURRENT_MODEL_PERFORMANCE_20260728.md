@@ -1,5 +1,9 @@
 # Current Model Performance (2026-07-28)
 
+> Superseded historical snapshot of V16. The authoritative current model is
+> V27; see `docs/FINAL_MODEL_V27_20260822.md` and
+> `data/config/current_presidential_model.json`.
+
 ## Active policy
 
 `active_strict_nested_v16_regional_identity`

@@ -1,8 +1,11 @@
 # Active v17 automation tranche
 
+> Superseded historical promotion record. The authoritative current model is
+> V27; see `docs/FINAL_MODEL_V27_20260822.md`.
+
 ## Promotion
 
-The current model is v17, promoted from the v10 successor experiments. The
+At this historical checkpoint the current model was v17, promoted from the v10 successor experiments. The
 canonical runner is `scripts/run_current_presidential_model.py`; v16 remains a
 byte-preserved rollback reference.
 

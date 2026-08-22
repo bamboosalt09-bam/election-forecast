@@ -98,9 +98,9 @@ def test_the_shipped_headline_is_reproduced_by_the_contest_votes_column() -> Non
     from pathlib import Path
 
     root = Path(__file__).resolve().parents[1]
-    predictions = root / "outputs/active_presidential_nested_v26/nested_predictions.csv"
+    predictions = root / "outputs/active_presidential_nested_v27/nested_predictions.csv"
     if not predictions.exists():
-        pytest.skip("V26 predictions are not present")
+        pytest.skip("V27 predictions are not present")
     pointer = json.loads(
         (root / "data/config/current_presidential_model.json").read_text(encoding="utf-8")
     )

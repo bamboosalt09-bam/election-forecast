@@ -1,18 +1,22 @@
-# Reproducibility and Frozen V25 Boundary
+# Reproducibility and Frozen V27 Boundary
 
 ## Frozen scope
 
-Active V25 is a through-2022 development model. Its runner, V23 base
+Active V27 is a through-2022 development model. Its runner, V23 base
 configuration, V24 versioned panel, predictions, interval records, and
-promotion manifests are frozen. V24 and V23 remain immutable rollback
+promotion manifests are frozen. V26 through V23 remain immutable rollback
 boundaries. New experiments must use a new versioned path.
 
 Canonical prediction artifacts:
 
 ```text
-V25 active:
-outputs/active_presidential_nested_v25/nested_predictions.csv
-SHA-256: 218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b
+V27 active:
+outputs/active_presidential_nested_v27/nested_predictions.csv
+SHA-256: f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b
+
+V26 rollback:
+outputs/active_presidential_nested_v26/nested_predictions.csv
+SHA-256: 9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3
 
 V24 rollback:
 outputs/active_presidential_nested_v24/nested_predictions.csv
@@ -23,23 +27,21 @@ outputs/active_presidential_nested_v23/nested_predictions.csv
 SHA-256: dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b
 ```
 
-`data/config/current_presidential_model.json` selects V25. V25 uses the V23
-JSON configuration and V24 ballot panel, then restores the bounded runtime
-bindings listed in `docs/V24_RUNTIME_LINEAGE_DEFECT_20260821.md`.
+`data/config/current_presidential_model.json` selects V27. V27 uses the V26
+runtime and adds the fixed gain-1 core-weighted regional dispersion layer.
 
 ## Reproduce the checks
 
 ```bash
-python scripts/run_active_presidential_model_v25.py --output-dir outputs/reproduction_v25
-python scripts/build_active_v25_predictive_intervals.py
-python scripts/audit_public_active_presidential_model_v25.py
+python scripts/run_active_presidential_model_v27.py --output-dir outputs/reproduction_v27
+python scripts/build_active_v27_predictive_intervals.py
+python scripts/audit_public_active_presidential_model_v27.py
 python scripts/audit_github_baseline.py
 python -m pytest -q
 ```
 
-The public audit checks pointer fields, V23/V24 rollback hashes, V25 input
-hashes, compositional rows, chronological intervals, the accepted
-`prediction_tilted` weak-C route, and finalized artifact hashes.
+The public audit checks pointer fields, V23~V26 rollback hashes, V27 prediction
+and artifact hashes, compositional rows, gain 1, and chronological intervals.
 
 ## Predictive intervals
 
@@ -56,17 +58,17 @@ untouched holdout.
 ## 2025 prospective run
 
 ```bash
-python scripts/run_prospective_forecast.py --version v25
+python scripts/run_prospective_forecast_v27.py
 ```
 
-The run uses the 2025-06-02 D-1 cutoff. Before emitting 51 target rows it must
-reproduce all 232 frozen V25 historical rows within `1e-12`. The manifest
-asserts that no 2025 outcome field or performance metric was used.
+The run uses the 2025-06-02 D-1 cutoff and prior-2022 regional vote volumes for
+V27's conservation weights. The manifest asserts that no 2025 outcome field or
+performance metric was used.
 
 ## Metric scope
 
 The primary regional metric weights candidate-region absolute errors by
 `contest_votes` within each election, then averages elections equally. The
 national metric also uses realised regional contest votes and is therefore a
-post-election aggregation diagnostic. V25 and V24 share the 232-row panel;
+post-election aggregation diagnostic. V27 through V24 share the 232-row panel;
 V23's older headline uses a different 199-row panel.
