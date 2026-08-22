@@ -109,8 +109,8 @@
     },
     {
       "path": "presidential_issue_engine/strong_incumbent_veto.py",
-      "bytes": 9269,
-      "sha256": "7d6b13cbc590e1facd827f5c48943e6fcbc24017c92736acbc594533d1ca8ecf",
+      "bytes": 10799,
+      "sha256": "7421627ceaec116e053df039801fd42c721280c3036a0faf3e129cb7f836d610",
       "hash_mode": "normalized_text_lf"
     },
     {
