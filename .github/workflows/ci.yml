@@ -57,7 +57,7 @@ jobs:
         run: python scripts/audit_public_active_presidential_model_v27.py
 
   v27-clean-reproduction:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5

@@ -20,7 +20,7 @@ TEMP/.venv/python TEMP/repo/scripts/audit_public_active_presidential_model_v27.p
 ## Result
 
 - package installed as `election-forecast 0.27.0`
-- frozen numerical environment: Python 3.13, NumPy 2.5.2, pandas 3.0.5,
+- frozen numerical environment: Windows, Python 3.13, NumPy 2.5.2, pandas 3.0.5,
   SciPy 1.18.1 and scikit-learn 1.9.0
 - V27 rebuilt in a separate temporary output directory
 - Windows clean-clone reproduced `nested_predictions.csv` SHA-256:
@@ -34,5 +34,8 @@ TEMP/.venv/python TEMP/repo/scripts/audit_public_active_presidential_model_v27.p
 - national development-panel macro MAE: `0.7209938807856883%p`
 
 GitHub CI also executes `scripts/verify_v27_clean_reproduction.py` from a clean
-checkout. The tagged commit must not be created until that required check and
-the full regression suite pass.
+Windows checkout. Linux remains the general test platform, but is not claimed
+as byte-identical: a diagnostic run found platform/BLAS drift beginning in the
+2012 fold and reaching `0.001174501524589` in `conversion_resistance`. The
+tagged commit must not be created until the canonical Windows reproduction and
+the full Linux regression suite pass.

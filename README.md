@@ -21,7 +21,7 @@ python scripts/audit_public_active_presidential_model_v27.py
 python -m pytest -q
 ```
 
-동결 V27을 수치적으로 재산출할 때는 Python 3.13에서
+동결 V27을 수치적으로 재산출할 때는 Windows와 Python 3.13에서
 `python -m pip install -e ".[dev,reproduce-v27]"`을 사용합니다. 일반 설치의
 Python 3.11+ 지원과 동결 수치 환경은 구분됩니다.
 

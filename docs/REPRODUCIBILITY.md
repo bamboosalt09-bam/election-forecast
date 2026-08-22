@@ -51,10 +51,13 @@ must agree within an absolute `1e-12` tolerance. The rebuilt byte hash is also
 reported because CSV serialization can differ across operating systems and
 dependency builds.
 
-Exact V27 regeneration uses Python 3.13 and the `reproduce-v27` optional
-dependency set. The ordinary package remains usable on Python 3.11+, but those
-broader dependency combinations are supported for use and testing rather than
-claimed as frozen numerical build environments.
+Exact V27 regeneration uses Windows, Python 3.13 and the `reproduce-v27`
+optional dependency set. The ordinary package remains usable and tested on
+Linux with Python 3.11+, but those broader combinations are supported for use
+rather than claimed as the frozen numerical build environment. A Linux rebuild
+with the same high-level dependency versions exposed BLAS/platform drift up to
+`0.001174501524589` in an intermediate share-scale field, so the project does
+not hide that difference behind a loose tolerance.
 The recorded independent-clone run is in
 `docs/V27_CLEAN_CLONE_VERIFICATION_20260822.md`.
 
