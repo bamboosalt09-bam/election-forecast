@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 from pathlib import Path
+import sys
 import tempfile
 
 import pandas as pd
 
-from scripts import run_active_presidential_model_v28 as v28
-
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts import run_active_presidential_model_v28 as v28  # noqa: E402
+
 FROZEN = ROOT / "outputs/active_presidential_nested_v28/nested_predictions.csv"
 
 
