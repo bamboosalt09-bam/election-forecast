@@ -10,20 +10,32 @@
 ## Quickstart
 
 ```bash
-python -m pip install -e ".[dev,viz]"
+python -m pip install .
 election-forecast --version
 election-forecast show-active-version
 election-forecast run-current-presidential --output-dir outputs/reproduction_v27
 election-forecast audit-current-presidential
+election-forecast verify-current-presidential
+```
+
+설치 wheel에는 실제 V27 실행 소스, 공개·파생 입력, V23~V27 롤백 감사
+산출물이 해시 매니페스트와 함께 들어갑니다. 따라서 소스 체크아웃이 없는
+디렉터리에서도 위 감사와 재현 검사를 실행할 수 있습니다. 개발·시각화까지
+필요하면 다음처럼 설치합니다.
+
+```bash
+python -m pip install -e ".[dev,viz,reproduce-v27]"
 python scripts/compute_forecast_baselines.py
 python presidential_issue_engine/make_poster_figures.py
 python scripts/audit_public_active_presidential_model_v27.py
+python scripts/audit_public_data_rights.py
+python scripts/audit_publication_security.py
 python -m pytest -q
 ```
 
-동결 V27을 수치적으로 재산출할 때는 Windows와 Python 3.13에서
-`python -m pip install -e ".[dev,reproduce-v27]"`을 사용합니다. 일반 설치의
-Python 3.11+ 지원과 동결 수치 환경은 구분됩니다.
+동결 V27의 기준 재산출 환경은 Windows, Python 3.13과
+`requirements-v27.lock`입니다. 일반 설치의 Python 3.11+ 지원과 동결 수치
+환경은 구분됩니다.
 
 ## 결과 요약
 
@@ -36,6 +48,8 @@ Python 3.11+ 지원과 동결 수치 환경은 구분됩니다.
 | 결과 불변성 감사 | 215/215 통과 |
 
 ![V27 회고 개발 패널 성능](presidential_issue_engine/poster_figures/v27_model_performance.png)
+
+![V27 공개 실행 구조](presidential_issue_engine/poster_figures/v27_architecture.png)
 
 ![2017 지역별 V27 예측과 실제](presidential_issue_engine/poster_figures/v27_regional_pres_2017.png)
 
@@ -272,7 +286,7 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 
 | 경로 | 역할 |
 |---|---|
-| `src/election_forecast/` | 공개 forecast API와 데이터 로더 |
+| `src/election_forecast/` | 공개 API, CLI와 검증된 V27 패키지 런타임 로더 |
 | `presidential_issue_engine/` | 회의록·이슈·지역 지형·nested 평가 엔진 |
 | `scripts/` | 수집, 빌드, 평가, 감사, 실행 진입점 |
 | `data/raw/` | 날짜와 출처가 있는 입력·공식자료 레지스트리 |
@@ -283,8 +297,11 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 | `outputs/active_presidential_nested_v24/` | 읽기 전용 V24 롤백 산출물 |
 | `outputs/active_presidential_nested_v23/` | 읽기 전용 V23 롤백 산출물 |
 | `outputs/prospective_pres_2025_v27/` | 실제 결과 없이 생성한 V27 D-1 시연 산출물 |
+| `research/` | 활성 패키지에서 제외한 구식 시각화와 비승격 연구 기록 |
 | `docs/` | 설계·감사·승격·재현성 기록 |
 | `tests/` | PIT, 누수, 입력 경계, 회귀 테스트 |
+
+공개 저장소의 연구 이력과 설치 배포물의 경계는 [저장소·배포 경계](docs/REPOSITORY_BOUNDARIES.md)에 고정합니다. wheel과 sdist에는 현재 V27 실행·감사에 필요한 코드·입력·공개 문서만 들어가며, 구형 시연과 비승격 실험 산출물은 포함하지 않습니다.
 
 ## 동결 정책
 
@@ -298,4 +315,4 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 
 프로젝트가 작성한 소스 코드와 문서는 [Apache License 2.0](LICENSE)으로 배포됩니다. 데이터셋, 모델 가중치, 제3자 소프트웨어와 외부 자료는 각 원출처의 라이선스·이용조건을 따르며 이 저장소의 라이선스로 재허가되지 않습니다. 범위는 [NOTICE](NOTICE)를 참조하십시오.
 
-입력 계열별 출처와 재배포 판정은 [데이터 출처·재배포 원장](docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md)을 참조하십시오. 원장에 권리가 확인되지 않았다고 표시된 원본 추출물은 별도 오픈 데이터셋으로 재배포하면 안 됩니다.
+입력 계열별 출처와 재배포 판정은 [데이터 출처·재배포 원장](docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md)과 [기계 판독 원장](docs/PUBLIC_DATA_SOURCES.json)을 참조하십시오. 권리가 불명확한 원본, 전체 회의록, API 캐시와 로컬 KOSPI 내역은 Git과 설치 패키지에서 제외됩니다. 대회 규정 대응표, SBOM과 AI 명세는 각각 [규정 대응표](docs/COMPETITION_COMPLIANCE_2026.md), [SBOM](docs/SBOM.md), [AI 명세](docs/AI_MODEL_SPEC.md)에 있습니다.

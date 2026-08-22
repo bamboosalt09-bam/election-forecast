@@ -23,6 +23,7 @@ from election_forecast.presidential.standardize_results import standardize_presi
 from election_forecast.presidential.transfer import apply_transfer_adjustments, load_transfer_events
 from election_forecast.presidential.utility_model import compute_utilities
 from election_forecast.presidential.vote_share import utility_to_vote_share
+from election_forecast.v27_runtime import ensure_v27_runtime
 
 
 try:
@@ -34,13 +35,17 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _repository_script(name: str) -> Path:
-    path = REPOSITORY_ROOT / "scripts" / name
-    if not path.is_file():
-        raise SystemExit(
-            f"{name} is a repository workflow and is unavailable in this installation. "
-            "Run it from a source checkout of election-forecast."
-        )
-    return path
+    source_path = REPOSITORY_ROOT / "scripts" / name
+    if source_path.is_file():
+        return source_path
+    runtime_path = ensure_v27_runtime() / "scripts" / name
+    if not runtime_path.is_file():
+        raise SystemExit(f"the verified V27 runtime does not contain {name}")
+    return runtime_path
+
+
+def _v27_root(script: Path) -> Path:
+    return script.resolve().parents[1]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -54,13 +59,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     run_current = subparsers.add_parser(
         "run-current-presidential",
-        help="Reproduce the active frozen V27 historical model from a source checkout",
+        help="Reproduce the active frozen V27 historical model",
     )
     run_current.add_argument("--output-dir")
 
     subparsers.add_parser(
         "audit-current-presidential",
         help="Audit the active V27 artifact and V23-V26 rollback boundaries",
+    )
+
+    subparsers.add_parser(
+        "verify-current-presidential",
+        help="Rebuild V27 in isolation and compare it with the frozen artifact",
     )
 
     subparsers.add_parser(
@@ -167,14 +177,25 @@ def main() -> None:
         return
 
     if args.command == "run-current-presidential":
-        command = [sys.executable, str(_repository_script("run_current_presidential_model.py"))]
-        if args.output_dir:
-            command.extend(["--output-dir", args.output_dir])
-        raise SystemExit(subprocess.run(command, cwd=REPOSITORY_ROOT, check=False).returncode)
+        script = _repository_script("run_current_presidential_model.py")
+        runtime_root = _v27_root(script)
+        output_dir = (
+            Path(args.output_dir).expanduser().resolve()
+            if args.output_dir
+            else (Path.cwd() / "outputs" / "reproduction_v27").resolve()
+        )
+        command = [sys.executable, str(script), "--output-dir", str(output_dir)]
+        raise SystemExit(subprocess.run(command, cwd=runtime_root, check=False).returncode)
 
     if args.command == "audit-current-presidential":
-        command = [sys.executable, str(_repository_script("audit_public_active_presidential_model_v27.py"))]
-        raise SystemExit(subprocess.run(command, cwd=REPOSITORY_ROOT, check=False).returncode)
+        script = _repository_script("audit_public_active_presidential_model_v27.py")
+        command = [sys.executable, str(script)]
+        raise SystemExit(subprocess.run(command, cwd=_v27_root(script), check=False).returncode)
+
+    if args.command == "verify-current-presidential":
+        script = _repository_script("verify_v27_clean_reproduction.py")
+        command = [sys.executable, str(script)]
+        raise SystemExit(subprocess.run(command, cwd=_v27_root(script), check=False).returncode)
 
     if args.command == "forecast":
         raw_data = load_raw_data(args.data_dir)

@@ -32,6 +32,23 @@ runtime and adds the fixed gain-1 core-weighted regional dispersion layer.
 
 ## Reproduce the checks
 
+### Installed wheel (source checkout not required)
+
+```bash
+python -m pip install election_forecast-0.27.0-py3-none-any.whl
+election-forecast audit-current-presidential
+election-forecast verify-current-presidential
+election-forecast run-current-presidential --output-dir outputs/reproduction_v27
+```
+
+The wheel embeds the Git-tracked public V27 runtime as a deterministic archive.
+On first use it rejects path traversal, extracts into a versioned user cache and
+verifies every file's size and SHA-256 before executing the unchanged V27
+runner. Local caches, credentials, full-text corpora and the uncertain-rights
+KOSPI export are excluded.
+
+### Source checkout
+
 ```bash
 python -m pip install -e ".[dev,reproduce-v27]"
 python scripts/run_active_presidential_model_v27.py --output-dir outputs/reproduction_v27
@@ -39,6 +56,8 @@ python scripts/verify_v27_clean_reproduction.py
 python scripts/build_active_v27_predictive_intervals.py
 python scripts/audit_public_active_presidential_model_v27.py
 python scripts/audit_github_baseline.py
+python scripts/audit_public_data_rights.py
+python scripts/audit_publication_security.py
 python -m pytest -q
 ```
 

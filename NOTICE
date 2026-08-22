@@ -10,6 +10,14 @@ licenses, terms, attribution requirements, and redistribution restrictions.
 The source-family register and conservative redistribution decisions are in
 docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md.
 
+Packaged V27 data boundary
+--------------------------
+The wheel contains only Git-tracked public or project-authored derived inputs.
+Local KOSPI history, official-source caches, full parliamentary text, raw HTML
+and PDFs, credentials, checkpoints and publisher article text are excluded.
+The machine-readable source and attribution register is
+docs/PUBLIC_DATA_SOURCES.json.
+
 Visualization geography
 -----------------------
 The generated South Korea regional map uses the 2025-04-01 `admdongkor`

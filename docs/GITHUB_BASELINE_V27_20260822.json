@@ -12,8 +12,17 @@
   },
   "required_repository_files": [
     "NOTICE",
+    "SECURITY.md",
+    "requirements-v27.lock",
+    "docs/AI_MODEL_SPEC.md",
+    "docs/PUBLIC_DATA_SOURCES.json",
+    "docs/REPOSITORY_BOUNDARIES.md",
+    "docs/SBOM.md",
     "docs/FINAL_MODEL_V27_20260822.md",
-    "scripts/audit_public_active_presidential_model_v27.py"
+    "scripts/audit_distribution_artifacts.py",
+    "scripts/audit_public_active_presidential_model_v27.py",
+    "scripts/audit_public_data_rights.py",
+    "scripts/audit_publication_security.py"
   ],
   "expected_hashes": {
     "data/config/current_presidential_model.json": "31a808d214c2f4298dab6539d7fe34539a61ffbbdb584679050e37efee7d14d5",
