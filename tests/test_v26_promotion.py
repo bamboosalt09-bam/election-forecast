@@ -37,13 +37,19 @@ def _pointer() -> dict[str, object]:
     return json.loads(POINTER.read_text(encoding="utf-8"))
 
 
-def test_v26_is_the_declared_v27_rollback() -> None:
+def test_v26_remains_in_the_declared_rollback_chain() -> None:
     pointer = _pointer()
-    assert pointer["active_version"] == "v27"
-    assert pointer["predecessor"] == "v26"
+    assert pointer["active_version"] == "v28"
+    assert pointer["predecessor"] == "v27"
     assert pointer["rollback_pointer"] == (
-        "outputs/active_presidential_nested_v26/finalization_manifest.json"
+        "outputs/active_presidential_nested_v27/finalization_manifest.json"
     )
+    v27 = json.loads(
+        (ROOT / "outputs/active_presidential_nested_v27/finalization_manifest.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert v27["rollback"]["version"] == "v26"
     assert _sha256(ACTIVE_DIR / "nested_predictions.csv") == (
         "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3"
     )

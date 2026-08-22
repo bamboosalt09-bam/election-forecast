@@ -10,7 +10,7 @@ from zipfile import ZipFile
 import pytest
 
 from election_forecast.cli import build_parser
-from election_forecast.v27_runtime import MANIFEST_NAME, _verify_tree
+from election_forecast.v28_runtime import MANIFEST_NAME, _verify_tree
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,29 +24,34 @@ def _build_support():
     return module
 
 
-def test_v27_runtime_selection_is_complete_and_fail_closed() -> None:
+def test_v28_runtime_selection_is_complete_and_fail_closed() -> None:
     support = _build_support()
     public_sources = support._source_files()
     assert not any(path.startswith("data/shadow/") for path in public_sources)
     assert not any(path.startswith("data/raw_lake/") for path in public_sources)
     assert not any(path.startswith("data/imports/") for path in public_sources)
-    selected = set(support.v27_runtime_files())
+    selected = set(support.v28_runtime_files())
     required = {
         "scripts/run_current_presidential_model.py",
-        "scripts/run_active_presidential_model_v27.py",
-        "scripts/run_prospective_forecast_v27.py",
-        "scripts/audit_public_active_presidential_model_v27.py",
-        "scripts/build_active_v27_predictive_intervals.py",
-        "scripts/verify_v27_clean_reproduction.py",
+        "scripts/run_active_presidential_model_v28.py",
+        "scripts/run_prospective_forecast_v28.py",
+        "scripts/audit_public_active_presidential_model_v28.py",
+        "scripts/build_active_v28_predictive_intervals.py",
+        "scripts/verify_v28_clean_reproduction.py",
         "presidential_issue_engine/issue_vote_engine.py",
         "presidential_issue_engine/party_regionalism_dispersion.py",
         "presidential_issue_engine/make_poster_figures.py",
         "common/shared_schema/election.py",
-        "outputs/active_presidential_nested_v27/nested_predictions.csv",
+        "outputs/active_presidential_nested_v28/nested_predictions.csv",
     }
     assert required <= selected
     assert "presidential_issue_engine/fixed_dataset/kospi_daily.csv" not in selected
     assert "data/raw/kospi_history_source.txt" not in selected
+    assert "data/raw/assembly_issue_character_overlay.csv" not in selected
+    assert "data/raw/auto_issue_seed/candidate_issue_profile.csv" not in selected
+    assert "data/raw/auto_issue_seed/mega_issue_axis.csv" not in selected
+    assert "data/raw/auto_issue_seed/mega_issue_attribution.csv" not in selected
+    assert not any("through2022_rederived/overlay_variants/" in path for path in selected)
     assert not any(path.startswith("data/raw/official_sources/cache/") for path in selected)
     assert "scripts/evaluate_external_nli_cascade.py" not in selected
     assert "scripts/train_stance_context_encoder.py" not in selected
@@ -75,16 +80,16 @@ def test_v27_runtime_selection_is_complete_and_fail_closed() -> None:
     assert selected <= tracked_set
 
 
-def test_v27_runtime_archive_manifest_matches_payload(tmp_path: Path) -> None:
+def test_v28_runtime_archive_manifest_matches_payload(tmp_path: Path) -> None:
     support = _build_support()
     archive_path = tmp_path / "runtime.zip"
-    support.build_v27_runtime_archive(archive_path)
+    support.build_v28_runtime_archive(archive_path)
     with ZipFile(archive_path) as archive:
         manifest = json.loads(archive.read("_runtime_manifest.json"))
-        assert manifest["active_version"] == "v27"
+        assert manifest["active_version"] == "v28"
         assert manifest["post_2022_outcomes_used"] is False
         records = {record["path"]: record for record in manifest["files"]}
-        frozen = "outputs/active_presidential_nested_v27/nested_predictions.csv"
+        frozen = "outputs/active_presidential_nested_v28/nested_predictions.csv"
         assert records[frozen]["sha256"] == (
             "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b"
         )
@@ -94,7 +99,7 @@ def test_v27_runtime_archive_manifest_matches_payload(tmp_path: Path) -> None:
             assert hashlib.sha256(payload).hexdigest() == record["sha256"]
 
 
-def test_cli_exposes_installed_v27_audit_and_reproduction_commands() -> None:
+def test_cli_exposes_installed_v28_audit_and_reproduction_commands() -> None:
     parser = build_parser()
     for command in (
         "audit-current-presidential",

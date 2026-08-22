@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "election-forecast"
-version = "0.27.1.dev0"
-description = "Point-in-time Korean presidential election forecasting engine; active frozen model V27."
+version = "0.28.0.dev0"
+description = "Point-in-time Korean presidential election forecasting engine; active external-model-free V28."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
@@ -38,15 +38,13 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
-reproduce-v27 = [
+reproduce-v28 = [
     "numpy==2.5.2",
     "pandas==3.0.5",
     "scipy==1.18.1",
     "scikit-learn==1.9.0",
 ]
 viz = ["matplotlib>=3.8", "shapely>=2.0"]
-stance-embedding = ["sentence-transformers==5.6.0"]
-stance-context = ["sentence-transformers==5.6.0", "transformers>=5.14,<6"]
 
 [project.urls]
 Homepage = "https://github.com/bamboosalt09-bam/election-forecast"
@@ -63,7 +61,7 @@ news-collector = "news_collector.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-election_forecast = ["_v27_runtime.zip"]
+election_forecast = ["_v28_runtime.zip"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]

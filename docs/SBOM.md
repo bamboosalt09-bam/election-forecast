@@ -1,10 +1,10 @@
-# V27 software bill of materials
+# V28 software bill of materials
 
 This is the human-readable SBOM required by Attachment 1 of the 2026 Open
 Source Developer Competition result report. `requirements-v27.lock` records
 the complete tested Python 3.13 runtime reproduction resolution, including
 transitive packages. Visualization is an optional extra; its two direct
-packages are recorded below at the versions used for the published V27 figures.
+packages are recorded below at the versions used for the published figures.
 
 | Library | Tested version | License | Official repository | Purpose |
 | --- | ---: | --- | --- | --- |
@@ -24,13 +24,12 @@ packages are recorded below at the versions used for the published V27 figures.
 | PyYAML | 6.0.3 | MIT | https://github.com/yaml/pyyaml | Configuration parsing |
 | openpyxl | 3.1.5 | MIT | https://foss.heptapod.net/openpyxl/openpyxl | Spreadsheet import/export tools |
 | pypdf | 6.16.1 | BSD-3-Clause | https://github.com/py-pdf/pypdf | Official-minute metadata extraction |
-| matplotlib | 3.11.0 | PSF-based | https://github.com/matplotlib/matplotlib | Current V27 figures |
+| matplotlib | 3.11.0 | PSF-based | https://github.com/matplotlib/matplotlib | Current figures |
 | Shapely | 2.1.2 | BSD-3-Clause | https://github.com/shapely/shapely | Administrative-boundary dissolve for maps |
 
-The optional `stance-embedding` and `stance-context` extras are historical
-research tools, not V27 runtime dependencies and not part of the competition
-demonstration. Their external model weights are not bundled. See
-`AI_MODEL_SPEC.md` before running those experiments.
+V28 exposes no external-model optional dependency extra. Historical stance
+experiments, weights and model-derived tables are excluded from the active
+runtime and wheel.
 
 ## Reproduction environment
 

@@ -16,6 +16,7 @@ recursive-include outputs/active_presidential_nested_v24 *
 recursive-include outputs/active_presidential_nested_v25 *
 recursive-include outputs/active_presidential_nested_v26 *
 recursive-include outputs/active_presidential_nested_v27 *
+recursive-include outputs/active_presidential_nested_v28 *
 recursive-include outputs/audit_logs *
 recursive-include outputs/automatic_controls_v22 *
 recursive-include outputs/automatic_controls_v23 *
@@ -29,6 +30,7 @@ recursive-include outputs/prospective_pres_2025_v23 *
 recursive-include outputs/prospective_pres_2025_v24 *
 recursive-include outputs/prospective_pres_2025_v25 *
 recursive-include outputs/prospective_pres_2025_v27 *
+recursive-include outputs/prospective_pres_2025_v28 *
 recursive-include outputs/unified_exact_lineage_v21 *
 recursive-include outputs/v24_defect_ablation *
 recursive-include outputs/v24_floor_recalibration_hypotheses *
@@ -36,6 +38,10 @@ recursive-include outputs/v24_structural_residual_hypotheses *
 exclude presidential_issue_engine/fixed_dataset/kospi_daily.csv
 exclude data/raw/kospi_history_source.txt
 exclude data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv
+exclude data/raw/assembly_issue_character_overlay.csv
+exclude data/raw/auto_issue_seed/candidate_issue_profile.csv
+exclude data/raw/auto_issue_seed/mega_issue_axis.csv
+exclude data/raw/auto_issue_seed/mega_issue_attribution.csv
 prune data/raw/official_sources/cache
 prune data/raw/official_sources/checkpoints
 prune data/cache
@@ -47,6 +53,7 @@ prune data/news_cleaned
 prune data/news_raw
 prune data/raw_lake
 prune data/shadow
+prune presidential_issue_engine/report/through2022_rederived/overlay_variants
 prune research
 prune outputs/automatic_controls_v23_ablation_v3
 prune outputs/prospective_pres_2025_v23
