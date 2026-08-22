@@ -3,9 +3,14 @@
 V27 is the active, frozen presidential model. The diagram below follows the
 actual public entry points rather than older poster-era experiments.
 
+The active package, frozen evidence, corrected demonstration and historical
+research surfaces are enumerated in `REPOSITORY_BOUNDARIES.md`.
+
 ```mermaid
 flowchart TD
-    A[Point-in-time inputs] --> B[Candidate, party, region and issue assembly]
+    P[Installable wheel] --> Q[Hash-verified V27 runtime]
+    Q --> A[Point-in-time public and derived inputs]
+    A --> B[Candidate, party, region and issue assembly]
     B --> C[Candidate prior and historical terrain]
     C --> D[Strict chronological nested Ridge]
     D --> E[Electorate mass layers]
@@ -21,6 +26,8 @@ flowchart TD
 
     O[2025 D-1 reconstructed context] --> B
     O -. corrected demonstration only .-> M
+
+    R[Historical research experiments] -. excluded from packaged V27 runtime .-> S[Research records]
 ```
 
 ## Runtime chain
@@ -32,10 +39,18 @@ flowchart TD
 - Core engine: `presidential_issue_engine/issue_vote_engine.py`
 - V27 terminal transform: `presidential_issue_engine/party_regionalism_dispersion.py`
 - Public integrity audit: `scripts/audit_public_active_presidential_model_v27.py`
+- Installed-runtime verifier: `src/election_forecast/v27_runtime.py`
+- Wheel build boundary: `setup.py`
 
 The version wrappers are intentionally layered. A successor must use a new
 runner and output directory; it must not edit V27 or a rollback version in
 place.
+
+The public repository keeps historical research scripts for transparency, but
+the wheel traces only modules reachable from the V27 historical/prospective,
+audit, reproduction and visualization entry points. Optional external-model
+experiments, raw caches and noncanonical research outputs are not admitted to
+the packaged runtime.
 
 ## Preserved invariants
 
@@ -50,4 +65,3 @@ and the fact that no 2025 row enters the scored historical artifact.
 The 2002-2022 elections are a development panel. The 2025 path is a corrected
 demonstration because its integration defects were repaired after the outcome
 was known. Neither is an untouched prospective validation set.
-

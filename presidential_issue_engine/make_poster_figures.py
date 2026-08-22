@@ -17,7 +17,7 @@ try:
     matplotlib.use("Agg")
     import matplotlib.font_manager as font_manager
     import matplotlib.pyplot as plt
-    from matplotlib.patches import Polygon, Wedge
+    from matplotlib.patches import FancyBboxPatch, Polygon, Wedge
     from shapely.geometry import shape
     from shapely.ops import unary_union
 except ModuleNotFoundError as exc:
@@ -142,6 +142,80 @@ def _save(fig, name: str) -> None:
     plt.close(fig)
 
 
+def public_overview():
+    metrics = json.loads((ACTIVE_DIR / "summary.json").read_text(encoding="utf-8"))["metrics"]
+    fig, ax = plt.subplots(figsize=(13.6, 7.4))
+    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
+    fig.patch.set_facecolor("#F4F7FA")
+    ax.text(.05, .92, "Election Forecast · V27", fontsize=25, fontweight="bold", color=NAVY)
+    ax.text(.05, .865, "설치·감사·재현 가능한 한국 대통령선거 예측 연구 엔진", fontsize=13, color="#415466")
+
+    cards = [
+        ("지역 MAE", f"{metrics['regional_equal_election_macro_mae_pp']:.3f}%p", "2002–2022 개발 패널", BLUE),
+        ("전국 MAE", f"{metrics['national_equal_election_macro_mae_pp']:.3f}%p", "사후 투표량 가중 진단", RED),
+        ("승자 적중", f"{int(metrics['winner_accuracy']*5)}/5", "독립 미래 검증 아님", ORANGE),
+    ]
+    for index, (label, value, note, color) in enumerate(cards):
+        x = .05 + index * .305
+        ax.add_patch(FancyBboxPatch((x, .59), .275, .21, boxstyle="round,pad=.012,rounding_size=.018", facecolor="white", edgecolor="#D9E2EA", linewidth=1.0))
+        ax.add_patch(FancyBboxPatch((x, .59), .012, .21, boxstyle="round,pad=0,rounding_size=.006", facecolor=color, edgecolor=color))
+        ax.text(x+.03, .75, label, fontsize=11, fontweight="bold", color="#536576")
+        ax.text(x+.03, .665, value, fontsize=24, fontweight="bold", color=color)
+        ax.text(x+.03, .615, note, fontsize=9.5, color=GRAY)
+
+    sections = [
+        ("공개 실행", "wheel 안에 실제 V27 런타임 포함\n파일별 SHA-256 확인 후 격리 실행"),
+        ("병합 필수 검사", "동결/롤백 감사 · clean 재현\nwheel 외부 재현 · 데이터 권리 · 보안"),
+        ("연구 경계", "2025는 결과 확인 뒤 결함을 고친 시연\nuntouched prospective validation은 아직 없음"),
+    ]
+    for index, (title, body) in enumerate(sections):
+        x = .05 + index * .305
+        ax.text(x, .47, title, fontsize=12, fontweight="bold", color=NAVY)
+        ax.plot([x, x+.275], [.445, .445], color="#D2DAE2", linewidth=1)
+        ax.text(x, .39, body, fontsize=10.2, color="#415466", va="top", linespacing=1.55)
+
+    ax.text(.05, .105, "Frozen prediction SHA-256", fontsize=9.5, fontweight="bold", color="#536576")
+    ax.text(.05, .065, "f40775599dde107a…d74fd5049c55b", fontsize=10.5, family="monospace", color=NAVY)
+    ax.text(.95, .065, "Apache-2.0 code · public/derived data boundary", fontsize=9.5, ha="right", color=GRAY)
+    return fig
+
+
+def architecture_diagram():
+    fig, ax = plt.subplots(figsize=(15.2, 8.1))
+    ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
+    fig.patch.set_facecolor("white")
+    ax.text(.05, .93, "V27 공개 실행 구조", fontsize=23, fontweight="bold", color=NAVY)
+    ax.text(.05, .885, "설치 경계와 연구 경계를 포함한 실제 런타임 계통", fontsize=12, color=GRAY)
+
+    nodes = [
+        (.05, .68, .16, .10, "설치 wheel", "해시 매니페스트"),
+        (.25, .68, .16, .10, "PIT 입력", "공개·파생 자료"),
+        (.45, .68, .16, .10, "Nested Ridge", "6개 slot-free 변수"),
+        (.65, .68, .16, .10, "구조 후처리", "유권자·충격·제3후보"),
+        (.45, .43, .16, .10, "V27 지역 분산", "전국 체급 보존"),
+        (.25, .43, .16, .10, "동결 산출물", "232행·예측구간"),
+        (.05, .43, .16, .10, "감사·재현", "롤백·wheel 외부"),
+    ]
+    for x, y, w, h, title, subtitle in nodes:
+        ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle="round,pad=.012,rounding_size=.015",facecolor="#F7FAFC",edgecolor="#9CB2C5",linewidth=1.2))
+        ax.text(x+w/2,y+.064,title,ha="center",fontsize=11.5,fontweight="bold",color=NAVY)
+        ax.text(x+w/2,y+.028,subtitle,ha="center",fontsize=8.7,color="#586B7C")
+    arrows = [((.21,.73),(.25,.73)),((.41,.73),(.45,.73)),((.61,.73),(.65,.73)),((.73,.68),(.53,.53)),((.45,.48),(.41,.48)),((.25,.48),(.21,.48))]
+    for start,end in arrows:
+        ax.annotate("",xy=end,xytext=start,arrowprops={"arrowstyle":"-|>","color":BLUE,"lw":1.7,"shrinkA":2,"shrinkB":2})
+
+    ax.add_patch(FancyBboxPatch((.65,.39),.28,.16,boxstyle="round,pad=.015,rounding_size=.015",facecolor="#FFF8EF",edgecolor=ORANGE,linewidth=1.2,linestyle="--"))
+    ax.text(.79,.505,"2025 corrected demonstration",ha="center",fontsize=11,fontweight="bold",color="#A85A00")
+    ax.text(.79,.447,"동일한 전체 실행 경로 · D-1 입력\n독립 OOS 성능으로 주장하지 않음",ha="center",va="center",fontsize=9.5,color="#6B5A45")
+    ax.annotate("",xy=(.65,.48),xytext=(.61,.48),arrowprops={"arrowstyle":"-|>","color":ORANGE,"lw":1.4,"linestyle":"--"})
+
+    ax.add_patch(FancyBboxPatch((.05,.16),.88,.11,boxstyle="round,pad=.012,rounding_size=.012",facecolor="#F1F3F5",edgecolor="#C7CED5",linewidth=1.0))
+    ax.text(.075,.225,"연구 보관 구역",fontsize=11,fontweight="bold",color="#4F5B66")
+    ax.text(.075,.185,"과거 모델 그림 · 비활성 외부 언어모델 실험 · 비승격 ablation은 공개 V27 런타임과 분리",fontsize=10,color="#5F6D78")
+    ax.text(.95,.07,"후보별 전국 수준과 지역별 100% 합계 보존",ha="right",fontsize=9.5,color=GRAY)
+    return fig
+
+
 def model_performance():
     metrics = json.loads((ACTIVE_DIR / "summary.json").read_text(encoding="utf-8"))["metrics"]
     values = [metrics["regional_equal_election_macro_mae_pp"], metrics["national_equal_election_macro_mae_pp"]]
@@ -247,7 +321,8 @@ def prospective_map():
 
 def main() -> None:
     _require_viz(); setup_style()
-    figures={"v27_model_performance":model_performance(),"v27_performance_by_election":performance_by_election(),
+    figures={"v27_public_overview":public_overview(),"v27_architecture":architecture_diagram(),
+        "v27_model_performance":model_performance(),"v27_performance_by_election":performance_by_election(),
         **{f"v27_regional_{e}":regional_pred_vs_actual(e) for e in ("pres_2002","pres_2007","pres_2012","pres_2017","pres_2022")},
         "v27_pres_2025_regional_bars":prospective_bars(),"v27_pres_2025_regional_map":prospective_map()}
     for name,figure in figures.items(): _save(figure,name)

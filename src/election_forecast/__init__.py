@@ -1,5 +1,5 @@
-"""Korean presidential election forecasting MVP package."""
+"""Korean presidential election forecasting package."""
 
 __all__ = ["__version__"]
 
-__version__ = "0.1.0"
+__version__ = "0.27.0"

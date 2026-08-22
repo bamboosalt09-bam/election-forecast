@@ -1,0 +1,57 @@
+include LICENSE
+include NOTICE
+include README.md
+include SECURITY.md
+include CONTRIBUTING.md
+include requirements-v27.lock
+include setup.py
+recursive-include docs *.md *.json
+recursive-include scripts *.py
+recursive-include presidential_issue_engine *.py *.csv *.json *.md
+recursive-include common *.py *.json *.csv *.md
+recursive-include data *.csv *.json *.jsonl *.md *.txt *.yaml *.yml
+recursive-include outputs/active_presidential_nested_v23 *
+recursive-include outputs/active_presidential_nested_v24 *
+recursive-include outputs/active_presidential_nested_v25 *
+recursive-include outputs/active_presidential_nested_v26 *
+recursive-include outputs/active_presidential_nested_v27 *
+recursive-include outputs/audit_logs *
+recursive-include outputs/automatic_controls_v22 *
+recursive-include outputs/automatic_controls_v23 *
+recursive-include outputs/automatic_controls_v23_ablation_v3/v23_unified_profile_transfer_generation/active_run *
+recursive-include outputs/automatic_controls_v26 *
+recursive-include outputs/footprint_candidate_base_v9 *
+recursive-include outputs/forecast_baselines *
+recursive-include outputs/preliminary_slot_assignment *
+recursive-include outputs/preliminary_slot_assignment_v23 *
+recursive-include outputs/prospective_pres_2025_v23 *
+recursive-include outputs/prospective_pres_2025_v24 *
+recursive-include outputs/prospective_pres_2025_v25 *
+recursive-include outputs/prospective_pres_2025_v27 *
+recursive-include outputs/unified_exact_lineage_v21 *
+recursive-include outputs/v24_defect_ablation *
+recursive-include outputs/v24_floor_recalibration_hypotheses *
+recursive-include outputs/v24_structural_residual_hypotheses *
+exclude presidential_issue_engine/fixed_dataset/kospi_daily.csv
+exclude data/raw/kospi_history_source.txt
+exclude data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv
+prune data/raw/official_sources/cache
+prune data/raw/official_sources/checkpoints
+prune data/cache
+prune data/generated
+prune data/imports
+prune data/logs
+prune data/news_analyzed
+prune data/news_cleaned
+prune data/news_raw
+prune data/raw_lake
+prune data/shadow
+prune research
+prune outputs/automatic_controls_v23_ablation_v3
+prune outputs/prospective_pres_2025_v23
+prune outputs/prospective_pres_2025_v24
+prune outputs/prospective_pres_2025_v25
+prune outputs/v24_defect_ablation
+prune outputs/v24_floor_recalibration_hypotheses
+prune outputs/v24_structural_residual_hypotheses
+global-exclude __pycache__ *.py[cod]

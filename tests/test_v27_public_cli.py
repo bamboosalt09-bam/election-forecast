@@ -15,6 +15,7 @@ def test_public_cli_exposes_current_workflows() -> None:
     help_text = cli.build_parser().format_help()
     assert "run-current-presidential" in help_text
     assert "audit-current-presidential" in help_text
+    assert "verify-current-presidential" in help_text
     assert "active frozen model V27" in help_text
 
 

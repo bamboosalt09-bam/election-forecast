@@ -1,0 +1,106 @@
+{
+  "schema": "election_forecast_public_data_sources_v1",
+  "policy": "Only Git-tracked public or project-authored derived inputs may enter the packaged V27 runtime. Raw caches, credentials, full-text corpora and uncertain-rights market exports are excluded.",
+  "sources": [
+    {
+      "id": "project_authored_and_derived_tables",
+      "coverage_prefixes": [
+        "data/",
+        "presidential_issue_engine/fixed_dataset/"
+      ],
+      "provider": "Election Forecast contributors",
+      "source_url": "https://github.com/bamboosalt09-bam/election-forecast",
+      "terms_url": "LICENSE",
+      "license_or_basis": "Apache-2.0 for project-authored schemas, annotations and transforms; source facts retain the official-source terms listed below",
+      "redistribution_decision": "include-derived-no-source-text",
+      "attribution": "Election Forecast contributors and the applicable official provider",
+      "notes": "The package contains compact numerical or categorical inputs, not downloaded articles, full parliamentary transcripts or API caches."
+    },
+    {
+      "id": "nec_open_election_data",
+      "coverage_prefixes": [
+        "data/raw/official_sources/nec_",
+        "data/raw/official_sources/pres_2025_candidate_registry.csv",
+        "data/raw/official_sources/presidential_candidate_reference.csv",
+        "data/raw/official_sources/automatic_candidate_regional_base_official.csv"
+      ],
+      "provider": "National Election Commission / Public Data Portal",
+      "source_url": "https://apis.data.go.kr/9760000/CndaSrchService/getCndaSrchInqire",
+      "terms_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+      "license_or_basis": "Public Data Act open-data service; repository files are factual extracts and project-derived audits",
+      "redistribution_decision": "include-derived-with-attribution",
+      "attribution": "National Election Commission, Republic of Korea",
+      "notes": "This decision does not relicense unrelated NEC website publications. Items without an open-data or KOGL indication remain excluded."
+    },
+    {
+      "id": "national_assembly_open_data",
+      "coverage_prefixes": [
+        "data/raw/official_sources/assembly_"
+      ],
+      "provider": "National Assembly Secretariat / Open Assembly Data",
+      "source_url": "https://open.assembly.go.kr/portal/data/service/selectAPIServicePage.do/OOWY4R001216HX11439",
+      "terms_url": "https://www.data.go.kr/data/15126133/openapi.do",
+      "license_or_basis": "Public Data Portal listing: no restriction on permitted use",
+      "redistribution_decision": "include-derived-with-attribution",
+      "attribution": "National Assembly Secretariat, Republic of Korea",
+      "notes": "Only rosters, meeting manifests and aggregate match/context tables are tracked. Full meeting text and source HTML/PDF caches are excluded."
+    },
+    {
+      "id": "bok_ecos_statistics",
+      "coverage_prefixes": [
+        "data/raw/official_sources/bok_ecos_",
+        "presidential_issue_engine/fixed_dataset/economic_indicators.csv",
+        "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv"
+      ],
+      "provider": "Bank of Korea ECOS",
+      "source_url": "https://ecos.bok.or.kr/api/",
+      "terms_url": "https://www.data.go.kr/data/15059635/openapi.do",
+      "license_or_basis": "Public Data Portal listing: no restriction on permitted use",
+      "redistribution_decision": "include-derived-with-attribution",
+      "attribution": "Bank of Korea Economic Statistics System (ECOS)",
+      "notes": "The downloaded KOSPI row cache is not tracked or packaged. Only its provenance manifest is public."
+    },
+    {
+      "id": "kosis_reb_housing_statistics",
+      "coverage_prefixes": [
+        "presidential_issue_engine/fixed_dataset/housing_price_index_"
+      ],
+      "provider": "KOSIS / Korea Real Estate Board",
+      "source_url": "https://kosis.kr/",
+      "terms_url": "https://kosis.kr/nsistN/kosisUseGuide.do",
+      "license_or_basis": "KOSIS public-data use policy; commercial and non-commercial reuse allowed with source indication, subject to the no-unmodified-table-resale condition",
+      "redistribution_decision": "include-derived-with-attribution",
+      "attribution": "KOSIS and Korea Real Estate Board",
+      "notes": "Repository files are model-ready derived regional series, not a resale of an unmodified KOSIS table."
+    },
+    {
+      "id": "sgis_administrative_boundaries",
+      "coverage_prefixes": [
+        "presidential_issue_engine/poster_figures/v27_"
+      ],
+      "provider": "vuski/admdongkor; Statistics Korea SGIS basis",
+      "source_url": "https://github.com/vuski/admdongkor",
+      "terms_url": "https://github.com/vuski/admdongkor/blob/master/LICENSE-DATA",
+      "license_or_basis": "CC BY 4.0 and Korea Open Government License Type 1 attribution",
+      "redistribution_decision": "include-generated-with-attribution",
+      "attribution": "Statistics Korea SGIS and vuski/admdongkor",
+      "notes": "The wheel does not bundle the source GeoJSON. Visualization generation downloads one hash-pinned dated snapshot."
+    }
+  ],
+  "excluded_paths": [
+    "presidential_issue_engine/fixed_dataset/kospi_daily.csv",
+    "data/raw/kospi_history_source.txt",
+    "data/cache/",
+    "data/generated/",
+    "data/imports/",
+    "data/logs/",
+    "data/news_analyzed/",
+    "data/news_cleaned/",
+    "data/news_raw/",
+    "data/raw_lake/",
+    "data/shadow/",
+    "data/raw/official_sources/cache/",
+    "data/raw/official_sources/checkpoints/",
+    "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv"
+  ]
+}
