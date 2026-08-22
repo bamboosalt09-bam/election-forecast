@@ -33,7 +33,9 @@ runtime and adds the fixed gain-1 core-weighted regional dispersion layer.
 ## Reproduce the checks
 
 ```bash
+python -m pip install -e ".[dev,reproduce-v27]"
 python scripts/run_active_presidential_model_v27.py --output-dir outputs/reproduction_v27
+python scripts/verify_v27_clean_reproduction.py
 python scripts/build_active_v27_predictive_intervals.py
 python scripts/audit_public_active_presidential_model_v27.py
 python scripts/audit_github_baseline.py
@@ -42,6 +44,27 @@ python -m pytest -q
 
 The public audit checks pointer fields, V23~V26 rollback hashes, V27 prediction
 and artifact hashes, compositional rows, gain 1, and chronological intervals.
+The clean-reproduction command rebuilds predictions in a temporary directory.
+It always pins the stored frozen artifact's raw-byte SHA-256. Rebuilt tables
+must have identical shape, column order and categorical values. On the original
+development machine the rebuilt file is byte-identical. Cross-hardware CI
+requires the final `layer_pred` within `0.001` share (`0.10%p`) and every
+numeric diagnostic within `0.0012` share (`0.12%p`). The rebuilt byte hash and
+observed maxima are always reported; this tolerance is not used to redefine
+the frozen artifact.
+
+Exact V27 regeneration uses Windows, Python 3.13, the `reproduce-v27`
+optional dependency set and single-threaded BLAS (`OMP_NUM_THREADS`,
+`OPENBLAS_NUM_THREADS`, `MKL_NUM_THREADS`, `BLIS_NUM_THREADS` and
+`VECLIB_MAXIMUM_THREADS` set to `1`). The ordinary package remains usable and tested on
+Linux with Python 3.11+, but those broader combinations are supported for use
+rather than claimed as the frozen numerical build environment. GitHub-hosted
+Windows and Linux rebuilds with the same high-level dependency versions exposed
+CPU/BLAS drift up to
+`0.001174501524589` in an intermediate share-scale field, so the project does
+not claim hardware-independent byte identity.
+The recorded independent-clone run is in
+`docs/V27_CLEAN_CLONE_VERIFICATION_20260822.md`.
 
 ## Predictive intervals
 

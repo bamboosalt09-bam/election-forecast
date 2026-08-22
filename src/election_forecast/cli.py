@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 import argparse
+from importlib.metadata import PackageNotFoundError, version
+import subprocess
+import sys
+from pathlib import Path
 
 import pandas as pd
 
@@ -21,11 +25,48 @@ from election_forecast.presidential.utility_model import compute_utilities
 from election_forecast.presidential.vote_share import utility_to_vote_share
 
 
+try:
+    PACKAGE_VERSION = version("election-forecast")
+except PackageNotFoundError:  # source-tree execution before installation
+    PACKAGE_VERSION = "0.27.0"
+ACTIVE_MODEL_VERSION = "V27"
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _repository_script(name: str) -> Path:
+    path = REPOSITORY_ROOT / "scripts" / name
+    if not path.is_file():
+        raise SystemExit(
+            f"{name} is a repository workflow and is unavailable in this installation. "
+            "Run it from a source checkout of election-forecast."
+        )
+    return path
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Build the CLI parser."""
 
-    parser = argparse.ArgumentParser(description="Korean presidential election forecast MVP")
+    parser = argparse.ArgumentParser(
+        description="Korean presidential election forecast engine (active frozen model V27)"
+    )
+    parser.add_argument("--version", action="version", version=f"%(prog)s {PACKAGE_VERSION} ({ACTIVE_MODEL_VERSION})")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    run_current = subparsers.add_parser(
+        "run-current-presidential",
+        help="Reproduce the active frozen V27 historical model from a source checkout",
+    )
+    run_current.add_argument("--output-dir")
+
+    subparsers.add_parser(
+        "audit-current-presidential",
+        help="Audit the active V27 artifact and V23-V26 rollback boundaries",
+    )
+
+    subparsers.add_parser(
+        "show-active-version",
+        help="Print the active public presidential-model version",
+    )
 
     forecast = subparsers.add_parser("forecast", help="Run forecast from raw CSV inputs")
     forecast.add_argument("--forecast-date", required=True)
@@ -120,6 +161,20 @@ def main() -> None:
     """CLI entry point."""
 
     args = build_parser().parse_args()
+
+    if args.command == "show-active-version":
+        print(ACTIVE_MODEL_VERSION)
+        return
+
+    if args.command == "run-current-presidential":
+        command = [sys.executable, str(_repository_script("run_current_presidential_model.py"))]
+        if args.output_dir:
+            command.extend(["--output-dir", args.output_dir])
+        raise SystemExit(subprocess.run(command, cwd=REPOSITORY_ROOT, check=False).returncode)
+
+    if args.command == "audit-current-presidential":
+        command = [sys.executable, str(_repository_script("audit_public_active_presidential_model_v27.py"))]
+        raise SystemExit(subprocess.run(command, cwd=REPOSITORY_ROOT, check=False).returncode)
 
     if args.command == "forecast":
         raw_data = load_raw_data(args.data_dir)
