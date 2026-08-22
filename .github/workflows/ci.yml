@@ -165,13 +165,20 @@ jobs:
             Pop-Location
           }
 
-  dependency-review:
-    if: github.event_name == 'pull_request'
+  dependency-security:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
-      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - name: Audit the exact V27 dependency lock
+        run: |
+          python -m pip install pip-audit
+          python -m pip_audit -r requirements-v27.lock --strict --progress-spinner off

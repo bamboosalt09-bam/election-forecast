@@ -28,4 +28,5 @@ credentials in the report.
   runtime or the competition demonstration.
 
 Automated checks scan the public boundary, source/data licenses, pinned GitHub
-Actions, dependency updates, the frozen V27 artifact and clean reproduction.
+Actions, the exact dependency lock against vulnerability advisories, dependency
+updates, the frozen V27 artifact and clean reproduction.
