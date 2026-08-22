@@ -3,8 +3,8 @@
 ## Status
 
 - Date: 2026-08-22
-- Status: successful development-panel experiment; not yet promoted
-- Active V26 and all frozen outputs remain unchanged
+- Status: promoted as V27 at theory-fixed gain 1.0
+- V26 and all earlier frozen outputs remain unchanged
 - Post-2022 outcomes used: none
 
 ## Mechanism
@@ -73,9 +73,9 @@ The result supports the conceptual split:
   belongs to the current candidate
 - fitted prediction: current regional ordering and national candidate size
 
-The experiment is still development evidence, not independent validation.  It
+The experiment is still development evidence, not independent validation. It
 was motivated by residual inspection, and gain 1 must be declared before any
-future election is scored.  Promotion should place this transform before
-shock-driven core erosion so that the latter can explicitly release part of
-the preserved concrete mass rather than operating on an already flattened
-map.
+future election is scored. V27 promotes the transform at the terminal
+regional-shape boundary where it was measured, after the complete frozen V26
+stack. Moving it before shock-driven core erosion is a distinct, unmeasured
+ordering experiment and is not part of V27.

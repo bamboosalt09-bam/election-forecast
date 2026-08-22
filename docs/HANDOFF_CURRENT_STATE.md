@@ -1,7 +1,7 @@
 # Current State Handoff
 
-> Authoritative current state: `docs/FINAL_MODEL_V25_20260821.md`. The active
-> pointer is `data/config/current_presidential_model.json`; V24 and V23 are immutable
+> Authoritative current state: `docs/FINAL_MODEL_V27_20260822.md`. The active
+> pointer is `data/config/current_presidential_model.json`; V26 through V23 are immutable
 > rollback models. Dated sections below preserve the state and terminology that
 > applied when each experiment was recorded and must not be read as current
 > active-version pointers.
@@ -9,15 +9,15 @@
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_v25_bounded_runtime_repair_pre_2025`
+- active policy: `active_v27_core_weighted_party_regional_dispersion`
 - rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
 
-## Active V25 promotion (2026-08-21)
+## Superseded V25 promotion (2026-08-21)
 
-V25 is the frozen current model. It repairs the V24 runner's accidental bypass
+V25 was the frozen current model at this dated checkpoint. It repairs the V24 runner's accidental bypass
 of promoted V23 runtime bindings while preserving V24's accepted
 `prediction_tilted` weak-C route and the generic third-candidate
 profile/pressure paths used by that route.
@@ -1121,7 +1121,9 @@ is bit-identical to baseline, so the two changes are a pure interaction rather
 than two independent improvements. The classifier's gate thresholds are now
 named constants in `automatic_controls_v22`, and the ladder reuses them, so the
 claim that it introduces no new number is checkable rather than asserted. It
-remains unpromoted; the active V25 pointer is unchanged.
+remained unpromoted at that checkpoint and the active V25 pointer was
+unchanged. The paired change was later promoted as V26 and is inherited by
+current V27.
 
 ## Three follow-ups closed (2026-08-22)
 

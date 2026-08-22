@@ -1,7 +1,7 @@
 # District Terrain and Candidate Regionalism
 
-> Historical pre-electorate-layer experiment. Current metrics are in
-> `docs/CURRENT_MODEL_PERFORMANCE_20260716.md`.
+> Historical pre-electorate-layer experiment. Current metrics and policy are in
+> `docs/FINAL_MODEL_V27_20260822.md`.
 
 ## Purpose
 
@@ -52,7 +52,7 @@
 ## Intermediate Verified Change
 
 아래 표는 within-bloc regional transfer를 추가하기 전, 지역주의 층만 수정한 중간
-스냅샷이다. 현재 활성 성능은 `WITHIN_BLOC_REGIONAL_TRANSFER.md`를 따른다.
+스냅샷이다. 당시 후속 성능은 `WITHIN_BLOC_REGIONAL_TRANSFER.md`를 따랐다.
 
 | Metric | Before | After |
 |---|---:|---:|

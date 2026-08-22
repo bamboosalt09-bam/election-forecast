@@ -1,5 +1,8 @@
 # Automatic candidate regional base v4
 
+> Historical V16 experiment. Current status is recorded in
+> `docs/FINAL_MODEL_V27_20260822.md`.
+
 ## Purpose
 
 This experiment tests whether `candidate_regional_base.csv` can be replaced

@@ -69,14 +69,14 @@
     },
     {
       "path": "docs/FINAL_MODEL_V27_20260822.md",
-      "bytes": 2628,
-      "sha256": "e4f23115a5ef6f5348cdfd74b3c6083c6773b13c126d537016aa7383a93620c3",
+      "bytes": 2663,
+      "sha256": "268492a6118e1ac851267ddefb5e0f0711dc5c587d510a415a7ad2772d9f7241",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "docs/EXPERIMENT_CORE_WEIGHTED_REGIONAL_POLARIZATION_20260822.md",
-      "bytes": 3137,
-      "sha256": "00f35aec905a206d335347186a3811638200cd8e00792e598de402040b072f7b",
+      "bytes": 3159,
+      "sha256": "5e732948fc69d27b93d5427f903039d434ebac4a1d9fe35ac88f2e0c60af0d9e",
       "hash_mode": "normalized_text_lf"
     },
     {

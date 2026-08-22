@@ -10,7 +10,7 @@
 - Post-2022 outcomes used: none
 
 V27 retains V26's graded mega-issue ladder and event-class alignment and adds
-one regional-shape layer at gain 1.0.  No Ridge predictor, historical ballot,
+one terminal regional-shape layer at gain 1.0 after the frozen V26 stack. No Ridge predictor, historical ballot,
 candidate national level, winner rule, shock coefficient or third-candidate
 rule changes.
 
