@@ -48,6 +48,22 @@ def main() -> None:
         finite_difference = np.abs(left_numeric - right_numeric)
         max_numeric_difference = float(np.nanmax(finite_difference))
         if not np.allclose(left_numeric, right_numeric, rtol=0.0, atol=NUMERIC_ATOL, equal_nan=True):
+            column_maxima = pd.Series(
+                np.nanmax(finite_difference, axis=0), index=numeric
+            ).sort_values(ascending=False)
+            print("largest_numeric_column_differences:")
+            print(column_maxima.head(12).to_string())
+            flat_index = int(np.nanargmax(finite_difference))
+            row_index, column_index = np.unravel_index(flat_index, finite_difference.shape)
+            identity_columns = [
+                column
+                for column in ("election_id", "region_id", "candidate_name", "slot")
+                if column in frozen_frame.columns
+            ]
+            print(f"largest_difference_row={frozen_frame.loc[row_index, identity_columns].to_dict()}")
+            print(f"largest_difference_column={numeric[column_index]}")
+            print(f"frozen_value={left_numeric[row_index, column_index]}")
+            print(f"reproduced_value={right_numeric[row_index, column_index]}")
             raise RuntimeError(
                 "clean V27 numerical reproduction exceeds tolerance: "
                 f"max_abs_difference={max_numeric_difference} atol={NUMERIC_ATOL}"
