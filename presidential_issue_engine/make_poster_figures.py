@@ -1,479 +1,257 @@
-﻿"""Generate final statistics-competition poster figures.
+"""Generate current V27 visualizations from finalized artifacts only.
 
-The figures intentionally use the frozen values reproduced by
-``presidential_issue_engine/robustness_check.py``.  They are presentation artifacts, not
-another modeling step.
+The map uses a hash-pinned, SGIS-derived 2025-04-01 administrative snapshot. See
+``docs/VISUALIZATION_DATA.md`` for provenance and reproduction details.
 """
 
 from __future__ import annotations
 
+import hashlib
+import json
 from pathlib import Path
 import sys
+from urllib.request import urlopen
 
 try:
     import matplotlib
-
     matplotlib.use("Agg")
     import matplotlib.font_manager as font_manager
     import matplotlib.pyplot as plt
-    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+    from matplotlib.patches import Polygon, Wedge
+    from shapely.geometry import shape
+    from shapely.ops import unary_union
 except ModuleNotFoundError as exc:
-    matplotlib = None
-    font_manager = None
-    plt = None
-    FancyArrowPatch = None
-    FancyBboxPatch = None
-    MATPLOTLIB_IMPORT_ERROR = exc
+    VIZ_IMPORT_ERROR = exc
 else:
-    MATPLOTLIB_IMPORT_ERROR = None
+    VIZ_IMPORT_ERROR = None
 
 import pandas as pd
 
-
-OUT = Path(__file__).resolve().parent / "poster_figures"
-OUT.mkdir(parents=True, exist_ok=True)
 ROOT = Path(__file__).resolve().parents[1]
-NESTED_PREDICTIONS = ROOT / "outputs" / "active_presidential_nested_v23" / "nested_predictions.csv"
+OUT = Path(__file__).resolve().parent / "poster_figures"
+ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v27"
+FORECAST_DIR = ROOT / "outputs" / "prospective_pres_2025_v27"
 REGIONS = Path(__file__).resolve().parent / "fixed_dataset" / "regions_master.csv"
-BASELINE_BY_ELECTION = ROOT / "outputs" / "forecast_baselines" / "baseline_by_election.csv"
-PROSPECTIVE_DIR = ROOT / "outputs" / "prospective_pres_2025_{version}"
+MAP_URL = (
+    "https://raw.githubusercontent.com/vuski/admdongkor/"
+    "fbcac3db020609dce5831a856a6d5aa5cb40a908/"
+    "ver20250401/HangJeongDong_ver20250401.geojson"
+)
+MAP_SHA256 = "1b80c423c82a9349859aef020174c1276896943d064762fc2e184f75f5ee2ceb"
 
-NAVY = "#1f3b6f"
-BLUE = "#2e86de"
-RED = "#c0392b"
-GREEN = "#1e8449"
-GRAY = "#7f8c8d"
-LIGHT_BLUE = "#eef3fb"
-LIGHT_GREEN = "#e8f6ef"
-LIGHT_RED = "#fdecea"
-
-MAE_LADDER = [
-    ("전체평균", 19.93),
-    ("슬롯평균", 15.71),
-    ("슬롯+지역구도", 8.67),
-    ("슬롯+지역+이슈", 8.42),
-    ("NEC prior+이슈 Ridge", 6.90),
-]
-
-ROLLING_BY_ELECTION = [
-    ("2007", 5.95),
-    ("2012", 7.22),
-    ("2017", 7.80),
-    ("2022", 7.75),
-]
-
-R2_LADDER = [
-    ("슬롯만", 0.304),
-    ("슬롯+지역구도", 0.799),
-    ("슬롯+지역+이슈", 0.823),
-    ("NEC prior+이슈 Ridge", 0.877),
-]
-
-REGION_ROLLING = [
-    ("강원", 9.40),
-    ("PK", 9.73),
-    ("전체", 10.44),
-    ("TK", 10.67),
-    ("호남", 11.55),
-]
-
-VARIABLE_IMPORTANCE = [
-    ("slot_A", 0.582),
-    ("slot_B", 0.433),
-    ("slotB_prior", 0.361),
-    ("rif", 0.359),
-    ("slotA_prior", 0.313),
-    ("landscape_bloc_alignment", -0.312),
-    ("landscape_centrist", 0.284),
-    ("partisan_prior", 0.259),
-    ("issue_advantage", -0.180),
-    ("landscape_inferred_prior", 0.042),
-]
+NAVY, BLUE, RED, ORANGE, GRAY = "#17365D", "#0878D1", "#E33D3D", "#F28C28", "#7B8794"
+SLOT_COLORS = {"A": BLUE, "B": RED, "C": ORANGE}
+SOURCE_SIDO_TO_REGION = {
+    "11":"sido_11", "26":"sido_26", "27":"sido_27", "28":"sido_28",
+    "29":"sido_29", "30":"sido_30", "31":"sido_31", "36":"sido_36",
+    "41":"sido_41", "51":"sido_42", "43":"sido_43", "44":"sido_44",
+    "52":"sido_45", "46":"sido_46", "47":"sido_47", "48":"sido_48",
+    "50":"sido_50",
+}
+PIE_ANCHORS = {
+    "sido_11":(126.98,37.57), "sido_28":(126.63,37.46), "sido_41":(127.25,37.25),
+    "sido_42":(128.20,37.40), "sido_44":(126.80,36.55), "sido_36":(127.29,36.48),
+    "sido_30":(127.38,36.35), "sido_43":(127.70,36.80), "sido_45":(127.15,35.75),
+    "sido_29":(126.85,35.16), "sido_46":(126.65,34.75), "sido_47":(128.75,36.45),
+    "sido_27":(128.60,35.87), "sido_48":(128.25,35.25), "sido_31":(129.31,35.54),
+    "sido_26":(129.08,35.18), "sido_50":(126.55,33.38),
+}
+SHORT_REGION_NAMES = {
+    "sido_11":"서울", "sido_26":"부산", "sido_27":"대구", "sido_28":"인천",
+    "sido_29":"광주", "sido_30":"대전", "sido_31":"울산", "sido_36":"세종",
+    "sido_41":"경기", "sido_42":"강원", "sido_43":"충북", "sido_44":"충남",
+    "sido_45":"전북", "sido_46":"전남", "sido_47":"경북", "sido_48":"경남",
+    "sido_50":"제주",
+}
 
 
 def _require_viz() -> None:
-    if MATPLOTLIB_IMPORT_ERROR is not None:
-        raise SystemExit(
-            'Visualization dependencies are missing. Install them with: pip install -e ".[viz]"'
-        ) from MATPLOTLIB_IMPORT_ERROR
+    if VIZ_IMPORT_ERROR is not None:
+        raise SystemExit('Install visualization dependencies with: pip install -e ".[viz]"') from VIZ_IMPORT_ERROR
 
 
 def setup_style() -> None:
-    preferred_fonts = [
-        "Malgun Gothic",
-        "AppleGothic",
-        "NanumGothic",
-        "Noto Sans CJK KR",
-    ]
+    preferred = ["Malgun Gothic", "AppleGothic", "NanumGothic", "Noto Sans CJK KR"]
     installed = {font.name for font in font_manager.fontManager.ttflist}
-    selected = next((font for font in preferred_fonts if font in installed), None)
-    if selected is None:
-        print(
-            "WARNING: No supported Korean font was found; Korean labels may render incorrectly. "
-            "Install Malgun Gothic, AppleGothic, NanumGothic, or Noto Sans CJK KR.",
-            file=sys.stderr,
-        )
-        plt.rcParams["font.family"] = ["DejaVu Sans"]
-    else:
-        plt.rcParams["font.family"] = [selected, "DejaVu Sans"]
-    plt.rcParams["axes.unicode_minus"] = False
-    plt.rcParams["figure.facecolor"] = "white"
-    plt.rcParams["axes.facecolor"] = "white"
+    selected = next((name for name in preferred if name in installed), "DejaVu Sans")
+    if selected == "DejaVu Sans":
+        print("WARNING: Korean font unavailable; labels may render incorrectly.", file=sys.stderr)
+    plt.rcParams.update({"font.family":[selected,"DejaVu Sans"], "axes.unicode_minus":False})
 
 
-def save(fig: plt.Figure, name: str) -> None:
-    fig.savefig(OUT / f"{name}.png", dpi=180, bbox_inches="tight")
+def _regions() -> pd.DataFrame:
+    return pd.read_csv(REGIONS, encoding="utf-8-sig")[["region_id","region_name"]]
+
+
+def _history() -> pd.DataFrame:
+    frame = pd.read_csv(ACTIVE_DIR / "nested_predictions.csv", encoding="utf-8-sig")
+    required = {"election_id","region_id","slot","candidate_name","actual","layer_pred"}
+    if missing := required - set(frame):
+        raise ValueError(f"V27 history missing columns: {sorted(missing)}")
+    if frame["election_id"].astype(str).str.contains("2025").any():
+        raise ValueError("2025 leaked into retrospective visualization")
+    return frame.merge(_regions(), on="region_id", how="left", validate="many_to_one")
+
+
+def _forecast() -> pd.DataFrame:
+    frame = pd.read_csv(FORECAST_DIR / "prospective_predictions.csv", encoding="utf-8-sig")
+    required = {"election_id","region_id","slot","candidate_name","predicted_share"}
+    if missing := required - set(frame):
+        raise ValueError(f"V27 forecast missing columns: {sorted(missing)}")
+    if set(frame["election_id"].astype(str)) != {"pres_2025"}:
+        raise ValueError("forecast visualization accepts only pres_2025")
+    totals = frame.groupby("region_id")["predicted_share"].sum()
+    if len(totals) != 17 or not ((totals - 1).abs() < 1e-9).all():
+        raise ValueError("forecast must have 17 compositional regions")
+    return frame.merge(_regions(), on="region_id", how="left", validate="many_to_one")
+
+
+def _korea_shapes() -> list[tuple[str,list[list[tuple[float,float]]]]]:
+    with urlopen(MAP_URL, timeout=60) as response:
+        payload = response.read()
+    digest = hashlib.sha256(payload).hexdigest()
+    if digest != MAP_SHA256:
+        raise ValueError(f"administrative-boundary hash mismatch: {digest}")
+    source = json.loads(payload.decode("utf-8-sig"))
+    grouped = {}
+    for feature in source["features"]:
+        code = str(feature["properties"]["sido"])
+        grouped.setdefault(code, []).append(shape(feature["geometry"]))
+    output = []
+    for code, geometries in grouped.items():
+        region = SOURCE_SIDO_TO_REGION.get(code)
+        if region is None:
+            continue
+        merged = unary_union(geometries)
+        polygons = list(merged.geoms) if merged.geom_type == "MultiPolygon" else [merged]
+        output.append((region, [[tuple(point) for point in polygon.exterior.coords] for polygon in polygons]))
+    if {region for region,_ in output} != set(SOURCE_SIDO_TO_REGION.values()):
+        raise ValueError("SGIS-derived input does not resolve all 17 regions")
+    return output
+
+
+def _bounds(parts):
+    points = [point for part in parts for point in part]
+    xs, ys = zip(*points)
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def _save(fig, name: str) -> None:
+    OUT.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUT / f"{name}.png", dpi=200, bbox_inches="tight", facecolor="white")
     plt.close(fig)
 
 
-def mae_ladder() -> plt.Figure:
-    labels = [item[0] for item in MAE_LADDER]
-    values = [item[1] for item in MAE_LADDER]
-    colors = [GRAY, GRAY, BLUE, BLUE, RED]
-
-    fig, ax = plt.subplots(figsize=(10.8, 5.8))
-    bars = ax.barh(labels, values, color=colors)
-    ax.invert_yaxis()
-    ax.set_xlim(0, 22)
-    ax.set_xlabel("LOEO MAE (%p, 낮을수록 좋음)")
-    ax.set_title("모델 단계별 MAE 감소", fontsize=18, fontweight="bold", color=NAVY, pad=14)
-    ax.grid(axis="x", alpha=0.25)
-    for bar, value in zip(bars, values):
-        ax.text(value + 0.35, bar.get_y() + bar.get_height() / 2, f"{value:.2f}%p", va="center", fontsize=12)
-    ax.text(
-        0.01,
-        -0.16,
-        "핵심 흐름: 전체평균 → 후보 슬롯 → 지역구도 → 이슈 → Ridge 보정",
-        transform=ax.transAxes,
-        fontsize=11,
-        color=GRAY,
-    )
+def model_performance():
+    metrics = json.loads((ACTIVE_DIR / "summary.json").read_text(encoding="utf-8"))["metrics"]
+    values = [metrics["regional_equal_election_macro_mae_pp"], metrics["national_equal_election_macro_mae_pp"]]
+    fig, ax = plt.subplots(figsize=(8.6,5.2))
+    bars = ax.bar(["지역 MAE","전국 MAE"], values, color=[BLUE,RED], width=.58)
+    ax.set_ylabel("동일 선거 가중 MAE (%p)")
+    ax.set_title("V27 회고 개발 패널 성능", fontsize=18, fontweight="bold", color=NAVY)
+    ax.grid(axis="y", alpha=.2)
+    for bar,value in zip(bars,values):
+        ax.text(bar.get_x()+bar.get_width()/2, value+.07, f"{value:.3f}%p", ha="center", fontweight="bold")
+    ax.text(.5,-.17,"2002–2022 개발 패널 · 독립 미래 검증 아님 · 2025 결과 미포함",transform=ax.transAxes,ha="center",color=GRAY)
     fig.tight_layout()
     return fig
 
 
-def r2_ladder() -> plt.Figure:
-    labels = [item[0] for item in R2_LADDER]
-    values = [item[1] for item in R2_LADDER]
-    colors = [GRAY, BLUE, BLUE, RED]
-
-    fig, ax = plt.subplots(figsize=(10.8, 5.8))
-    bars = ax.bar(labels, values, color=colors)
-    ax.set_ylim(0, 1.0)
-    ax.set_ylabel("R²")
-    ax.set_title("설명력(R²) 사다리", fontsize=18, fontweight="bold", color=NAVY, pad=14)
-    ax.grid(axis="y", alpha=0.25)
-    ax.tick_params(axis="x", labelrotation=10)
-    for bar, value in zip(bars, values):
-        ax.text(bar.get_x() + bar.get_width() / 2, value + 0.025, f"{value:.3f}", ha="center", fontsize=12)
+def performance_by_election():
+    frame = pd.read_csv(ACTIVE_DIR / "by_election.csv", encoding="utf-8-sig")
+    frame["year"] = frame["election_id"].str.replace("pres_","",regex=False)
+    fig, ax = plt.subplots(figsize=(10.2,5.4))
+    bars = ax.bar(frame["year"], frame["regional_weighted_mae_pp"], color=BLUE)
+    ax.set_ylabel("지역 MAE (%p)")
+    ax.set_title("V27 선거별 지역 오차", fontsize=18, fontweight="bold", color=NAVY)
+    ax.grid(axis="y", alpha=.2)
+    for bar,value in zip(bars,frame["regional_weighted_mae_pp"]):
+        ax.text(bar.get_x()+bar.get_width()/2,value+.08,f"{value:.2f}",ha="center")
     fig.tight_layout()
     return fig
 
 
-def region_error() -> plt.Figure:
-    labels = [item[0] for item in REGION_ROLLING]
-    values = [item[1] for item in REGION_ROLLING]
-    colors = [BLUE, BLUE, NAVY, BLUE, RED]
-
-    fig, ax = plt.subplots(figsize=(10.8, 5.8))
-    bars = ax.bar(labels, values, color=colors)
-    ax.set_ylim(0, 13)
-    ax.set_ylabel("Rolling-origin MAE (%p)")
-    ax.set_title("지역별 rolling-origin 오차", fontsize=18, fontweight="bold", color=NAVY, pad=14)
-    ax.grid(axis="y", alpha=0.25)
-    for bar, value in zip(bars, values):
-        ax.text(bar.get_x() + bar.get_width() / 2, value + 0.18, f"{value:.2f}", ha="center", fontsize=12)
-    ax.text(
-        0.01,
-        -0.16,
-        "호남은 2017년 제3후보 분열처럼 구조 prior만으로 잡기 어려운 사건성이 남는다.",
-        transform=ax.transAxes,
-        fontsize=11,
-        color=GRAY,
-    )
-    fig.tight_layout()
-    return fig
-
-
-def variable_importance() -> plt.Figure:
-    data = sorted(VARIABLE_IMPORTANCE, key=lambda item: item[1])
-    labels = [item[0] for item in data]
-    values = [item[1] for item in data]
-    colors = [RED if value < 0 else (GREEN if label == "rif" else BLUE) for label, value in data]
-
-    fig, ax = plt.subplots(figsize=(10.8, 6.2))
-    bars = ax.barh(labels, values, color=colors)
-    ax.axvline(0, color="#333333", linewidth=0.8)
-    ax.set_xlabel("표준화 β")
-    ax.set_title("핵심 변수 중요도", fontsize=18, fontweight="bold", color=NAVY, pad=14)
-    ax.grid(axis="x", alpha=0.25)
-    for bar, value in zip(bars, values):
-        offset = 0.018 if value >= 0 else -0.018
-        ha = "left" if value >= 0 else "right"
-        ax.text(value + offset, bar.get_y() + bar.get_height() / 2, f"{value:+.3f}", va="center", ha=ha, fontsize=10)
-    ax.text(
-        0.01,
-        -0.12,
-        "후보 슬롯과 지역 prior가 기본 구조를 만들고, rif가 이슈의 추가 설명력을 담당한다.",
-        transform=ax.transAxes,
-        fontsize=11,
-        color=GRAY,
-    )
-    fig.tight_layout()
-    return fig
-
-
-def research_flow() -> plt.Figure:
-    fig, ax = plt.subplots(figsize=(12.0, 5.8))
-    ax.axis("off")
-    ax.set_title("연구 흐름 요약도", fontsize=18, fontweight="bold", color=NAVY, pad=12)
-
-    boxes = [
-        ("국회 발언록", "이슈 키워드 매칭\n발언량·정당별 강조도", LIGHT_BLUE),
-        ("지역구도 prior", "NEC 대선·비례·지방의회\n지역별 진영 기반", "#fff4e6"),
-        ("이슈-지역 결합", "후보 이슈소유 × 이슈부각\n× 지역 민감도", LIGHT_GREEN),
-        ("Ridge 모델", "과적합 억제\n최종 LOEO 6.90%p", LIGHT_RED),
-        ("검증", "rolling-origin 7.14%p\nR² 0.877", "#f4ecf7"),
-    ]
-
-    x = 0.03
-    y = 0.39
-    width = 0.16
-    height = 0.30
-    for index, (title, body, color) in enumerate(boxes):
-        ax.add_patch(
-            FancyBboxPatch(
-                (x, y),
-                width,
-                height,
-                boxstyle="round,pad=0.018",
-                fc=color,
-                ec=NAVY,
-                lw=1.4,
-                transform=ax.transAxes,
-            )
-        )
-        ax.text(x + width / 2, y + height * 0.68, title, ha="center", va="center", fontsize=12, fontweight="bold", color=NAVY, transform=ax.transAxes)
-        ax.text(x + width / 2, y + height * 0.34, body, ha="center", va="center", fontsize=10, color="#222222", transform=ax.transAxes)
-        if index < len(boxes) - 1:
-            ax.add_patch(
-                FancyArrowPatch(
-                    (x + width + 0.012, y + height / 2),
-                    (x + width + 0.055, y + height / 2),
-                    arrowstyle="-|>",
-                    mutation_scale=18,
-                    color=GRAY,
-                    transform=ax.transAxes,
-                )
-            )
-        x += 0.195
-
-    ax.text(
-        0.5,
-        0.16,
-        "결론: 대선 득표율은 후보 슬롯과 지역구도가 기본이고, 국회 발언록 기반 이슈 지표는 그 잔차를 추가로 줄인다.",
-        ha="center",
-        va="center",
-        fontsize=12,
-        color="#222222",
-        bbox=dict(boxstyle="round,pad=0.55", fc="white", ec=GRAY, lw=1.0),
-        transform=ax.transAxes,
-    )
-    return fig
-
-
-def rolling_by_election() -> plt.Figure:
-    labels = [item[0] for item in ROLLING_BY_ELECTION]
-    values = [item[1] for item in ROLLING_BY_ELECTION]
-
-    fig, ax = plt.subplots(figsize=(10.8, 5.2))
-    bars = ax.bar(labels, values, color=[BLUE, BLUE, RED, RED])
-    ax.axhline(7.14, color=NAVY, linestyle="--", linewidth=1.6)
-    ax.text(3.05, 7.25, "평균 7.14%p", color=NAVY, fontsize=11, fontweight="bold")
-    ax.set_ylim(0, 9)
-    ax.set_ylabel("Rolling-origin MAE (%p)")
-    ax.set_title("선거별 rolling-origin 오차", fontsize=18, fontweight="bold", color=NAVY, pad=14)
-    ax.grid(axis="y", alpha=0.25)
-    for bar, value in zip(bars, values):
-        ax.text(bar.get_x() + bar.get_width() / 2, value + 0.12, f"{value:.2f}", ha="center", fontsize=12)
-    fig.tight_layout()
-    return fig
-
-
-def regional_pred_vs_actual(election_id: str) -> plt.Figure:
-    predictions = pd.read_csv(NESTED_PREDICTIONS, encoding="utf-8-sig")
-    regions = pd.read_csv(REGIONS, encoding="utf-8-sig")[["region_id", "region_name"]]
-    election = predictions.loc[predictions["election_id"].eq(election_id)].merge(
-        regions,
-        on="region_id",
-        how="left",
-        validate="many_to_one",
-    )
+def regional_pred_vs_actual(election_id: str):
+    election = _history().loc[lambda x: x["election_id"].eq(election_id)]
     if election.empty:
-        raise ValueError(f"no V23 predictions found for {election_id}")
-    if election["region_name"].isna().any():
-        missing = sorted(election.loc[election["region_name"].isna(), "region_id"].unique())
-        raise ValueError(f"unknown region ids in {election_id}: {missing}")
-
-    slots = sorted(election["slot"].unique())
-    fig, axes = plt.subplots(
-        1,
-        len(slots),
-        figsize=(6.2 * len(slots), 8.2),
-        sharex=True,
-        squeeze=False,
-    )
-    name_column = "candidate_name_x" if "candidate_name_x" in election.columns else "candidate_name"
-    for axis, slot in zip(axes[0], slots):
-        rows = election.loc[election["slot"].eq(slot)].sort_values("actual", ascending=True)
-        positions = range(len(rows))
-        axis.barh(
-            [position - 0.18 for position in positions],
-            rows["layer_pred"] * 100.0,
-            height=0.34,
-            color=BLUE,
-            label="예측",
-        )
-        axis.barh(
-            [position + 0.18 for position in positions],
-            rows["actual"] * 100.0,
-            height=0.34,
-            color=GRAY,
-            label="실제",
-        )
-        axis.set_yticks(list(positions), rows["region_name"])
-        axis.set_xlim(0, 100)
-        axis.grid(axis="x", alpha=0.25)
-        candidate = str(rows[name_column].iloc[0])
-        axis.set_title(f"{slot} · {candidate}", fontsize=13, fontweight="bold", color=NAVY)
+        raise ValueError(f"no V27 rows for {election_id}")
+    slots = sorted(election["slot"].astype(str).unique())
+    fig, axes = plt.subplots(1,len(slots),figsize=(5.7*len(slots),8.2),sharex=True,squeeze=False)
+    for axis,slot in zip(axes[0],slots):
+        rows = election.loc[election["slot"].astype(str).eq(slot)].sort_values("actual")
+        y = list(range(len(rows)))
+        axis.barh([v-.18 for v in y],rows["layer_pred"]*100,height=.34,color=BLUE,label="예측")
+        axis.barh([v+.18 for v in y],rows["actual"]*100,height=.34,color=GRAY,label="실제")
+        axis.set_yticks(y,rows["region_name"]); axis.set_xlim(0,100); axis.grid(axis="x",alpha=.2)
+        axis.set_title(f"{slot} · {rows['candidate_name'].iloc[0]}",color=NAVY,fontweight="bold")
         axis.set_xlabel("득표율 (%)")
     axes[0][0].legend(loc="lower right")
-    fig.suptitle(
-        f"{election_id.removeprefix('pres_')} 대선 지역별 예측과 실제",
-        fontsize=18,
-        fontweight="bold",
-        color=NAVY,
-        y=1.01,
-    )
-    fig.tight_layout()
-    return fig
+    fig.suptitle(f"{election_id[-4:]} 대선 V27 지역 예측과 실제",fontsize=18,fontweight="bold",color=NAVY)
+    fig.tight_layout(); return fig
 
 
-def baseline_comparison() -> plt.Figure:
-    baseline = pd.read_csv(BASELINE_BY_ELECTION, encoding="utf-8-sig")
-    metrics = [
-        ("V23 모델", "model_mae_pp"),
-        ("직전 대선 유지", "persistence_mae_pp"),
-        ("전국 균일 스윙", "uniform_national_swing_mae_pp"),
-        ("전국 득표율 균일", "national_uniform_mae_pp"),
-    ]
-    labels = [label for label, _ in metrics]
-    values = [float(baseline[column].mean()) for _, column in metrics]
-    skill_persistence = 1.0 - values[0] / values[1]
-    skill_swing = 1.0 - values[0] / values[2]
-    annotations = [
-        "활성 모델",
-        f"모델 skill {skill_persistence:+.1%}",
-        f"모델 skill {skill_swing:+.1%}",
-        "실제 전국값 사용",
-    ]
-
-    fig, ax = plt.subplots(figsize=(11.2, 5.8))
-    bars = ax.bar(labels, values, color=[RED, GRAY, BLUE, GREEN])
-    ax.set_ylabel("선거 동일가중 지역 MAE (%p)")
-    ax.set_title("V23과 기준선 비교", fontsize=18, fontweight="bold", color=NAVY, pad=14)
-    ax.grid(axis="y", alpha=0.25)
-    ax.tick_params(axis="x", labelrotation=8)
-    for bar, value, annotation in zip(bars, values, annotations):
-        ax.text(
-            bar.get_x() + bar.get_width() / 2,
-            value + 0.25,
-            f"{value:.2f}%p\n{annotation}",
-            ha="center",
-            va="bottom",
-            fontsize=10,
-        )
-    ax.set_ylim(0, max(values) * 1.22)
-    fig.tight_layout()
-    return fig
-
-
-def prospective_forecast(version: str = "v23") -> plt.Figure:
-    path = Path(str(PROSPECTIVE_DIR).format(version=version)) / "prospective_predictions.csv"
-    predictions = pd.read_csv(path, encoding="utf-8-sig")
-    regions = pd.read_csv(REGIONS, encoding="utf-8-sig")[["region_id", "region_name"]]
-    frame = predictions.merge(
-        regions,
-        on="region_id",
-        how="left",
-        validate="many_to_one",
-    )
-    if frame.empty or frame["region_name"].isna().any():
-        raise ValueError(f"invalid prospective prediction input: {path}")
-
-    slots = sorted(frame["slot"].astype(str).unique())
-    fig, axes = plt.subplots(
-        1,
-        len(slots),
-        figsize=(6.2 * len(slots), 8.2),
-        sharex=True,
-        squeeze=False,
-    )
-    colors = [BLUE, RED, GREEN]
-    for axis, slot, color in zip(axes[0], slots, colors):
-        rows = frame.loc[frame["slot"].astype(str).eq(slot)].sort_values(
-            "predicted_share", ascending=True
-        )
-        axis.barh(
-            rows["region_name"],
-            rows["predicted_share"] * 100.0,
-            color=color,
-        )
-        axis.set_xlim(0, 100)
-        axis.grid(axis="x", alpha=0.25)
-        candidate = str(rows["candidate_name"].iloc[0])
-        axis.set_title(
-            f"{slot} · {candidate}",
-            fontsize=13,
-            fontweight="bold",
-            color=NAVY,
-        )
+def prospective_bars():
+    frame = _forecast(); slots = sorted(frame["slot"].astype(str).unique())
+    fig, axes = plt.subplots(1,len(slots),figsize=(5.7*len(slots),8.2),sharex=True,squeeze=False)
+    for axis,slot in zip(axes[0],slots):
+        rows = frame.loc[frame["slot"].astype(str).eq(slot)].sort_values("predicted_share")
+        axis.barh(rows["region_name"],rows["predicted_share"]*100,color=SLOT_COLORS[slot])
+        axis.set_xlim(0,100); axis.grid(axis="x",alpha=.2)
+        axis.set_title(f"{slot} · {rows['candidate_name'].iloc[0]}",color=NAVY,fontweight="bold")
         axis.set_xlabel("예측 득표율 (%)")
-    fig.suptitle(
-        f"2025 대선 전향 예측 ({version})\n예측 시점 2025-06-02 (D-1), 실제 결과 미사용",
-        fontsize=18,
-        fontweight="bold",
-        color=NAVY,
-        y=1.02,
-    )
-    fig.tight_layout()
+    fig.suptitle("2025 대선 V27 D-1 지역 예측\n실제 결과 미사용 · 성능평가 대상 아님",fontsize=18,fontweight="bold",color=NAVY)
+    fig.tight_layout(); return fig
+
+
+def prospective_map():
+    frame, shapes = _forecast(), _korea_shapes()
+    fig = plt.figure(figsize=(14.5,9.0))
+    grid = fig.add_gridspec(1, 2, width_ratios=(1.55, 1.0), wspace=.02)
+    ax = fig.add_subplot(grid[0, 0])
+    table_ax = fig.add_subplot(grid[0, 1])
+    all_parts = [p for _,parts in shapes for p in parts]
+    for region,parts in shapes:
+        for part in parts:
+            ax.add_patch(Polygon(part,closed=True,facecolor="#F4F7FA",edgecolor="#9AA6B2",linewidth=.65,zorder=1))
+        x,y = PIE_ANCHORS[region]
+        rows=frame.loc[frame["region_id"].eq(region)].sort_values("slot"); start=90.
+        for row in rows.itertuples(index=False):
+            sweep=float(row.predicted_share)*360
+            ax.add_patch(Wedge((x,y),.067,start-sweep,start,facecolor=SLOT_COLORS[str(row.slot)],edgecolor="white",linewidth=.4,zorder=3)); start-=sweep
+        ax.text(x,y-.083,SHORT_REGION_NAMES[region],ha="center",va="top",fontsize=6.2,color="#263442",zorder=4)
+    left,bottom,right,top=_bounds(all_parts); ax.set_xlim(left-.35,right+.35); ax.set_ylim(bottom-.2,top+.2)
+    ax.set_aspect("equal"); ax.axis("off")
+    candidates=frame[["slot","candidate_name"]].drop_duplicates().sort_values("slot")
+    handles=[plt.Line2D([0],[0],marker="o",color="none",markerfacecolor=SLOT_COLORS[r.slot],markersize=11,label=f"{r.slot} · {r.candidate_name}") for r in candidates.itertuples(index=False)]
+    ax.legend(handles=handles,loc="lower left",frameon=False,fontsize=9)
+    ax.set_title("지역별 예측 구성",fontsize=17,fontweight="bold",color=NAVY,pad=10)
+
+    wide = frame.pivot(index=["region_id","region_name"],columns="slot",values="predicted_share").reset_index()
+    order = list(_regions()["region_id"])
+    wide["order"] = wide["region_id"].map({value:index for index,value in enumerate(order)})
+    wide = wide.sort_values("order")
+    cell_text = [[row.region_name, f"{row.A*100:.1f}", f"{row.B*100:.1f}", f"{row.C*100:.1f}"] for row in wide.itertuples(index=False)]
+    table = table_ax.table(cellText=cell_text, colLabels=["시·도","A (%)","B (%)","C (%)"], cellLoc="center", colLoc="center", loc="center", colWidths=[.40,.20,.20,.20])
+    table.auto_set_font_size(False); table.set_fontsize(8.3); table.scale(1,1.25)
+    for column,color in enumerate((NAVY,BLUE,RED,ORANGE)):
+        table[(0,column)].set_facecolor(color); table[(0,column)].set_text_props(color="white",weight="bold")
+    for (row,column),cell in table.get_celld().items():
+        cell.set_edgecolor("#D6DDE4"); cell.set_linewidth(.55)
+        if row and row % 2 == 0: cell.set_facecolor("#F7F9FB")
+    table_ax.axis("off"); table_ax.set_title("시·도별 예측 득표율",fontsize=17,fontweight="bold",color=NAVY,pad=10)
+    fig.suptitle("2025 대선 V27 D-1 예측 지도",fontsize=21,fontweight="bold",color=NAVY,y=.975)
+    fig.text(.5,.025,"각 원은 해당 시·도의 예측 득표 구성(합계 100%) · 원 크기는 인구를 뜻하지 않음\n예측 기준 2025-06-02 (D-1) · 실제 결과 미사용 · 경계: 통계청 SGIS 기반 admdongkor 2025-04-01 (CC BY 4.0 / 공공누리 제1유형)",ha="center",va="bottom",fontsize=9.0,color=GRAY)
+    fig.subplots_adjust(left=.03,right=.98,bottom=.11,top=.88,wspace=.02)
     return fig
 
 
 def main() -> None:
-    _require_viz()
-    setup_style()
-    figures = {
-        "01_model_mae_ladder": mae_ladder(),
-        "02_r2_ladder": r2_ladder(),
-        "03_region_rolling_error": region_error(),
-        "04_variable_importance": variable_importance(),
-        "05_research_flow": research_flow(),
-        "06_rolling_by_election": rolling_by_election(),
-        **{
-            f"07_regional_pred_vs_actual_{election_id}": regional_pred_vs_actual(election_id)
-            for election_id in ("pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022")
-        },
-        "12_baseline_comparison": baseline_comparison(),
-        # The v23 panel is kept because its outputs are frozen and still
-        # referenced, but the active pointer is v25 and that is the figure the
-        # README shows.
-        "13_prospective_forecast_v23": prospective_forecast("v23"),
-        "14_prospective_forecast_v25": prospective_forecast("v25"),
-    }
-    for name, fig in figures.items():
-        save(fig, name)
-    print(f"Generated {len(figures)} PNG files in {OUT}")
+    _require_viz(); setup_style()
+    figures={"v27_model_performance":model_performance(),"v27_performance_by_election":performance_by_election(),
+        **{f"v27_regional_{e}":regional_pred_vs_actual(e) for e in ("pres_2002","pres_2007","pres_2012","pres_2017","pres_2022")},
+        "v27_pres_2025_regional_bars":prospective_bars(),"v27_pres_2025_regional_map":prospective_map()}
+    for name,figure in figures.items(): _save(figure,name)
+    print(f"Generated {len(figures)} current V27 PNG files in {OUT}")
 
 
 if __name__ == "__main__":

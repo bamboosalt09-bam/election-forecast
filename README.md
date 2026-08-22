@@ -27,9 +27,9 @@ python -m pytest -q
 | 채점 선거 | 2002, 2007, 2012, 2017, 2022 |
 | 결과 불변성 감사 | 215/215 통과 |
 
-![V23 기준선 비교](presidential_issue_engine/poster_figures/12_baseline_comparison.png)
+![V27 회고 개발 패널 성능](presidential_issue_engine/poster_figures/v27_model_performance.png)
 
-![2017 지역별 예측과 실제](presidential_issue_engine/poster_figures/07_regional_pred_vs_actual_pres_2017.png)
+![2017 지역별 V27 예측과 실제](presidential_issue_engine/poster_figures/v27_regional_pres_2017.png)
 
 ### 폴드별 훈련 깊이
 
@@ -179,7 +179,36 @@ python scripts/run_prospective_forecast_v27.py
 
 이 러너는 V26 실행 계보와 V27 지역 양극화층, 2025-06-02(D-1)까지 공개된 후보 명부·국회 발언 맥락만 사용합니다. 2025 실제 결과를 읽거나 성능지표를 계산하지 않습니다. V27 층의 보존 가중치는 2022 지역 투표량이며 입력 SHA-256과 결과정보 미사용 선언을 `run_manifest.json`에 기록합니다.
 
-![2025 D-1 전국 예측—V27에서도 전국 배분은 동일](presidential_issue_engine/poster_figures/14_prospective_forecast_v25.png)
+![2025 D-1 V27 지역별 예측 지도](presidential_issue_engine/poster_figures/v27_pres_2025_regional_map.png)
+
+지도 위 원형은 각 시·도의 후보별 예측 구성으로 합계가 100%이며, 원
+크기는 인구나 투표수를 뜻하지 않습니다. 경계는 통계청 SGIS 기반
+`admdongkor` 2025-04-01 자료를 사용하고 다운로드 SHA-256을 고정합니다.
+출처·라이선스·재현 조건은 [시각화 데이터 문서](docs/VISUALIZATION_DATA.md)에
+있습니다. 2025 그림은 실제 결과를 포함하지 않는 교정된 시연입니다.
+
+### 2025 사후 평가
+
+선거 후 공개된 중앙선거관리위원회 개표결과를 동결 V27 D-1 예측에
+연결했습니다. 이 결과는 평가에만 사용하며 모델 적합·선택·조정에는
+들어가지 않습니다. V27이 A/B/C 세 후보 합계 100%를 예측하므로 실제
+결과도 같은 세 후보 범위로 정규화한 값이 헤드라인입니다.
+
+| 2025 사후 점 오차 | V27 |
+|---|---:|
+| 지역 실제 A/B/C 유효표 가중 MAE | **4.6281%p** |
+| 지역 동일가중 MAE | **4.6968%p** |
+| 동결 전국 예측 후보 MAE | **4.0539%p** |
+
+| 후보 | 동결 전국 예측 | 실제 A/B/C 정규화 | 오차 |
+|---|---:|---:|---:|
+| 이재명 | 55.81% | 49.96% | +5.85%p |
+| 김문수 | 35.52% | 41.61% | -6.08%p |
+| 이준석 | 8.66% | 8.43% | +0.23%p |
+
+재현 명령은 `python scripts/evaluate_pres_2025_v27.py`입니다. 공식 원본,
+범위, 계산식과 해시는 [2025 V27 사후 평가](docs/PRES_2025_V27_POST_ELECTION_EVALUATION.md)에
+기록했습니다.
 
 ### 이 경로를 out-of-sample 예측으로 인용하지 마십시오
 

@@ -7,3 +7,11 @@ under the Apache License, Version 2.0, unless a file states otherwise.
 Datasets, model weights, third-party software, and externally sourced material
 are not relicensed by this notice. They remain subject to their respective
 licenses, terms, attribution requirements, and redistribution restrictions.
+
+Visualization geography
+-----------------------
+The generated South Korea regional map uses the 2025-04-01 `admdongkor`
+administrative-boundary snapshot, derived from Statistics Korea SGIS data.
+The boundary data are CC BY 4.0 with Korea Open Government License Type 1
+attribution requirements. Source, hash, and terms are in
+docs/VISUALIZATION_DATA.md.
