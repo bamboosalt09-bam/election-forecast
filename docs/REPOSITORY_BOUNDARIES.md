@@ -5,7 +5,7 @@ for transparency, but they are not the same publication surface.
 
 | Boundary | Canonical location | Install package | Meaning |
 | --- | --- | --- | --- |
-| Active engine | `src/election_forecast/`, reachable V27 engine modules and declared public/derived inputs | Yes | Locally runnable V27 code and inputs |
+| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V27 engine modules and declared public/derived inputs | Yes | Locally runnable V27 code and inputs; the unversioned active alias must match the current pointer |
 | Frozen active evidence | `outputs/active_presidential_nested_v27/` | Yes | Immutable V27 predictions, intervals and promotion audits |
 | Rollback evidence | V23-V26 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
 | Corrected demonstration | `outputs/prospective_pres_2025_v27/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |

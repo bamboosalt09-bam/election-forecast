@@ -10,7 +10,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "outputs" / "automation_status_v3"
-CONFIG = ROOT / "data" / "config" / "active_presidential_model.json"
+CONFIG = ROOT / "data" / "config" / "active_presidential_model_v16.json"
 
 
 INPUT_STATUS = [

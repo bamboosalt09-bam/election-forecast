@@ -234,7 +234,7 @@ V15 reduces pooled Daejeon, Sejong, Chungbuk, and Chungnam MAEs to `3.8198`,
 
 ## Artifacts
 
-- `data/config/active_presidential_model.json`
+- `data/config/active_presidential_model_v16.json` (renamed compatibility base)
 - `outputs/active_presidential_nested_v16/summary.json`
 - `outputs/active_presidential_nested_v16/by_election.csv`
 - `outputs/active_presidential_nested_v16/national_predictions.csv`

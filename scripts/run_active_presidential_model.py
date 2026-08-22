@@ -1,4 +1,8 @@
-"""Run the promoted outcome-blind strict nested presidential model."""
+"""Provide the frozen V16 base implementation used by versioned runners.
+
+This module is an internal compatibility layer. Public execution must enter
+through ``run_current_presidential_model.py`` or an explicit versioned runner.
+"""
 
 from __future__ import annotations
 
@@ -35,7 +39,7 @@ from presidential_issue_engine import rejection_beneficiary_routing  # noqa: E40
 from presidential_issue_engine.point_in_time import filter_available_by_election  # noqa: E402
 
 
-CONFIG_PATH = ROOT / "data" / "config" / "active_presidential_model.json"
+CONFIG_PATH = ROOT / "data" / "config" / "active_presidential_model_v16.json"
 OUTPUT_DIR = ROOT / "outputs" / "active_presidential_nested_v16"
 ASSIGNMENT_DIR = ROOT / "outputs" / "preliminary_slot_assignment"
 EXPECTED_VARIANT = "slot_free_hierarchy_no_neutral"

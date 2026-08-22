@@ -20,7 +20,7 @@ The attachments themselves are not redistributed by this repository.
 | Article 9: embedded AI must run independently and be at least open weights | Active V27 uses no external AI weight or hosted inference API; optional experiments are excluded and disclosed | `docs/AI_MODEL_SPEC.md` |
 | Article 10: complete source must be public and reviewable | Public source tree plus a self-contained wheel that embeds the actual V27 runtime | `setup.py`, `src/election_forecast/v27_runtime.py` |
 | Article 10: winning repository remains public for five years | Repository policy records the obligation; deletion/private conversion must not occur during that period | this document and release checklist |
-| Article 11: repository state at evaluation time is judged | `main` is protected; mandatory checks pin audit, reproduction, package and rights boundaries | `.github/workflows/ci.yml` |
+| Article 11: repository state at evaluation time is judged | `main` is protected; mandatory checks pin current-pointer consistency, audit, reproduction, package and rights boundaries | `.github/workflows/ci.yml`, `scripts/audit_current_public_surface.py` |
 | Result-report form: architecture, stack, data flow, run/test and limitations | Current V27 documents link actual entry points and evidence boundaries | `docs/ARCHITECTURE.md`, `docs/REPRODUCIBILITY.md` |
 | Attachment 1: SBOM is mandatory | Direct dependency table and exact lock are maintained | `docs/SBOM.md` |
 | Attachment 2: AI model specification when applicable | V27 statistical model and non-active external-model experiments are distinguished | `docs/AI_MODEL_SPEC.md` |

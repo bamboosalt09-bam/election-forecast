@@ -18,5 +18,6 @@
 
 ## Model lifecycle
 
-- [ ] V23 remains unchanged, or a new version and promotion record are included
+- [ ] Frozen V23-V27 artifacts remain unchanged, or a new version and promotion record are included
+- [ ] `current_presidential_model.json` and its public compatibility alias still select the same version
 - [ ] Performance changes are reported using the same metric definitions as the active baseline

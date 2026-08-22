@@ -1,15 +1,20 @@
 # Workspace Structure
 
-| 경로 | 역할 |
+| 경로 | 현재 역할 |
 |---|---|
-| `src/` | 공개 forecast 패키지와 데이터 수집·특징 코드 |
-| `presidential_issue_engine/` | 대통령선거 예측, rolling/LOEO, PIT 감사 |
-| `data/` | 활성 입력 데이터와 설정 |
-| `common/` | 공통 지역·스키마 유틸리티 |
-| `scripts/` | 데이터 생성, 감사, 실험 보조 스크립트 |
-| `tests/` | 단위·통합·누수 방지 테스트 |
-| `docs/` | baseline 출처, 삭제 감사, 해시 매니페스트 |
+| `src/election_forecast/` | 설치 가능한 공개 패키지, V27 CLI와 검증된 런타임 로더 |
+| `presidential_issue_engine/` | 대통령선거 특징 조립, PIT 처리, 지역·후처리 계층 |
+| `scripts/run_current_presidential_model.py` | 현재 V27의 소스 체크아웃 실행 진입점 |
+| `data/config/current_presidential_model.json` | 유일한 정식 활성 버전 포인터 |
+| `data/config/active_presidential_model.json` | 위 정식 포인터의 호환 별칭 |
+| `data/config/active_presidential_model_v16.json` | 후대 버전 실행 계보가 사용하는 동결 V16 내부 기반 설정 |
+| `outputs/active_presidential_nested_v27/` | 변경 금지 V27 산출물과 승격 감사 |
+| `outputs/active_presidential_nested_v23/` ~ `v26/` | 변경 금지 롤백 증거 |
+| `outputs/prospective_pres_2025_v27/` | 결과 확인 뒤 수정된 demonstration; prospective 검증이 아님 |
+| `research/` | 설치 배포물에서 제외되는 비승격 연구와 구식 시각화 |
+| `docs/` | 설계, 데이터 권리, 규정 준수, 재현·승격 기록 |
+| `tests/` | 회귀, PIT, 누수, 패키지·공개 경계 검사 |
 
-대용량 산출물, 과거 보고서, 통계대회 제출본, 기존 Git 이력은 활성 폴더에 복사하지
-않았다. 그것들은 보존 폴더
-`C:\english_folder\poll_project_post2025_outcome_aware_20260714`에 그대로 남아 있다.
+공개 저장소와 설치 배포물의 정확한 포함 범위는
+`docs/REPOSITORY_BOUNDARIES.md`를 따른다. 로컬 캐시, 자격증명, 원문 말뭉치,
+권리가 불명확한 행 단위 자료는 어느 공개 배포물에도 포함하지 않는다.

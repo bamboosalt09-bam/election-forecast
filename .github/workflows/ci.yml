@@ -26,6 +26,8 @@ jobs:
           python-version: "3.11"
       - name: Verify tracked-file and frozen-baseline boundary
         run: python scripts/audit_github_baseline.py
+      - name: Verify current public pointers and package version
+        run: python scripts/audit_current_public_surface.py
 
   tests:
     runs-on: ubuntu-latest

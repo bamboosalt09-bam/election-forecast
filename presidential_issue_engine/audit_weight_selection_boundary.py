@@ -57,7 +57,7 @@ ELECTORATE_NESTED_LEARNING_SUMMARY = (
 ELECTORATE_FIXED_EXPERIMENT = (
     ROOT / "data" / "config" / "electorate_layers_fixed_experiment.json"
 )
-ACTIVE_POLICY = ROOT / "data" / "config" / "active_presidential_model.json"
+ACTIVE_POLICY = ROOT / "data" / "config" / "active_presidential_model_v16.json"
 DIRECT_MEGA_SCORES = ROOT / "outputs" / "active_presidential_nested" / "direct_mega_issue_scores.csv"
 GOVERNMENT_BURDEN_SCORES = (
     ROOT / "outputs" / "active_presidential_nested" / "government_burden_scores.csv"

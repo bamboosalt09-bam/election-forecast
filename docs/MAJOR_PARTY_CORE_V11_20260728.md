@@ -99,7 +99,7 @@ is `24.751%`.
 
 ## Artifacts
 
-- `data/config/active_presidential_model.json`;
+- `data/config/active_presidential_model_v16.json` (renamed compatibility base);
 - `outputs/active_presidential_nested_v11/`;
 - `outputs/major_party_core_v11_experiment/decision.json`;
 - `scripts/evaluate_major_party_core_v11.py`;

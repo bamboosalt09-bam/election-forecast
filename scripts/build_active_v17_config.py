@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "data" / "config" / "active_presidential_model.json"
+SOURCE = ROOT / "data" / "config" / "active_presidential_model_v16.json"
 DESTINATION = ROOT / "data" / "config" / "active_presidential_model_v17.json"
 
 
