@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "election-forecast"
-version = "0.27.0"
+version = "0.27.1.dev0"
 description = "Point-in-time Korean presidential election forecasting engine; active frozen model V27."
 readme = "README.md"
 license = "Apache-2.0"

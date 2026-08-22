@@ -27,8 +27,12 @@ outputs/active_presidential_nested_v23/nested_predictions.csv
 SHA-256: dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b
 ```
 
-`data/config/current_presidential_model.json` selects V27. V27 uses the V26
-runtime and adds the fixed gain-1 core-weighted regional dispersion layer.
+`data/config/current_presidential_model.json` selects V27, and
+`data/config/active_presidential_model.json` is an identical public
+compatibility alias. The explicit `active_presidential_model_v16.json` file is
+only the frozen internal base used by the versioned runner lineage. V27 uses
+the V26 runtime and adds the fixed gain-1 core-weighted regional dispersion
+layer.
 
 ## Reproduce the checks
 

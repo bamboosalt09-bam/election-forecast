@@ -95,7 +95,8 @@ withdrawal sequence is:
 The `slot_free_hierarchy_no_neutral` row is now the active presidential model.
 It retains the final `withdrawn_candidate_transfer` addition after Ridge and
 before normalization. The realized-rank slot model remains archived only. The
-active configuration is `data/config/active_presidential_model.json`; canonical
+the then-active configuration is now preserved as
+`data/config/active_presidential_model_v16.json`; canonical
 strict nested outputs are written by `scripts/run_active_presidential_model.py`
 to `outputs/active_presidential_nested/`.
 

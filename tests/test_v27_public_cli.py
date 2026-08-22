@@ -20,5 +20,5 @@ def test_public_cli_exposes_current_workflows() -> None:
 
 
 def test_package_and_model_versions_are_explicit() -> None:
-    assert cli.PACKAGE_VERSION == "0.27.0"
+    assert cli.PACKAGE_VERSION == "0.27.1.dev0"
     assert cli.ACTIVE_MODEL_VERSION == "V27"

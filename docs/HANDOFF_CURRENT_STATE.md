@@ -15,6 +15,16 @@
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
 - Assembly reprocessing: do not run unless explicitly requested
 
+### Authoritative current artifacts
+
+- `data/config/current_presidential_model.json`
+- `data/config/active_presidential_model.json` (identical compatibility alias)
+- `data/config/active_presidential_model_v16.json` (internal frozen base only)
+- `scripts/run_current_presidential_model.py`
+- `scripts/run_active_presidential_model_v27.py`
+- `outputs/active_presidential_nested_v27/`
+- `outputs/prospective_pres_2025_v27/` (corrected demonstration only)
+
 ## Superseded V25 promotion (2026-08-21)
 
 V25 was the frozen current model at this dated checkpoint. It repairs the V24 runner's accidental bypass
@@ -536,9 +546,9 @@ defensible step is external validation or a predeclared structural rule tested
 against non-presidential proportional elections without using presidential
 targets for coefficient selection.
 
-## Key artifacts
+## Historical V16 checkpoint artifacts
 
-- `data/config/active_presidential_model.json`
+- `data/config/active_presidential_model_v16.json`
 - `outputs/active_presidential_nested_v16/summary.json`
 - `outputs/active_presidential_nested_v16/nested_predictions.csv`
 - `outputs/active_presidential_nested_v16/national_predictions.csv`

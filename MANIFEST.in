@@ -2,6 +2,7 @@ include LICENSE
 include NOTICE
 include README.md
 include SECURITY.md
+include STRUCTURE.md
 include CONTRIBUTING.md
 include requirements-v27.lock
 include setup.py

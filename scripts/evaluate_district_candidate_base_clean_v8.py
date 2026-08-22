@@ -178,7 +178,7 @@ def _manifest_diff(path: Path) -> pd.DataFrame:
                     in {
                         "candidate_regional_base.csv",
                         "candidate_slot_assignments_v2.csv",
-                        "active_presidential_model.json",
+                        "active_presidential_model_v16.json",
                     },
                 }
             )

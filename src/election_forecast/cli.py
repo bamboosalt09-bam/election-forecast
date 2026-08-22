@@ -29,7 +29,7 @@ from election_forecast.v27_runtime import ensure_v27_runtime
 try:
     PACKAGE_VERSION = version("election-forecast")
 except PackageNotFoundError:  # source-tree execution before installation
-    PACKAGE_VERSION = "0.27.0"
+    PACKAGE_VERSION = "0.27.1.dev0"
 ACTIVE_MODEL_VERSION = "V27"
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 

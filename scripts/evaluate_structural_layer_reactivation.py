@@ -28,7 +28,7 @@ from scripts import evaluate_preliminary_slot_shadow_nested as nested  # noqa: E
 
 
 OUTPUT_DIR = ROOT / "outputs" / "structural_layer_reactivation"
-POLICY_PATH = ROOT / "data" / "config" / "active_presidential_model.json"
+POLICY_PATH = ROOT / "data" / "config" / "active_presidential_model_v16.json"
 PROFILE_PATH = ROOT / "data" / "raw" / "auto_issue_seed" / "candidate_issue_profile.csv"
 INTENSITY_PATH = ROOT / "data" / "raw" / "mega_issue_intensity.csv"
 ACTIVE_VARIANT = "slot_free_hierarchy_no_neutral"

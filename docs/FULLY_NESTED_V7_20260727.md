@@ -92,7 +92,7 @@ future election can provide a genuinely untouched evaluation.
 
 ## Artifacts
 
-- `data/config/active_presidential_model.json`
+- `data/config/active_presidential_model_v16.json` (renamed compatibility base)
 - `outputs/active_presidential_nested_v7/summary.json`
 - `outputs/active_presidential_nested_v7/stage_selection_audit.csv`
 - `outputs/active_presidential_nested_v7/candidate_stage_summary.csv`

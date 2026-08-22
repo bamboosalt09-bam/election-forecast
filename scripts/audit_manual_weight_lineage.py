@@ -17,7 +17,7 @@ RUN_MANIFEST = (
     / "active_run"
     / "input_manifest.csv"
 )
-CONFIG = ROOT / "data" / "config" / "active_presidential_model.json"
+CONFIG = ROOT / "data" / "config" / "active_presidential_model_v16.json"
 
 
 INPUTS = [

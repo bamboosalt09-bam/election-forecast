@@ -13,7 +13,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PATHS = (
-    "data/config/active_presidential_model.json",
+    "data/config/active_presidential_model_v16.json",
+    "data/config/current_presidential_model.json",
     "data/raw/candidate_regional_base.csv",
     "data/raw/chungcheong_identity_alignment.csv",
     "data/raw/third_candidate_profile.csv",

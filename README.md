@@ -136,6 +136,7 @@ python scripts/evaluate_ex_ante_weighting.py --active-dir outputs/active_preside
 - `presidential_issue_engine/audit_weight_selection_boundary.py`: 2022년까지의 학습 경계와 격리된 2025 입력 검사
 - `scripts/audit_slot_predictor_leakage.py`: 실제 순위로 정해진 슬롯 변수를 활성 모델이 쓰지 않는지 검사
 - `scripts/audit_public_active_presidential_model_v27.py`: V23~V26 롤백 경계, V27 포인터·산출물·예측구간·지역 양극화 강도 검사
+- `scripts/audit_current_public_surface.py`: 공개 활성 별칭·V27 포인터·내부 V16 기반·패키지 개발 버전의 동기화 검사
 
 최신 실행 로그는 `outputs/audit_logs/`에 저장합니다. 동결 범위와 매니페스트 해석은 [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)를 참조하십시오.
 
@@ -291,8 +292,10 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 | `scripts/` | 수집, 빌드, 평가, 감사, 실행 진입점 |
 | `data/raw/` | 날짜와 출처가 있는 입력·공식자료 레지스트리 |
 | `data/config/` | 버전별 모델 설정과 활성 포인터 |
+| `data/config/active_presidential_model_v16.json` | 후대 버전 실행 계보용 동결 V16 내부 기반 설정 |
 | `outputs/active_presidential_nested_v27/` | 읽기 전용 V27 활성 산출물과 시간순 예측구간 |
 | `outputs/automatic_controls_v26/` | V26 등급화 거대 이슈 강도 제어 |
+| `outputs/active_presidential_nested_v26/` | 읽기 전용 V26 롤백 산출물 |
 | `outputs/active_presidential_nested_v25/` | 읽기 전용 V25 롤백 산출물 |
 | `outputs/active_presidential_nested_v24/` | 읽기 전용 V24 롤백 산출물 |
 | `outputs/active_presidential_nested_v23/` | 읽기 전용 V23 롤백 산출물 |
@@ -302,6 +305,11 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 | `tests/` | PIT, 누수, 입력 경계, 회귀 테스트 |
 
 공개 저장소의 연구 이력과 설치 배포물의 경계는 [저장소·배포 경계](docs/REPOSITORY_BOUNDARIES.md)에 고정합니다. wheel과 sdist에는 현재 V27 실행·감사에 필요한 코드·입력·공개 문서만 들어가며, 구형 시연과 비승격 실험 산출물은 포함하지 않습니다.
+
+정식 활성 포인터는 `data/config/current_presidential_model.json`입니다.
+`active_presidential_model.json`은 같은 내용을 제공하는 공개 호환 별칭이며,
+이름 없는 내부 기반 러너는 명시적으로 `active_presidential_model_v16.json`을
+사용합니다. 따라서 구형 기반 설정이 현재 버전처럼 노출되지 않습니다.
 
 ## 동결 정책
 
