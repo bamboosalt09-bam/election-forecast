@@ -54,4 +54,4 @@ jobs:
       # version: each version's script asserts the pointer still reads that
       # version and fails the moment a successor is promoted.
       - name: Audit frozen active model
-        run: python scripts/audit_public_active_presidential_model_v26.py
+        run: python scripts/audit_public_active_presidential_model_v27.py
