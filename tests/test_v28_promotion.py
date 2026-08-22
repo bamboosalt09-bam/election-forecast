@@ -30,6 +30,8 @@ def test_v28_is_prediction_equivalent_and_external_model_runtime_free() -> None:
     assert not paths.str.endswith(
         ("mega_issue_axis.csv", "mega_issue_attribution.csv")
     ).any()
+    assert not paths.str.endswith("kospi_daily.csv").any()
+    assert int(paths.str.endswith("kospi_election_context.csv").sum()) == 1
     summary = json.loads((active / "summary.json").read_text(encoding="utf-8"))
     assert summary["metrics"]["variant"] == "v28_external_model_free"
     assert summary["external_neural_model_runtime"] is False

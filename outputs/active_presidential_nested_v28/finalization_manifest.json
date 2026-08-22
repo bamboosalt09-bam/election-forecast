@@ -58,6 +58,12 @@
       "hash_mode": "normalized_text_lf"
     },
     {
+      "path": "scripts/finalize_active_presidential_model_v28.py",
+      "bytes": 6547,
+      "sha256": "d286e7e1b8dedf7db1214d7d74abaa46d336a87428e4ad5f977a3146dc30f87d",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
       "path": "scripts/audit_public_active_presidential_model_v28.py",
       "bytes": 3508,
       "sha256": "3e5f247ac75395636f281798cfec61730388535f65ad347c475fa7270f2e20ac",
@@ -73,6 +79,18 @@
       "path": "presidential_issue_engine/external_model_free_runtime.py",
       "bytes": 3454,
       "sha256": "4c1e8946b4bb7047e1fb99961cd96f638f916605cc5016df3a01897a83e3baf2",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/issue_vote_engine.py",
+      "bytes": 266581,
+      "sha256": "b7fe1343231759e0b6919aee3cf441139851f0ea22164b1e22b3ccaa11334d74",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/kospi_election_context.csv",
+      "bytes": 2550,
+      "sha256": "d3709e3be33d22d91fdffdd8636c9fd82aa0c608705b1d1884a0017bff9742ff",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -113,8 +131,8 @@
     },
     {
       "path": "outputs/active_presidential_nested_v28/input_manifest.csv",
-      "bytes": 5279,
-      "sha256": "cbdd273af78ef27b3fcaa4e4fb46e9b5fc2514d907a5dcd1c853744bbf247dd5",
+      "bytes": 5287,
+      "sha256": "2fafab98f4c554f250a22b2c6c9a1d69079f02249068e6b5709ff01598643635",
       "hash_mode": "raw_bytes"
     },
     {

@@ -327,4 +327,4 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 
 프로젝트가 작성한 소스 코드와 문서는 [Apache License 2.0](LICENSE)으로 배포됩니다. 데이터셋, 모델 가중치, 제3자 소프트웨어와 외부 자료는 각 원출처의 라이선스·이용조건을 따르며 이 저장소의 라이선스로 재허가되지 않습니다. 범위는 [NOTICE](NOTICE)를 참조하십시오.
 
-입력 계열별 출처와 재배포 판정은 [데이터 출처·재배포 원장](docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md)과 [기계 판독 원장](docs/PUBLIC_DATA_SOURCES.json)을 참조하십시오. 권리가 불명확한 원본, 전체 회의록, API 캐시와 로컬 KOSPI 내역은 Git과 설치 패키지에서 제외됩니다. 대회 규정 대응표, SBOM과 AI 명세는 각각 [규정 대응표](docs/COMPETITION_COMPLIANCE_2026.md), [SBOM](docs/SBOM.md), [AI 명세](docs/AI_MODEL_SPEC.md)에 있습니다.
+입력 계열별 출처와 재배포 판정은 [데이터 출처·재배포 원장](docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md)과 [기계 판독 원장](docs/PUBLIC_DATA_SOURCES.json)을 참조하십시오. 권리가 불명확한 원본, 전체 회의록, API 캐시와 로컬 KOSPI 일별 내역은 Git과 설치 패키지에서 제외됩니다. V28은 재현에 필요한 D-1 선거×슬롯 KOSPI 집계 15행만 출처와 함께 포함합니다. 대회 규정 대응표, SBOM과 AI 명세는 각각 [규정 대응표](docs/COMPETITION_COMPLIANCE_2026.md), [SBOM](docs/SBOM.md), [AI 명세](docs/AI_MODEL_SPEC.md)에 있습니다.

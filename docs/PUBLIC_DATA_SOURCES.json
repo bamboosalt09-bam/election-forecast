@@ -50,7 +50,8 @@
       "coverage_prefixes": [
         "data/raw/official_sources/bok_ecos_",
         "presidential_issue_engine/fixed_dataset/economic_indicators.csv",
-        "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv"
+        "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv",
+        "presidential_issue_engine/fixed_dataset/kospi_election_context.csv"
       ],
       "provider": "Bank of Korea ECOS",
       "source_url": "https://ecos.bok.or.kr/api/",
@@ -58,7 +59,7 @@
       "license_or_basis": "Public Data Portal listing: no restriction on permitted use",
       "redistribution_decision": "include-derived-with-attribution",
       "attribution": "Bank of Korea Economic Statistics System (ECOS)",
-      "notes": "The downloaded KOSPI row cache is not tracked or packaged. Only its provenance manifest is public."
+      "notes": "The downloaded KOSPI row cache is not tracked or packaged. V28 includes only 15 D-1 election-by-slot context rows calculated from that series, plus the provenance manifest."
     },
     {
       "id": "kosis_reb_housing_statistics",

@@ -55,7 +55,8 @@ The wheel embeds the Git-tracked public V28 runtime as a deterministic archive.
 On first use it rejects path traversal, extracts into a versioned user cache and
 verifies every file's size and SHA-256 before executing the V28
 runner. Local caches, credentials, full-text corpora and the uncertain-rights
-KOSPI export are excluded.
+daily KOSPI export are excluded. The wheel includes only the 15 attributed D-1
+election×slot aggregates actually consumed by V28.
 
 ### Source checkout
 
