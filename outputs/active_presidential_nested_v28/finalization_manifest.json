@@ -63,8 +63,8 @@
     },
     {
       "path": "scripts/verify_v28_clean_reproduction.py",
-      "bytes": 1202,
-      "sha256": "42708751c4d06e0bc5773069e0445e801118d67dd6743ad6cf8fcd12d58bcf7c",
+      "bytes": 1292,
+      "sha256": "772cca70b469106ce82184d88604e7e747442195270a2940eb75e246736c2dae",
       "hash_mode": "normalized_text_lf"
     },
     {
