@@ -119,8 +119,14 @@ saturation, is preserved by construction.
 **2002 does not move at all** and remains the worst election in the panel at
 -3.512 %p. Its intensity is 0.6837, still below the activation gate, so the
 direct mega path stays inert there. V26 improves the elections that were
-already close and leaves the outlier exactly where it was. That is the pattern
-to remain suspicious of, and it is the first place to look next.
+already close and leaves the outlier exactly where it was.
+
+2002 has since been diagnosed - `docs/DIAGNOSIS_PRES_2002_20260822.md`. It is
+the panel's only winner miss, so it is the entire 4/5 winner metric, and its
+error is a **base-stage** error: the reversal is present in the earliest
+modelled stage and the three structural postprocesses widen the two-major gap
+from -3.66 to -4.16 rather than closing it. No structural layer worked on so
+far reaches it.
 
 **The 2025 forecast is unchanged.** 2025 sits above both gates, so its
 intensity stays at 2.00 and the composition remains 이재명 55.81 · 김문수 35.52
