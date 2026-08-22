@@ -4,6 +4,12 @@
 
 - Date: 2026-08-22
 - Status: diagnosis only; **no change made, and none proposed here**
+- **Mechanism superseded** by `DIAGNOSIS_STRONGHOLD_ERRORS_20260822.md`.
+  The measurements below stand, but the explanation - one phenomenon
+  scaling with third-candidate size - was too coarse. The correlation is
+  a symptom of two unrelated defects that both happen to occur in the two
+  elections with a large third candidate, which is why the swept rescale
+  helped 2007 and 2017 while hurting 2002 and 2022.
 - Post-2022 outcomes used: none beyond the scored panel this evaluates
 
 The question that prompted this: is 2007's error an under-corrected regression
@@ -95,3 +101,91 @@ which key on pre-election facts.
 The measurement is a few lines against
 `outputs/active_presidential_nested_v26/nested_predictions.csv`: group by
 election and candidate, compare `layer_pred.std()` with `actual.std()`.
+
+## The correction was built and measured, and is not adopted
+
+Asked whether this needs a model change, the answer is measured rather than
+argued. `scripts/evaluate_regional_dispersion_calibration.py` expands each
+candidate's regional deviations around their own national level by
+`1 + gain * predicted_third_share` and renormalises. The index is the model's
+own predicted third share, available at forecast time, so the transform reads
+no outcome; the gain is swept rather than fitted.
+
+### Where the compression enters
+
+Before the sweep, one thing had to be settled: which stage compresses.
+
+| stage | 2002 | 2007 | 2012 | 2017 | 2022 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `shadow_pred` | 1.066 | **0.689** | 0.984 | **0.811** | 1.224 |
+| `layer_pred` (final) | 1.047 | **0.681** | 1.038 | **0.791** | 1.098 |
+
+It is there in the earliest modelled stage and the postprocess layers neither
+create nor remove it. A correction would therefore have to live in the fitted
+base, which is the highest-risk place to put one: every election depends on it,
+unlike the bolt-on transforms all previous structural work touched.
+
+### Shrinkage is not by itself the defect
+
+A regularised predictor should have less variance than the outcome; the
+conditional mean does too. Predicted spread below realised spread is what Ridge
+is supposed to produce, and reproducing the full outcome variance would be
+overfitting.
+
+What marks 2007 and 2017 is the slope of realised on predicted: 1.141, 1.276
+and 2.043 in 2007, 1.269 and 1.312 in 2017, against roughly 1.0 everywhere
+else. Calibrated shrinkage gives slope 1. So those two elections are
+miscalibrated, and the other three are not.
+
+### The sweep
+
+| gain | regional macro | national macro | dispersion ratio | winners |
+| ---: | ---: | ---: | ---: | ---: |
+| **0.00** (shipped) | **2.7122** | **0.7210** | 0.9308 | 4/5 |
+| 0.25 | 2.6584 | 0.7210 | 0.9499 | 4/5 |
+| 0.50 | 2.6103 | 0.7210 | 0.9690 | 4/5 |
+| 0.75 | 2.5936 | 0.7210 | 0.9881 | 4/5 |
+| 1.00 | **2.5829** | 0.7228 | 1.0056 | 4/5 |
+| 1.50 | 2.5973 | 0.7312 | 1.0373 | 4/5 |
+| 2.00 | 2.6424 | 0.7519 | 1.0678 | 4/5 |
+
+Regional weighted MAE by election, at the best gain:
+
+| election | gain 0.00 | gain 1.00 | change |
+| --- | ---: | ---: | ---: |
+| pres_2007 | 4.272 | 3.793 | **-0.479** |
+| pres_2017 | 3.025 | 2.687 | **-0.338** |
+| pres_2012 | 2.378 | 2.378 | 0.000 |
+| **pres_2002** | 2.752 | 2.913 | **+0.161** |
+| **pres_2022** | 1.134 | 1.144 | +0.010 |
+
+### Why not
+
+**It improves the two compressed elections and degrades the two that were not.**
+The net gain is positive, but the gain was chosen from the same five outcomes,
+so this is fitting the panel by construction. It is the mirror image of the
+pattern the V26 record already flags on 2002 - helping where the correction was
+aimed and leaving or worsening the rest.
+
+**The national metric does not improve.** 0.7210 goes to 0.7228. The headline
+V26 was promoted on does not move, and winner accuracy is 4/5 at every gain
+including 2.00.
+
+**The optimum is flat.** Gains from 0.75 to 1.50 span 2.5829 to 2.5973, a range
+of 0.014. Locating a minimum on a surface that flat is selecting noise.
+
+The apparent coincidence - that the best gain is also where the dispersion
+ratio reaches 1.0 - is arithmetic rather than corroboration. Minimising
+absolute error and matching outcome variance are closely related objectives, so
+they meet near the same point by construction.
+
+**And it would go in the fitted stage** to fix a pattern with two supporting
+elections. That is the worst available ratio of risk to evidence in the model.
+
+### What the sweep is good for
+
+Not as a correction, but as confirmation of the diagnosis. That gain > 0 helps
+exactly 2007 and 2017, does nothing to 2012, and hurts 2002 and 2022 is
+independent evidence that the compression is real in the first two and absent
+in the others. The measurement earns its place as a diagnostic even though the
+transform does not earn promotion.
