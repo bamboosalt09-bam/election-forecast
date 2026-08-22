@@ -39,7 +39,6 @@ exclude presidential_issue_engine/fixed_dataset/kospi_daily.csv
 exclude data/raw/kospi_history_source.txt
 exclude data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv
 exclude data/raw/assembly_issue_character_overlay.csv
-exclude data/raw/auto_issue_seed/candidate_issue_profile.csv
 exclude data/raw/auto_issue_seed/mega_issue_axis.csv
 exclude data/raw/auto_issue_seed/mega_issue_attribution.csv
 prune data/raw/official_sources/cache

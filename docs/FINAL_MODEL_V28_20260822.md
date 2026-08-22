@@ -1,9 +1,11 @@
-# Final presidential model V28 — external-model-free runtime
+# Final presidential model V28 — external-model-runtime-free boundary
 
-V28 is V27 with the external-model-derived Assembly stance overlay and its
-three automatic issue-seed descendants removed from every active historical
-and prospective input manifest. Official
-parliamentary records and deterministic issue matching remain active.
+V28 is V27 without neural inference, downloaded model weights, source sentence
+corpora or the direct Assembly stance overlay in its installable runtime. Two
+unused automatic issue-seed descendants are also excluded. The frozen
+historical `data/raw/auto_issue_seed/candidate_issue_profile.csv` remains an
+active postprocess input and is included with explicit provenance disclosure.
+Official parliamentary records and deterministic issue matching remain active.
 
 ## Frozen development metrics
 
@@ -21,12 +23,15 @@ a dependency and provenance simplification, not a performance improvement.
 - hosted inference API: none
 - downloaded model weights at runtime: none
 - external neural encoder at runtime: none
-- external-model-derived active input: none
+- external-model-derived active input: one compact frozen candidate-issue aggregate
 - fitted component: scikit-learn Ridge plus deterministic project transforms
 
-Historical stance experiments remain research records only.  Their model
-weights, sentence corpora and generated outputs are not distributed in the
-V28 wheel.
+Historical stance experiment code, model weights, sentence corpora and direct
+overlay are not distributed in the V28 wheel. The retained compact aggregate
+contains no source sentence or model weight. A full-removal diagnostic changed
+the development-panel regional MAE from `2.613902987%p` to `4.935929128%p` and
+winner accuracy from `0.8` to `0.6`; therefore it cannot truthfully be described
+as a negligible inactive dependency.
 
 ## Evidence boundary
 

@@ -24,7 +24,6 @@ FORBIDDEN_FILES = {
     "data/raw/kospi_history_source.txt",
     "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
     "data/raw/assembly_issue_character_overlay.csv",
-    "data/raw/auto_issue_seed/candidate_issue_profile.csv",
     "data/raw/auto_issue_seed/mega_issue_axis.csv",
     "data/raw/auto_issue_seed/mega_issue_attribution.csv",
 }
@@ -62,6 +61,7 @@ REQUIRED_RUNTIME_FILES = {
     "scripts/audit_public_active_presidential_model_v28.py",
     "scripts/verify_v28_clean_reproduction.py",
     "presidential_issue_engine/issue_vote_engine.py",
+    "data/raw/auto_issue_seed/candidate_issue_profile.csv",
     "outputs/active_presidential_nested_v28/nested_predictions.csv",
 }
 

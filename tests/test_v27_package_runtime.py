@@ -48,7 +48,7 @@ def test_v28_runtime_selection_is_complete_and_fail_closed() -> None:
     assert "presidential_issue_engine/fixed_dataset/kospi_daily.csv" not in selected
     assert "data/raw/kospi_history_source.txt" not in selected
     assert "data/raw/assembly_issue_character_overlay.csv" not in selected
-    assert "data/raw/auto_issue_seed/candidate_issue_profile.csv" not in selected
+    assert "data/raw/auto_issue_seed/candidate_issue_profile.csv" in selected
     assert "data/raw/auto_issue_seed/mega_issue_axis.csv" not in selected
     assert "data/raw/auto_issue_seed/mega_issue_attribution.csv" not in selected
     assert not any("through2022_rederived/overlay_variants/" in path for path in selected)

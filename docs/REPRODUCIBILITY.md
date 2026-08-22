@@ -35,8 +35,10 @@ SHA-256: dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b
 `data/config/active_presidential_model.json` is an identical public
 compatibility alias. The explicit `active_presidential_model_v16.json` file is
 only the frozen internal base used by the versioned runner lineage. V28 keeps
-V27's statistical chain but disables and excludes the external-model-derived
-stance overlay. Historical predictions remain byte-identical.
+V27's statistical chain but disables neural inference and excludes the direct
+sentence-level stance overlay. The disclosed frozen historical
+`candidate_issue_profile.csv` remains because full removal materially changes
+the postprocess. Historical predictions remain byte-identical.
 
 ## Reproduce the checks
 

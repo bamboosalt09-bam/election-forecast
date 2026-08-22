@@ -41,16 +41,31 @@ def main() -> None:
     require(not frame.election_id.astype(str).str.contains("2025").any(), "2025 leaked into history")
     require(np.allclose(frame.groupby(["election_id", "region_id"]).layer_pred.sum(), 1.0, atol=1e-10), "composition drift")
     manifest = pd.read_csv(ACTIVE_DIR / "input_manifest.csv")
+    normalized_paths = manifest.path.astype(str).str.replace("\\", "/", regex=False)
     require(
-        not manifest.path.astype(str).str.contains(
-            "assembly_issue_character_overlay|data/raw/auto_issue_seed/", regex=True
+        not normalized_paths.str.contains("assembly_issue_character_overlay", regex=False).any(),
+        "sentence-level external-model overlay remains active",
+    )
+    require(
+        normalized_paths.str.endswith(
+            "data/raw/auto_issue_seed/candidate_issue_profile.csv"
         ).any(),
-        "external-model-derived input remains active",
+        "disclosed frozen candidate-issue profile is missing",
+    )
+    require(
+        not normalized_paths.str.endswith(
+            ("mega_issue_axis.csv", "mega_issue_attribution.csv")
+        ).any(),
+        "unused external-model-derived seed remains active",
     )
     summary = json.loads((ACTIVE_DIR / "summary.json").read_text(encoding="utf-8"))
     require(summary["metrics"]["variant"] == "v28_external_model_free", "variant drift")
     require(summary["external_neural_model_runtime"] is False, "neural runtime enabled")
-    require(summary["external_model_derived_inputs"] == [], "external model input declared")
+    require(
+        summary["external_model_derived_inputs"]
+        == ["data/raw/auto_issue_seed/candidate_issue_profile.csv"],
+        "retained derived-input disclosure drift",
+    )
     finalization = json.loads((ACTIVE_DIR / "finalization_manifest.json").read_text(encoding="utf-8"))
     require(sha(ACTIVE_DIR / "nested_predictions.csv") == finalization["verification"]["v28_prediction_hash"], "V28 prediction drift")
     for record in finalization["artifacts"]:

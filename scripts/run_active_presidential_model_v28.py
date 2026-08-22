@@ -1,4 +1,4 @@
-"""Run V28: V27 with all external-model-derived active inputs removed."""
+"""Run V28 without neural inference or the sentence-level stance overlay."""
 
 from __future__ import annotations
 
@@ -45,12 +45,14 @@ def run(output_dir: Path | None = None) -> Path:
     summary_path = destination / "summary.json"
     payload = json.loads(summary_path.read_text(encoding="utf-8"))
     payload["metrics"]["variant"] = FINAL_VARIANT
-    payload["policy_version"] = "active_v28_external_model_free"
+    payload["policy_version"] = "active_v28_external_model_runtime_free"
     payload["predecessor"] = "v27"
     payload["external_neural_model_runtime"] = False
-    payload["external_model_derived_inputs"] = []
+    payload["external_model_derived_inputs"] = [
+        "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+    ]
     payload["parliamentary_source_policy"] = (
-        "official_records_and_deterministic_issue_matching_only"
+        "official_records_plus_disclosed_frozen_historical_candidate_issue_aggregate"
     )
     payload["post_2022_outcomes_used"] = False
     v24._atomic_json_crlf(payload, summary_path)

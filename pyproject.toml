@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "election-forecast"
 version = "0.28.0.dev0"
-description = "Point-in-time Korean presidential election forecasting engine; active external-model-free V28."
+description = "Point-in-time Korean presidential election forecasting engine; active external-model-runtime-free V28."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
@@ -39,9 +39,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
 reproduce-v28 = [
-    "numpy==2.5.2",
-    "pandas==3.0.5",
-    "scipy==1.18.1",
+    "numpy==2.4.6",
+    "pandas==3.0.3",
+    "scipy==1.18.0",
     "scikit-learn==1.9.0",
 ]
 viz = ["matplotlib>=3.8", "shapely>=2.0"]

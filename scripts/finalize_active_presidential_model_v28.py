@@ -1,4 +1,4 @@
-"""Promote and freeze the external-model-free V28 runtime."""
+"""Promote and freeze the external-model-runtime-free V28 runtime."""
 
 from __future__ import annotations
 
@@ -47,27 +47,29 @@ def main() -> None:
     ]
     promotion = {
         "schema": "presidential_model_promotion_v1",
-        "status": "promoted_external_model_free",
+        "status": "promoted_external_model_runtime_free",
         "active_version": "v28",
         "predecessor": "v27",
         "post_2022_outcomes_used": False,
         "point_metrics": summary["metrics"],
         "accepted_scope": ["remove_external_model_derived_stance_overlay"],
-        "selection_disclosure": "Adopted for provenance and dependency reduction; historical predictions are byte-identical to V27.",
+        "selection_disclosure": "Adopted to remove neural runtime, model weights, sentence corpora, the direct stance overlay and unused descendants. The frozen historical candidate-issue aggregate remains disclosed because full removal materially degrades the development panel; historical predictions remain byte-identical to V27.",
         "rollback": {"version": "v27", "prediction_sha256": V27_SHA256},
     }
     shared._atomic_json(promotion, ACTIVE_DIR / "promotion_manifest.json")
     artifacts.append("outputs/active_presidential_nested_v28/promotion_manifest.json")
     finalization = {
         "schema": "presidential_model_finalization_v1",
-        "status": "frozen_external_model_free",
+        "status": "frozen_external_model_runtime_free",
         "active_version": "v28",
         "base_config_version": "v23",
         "scored_development_elections": ["pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022"],
         "post_2022_outcomes_used": False,
         "untouched_historical_holdout": False,
         "external_neural_model_runtime": False,
-        "external_model_derived_inputs": [],
+        "external_model_derived_inputs": [
+            "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+        ],
         "metrics": summary["metrics"],
         "predictive_intervals": {"status": intervals["status"], "levels": intervals["levels"], "post_2022_outcomes_used": False},
         "verification": {
@@ -83,7 +85,7 @@ def main() -> None:
     pointer = {
         "schema": "current_presidential_model_pointer_v1",
         "active_version": "v28",
-        "lifecycle_status": "frozen_external_model_free",
+        "lifecycle_status": "frozen_external_model_runtime_free",
         "canonical_document": "docs/FINAL_MODEL_V28_20260822.md",
         "finalization_manifest": "outputs/active_presidential_nested_v28/finalization_manifest.json",
         "runner": "scripts/run_active_presidential_model_v28.py",
@@ -103,7 +105,9 @@ def main() -> None:
         "predictive_interval_levels": intervals["levels"],
         "predictive_interval_status": intervals["status"],
         "external_neural_model_runtime": False,
-        "external_model_derived_inputs": [],
+        "external_model_derived_inputs": [
+            "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+        ],
         "post_2022_outcomes_used": False,
     }
     for path in POINTERS:

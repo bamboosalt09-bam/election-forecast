@@ -1,8 +1,9 @@
 # V28 architecture
 
-V28 is the active, frozen presidential model. It preserves V27 predictions but
-removes the external-model-derived stance overlay from every active input and
-packaged-runtime path. The diagram below follows the
+V28 is the active, frozen presidential model. It preserves V27 predictions and
+removes neural inference, weights, source sentences and the direct stance
+overlay from the packaged-runtime path. One frozen historical candidate-issue
+aggregate remains as a disclosed postprocess input. The diagram below follows the
 actual public entry points rather than older poster-era experiments.
 
 The active package, frozen evidence, corrected demonstration and historical
@@ -29,7 +30,8 @@ flowchart TD
     O[2025 D-1 reconstructed context] --> B
     O -. corrected demonstration only .-> M
 
-    R[External-model and other historical experiments] -. excluded from packaged V28 runtime .-> S[Research records]
+    R[External-model weights, sentences and experiment code] -. excluded from packaged V28 runtime .-> S[Research records]
+    T[Disclosed frozen candidate-issue aggregate] --> F
 ```
 
 ## Runtime chain
@@ -40,7 +42,7 @@ flowchart TD
 - V25/V24 structural stack: `scripts/run_active_presidential_model_v25.py`
 - Core engine: `presidential_issue_engine/issue_vote_engine.py`
 - V27 terminal transform: `presidential_issue_engine/party_regionalism_dispersion.py`
-- External-model-free boundary: `presidential_issue_engine/external_model_free_runtime.py`
+- External-model-runtime-free boundary: `presidential_issue_engine/external_model_free_runtime.py`
 - Public integrity audit: `scripts/audit_public_active_presidential_model_v28.py`
 - Installed-runtime verifier: `src/election_forecast/v28_runtime.py`
 - Wheel build boundary: `setup.py`

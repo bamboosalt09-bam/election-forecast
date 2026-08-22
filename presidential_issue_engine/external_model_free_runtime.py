@@ -1,9 +1,10 @@
-"""Runtime guard that excludes external-model-derived stance overlays.
+"""Runtime guard that excludes external neural inference and direct overlays.
 
-V28 keeps the official parliamentary records and deterministic issue matcher,
-but it does not read features produced by a neural encoder.  The environment
-guard is process-wide so it also covers historical modules imported under a
-bare name during the legacy execution chain.
+V28 keeps the frozen historical candidate-issue aggregate required by the
+validated postprocess, but it does not execute a neural encoder or read the
+sentence-level stance overlay.  The environment guard is process-wide so it
+also covers historical modules imported under a bare name during the legacy
+execution chain.
 """
 
 from __future__ import annotations
@@ -20,7 +21,6 @@ import pandas as pd
 OVERLAY_ENV = "POLL_PROJECT_STANCE_ISSUE_OVERLAY_PATH"
 OVERLAY_PATH_FRAGMENT = "assembly_issue_character_overlay.csv"
 DERIVED_SEED_FRAGMENTS = (
-    "data/raw/auto_issue_seed/candidate_issue_profile.csv",
     "data/raw/auto_issue_seed/mega_issue_axis.csv",
     "data/raw/auto_issue_seed/mega_issue_attribution.csv",
 )
@@ -37,7 +37,7 @@ def _engine_modules() -> list[object]:
 
 @contextmanager
 def external_model_free_runtime() -> Iterator[None]:
-    """Disable the optional stance overlay and restore caller state on exit."""
+    """Disable neural runtime consumers and restore caller state on exit."""
 
     previous = os.environ.get(OVERLAY_ENV)
     patched: list[tuple[object, dict[str, object], dict[str, object]]] = []
@@ -66,7 +66,7 @@ def external_model_free_runtime() -> Iterator[None]:
 
 
 def strip_external_model_inputs(manifest_path: Path) -> None:
-    """Remove external-model-derived inputs from a generated input manifest."""
+    """Remove direct overlay inputs while retaining the disclosed frozen profile."""
 
     manifest = pd.read_csv(manifest_path, encoding="utf-8-sig")
     paths = manifest["path"].astype(str).str.replace("\\", "/", regex=False)
@@ -78,7 +78,7 @@ def strip_external_model_inputs(manifest_path: Path) -> None:
 
 
 def assert_external_model_free_manifest(manifest_path: Path) -> None:
-    """Fail closed if an external-model-derived input remains declared."""
+    """Fail closed if a direct overlay or unused derived seed remains declared."""
 
     manifest = pd.read_csv(manifest_path, encoding="utf-8-sig")
     paths = manifest["path"].astype(str).str.replace("\\", "/", regex=False)

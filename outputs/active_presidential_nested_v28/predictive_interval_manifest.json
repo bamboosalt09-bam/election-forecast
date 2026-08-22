@@ -28,7 +28,7 @@
   "target_outcomes_used_to_construct_bounds": false,
   "target_outcomes_used_for_historical_coverage_only": true,
   "post_2022_outcomes_used": false,
-  "development_outcome_warning": "V28 removes an external-model-derived no-impact historical overlay. Coverage remains historical calibration, not holdout evidence.",
+  "development_outcome_warning": "V28 removes neural runtime and the direct historical stance overlay, while disclosing one retained compact candidate-issue aggregate. Coverage remains historical calibration, not holdout evidence.",
   "input": "outputs/active_presidential_nested_v28/nested_predictions.csv",
   "input_sha256": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
   "outputs": {

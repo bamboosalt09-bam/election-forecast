@@ -1,5 +1,5 @@
 {
-  "policy_version": "active_v28_external_model_free",
+  "policy_version": "active_v28_external_model_runtime_free",
   "variant": "slot_free_hierarchy_no_neutral",
   "status": "active",
   "strict_nested": true,
@@ -232,6 +232,8 @@
     "outcome_fields_used": []
   },
   "external_neural_model_runtime": false,
-  "external_model_derived_inputs": [],
-  "parliamentary_source_policy": "official_records_and_deterministic_issue_matching_only"
+  "external_model_derived_inputs": [
+    "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+  ],
+  "parliamentary_source_policy": "official_records_plus_disclosed_frozen_historical_candidate_issue_aggregate"
 }

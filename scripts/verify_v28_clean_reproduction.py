@@ -25,10 +25,14 @@ def main() -> None:
         actual = pd.read_csv(destination / "nested_predictions.csv", low_memory=False)
         pd.testing.assert_frame_equal(actual, expected, check_exact=False, atol=1e-12, rtol=0.0)
         manifest = pd.read_csv(destination / "input_manifest.csv")
-        if manifest.path.astype(str).str.contains(
-            "assembly_issue_character_overlay|data/raw/auto_issue_seed/", regex=True
-        ).any():
-            raise RuntimeError("clean V28 reproduction retained external-model input")
+        paths = manifest.path.astype(str).str.replace("\\", "/", regex=False)
+        if paths.str.contains("assembly_issue_character_overlay", regex=False).any():
+            raise RuntimeError("clean V28 reproduction retained sentence-level overlay")
+        retained = paths.str.endswith(
+            "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+        )
+        if int(retained.sum()) != 1:
+            raise RuntimeError("clean V28 reproduction lost its disclosed frozen profile")
     print("[clean V28 reproduction: PASS]")
 
 

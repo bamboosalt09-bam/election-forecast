@@ -1,6 +1,6 @@
 {
   "schema": "presidential_model_promotion_v1",
-  "status": "promoted_external_model_free",
+  "status": "promoted_external_model_runtime_free",
   "active_version": "v28",
   "predecessor": "v27",
   "post_2022_outcomes_used": false,
@@ -14,7 +14,7 @@
   "accepted_scope": [
     "remove_external_model_derived_stance_overlay"
   ],
-  "selection_disclosure": "Adopted for provenance and dependency reduction; historical predictions are byte-identical to V27.",
+  "selection_disclosure": "Adopted to remove neural runtime, model weights, sentence corpora, the direct stance overlay and unused descendants. The frozen historical candidate-issue aggregate remains disclosed because full removal materially degrades the development panel; historical predictions remain byte-identical to V27.",
   "rollback": {
     "version": "v27",
     "prediction_sha256": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b"

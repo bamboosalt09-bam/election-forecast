@@ -1,7 +1,7 @@
 {
   "schema": "current_presidential_model_pointer_v1",
   "active_version": "v28",
-  "lifecycle_status": "frozen_external_model_free",
+  "lifecycle_status": "frozen_external_model_runtime_free",
   "canonical_document": "docs/FINAL_MODEL_V28_20260822.md",
   "finalization_manifest": "outputs/active_presidential_nested_v28/finalization_manifest.json",
   "runner": "scripts/run_active_presidential_model_v28.py",
@@ -26,6 +26,8 @@
   ],
   "predictive_interval_status": "historical_chronological_calibration",
   "external_neural_model_runtime": false,
-  "external_model_derived_inputs": [],
+  "external_model_derived_inputs": [
+    "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+  ],
   "post_2022_outcomes_used": false
 }

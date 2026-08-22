@@ -5,7 +5,7 @@
 
 재현 가능한 선거 예측 프레임워크와 국회 회의록 분석 파이프라인입니다.
 
-국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V28은 2022년까지의 선거만 채점·선택에 사용합니다. V28은 외부 오픈웨이트 모델로 만든 stance overlay를 활성 입력과 설치 배포물에서 제거했으며, 역사 예측은 V27과 바이트 단위로 같습니다.
+국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V28은 2022년까지의 선거만 채점·선택에 사용합니다. V28은 외부 오픈웨이트 모델의 실행·가중치·문장 코퍼스와 직접 stance overlay를 설치 배포물에서 제거했습니다. 다만 역사 후처리에 실질적인 영향을 주는 동결 후보×이슈 집계표 1개는 파생 이력을 명시해 유지하며, 역사 예측은 V27과 바이트 단위로 같습니다.
 
 ## Quickstart
 
@@ -135,7 +135,7 @@ python scripts/evaluate_ex_ante_weighting.py --active-dir outputs/active_preside
 - `presidential_issue_engine/audit_point_in_time.py --deep`: 입력 날짜, fold 범위, 목표 결과 변조 불변성 검사
 - `presidential_issue_engine/audit_weight_selection_boundary.py`: 2022년까지의 학습 경계와 격리된 2025 입력 검사
 - `scripts/audit_slot_predictor_leakage.py`: 실제 순위로 정해진 슬롯 변수를 활성 모델이 쓰지 않는지 검사
-- `scripts/audit_public_active_presidential_model_v28.py`: V23~V27 롤백 경계, V28 포인터·산출물·예측구간·외부모델 입력 부재 검사
+- `scripts/audit_public_active_presidential_model_v28.py`: V23~V27 롤백 경계, V28 포인터·산출물·예측구간·신경망 런타임 부재와 잔류 파생 집계표 공개 검사
 - `scripts/audit_current_public_surface.py`: 공개 활성 별칭·V28 포인터·내부 V16 기반·패키지 개발 버전의 동기화 검사
 
 최신 실행 로그는 `outputs/audit_logs/`에 저장합니다. 동결 범위와 매니페스트 해석은 [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)를 참조하십시오.
@@ -158,7 +158,7 @@ python scripts/describe_inputs.py sources pres_2025
 
 ### 대선 예측 엔진
 
-V28은 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. V27의 Ridge 모형·예측변수·투표지 패널·충격 구조와 지역 분산층은 유지하되, 외부 모델에서 파생된 stance overlay를 사용하지 않습니다. 후보별 전국 체급과 지역별 100% 합계는 바꾸지 않습니다.
+V28은 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. V27의 Ridge 모형·예측변수·투표지 패널·충격 구조와 지역 분산층은 유지하되, 외부 모델을 실행하거나 문장 단위 stance overlay를 직접 읽지 않습니다. 역사 후처리가 소비하는 동결 후보×이슈 집계표는 별도로 공개합니다. 후보별 전국 체급과 지역별 100% 합계는 바꾸지 않습니다.
 
 현재 실행 구조는 [V28 architecture](docs/ARCHITECTURE.md), 안전한 수정·재사용 절차는 [CONTRIBUTING](CONTRIBUTING.md)에 정리되어 있습니다.
 
@@ -252,7 +252,7 @@ python scripts/run_prospective_forecast_v28.py
 
 ## 최고 회고 성능과 활성 버전
 
-활성 V28의 지역 MAE는 **2.6139%p**, 전국 진단 MAE는 **0.7210%p**입니다. V27과 같은 232행 예측을 유지하면서 외부모델 파생 입력을 제거했습니다. 두 값 모두 개발표본 진단이며 untouched holdout 성능이 아닙니다.
+활성 V28의 지역 MAE는 **2.6139%p**, 전국 진단 MAE는 **0.7210%p**입니다. V27과 같은 232행 예측을 유지하면서 외부모델 실행과 직접 overlay를 제거했습니다. 두 값 모두 개발표본 진단이며 untouched holdout 성능이 아닙니다.
 
 V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서 단일 정확 계보 원장으로 통합하면서 지역 회고 MAE가 약 **0.178%p** 악화되었고, 이는 회고 적합도보다 표현 일관성과 모든 지역에 동일한 규칙을 우선한 의도적 교환입니다. V23~V27은 롤백 가능한 동결 선행판이고, V28이 현재 공식 포인터입니다.
 
@@ -279,7 +279,7 @@ python scripts/evaluate_v25_intensity_ladder.py
 
 ### V28이 바꾼 것
 
-V28은 외부 오픈웨이트 언어모델의 추론, 그 모델에서 파생한 `assembly_issue_character_overlay.csv`, 그리고 그 overlay로 만든 자동 issue seed 3종을 활성 입력으로 사용하지 않습니다. 직접·간접 파생물을 모두 끈 엄격한 역사 재실행도 V27과 232행 전체에서 완전히 같았습니다. 2025 D-1 산출의 최대 변화는 지역 `0.018289%p`, 전국 `0.006620%p`였습니다. 이 제거는 성능 향상을 위한 조정이 아니라 출처·재배포·선택 의존성 위험을 줄이기 위한 것입니다. 검증 기록은 [외부모델 overlay 제거 실험](docs/EXPERIMENT_REMOVE_EXTERNAL_MODEL_OVERLAY_20260822.md)에 있습니다.
+V28은 외부 오픈웨이트 언어모델의 추론·가중치·문장 코퍼스와 `assembly_issue_character_overlay.csv`를 직접 사용하지 않으며, 사용되지 않는 자동 seed 2종도 배포에서 제외합니다. 후단의 동결 `candidate_issue_profile.csv`까지 제거한 재검사에서는 지역 MAE가 `2.6139%p`에서 `4.9359%p`로 악화되고 승자 정확도가 `0.8`에서 `0.6`으로 떨어져, 이 집계표는 제거하지 않고 파생 이력을 공개하는 쪽으로 수정했습니다. 이 결정은 성능 향상이 아니라 잘못된 0효과 판단을 정정하고 실행·재배포 경계를 사실대로 만드는 것입니다. 검증 기록은 [외부모델 overlay 제거 실험](docs/EXPERIMENT_REMOVE_EXTERNAL_MODEL_OVERLAY_20260822.md)에 있습니다.
 
 ### V27이 바꾼 것
 
@@ -308,7 +308,7 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 | `docs/` | 설계·감사·승격·재현성 기록 |
 | `tests/` | PIT, 누수, 입력 경계, 회귀 테스트 |
 
-공개 저장소의 연구 이력과 설치 배포물의 경계는 [저장소·배포 경계](docs/REPOSITORY_BOUNDARIES.md)에 고정합니다. wheel과 sdist에는 현재 V28 실행·감사에 필요한 코드·입력·공개 문서만 들어가며, 외부모델 파생 입력·구형 시연·비승격 실험 산출물은 포함하지 않습니다.
+공개 저장소의 연구 이력과 설치 배포물의 경계는 [저장소·배포 경계](docs/REPOSITORY_BOUNDARIES.md)에 고정합니다. wheel과 sdist에는 현재 V28 실행·감사에 필요한 코드·입력·공개 문서만 들어갑니다. 외부모델 가중치·문장 코퍼스·직접 overlay·구형 시연·비승격 실험 산출물은 제외하며, 필요한 동결 후보×이슈 집계표 1개만 파생 이력과 함께 포함합니다.
 
 정식 활성 포인터는 `data/config/current_presidential_model.json`입니다.
 `active_presidential_model.json`은 같은 내용을 제공하는 공개 호환 별칭이며,

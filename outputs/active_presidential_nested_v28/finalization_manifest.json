@@ -1,6 +1,6 @@
 {
   "schema": "presidential_model_finalization_v1",
-  "status": "frozen_external_model_free",
+  "status": "frozen_external_model_runtime_free",
   "active_version": "v28",
   "base_config_version": "v23",
   "scored_development_elections": [
@@ -13,7 +13,9 @@
   "post_2022_outcomes_used": false,
   "untouched_historical_holdout": false,
   "external_neural_model_runtime": false,
-  "external_model_derived_inputs": [],
+  "external_model_derived_inputs": [
+    "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+  ],
   "metrics": {
     "variant": "v28_external_model_free",
     "regional_equal_election_macro_mae_pp": 2.6139029869761212,
@@ -39,8 +41,8 @@
   "artifacts": [
     {
       "path": "scripts/run_active_presidential_model_v28.py",
-      "bytes": 2346,
-      "sha256": "f5401dc7c989e09da0fa95d7d83230f1e67e5204d939adaa0ac139c644c67d93",
+      "bytes": 2446,
+      "sha256": "1c0a2247e49651b80eb35be33b42fc848083b9095e0a0c89e0b6aa1116fa081d",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -51,38 +53,38 @@
     },
     {
       "path": "scripts/build_active_v28_predictive_intervals.py",
-      "bytes": 1644,
-      "sha256": "fb00eae6d5885e371cdbe9b4068fcebdabd306a12378045f4dd3a30b95f9d5b9",
+      "bytes": 1721,
+      "sha256": "82423026ba5746c41bec3032ecf32a58a243ae6c0d50e741de0577a09b1bd6c8",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "scripts/audit_public_active_presidential_model_v28.py",
-      "bytes": 2964,
-      "sha256": "d58081f72c1f4ba68658f6bde4a7df688bd4ec45500420e981c2cf741f8d0309",
+      "bytes": 3508,
+      "sha256": "3e5f247ac75395636f281798cfec61730388535f65ad347c475fa7270f2e20ac",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "scripts/verify_v28_clean_reproduction.py",
-      "bytes": 1292,
-      "sha256": "772cca70b469106ce82184d88604e7e747442195270a2940eb75e246736c2dae",
+      "bytes": 1549,
+      "sha256": "8b07c525773f3ad9abc7ea11bd48f7f1c6aa19afe5c27d1a98a9fda24780d95e",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "presidential_issue_engine/external_model_free_runtime.py",
       "bytes": 3454,
-      "sha256": "1cb3b256de72dc7d3cb58308a9db4988e680acd7db2994adba4e1bfe441d06a4",
+      "sha256": "4c1e8946b4bb7047e1fb99961cd96f638f916605cc5016df3a01897a83e3baf2",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "docs/FINAL_MODEL_V28_20260822.md",
-      "bytes": 1367,
-      "sha256": "8cf19876b2947b3e6326bec50a5d7bff54f8a1a88b6e387b9174384173659630",
+      "bytes": 1887,
+      "sha256": "1f4f52143210ca5d8c21d384489ef6b4451a3f663b1579b96e49384ef6e9567a",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "docs/EXPERIMENT_REMOVE_EXTERNAL_MODEL_OVERLAY_20260822.md",
-      "bytes": 2062,
-      "sha256": "1d4ad511a458898607dd10a77511951321298b35c24a8bbfe8c4679fb55a2485",
+      "bytes": 2283,
+      "sha256": "78ac56efec9801431667871784ae78d03eb7e5658f0f10cb6d89651ec4961b7d",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -93,8 +95,8 @@
     },
     {
       "path": "outputs/active_presidential_nested_v28/summary.json",
-      "bytes": 9801,
-      "sha256": "9ad3735048af63c6389fa9c64d78e457ea4340db2cc6888715c5b0a96ac71f3f",
+      "bytes": 9894,
+      "sha256": "583e2aa73d87ff3841d07fc4318b1061e9664cfa31b332278bc9f94ea504c926",
       "hash_mode": "raw_bytes"
     },
     {
@@ -111,8 +113,8 @@
     },
     {
       "path": "outputs/active_presidential_nested_v28/input_manifest.csv",
-      "bytes": 5154,
-      "sha256": "43dc734c75ba0425068de9333343e42414a33d9860fb18d454ef268a3842fd2c",
+      "bytes": 5279,
+      "sha256": "cbdd273af78ef27b3fcaa4e4fb46e9b5fc2514d907a5dcd1c853744bbf247dd5",
       "hash_mode": "raw_bytes"
     },
     {
@@ -135,14 +137,14 @@
     },
     {
       "path": "outputs/active_presidential_nested_v28/predictive_interval_manifest.json",
-      "bytes": 2521,
-      "sha256": "7501acbb13e92718414dd052e8a89566ebcf747a7a0fc2466bbff1977e8445cb",
+      "bytes": 2587,
+      "sha256": "5dd69aa2b7c26dc3706899ac385a9ca3cfc7729fe6ffb1d156e42df3d6cceec4",
       "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v28/promotion_manifest.json",
-      "bytes": 762,
-      "sha256": "13115c8242d0e47b0043554b7de66faa7e30a73d413c2ccb56cc322b9b8f6f93",
+      "bytes": 971,
+      "sha256": "a4dce94f193561ef999b7df28c45ca2379b2c5aefdf94f55b5b6a44abbe2629c",
       "hash_mode": "raw_bytes"
     }
   ],

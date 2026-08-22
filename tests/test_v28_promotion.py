@@ -18,17 +18,24 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def test_v28_is_prediction_equivalent_and_external_model_free() -> None:
+def test_v28_is_prediction_equivalent_and_external_model_runtime_free() -> None:
     active = ROOT / "outputs/active_presidential_nested_v28"
     assert _sha(active / "nested_predictions.csv") == V27_HASH
     manifest = pd.read_csv(active / "input_manifest.csv")
-    assert not manifest.path.astype(str).str.contains(
-        "assembly_issue_character_overlay|data/raw/auto_issue_seed/", regex=True
+    paths = manifest.path.astype(str).str.replace("\\", "/", regex=False)
+    assert not paths.str.contains("assembly_issue_character_overlay", regex=False).any()
+    assert int(
+        paths.str.endswith("data/raw/auto_issue_seed/candidate_issue_profile.csv").sum()
+    ) == 1
+    assert not paths.str.endswith(
+        ("mega_issue_axis.csv", "mega_issue_attribution.csv")
     ).any()
     summary = json.loads((active / "summary.json").read_text(encoding="utf-8"))
     assert summary["metrics"]["variant"] == "v28_external_model_free"
     assert summary["external_neural_model_runtime"] is False
-    assert summary["external_model_derived_inputs"] == []
+    assert summary["external_model_derived_inputs"] == [
+        "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+    ]
 
 
 def test_v28_prospective_is_outcome_free_and_compositional() -> None:

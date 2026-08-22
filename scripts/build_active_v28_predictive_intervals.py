@@ -27,7 +27,8 @@ def build(*, n_sim: int = 50_000, seed: int = 28_820, output_dir: Path = OUTPUT_
     payload["schema"] = "active_v28_national_predictive_intervals_v1"
     payload["model_version"] = "v28"
     payload["development_outcome_warning"] = (
-        "V28 removes an external-model-derived no-impact historical overlay. "
+        "V28 removes neural runtime and the direct historical stance overlay, "
+        "while disclosing one retained compact candidate-issue aggregate. "
         "Coverage remains historical calibration, not holdout evidence."
     )
     shared._atomic_json(payload, output_dir / "predictive_interval_manifest.json")

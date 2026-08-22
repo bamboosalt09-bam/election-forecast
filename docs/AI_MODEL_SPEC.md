@@ -10,8 +10,11 @@ Its fitted component is scikit-learn Ridge regression (`alpha=0.30`) over six
 documented, slot-free predictors, followed by deterministic electorate,
 contest, lineage, transfer and regional-dispersion transforms. There is no
 hosted inference API, neural foundation model, downloaded model weight or
-approval-gated model in the submitted V28 execution path. V28 also rejects
-inputs derived from an external neural encoder.
+approval-gated model in the submitted V28 execution path. The direct
+sentence-level stance overlay is rejected. One compact historical
+candidate-by-issue aggregate derived during an earlier encoder experiment is
+retained and disclosed because removing it materially changes the validated
+postprocess; no model weight or source sentence is bundled.
 
 All model code, input schemas, public/derived inputs, frozen outputs and audit
 manifests needed by V28 are present in the public repository and in the built
@@ -34,16 +37,18 @@ Public source families and redistribution decisions are listed in
 ## Archived external-model experiments
 
 The repository history documents stance-classifier experiments that referenced
-the following public model pages. They do not feed active V28, their derived
-tables are excluded from V28 input manifests, their weights are not
-redistributed, and the V28 wheel excludes their experiment runners, optional
-dependency extras, and inactive stance modules. The frozen V23-V27 rollback record is not an active V28
-input.
+the following public model pages. No model executes in active V28 and their
+weights are not redistributed. The V28 wheel excludes experiment runners,
+optional dependency extras, inactive stance modules, source sentences and the
+direct overlay. A disclosed frozen aggregate at
+`data/raw/auto_issue_seed/candidate_issue_profile.csv` remains an active
+historical postprocess input. The frozen V23-V27 rollback record is not itself
+an active V28 input.
 
 | Model | Use in repository | Source/license status | Submission status |
 | --- | --- | --- | --- |
 | [`pongjin/roberta_with_kornli`](https://huggingface.co/pongjin/roberta_with_kornli) | Shadow NLI comparison | Hugging Face model card declares Apache-2.0 | Not active; not bundled |
-| [`jhgan/ko-sroberta-nli`](https://huggingface.co/jhgan/ko-sroberta-nli) | Historical embedding and bounded-overlay experiment | Public weights; model card did not expose an explicit license tag during this audit | Removed from V28 active inputs; not bundled |
+| [`jhgan/ko-sroberta-nli`](https://huggingface.co/jhgan/ko-sroberta-nli) | Historical embedding and bounded-overlay experiment | Public weights; model card did not expose an explicit license tag during this audit | Runtime, weights, source sentences and direct overlay removed; one compact derived aggregate retained and disclosed |
 | [`jhgan/ko-sroberta-multitask`](https://huggingface.co/jhgan/ko-sroberta-multitask) | Historical precision experiment | Public weights; model card did not expose an explicit license tag during this audit | Not active; not bundled; do not use for the submitted demo without separate permission verification |
 | [`klue/roberta-small`](https://huggingface.co/klue/roberta-small) | Historical encoder experiment | Public weights; downstream dataset/model terms require separate review | Not active; not bundled; do not use for the submitted demo without completing that review |
 
