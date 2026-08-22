@@ -144,4 +144,25 @@ def test_the_shipped_default_is_still_proportional_erosion() -> None:
     """The absolute mode is measured and unadopted; the default must not drift."""
 
     assert strong_incumbent_veto.DEFAULT_FLOOR_EROSION_MODE == "proportional"
-    assert strong_incumbent_veto.FLOOR_EROSION_MODES == {"proportional", "absolute"}
+    assert strong_incumbent_veto.FLOOR_EROSION_MODES == {
+        "proportional",
+        "absolute",
+        "layered",
+    }
+
+
+def test_layered_mode_defaults_reproduce_the_undifferentiated_transfer() -> None:
+    """core_erosion_resistance 1.0 keeps the core contributing exactly as before."""
+
+    assert strong_incumbent_veto.DEFAULT_CORE_EROSION_RESISTANCE == 1.0
+    assert strong_incumbent_veto.CRITICAL_ELASTICITY == 0.75
+    assert strong_incumbent_veto.SWING_ELASTICITY == 1.25
+
+
+def test_the_elasticities_match_the_contest_regime_layer() -> None:
+    """One shock must not use two different elasticity sets."""
+
+    from presidential_issue_engine import contest_regime
+
+    assert strong_incumbent_veto.CRITICAL_ELASTICITY == contest_regime.V10_CRITICAL_ELASTICITY
+    assert strong_incumbent_veto.SWING_ELASTICITY == contest_regime.V10_SWING_ELASTICITY
