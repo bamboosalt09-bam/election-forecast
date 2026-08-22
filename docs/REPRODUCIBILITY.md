@@ -43,8 +43,12 @@ python -m pytest -q
 
 The public audit checks pointer fields, V23~V26 rollback hashes, V27 prediction
 and artifact hashes, compositional rows, gain 1, and chronological intervals.
-The clean-reproduction command rebuilds predictions in a temporary directory
-and requires their raw-byte SHA-256 to equal the frozen V27 artifact.
+The clean-reproduction command rebuilds predictions in a temporary directory.
+It always pins the stored frozen artifact's raw-byte SHA-256. Rebuilt tables
+must have identical shape, column order and categorical values; numeric values
+must agree within an absolute `1e-12` tolerance. The rebuilt byte hash is also
+reported because CSV serialization can differ across operating systems and
+dependency builds.
 The recorded independent-clone run is in
 `docs/V27_CLEAN_CLONE_VERIFICATION_20260822.md`.
 
