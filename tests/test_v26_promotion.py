@@ -37,17 +37,16 @@ def _pointer() -> dict[str, object]:
     return json.loads(POINTER.read_text(encoding="utf-8"))
 
 
-def test_active_pointer_records_v26_over_v25() -> None:
+def test_v26_is_the_declared_v27_rollback() -> None:
     pointer = _pointer()
-    assert pointer["active_version"] == "v26"
-    assert pointer["predecessor"] == "v25"
-    assert pointer["runner"] == "scripts/run_active_presidential_model_v26.py"
-    assert pointer["output"] == "outputs/active_presidential_nested_v26"
-    assert pointer["canonical_document"] == "docs/FINAL_MODEL_V26_20260822.md"
-    assert pointer["post_2022_outcomes_used"] is False
-    # the base config is inherited, not re-tuned
-    assert pointer["base_config_version"] == "v23"
-    assert pointer["config"] == "data/config/active_presidential_model_v23.json"
+    assert pointer["active_version"] == "v27"
+    assert pointer["predecessor"] == "v26"
+    assert pointer["rollback_pointer"] == (
+        "outputs/active_presidential_nested_v26/finalization_manifest.json"
+    )
+    assert _sha256(ACTIVE_DIR / "nested_predictions.csv") == (
+        "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3"
+    )
 
 
 def test_promoting_v26_did_not_move_any_frozen_predecessor() -> None:

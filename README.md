@@ -5,7 +5,7 @@
 
 재현 가능한 선거 예측 프레임워크와 국회 회의록 분석 파이프라인입니다.
 
-국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V26은 2022년까지의 선거만 채점·선택에 사용합니다.
+국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V27은 2022년까지의 선거만 채점·선택에 사용합니다.
 
 ## Quickstart
 
@@ -13,15 +13,15 @@
 python -m pip install -e ".[dev,viz]"
 python scripts/compute_forecast_baselines.py
 python presidential_issue_engine/make_poster_figures.py
-python scripts/audit_public_active_presidential_model_v26.py
+python scripts/audit_public_active_presidential_model_v27.py
 python -m pytest -q
 ```
 
 ## 결과 요약
 
-| 지표 | 활성 V26 |
+| 지표 | 활성 V27 |
 |---|---:|
-| 지역 `contest_votes` 가중·선거 동일가중 MAE | **2.7122%p** |
+| 지역 `contest_votes` 가중·선거 동일가중 MAE | **2.6139%p** |
 | 전국 후보·선거 동일가중 MAE | **0.7210%p** |
 | 승자 적중률 | **80% (4/5)** |
 | 채점 선거 | 2002, 2007, 2012, 2017, 2022 |
@@ -113,7 +113,7 @@ python scripts/evaluate_ex_ante_weighting.py
 - `presidential_issue_engine/audit_point_in_time.py --deep`: 입력 날짜, fold 범위, 목표 결과 변조 불변성 검사
 - `presidential_issue_engine/audit_weight_selection_boundary.py`: 2022년까지의 학습 경계와 격리된 2025 입력 검사
 - `scripts/audit_slot_predictor_leakage.py`: 실제 순위로 정해진 슬롯 변수를 활성 모델이 쓰지 않는지 검사
-- `scripts/audit_public_active_presidential_model_v26.py`: V23·V24·V25 롤백 경계, V26 포인터·산출물·예측구간·입력 해시·등급화 강도 단측성 검사
+- `scripts/audit_public_active_presidential_model_v27.py`: V23~V26 롤백 경계, V27 포인터·산출물·예측구간·지역 양극화 강도 검사
 
 최신 실행 로그는 `outputs/audit_logs/`에 저장합니다. 동결 범위와 매니페스트 해석은 [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)를 참조하십시오.
 
@@ -135,9 +135,9 @@ python scripts/describe_inputs.py sources pres_2025
 
 ### 대선 예측 엔진
 
-V26은 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. 후보의 사전 체급, 직전 선거까지의 정확 정당 계보, 지역 지형, 국회 회의록 기반 이슈 부각도, 후보 맥락, 철회·단일화 사건, 세대 구성과 거시 지표를 시점 제한 아래 결합합니다. V25의 Ridge 모형·예측변수·투표지 패널·구조적 후처리 3층을 그대로 유지하면서, 거대 이슈 강도를 등급화하고 이벤트-클래스 정렬을 채점 경로에도 적용합니다.
+V27은 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. V26의 Ridge 모형·예측변수·투표지 패널·충격 구조를 유지하면서, 정당의 시점 제한 지역 분산 중 콘크리트 지지층과 계보 신뢰도로 뒷받침되는 부분을 보존합니다. 후보별 전국 체급과 지역별 100% 합계는 바꾸지 않습니다.
 
-후처리 계층은 콘크리트·비판적·유동 지지층, 제3후보 경쟁력, 지역 정체성, 정권 심판과 거대 이슈 반응을 분리합니다. 모든 선거에 같은 증거 기반 규칙을 적용하며, 2025 실제 결과는 가중치 선택이나 ablation에 사용하지 않습니다. 전체 사양과 개발표본 한계는 [FINAL_MODEL_V26_20260822.md](docs/FINAL_MODEL_V26_20260822.md)에 있습니다.
+후처리 계층은 콘크리트·비판적·유동 지지층, 제3후보 경쟁력, 지역 정체성, 정권 심판과 거대 이슈 반응을 분리합니다. 모든 선거에 같은 증거 기반 규칙을 적용하며, 2025 실제 결과는 가중치 선택이나 ablation에 사용하지 않습니다. 전체 사양과 개발표본 한계는 [FINAL_MODEL_V27_20260822.md](docs/FINAL_MODEL_V27_20260822.md)에 있습니다.
 
 #### 각 구조 규칙이 서 있는 관측 수
 
@@ -160,7 +160,7 @@ python scripts/evaluate_postprocess_ablation.py
 
 | 방법 | 지역 매크로 MAE | 비고 |
 |---|---:|---:|
-| 활성 V26 | **2.7122%p** | 232개 후보×지역 행 |
+| 활성 V27 | **2.6139%p** | 232개 후보×지역 행 |
 | 동결 V25 | 2.7739%p | 232개 후보×지역 행 |
 | 동결 V24 | 2.7698%p | 232개 후보×지역 행 |
 | 동결 V23 | 3.3679%p | 199개 후보×지역 행 |
@@ -197,9 +197,9 @@ python scripts/run_prospective_forecast.py --version v25
 
 ## 최고 회고 성능과 활성 버전
 
-활성 V26의 지역 MAE는 **2.7122%p**, 전국 진단 MAE는 **0.7210%p**입니다. V25와는 같은 232행 패널이지만 두 값 모두 개발표본 진단이며 untouched holdout 성능이 아닙니다. V23과의 비교는 채점 패널이 199행에서 232행으로 달라 직접적인 동일표본 개선으로 해석할 수 없습니다.
+활성 V27의 지역 MAE는 **2.6139%p**, 전국 진단 MAE는 **0.7210%p**입니다. V26과 같은 232행 패널에서 후보별 전국 체급은 보존하고 지역 분산만 보정했습니다. 두 값 모두 개발표본 진단이며 untouched holdout 성능이 아닙니다.
 
-V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서 단일 정확 계보 원장으로 통합하면서 지역 회고 MAE가 약 **0.178%p** 악화되었고, 이는 회고 적합도보다 표현 일관성과 모든 지역에 동일한 규칙을 우선한 의도적 교환입니다. 결정 근거는 [V21 계보 통합 기록](docs/ACTIVE_V21_UNIFIED_EXACT_GENEALOGY_20260802.md)에 보존되어 있습니다. V23·V24·V25는 롤백 가능한 동결 선행판이고, V26이 현재 공식 포인터입니다.
+V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서 단일 정확 계보 원장으로 통합하면서 지역 회고 MAE가 약 **0.178%p** 악화되었고, 이는 회고 적합도보다 표현 일관성과 모든 지역에 동일한 규칙을 우선한 의도적 교환입니다. V23~V26은 롤백 가능한 동결 선행판이고, V27이 현재 공식 포인터입니다.
 
 ### V26이 바꾼 것
 
@@ -231,7 +231,7 @@ python scripts/evaluate_v25_intensity_ladder.py
 | `scripts/` | 수집, 빌드, 평가, 감사, 실행 진입점 |
 | `data/raw/` | 날짜와 출처가 있는 입력·공식자료 레지스트리 |
 | `data/config/` | 버전별 모델 설정과 활성 포인터 |
-| `outputs/active_presidential_nested_v26/` | 읽기 전용 V26 활성 산출물과 시간순 예측구간 |
+| `outputs/active_presidential_nested_v27/` | 읽기 전용 V27 활성 산출물과 시간순 예측구간 |
 | `outputs/automatic_controls_v26/` | V26 등급화 거대 이슈 강도 제어 |
 | `outputs/active_presidential_nested_v25/` | 읽기 전용 V25 롤백 산출물 |
 | `outputs/active_presidential_nested_v24/` | 읽기 전용 V24 롤백 산출물 |
@@ -242,7 +242,7 @@ python scripts/evaluate_v25_intensity_ladder.py
 
 ## 동결 정책
 
-`outputs/active_presidential_nested_v26/`와 V25·V24·V23 롤백 경계는 읽기 전용입니다. 모델 변경은 새 버전 경로에서 개별 ablation으로 측정하며 활성 포인터는 사람의 검토 없이는 이동하지 않습니다. V26 기준 예측 SHA-256 `9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3`, V25 롤백 `218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b`, V23 롤백 `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`를 계속 감사합니다.
+`outputs/active_presidential_nested_v27/`와 V26~V23 롤백 경계는 읽기 전용입니다. V27 예측 SHA-256은 `f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b`, V26 롤백은 `9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3`, V23 롤백은 `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`입니다.
 
 ## 용도 범위
 

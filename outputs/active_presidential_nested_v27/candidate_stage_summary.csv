@@ -1,0 +1,7 @@
+﻿variant,regional_equal_election_macro_mae_pp,national_equal_election_macro_mae_pp,winner_accuracy,rows
+strict_base,6.165891085807993,5.469606100616471,0.6,232
+structural,5.546591247391263,4.558700235517733,0.6,232
+structural_mega,5.267374190517558,4.330163021568963,0.8,232
+structural_mega_shock,4.992300624487586,3.999317408266678,0.8,232
+structural_mega_shock_regime,3.952596519480823,2.478812706781737,0.8,232
+v26_graded_mega_intensity_event_aligned,2.7122332621133673,0.7209938807856904,0.8,232

@@ -2273,7 +2273,7 @@ def _input_manifest(
     return out
 
 
-def run(version: str = "v23") -> Path:
+def run(version: str = "v23", *, output_dir_override: Path | None = None) -> Path:
     assert_election_scope()
     cutoff = forecast_cutoff(TARGET_ELECTION, ELECTION_DATES)
     if cutoff is None or cutoff.date().isoformat() != FORECAST_CUTOFF:
@@ -2307,7 +2307,11 @@ def run(version: str = "v23") -> Path:
         if lineage_date.isna().any() or lineage_date.gt(cutoff).any():
             raise RuntimeError("V24 lineage evidence crosses the D-1 cutoff")
 
-    output_dir = ROOT / "outputs" / f"prospective_pres_2025_{version}"
+    output_dir = (
+        Path(output_dir_override)
+        if output_dir_override is not None
+        else ROOT / "outputs" / f"prospective_pres_2025_{version}"
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
     mega_control_outputs: dict[str, pd.DataFrame] = {}
     with tempfile.TemporaryDirectory(prefix="prospective_pres_2025_") as temp_dir:

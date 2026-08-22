@@ -1170,3 +1170,23 @@ It is also barely testable. Across the scored panel the ceiling binds for
 - so this component has one scored activation, the same n=1 problem the direct
 mega path has. No change is made on that basis. Recorded so the earlier note is
 not carried forward.
+
+## V27 regional-polarization promotion (2026-08-22)
+
+V27 promotes the gain-1 core-weighted inherited party-regional dispersion
+layer over frozen V26. It expands only the fitted logit dispersion missing
+relative to `recent_bloc_base`, multiplied by
+`core_voting_mass * direct_party_reliability`, then restores candidate national
+levels and regional compositions.
+
+- regional weighted equal-election MAE: 2.7122 -> 2.6139 %p
+- national candidate equal-election MAE: 0.7210 -> 0.7210 %p
+- winner accuracy: 4/5 unchanged
+- V27 SHA-256: `f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b`
+- V26 rollback: `9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3`
+
+Gain 3 was the development-panel optimum and was explicitly rejected. Gain 1
+is promoted because the evidenced concrete share retains its proportional part
+of inherited regional width. The 2025 runner uses pres_2022 regional vote
+volumes, preserves the existing national forecast exactly, and remains a
+corrected demonstration rather than genuine OOS evidence.
