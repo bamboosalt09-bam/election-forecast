@@ -22,6 +22,7 @@ TEMP/.venv/python TEMP/repo/scripts/audit_public_active_presidential_model_v27.p
 - package installed as `election-forecast 0.27.0`
 - frozen numerical environment: Windows, Python 3.13, NumPy 2.5.2, pandas 3.0.5,
   SciPy 1.18.1 and scikit-learn 1.9.0
+- BLAS/OpenMP thread controls fixed to one worker
 - V27 rebuilt in a separate temporary output directory
 - Windows clean-clone reproduced `nested_predictions.csv` SHA-256:
   `f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b`
