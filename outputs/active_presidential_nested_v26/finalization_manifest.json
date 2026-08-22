@@ -115,8 +115,8 @@
     },
     {
       "path": "presidential_issue_engine/third_candidate_lineage_constraint.py",
-      "bytes": 7315,
-      "sha256": "5488cc022fbf0928050de7437f7fd26d4460760ea8f976de1e1a74f4d258459f",
+      "bytes": 9106,
+      "sha256": "a247c670aa61859ab3adb5fa5d5be9f36df36cf1569762f0e99702dba334016f",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -127,8 +127,8 @@
     },
     {
       "path": "docs/FINAL_MODEL_V26_20260822.md",
-      "bytes": 7172,
-      "sha256": "de70cae018c5bd8e29d337af60a34babfe31a0196463cfc10683466f22c32a50",
+      "bytes": 8982,
+      "sha256": "5b38f35e500970abafee1753ecf9d823239d65765b0568714180f8018677d912",
       "hash_mode": "normalized_text_lf"
     },
     {

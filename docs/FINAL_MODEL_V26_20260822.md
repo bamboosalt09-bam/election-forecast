@@ -128,6 +128,46 @@ intensity stays at 2.00 and the composition remains 이재명 55.81 · 김문수
 a regime between 2025 and a milder one, and it does not address concerns that
 the conservative slot is suppressed too hard.
 
+## Evidence behind each structural layer
+
+The structural layers fire conditionally, so five scored elections does not mean
+five observations per rule. What each rule actually rests on:
+
+| layer | scored elections firing | count |
+| --- | --- | ---: |
+| `strong_incumbent_veto` | 2007, 2017 | 2 |
+| `third_candidate_lineage_ceiling` | 2002 | **1** |
+| `weak_same_lane_refusal` | 2002, 2022 | 2 |
+| direct mega attribution | 2012, 2017 | 2 |
+
+**No scored election fires all three postprocesses**; exactly one fires two. The
+2025 target fires all three, so the interaction between them is not testable on
+this panel at all. Order permutation and isolated ablation, and what they can
+and cannot settle, are in `docs/EXPERIMENT_POSTPROCESS_ABLATION_20260822.md`.
+
+These counts belong beside the metrics wherever the structural layers are
+described. A rule resting on one observation should not be quoted with the same
+confidence as the Ridge stage, which is fitted on the whole panel.
+
+## Regional metric under ex-ante weightings
+
+The headline regional figure weights by the target election's own turnout,
+which a forecaster does not hold in advance.
+
+| weighting | all five | matched four |
+| --- | ---: | ---: |
+| `contest_votes` (headline, post-hoc) | 2.7122 | 2.7023 |
+| prior election volumes (ex ante) | 2.8510 | 2.8510 |
+| equal region (ex ante) | 3.4214 | 3.3844 |
+
+Only the matched column compares the three directly, since the prior-election
+weighting is undefined for the first scored election. Two readings: the post-hoc
+weighting buys **0.15 %p** over its ex-ante analogue, so the regional volume
+structure is stable across elections; and equal-region is 0.68 %p worse, which
+says the model does better in large regions than small ones.
+
+Reproduce with `python scripts/evaluate_ex_ante_weighting.py`.
+
 ## Selection disclosure
 
 The pairing was chosen by comparing the same five scored outcomes that measure
