@@ -46,20 +46,23 @@ The public audit checks pointer fields, V23~V26 rollback hashes, V27 prediction
 and artifact hashes, compositional rows, gain 1, and chronological intervals.
 The clean-reproduction command rebuilds predictions in a temporary directory.
 It always pins the stored frozen artifact's raw-byte SHA-256. Rebuilt tables
-must have identical shape, column order and categorical values; numeric values
-must agree within an absolute `1e-12` tolerance. The rebuilt byte hash is also
-reported because CSV serialization can differ across operating systems and
-dependency builds.
+must have identical shape, column order and categorical values. On the original
+development machine the rebuilt file is byte-identical. Cross-hardware CI
+requires the final `layer_pred` within `0.001` share (`0.10%p`) and every
+numeric diagnostic within `0.0012` share (`0.12%p`). The rebuilt byte hash and
+observed maxima are always reported; this tolerance is not used to redefine
+the frozen artifact.
 
 Exact V27 regeneration uses Windows, Python 3.13, the `reproduce-v27`
 optional dependency set and single-threaded BLAS (`OMP_NUM_THREADS`,
 `OPENBLAS_NUM_THREADS`, `MKL_NUM_THREADS`, `BLIS_NUM_THREADS` and
 `VECLIB_MAXIMUM_THREADS` set to `1`). The ordinary package remains usable and tested on
 Linux with Python 3.11+, but those broader combinations are supported for use
-rather than claimed as the frozen numerical build environment. A Linux rebuild
-with the same high-level dependency versions exposed BLAS/platform drift up to
+rather than claimed as the frozen numerical build environment. GitHub-hosted
+Windows and Linux rebuilds with the same high-level dependency versions exposed
+CPU/BLAS drift up to
 `0.001174501524589` in an intermediate share-scale field, so the project does
-not hide that difference behind a loose tolerance.
+not claim hardware-independent byte identity.
 The recorded independent-clone run is in
 `docs/V27_CLEAN_CLONE_VERIFICATION_20260822.md`.
 

@@ -27,9 +27,10 @@ TEMP/.venv/python TEMP/repo/scripts/audit_public_active_presidential_model_v27.p
 - Windows clean-clone reproduced `nested_predictions.csv` SHA-256:
   `f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b`
 - frozen artifact hash: identical
-- cross-platform CI additionally requires identical schema and categorical
-  values and numeric agreement within absolute `1e-12`; it reports the rebuilt
-  byte hash rather than assuming CSV serialization is platform-independent
+- hosted CI additionally requires identical schema and categorical values,
+  final `layer_pred` agreement within `0.001` share (`0.10%p`) and all numeric
+  diagnostics within `0.0012` share (`0.12%p`); it reports the rebuilt byte
+  hash and observed maxima rather than assuming hardware-independent identity
 - active V27 public audit: PASS
 - regional development-panel macro MAE: `2.6139029869761212%p`
 - national development-panel macro MAE: `0.7209938807856883%p`
