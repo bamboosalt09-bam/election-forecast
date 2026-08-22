@@ -45,6 +45,8 @@ The public audit checks pointer fields, V23~V26 rollback hashes, V27 prediction
 and artifact hashes, compositional rows, gain 1, and chronological intervals.
 The clean-reproduction command rebuilds predictions in a temporary directory
 and requires their raw-byte SHA-256 to equal the frozen V27 artifact.
+The recorded independent-clone run is in
+`docs/V27_CLEAN_CLONE_VERIFICATION_20260822.md`.
 
 ## Predictive intervals
 
