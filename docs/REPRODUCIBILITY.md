@@ -34,6 +34,7 @@ runtime and adds the fixed gain-1 core-weighted regional dispersion layer.
 
 ```bash
 python scripts/run_active_presidential_model_v27.py --output-dir outputs/reproduction_v27
+python scripts/verify_v27_clean_reproduction.py
 python scripts/build_active_v27_predictive_intervals.py
 python scripts/audit_public_active_presidential_model_v27.py
 python scripts/audit_github_baseline.py
@@ -42,6 +43,8 @@ python -m pytest -q
 
 The public audit checks pointer fields, V23~V26 rollback hashes, V27 prediction
 and artifact hashes, compositional rows, gain 1, and chronological intervals.
+The clean-reproduction command rebuilds predictions in a temporary directory
+and requires their raw-byte SHA-256 to equal the frozen V27 artifact.
 
 ## Predictive intervals
 

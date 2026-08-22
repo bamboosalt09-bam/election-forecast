@@ -7,6 +7,8 @@ under the Apache License, Version 2.0, unless a file states otherwise.
 Datasets, model weights, third-party software, and externally sourced material
 are not relicensed by this notice. They remain subject to their respective
 licenses, terms, attribution requirements, and redistribution restrictions.
+The source-family register and conservative redistribution decisions are in
+docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md.
 
 Visualization geography
 -----------------------

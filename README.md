@@ -11,6 +11,10 @@
 
 ```bash
 python -m pip install -e ".[dev,viz]"
+election-forecast --version
+election-forecast show-active-version
+election-forecast run-current-presidential --output-dir outputs/reproduction_v27
+election-forecast audit-current-presidential
 python scripts/compute_forecast_baselines.py
 python presidential_issue_engine/make_poster_figures.py
 python scripts/audit_public_active_presidential_model_v27.py
@@ -136,6 +140,8 @@ python scripts/describe_inputs.py sources pres_2025
 ### 대선 예측 엔진
 
 V27은 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. V26의 Ridge 모형·예측변수·투표지 패널·충격 구조를 유지하면서, 정당의 시점 제한 지역 분산 중 콘크리트 지지층과 계보 신뢰도로 뒷받침되는 부분을 보존합니다. 후보별 전국 체급과 지역별 100% 합계는 바꾸지 않습니다.
+
+현재 실행 구조는 [V27 architecture](docs/ARCHITECTURE.md), 안전한 수정·재사용 절차는 [CONTRIBUTING](CONTRIBUTING.md)에 정리되어 있습니다.
 
 후처리 계층은 콘크리트·비판적·유동 지지층, 제3후보 경쟁력, 지역 정체성, 정권 심판과 거대 이슈 반응을 분리합니다. 모든 선거에 같은 증거 기반 규칙을 적용하며, 2025 실제 결과는 가중치 선택이나 ablation에 사용하지 않습니다. 전체 사양과 개발표본 한계는 [FINAL_MODEL_V27_20260822.md](docs/FINAL_MODEL_V27_20260822.md)에 있습니다.
 
@@ -287,3 +293,5 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 ## 라이선스
 
 프로젝트가 작성한 소스 코드와 문서는 [Apache License 2.0](LICENSE)으로 배포됩니다. 데이터셋, 모델 가중치, 제3자 소프트웨어와 외부 자료는 각 원출처의 라이선스·이용조건을 따르며 이 저장소의 라이선스로 재허가되지 않습니다. 범위는 [NOTICE](NOTICE)를 참조하십시오.
+
+입력 계열별 출처와 재배포 판정은 [데이터 출처·재배포 원장](docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md)을 참조하십시오. 원장에 권리가 확인되지 않았다고 표시된 원본 추출물은 별도 오픈 데이터셋으로 재배포하면 안 됩니다.
