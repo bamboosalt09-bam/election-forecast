@@ -28,6 +28,23 @@ ALIAS = ROOT / "data/config/active_presidential_model.json"
 
 problems: list[str] = []
 
+#: The documents a reader is pointed at to learn what the active model is.
+#: Each has to say so in prose - a version token buried in a script path is not
+#: a declaration, and before the V29 sync every one of these named V28 as active
+#: while already citing v29 file paths.
+CORE_PUBLIC_DOCUMENTS = (
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/REPRODUCIBILITY.md",
+    "docs/COMPETITION_COMPLIANCE_2026.md",
+)
+#: How those documents assert activeness, in both languages they use.
+ACTIVENESS_PATTERNS = (
+    r"[Aa]ctive (V\d+)",
+    r"(V\d+) is the active",
+    r"활성 (V\d+)",
+)
+
 
 def check(condition: bool, message: str) -> None:
     if not condition:
@@ -124,6 +141,25 @@ def main() -> None:
     #    and the protection rule updated in lockstep - and when that is missed,
     #    main blocks on a check that will never report again, with every job
     #    green and nothing to point at.
+    # 10. the documents a reader consults must declare this version as active,
+    #     and must not declare a different one. A bare token search would not do:
+    #     these files cite v29 script paths regardless of what their prose says.
+    upper = version.upper()
+    for relative in CORE_PUBLIC_DOCUMENTS:
+        text = _read(relative)
+        declared = {
+            match
+            for pattern in ACTIVENESS_PATTERNS
+            for match in re.findall(pattern, text)
+        }
+        if not declared:
+            problems.append(f"{relative} never states which version is active")
+        elif declared != {upper}:
+            stale = sorted(declared - {upper})
+            problems.append(
+                f"{relative} declares {', '.join(stale)} active, pointer says {upper}"
+            )
+
     workflow = _read(".github/workflows/ci.yml")
     versioned_jobs = re.findall(r"^  ([a-z0-9-]*v\d+[a-z0-9-]*):", workflow, re.MULTILINE)
     check(not versioned_jobs,
