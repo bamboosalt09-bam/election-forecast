@@ -1,3 +1,4 @@
+<!-- active-model-version: v29 -->
 # 2026 competition compliance matrix
 
 This matrix applies the two supplied competition documents as reference rules;

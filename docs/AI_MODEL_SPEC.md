@@ -1,3 +1,4 @@
+<!-- active-model-version: v29 -->
 # AI and statistical-model specification
 
 This document addresses Attachment 2 and Article 9 of the 2026 Open Source

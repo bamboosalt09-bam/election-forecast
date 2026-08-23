@@ -1,3 +1,4 @@
+<!-- active-model-version: v29 -->
 # Data provenance and redistribution register
 
 This register distinguishes project-authored derived tables from externally

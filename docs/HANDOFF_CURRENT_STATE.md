@@ -1,15 +1,16 @@
+<!-- active-model-version: v29 -->
 # Current State Handoff
 
-> Authoritative current state: `docs/FINAL_MODEL_V27_20260822.md`. The active
-> pointer is `data/config/current_presidential_model.json`; V26 through V23 are immutable
-> rollback models. Dated sections below preserve the state and terminology that
-> applied when each experiment was recorded and must not be read as current
-> active-version pointers.
+> Authoritative current state: `docs/FINAL_MODEL_V29_20260823.md`. The active
+> pointer is `data/config/current_presidential_model.json`; V28 through V23 are
+> immutable rollback models. Dated sections below preserve the state and
+> terminology that applied when each experiment was recorded and must not be
+> read as current active-version pointers.
 
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_v27_core_weighted_party_regional_dispersion`
+- active policy: `active_v29_third_share_dispersion_expansion`
 - rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
@@ -21,9 +22,10 @@
 - `data/config/active_presidential_model.json` (identical compatibility alias)
 - `data/config/active_presidential_model_v16.json` (internal frozen base only)
 - `scripts/run_current_presidential_model.py`
-- `scripts/run_active_presidential_model_v27.py`
-- `outputs/active_presidential_nested_v27/`
-- `outputs/prospective_pres_2025_v27/` (corrected demonstration only)
+- `scripts/run_active_presidential_model_v29.py`
+- `outputs/active_presidential_nested_v29/`
+- `outputs/prospective_pres_2025_v29/` (corrected demonstration only)
+- `outputs/external_model_free_v25_baseline/` (harness history reference; never promoted or scored)
 
 ## Superseded V25 promotion (2026-08-21)
 

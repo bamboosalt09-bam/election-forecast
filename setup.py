@@ -67,6 +67,7 @@ SDIST_PUBLICATION_FILES = {
     "docs/VISUALIZATION_DATA.md",
     "pyproject.toml",
     "requirements-v27.lock",
+    "requirements-v29.lock",
     "scripts/audit_distribution_artifacts.py",
     "scripts/audit_current_public_surface.py",
     "scripts/audit_github_baseline.py",
