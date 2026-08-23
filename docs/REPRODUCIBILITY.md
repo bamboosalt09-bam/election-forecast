@@ -8,11 +8,14 @@
 | V29 packaged runtime | **yes**, from the built wheel | `wheel-reproduction` |
 | 2025 D-1 demonstration | **yes, with one boundary** | `prospective-reproduction` |
 
-The 2025 demonstration is built from official Assembly proceedings whose
-collected form carries verbatim excerpts and is not redistributed. Two derived
-files ship in its place - the rows with each excerpt replaced by its character
-count, and the output of the keyword matching that does read the words. Together
-they are 0.64 MB against the corpus's 35 MB and contain no source sentence.
+The 2025 demonstration is built from official Assembly proceedings. Its
+collected form carries verbatim excerpts and is not redistributed, and the
+historical speaker-issue matches it needs lived only under `archives/`, which
+the repository boundary forbids tracking. Three derived files ship in their
+place - the 2025 rows with each excerpt replaced by its character count, the
+output of the keyword matching that does read the words, and the historical
+matches gzipped. Together they are 3.7 MB against 154 MB of untracked inputs,
+and none carries a source sentence.
 
 So the boundary is this: from the public tree the forecast is rebuilt and
 compared **downstream of the keyword matching**, and the matching itself is

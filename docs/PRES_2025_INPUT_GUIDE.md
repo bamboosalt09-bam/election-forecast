@@ -1,19 +1,26 @@
-# The 2025 forecast's Assembly inputs: what ships, what does not, and how to rebuild either
+# The 2025 forecast's Assembly inputs: what ships, what does not, and how to rebuild any of it
 
 The 2025 D-1 demonstration is built from official National Assembly proceedings.
-The collected form of those proceedings is **not** redistributed; two derived
-files are. This document says exactly what each contains, what the difference
-costs, and how to regenerate every one of them.
+Neither the collected 2025 proceedings nor the archived historical matches are
+redistributed; three derived files are. This document says exactly what each
+contains, what the difference costs, and how to regenerate every one of them.
 
-## The three files
+## The five files
 
 | file | ships | size | carries source text |
 | --- | :---: | ---: | :---: |
 | `assembly_stance_rows_2025_h1.csv` | **no** | 35.0 MB | yes — 48,588 excerpts |
 | `assembly_stance_rows_2025_h1_public.csv.gz` | yes | 0.52 MB | no |
 | `assembly_issue_matches_2025_h1_public.csv.gz` | yes | 0.12 MB | no |
+| `assembly_speaker_issue_matches_15_22.csv` (archived) | **no** | 118.9 MB | no |
+| `assembly_speaker_issue_matches_15_22.csv.gz` | yes | 3.07 MB | no |
 
-All three live in `data/raw/official_sources/assembly_pres_2025_minutes/`.
+The first three live in `data/raw/official_sources/assembly_pres_2025_minutes/`.
+The published historical matches live in `data/raw/official_sources/`; the
+archived original sits under `archives/experiments/`.
+
+Together the three published files are 3.7 MB, against 154 MB of inputs the
+repository does not track.
 
 ### `assembly_stance_rows_2025_h1.csv` — collected, not redistributed
 
@@ -34,6 +41,26 @@ active model never reads them.
 `source_sha256` is retained. Anyone holding the official minutes can therefore
 verify any row against its source without the project redistributing the text.
 
+### `assembly_speaker_issue_matches_15_22.csv.gz` — the historical matches
+
+The forecast is built against the five scored elections, and their speaker-level
+issue matches come from a 195,758-row table that lives under
+`archives/experiments/manual_seed_lineage_v17_rejected_20260728/`. Two things
+made that a poor dependency: the repository boundary forbids tracking
+`archives/`, and the directory name says the experiment was *rejected* even
+though the active forecast path reads it.
+
+Neither is a rights problem — the table already carries `text_length` rather
+than `text_excerpt`. It is published gzipped instead: the same rows, 3.07 MB
+against 118.9 MB, because `committee`, `agenda` and `source_file` repeat
+heavily.
+
+Rebuild it with:
+
+```bash
+python scripts/build_redistributable_assembly_issue_matches.py
+```
+
 ### `assembly_issue_matches_2025_h1_public.csv.gz` — the keyword rematch result
 
 `election_id, period, speaker, issue_name, issue_weight, matched_term_count`,
@@ -48,7 +75,7 @@ but `_historical_compatible_target_matches` in
 
 ## What that costs, precisely
 
-With the two public files, a clean checkout reproduces the 2025 forecast
+With the three published files, a clean checkout reproduces the 2025 forecast
 **downstream of the keyword matching**. The matching itself is taken as given.
 
 That is a real boundary and it is worth being blunt about: someone auditing from
@@ -87,10 +114,11 @@ not redistributed — and the same reasoning covers it.
    point-in-time boundary — that nothing dated after the D-1 cutoff,
    **2025-06-02**, entered the inputs.
 
-3. Rebuild both public files:
+3. Rebuild the published files:
 
    ```bash
    python scripts/build_redistributable_pres_2025_stance_rows.py
+   python scripts/build_redistributable_assembly_issue_matches.py
    ```
 
    The output is deterministic: the gzip header carries no timestamp, so the

@@ -101,18 +101,19 @@
       "notes": "Separated from project_authored_and_derived_tables because that family's basis is Apache-2.0 project authorship, which does not describe an external-model-derived artefact. Competition Article 9 asks that embedded AI be open weights and run independently: this encoder is open-weight and ran locally, and V28 does not run it at all. Removing this file is not cost-free - the full-removal diagnostic moved regional macro MAE from 2.613902987%p to 4.935929128%p and winner accuracy from 0.8 to 0.6 - so it is disclosed rather than dropped. See docs/AI_MODEL_SPEC.md and docs/FINAL_MODEL_V28_20260822.md."
     },
     {
-      "id": "official_assembly_proceedings_derived_2025",
+      "id": "official_assembly_proceedings_derived",
       "coverage_prefixes": [
         "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1_public.csv.gz",
-        "data/raw/official_sources/assembly_pres_2025_minutes/assembly_issue_matches_2025_h1_public.csv.gz"
+        "data/raw/official_sources/assembly_pres_2025_minutes/assembly_issue_matches_2025_h1_public.csv.gz",
+        "data/raw/official_sources/assembly_speaker_issue_matches_15_22.csv.gz"
       ],
       "provider": "National Assembly of the Republic of Korea, official proceedings",
       "source_url": "https://likms.assembly.go.kr/record/",
       "terms_url": "https://losi-open.nanet.go.kr/user/agreement.do",
-      "license_or_basis": "No grant is claimed from the provider. Both files are project-authored derivations that contain no verbatim excerpt: the first replaces each excerpt with its character count, the second holds only the output of the project's own keyword matching. The collected rows that do carry excerpts stay in excluded_paths and are not redistributed, because the provider terms prohibit sharing the supplied information unchanged.",
+      "license_or_basis": "No grant is claimed from the provider. All three files are project-authored derivations of official proceedings and contain no verbatim excerpt: the 2025 rows replace each excerpt with its character count, and the two issue-match tables hold only the output of the project's own keyword matching. The collected 2025 rows that do carry excerpts stay in excluded_paths and are not redistributed, because the provider terms prohibit sharing the supplied information unchanged.",
       "redistribution_decision": "include-derived-no-source-text",
       "attribution": "National Assembly of the Republic of Korea and Election Forecast contributors",
-      "notes": "With these two files a clean checkout reproduces the 2025 forecast downstream of the keyword matching and takes the matching itself as given; recomputing it needs the collected proceedings. source_sha256 is retained per row so a holder of the official minutes can verify provenance without the text being redistributed. See docs/PRES_2025_INPUT_GUIDE.md."
+      "notes": "These are the derived inputs that let a clean checkout rebuild the 2025 forecast; without them it needs 154 MB of files this repository does not track. The 15th-22nd matches are the same rows as the archived copy, gzipped - 3.1 MB against 118.9 MB. Reproduction from the public tree covers everything downstream of the keyword matching and takes the matching itself as given. source_sha256 is retained per 2025 row so a holder of the official minutes can verify provenance without the text being redistributed. See docs/PRES_2025_INPUT_GUIDE.md."
     }
   ],
   "excluded_paths": [
