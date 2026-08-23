@@ -9,20 +9,18 @@ altering how the headline should be read.
 
 from __future__ import annotations
 
-from pathlib import Path
-
 import pandas as pd
 import pytest
 
 from scripts import diagnose_fold_training_depth as depth
+from scripts.active_model_pointer import active_output_dir, active_version
 
-ROOT = Path(__file__).resolve().parents[1]
-ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v26"
+ACTIVE_DIR = active_output_dir()
 
 
 def _report() -> pd.DataFrame:
     if not (ACTIVE_DIR / "fold_audit.csv").exists():
-        pytest.skip("V26 fold audit is not present")
+        pytest.skip(f"the {active_version().upper()} fold audit is not present")
     return depth.report(ACTIVE_DIR)
 
 

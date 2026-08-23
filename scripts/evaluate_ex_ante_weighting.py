@@ -40,7 +40,9 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v26"
+from scripts.active_model_pointer import active_output_dir
+
+ACTIVE_DIR = active_output_dir()
 OUTPUT_DIR = ROOT / "outputs" / "ex_ante_weighting"
 # chronological, so "previous" is well defined
 ORDER = ("pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022")

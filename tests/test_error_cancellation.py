@@ -13,6 +13,7 @@ import pandas as pd
 import pytest
 
 from scripts import diagnose_error_cancellation as cancel
+from scripts.active_model_pointer import active_output_dir, active_version
 
 
 def _frame(errors: list[float]) -> pd.DataFrame:
@@ -48,12 +49,9 @@ def test_systematic_errors_do_not_cancel() -> None:
 def test_cancellation_explains_the_national_metric_better_than_accuracy() -> None:
     """On the panel, national error tracks cancellation, not regional accuracy."""
 
-    from pathlib import Path
-
-    root = Path(__file__).resolve().parents[1]
-    predictions = root / "outputs/active_presidential_nested_v26/nested_predictions.csv"
+    predictions = active_output_dir() / "nested_predictions.csv"
     if not predictions.exists():
-        pytest.skip("V26 predictions are not present")
+        pytest.skip(f"{active_version().upper()} predictions are not present")
     frame = pd.read_csv(predictions, encoding="utf-8-sig", low_memory=False)
     detail = cancel.cancellation(frame)
     by_election = detail.groupby("election_id").agg(
@@ -71,12 +69,9 @@ def test_cancellation_explains_the_national_metric_better_than_accuracy() -> Non
 
 
 def test_the_worst_national_fold_is_the_one_that_cancels_least() -> None:
-    from pathlib import Path
-
-    root = Path(__file__).resolve().parents[1]
-    predictions = root / "outputs/active_presidential_nested_v26/nested_predictions.csv"
+    predictions = active_output_dir() / "nested_predictions.csv"
     if not predictions.exists():
-        pytest.skip("V26 predictions are not present")
+        pytest.skip(f"{active_version().upper()} predictions are not present")
     frame = pd.read_csv(predictions, encoding="utf-8-sig", low_memory=False)
     detail = cancel.cancellation(frame)
     by_election = detail.groupby("election_id").agg(

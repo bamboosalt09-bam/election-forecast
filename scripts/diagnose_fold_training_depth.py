@@ -31,7 +31,9 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v26"
+from scripts.active_model_pointer import active_output_dir
+
+ACTIVE_DIR = active_output_dir()
 OUTPUT_DIR = ROOT / "outputs" / "fold_training_depth"
 
 

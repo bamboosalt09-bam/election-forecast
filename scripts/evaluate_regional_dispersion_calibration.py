@@ -42,7 +42,9 @@ for _path in (ROOT, ROOT / "src", ROOT / "scripts", ROOT / "presidential_issue_e
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 
-ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v26"
+from scripts.active_model_pointer import active_output_dir
+
+ACTIVE_DIR = active_output_dir()
 OUTPUT_DIR = ROOT / "outputs" / "regional_dispersion_calibration"
 DEFAULT_GAINS = (0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0)
 
