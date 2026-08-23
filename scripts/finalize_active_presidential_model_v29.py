@@ -20,6 +20,19 @@ POINTERS = (
 )
 V28_SHA256 = "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
 
+PROSPECTIVE_DEMONSTRATION = {
+    "artifact": "outputs/prospective_pres_2025_v28",
+    "regenerated_for_v29": False,
+    "blocked_by": "docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md",
+    "reason": (
+        "The prospective harness has been unrunnable since the V28 external-model "
+        "boundary was enforced process-wide, because it asserts byte-identical "
+        "reproduction of a V25 history frozen before that boundary. The published "
+        "artifact predates the enforcement and therefore used the seed inputs V28 "
+        "excludes; regenerating it changes the published forecast."
+    ),
+}
+
 SELECTION_DISCLOSURE = (
     "Adopted at gain 1.0, where the expansion factor is the predicted third share "
     "itself and no constant is selected. A swept gain of 0.50 gives a better "
@@ -173,6 +186,7 @@ def main() -> None:
             "data/raw/auto_issue_seed/candidate_issue_profile.csv"
         ],
         "post_2022_outcomes_used": False,
+        "prospective_demonstration": PROSPECTIVE_DEMONSTRATION,
     }
     for path in POINTERS:
         shared._atomic_json(pointer, path)

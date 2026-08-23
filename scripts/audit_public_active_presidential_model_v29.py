@@ -19,6 +19,8 @@ ROLLBACKS = {
     "v27": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
     "v28": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
 }
+V28_NATIONAL_MACRO_PP = 0.726249711635409
+V28_REGIONAL_MACRO_PP = 2.638410502170951
 
 
 def sha(path: Path) -> str:
@@ -89,23 +91,17 @@ def main() -> None:
 
     # The expansion is promoted on conserving each candidate's national level.
     # If that ever stops holding, the national metric silently stops being the
-    # V28 measurement the promotion record claims it still is.
-    v28_summary = json.loads(
-        (ROOT / "outputs/active_presidential_nested_v28/summary.json").read_text(
-            encoding="utf-8"
-        )
-    )
+    # V28 measurement the promotion record claims it still is. V28's figures are
+    # pinned here rather than read from its summary.json, because the packaged
+    # runtime ships only the predecessor's prediction table - and the hash of
+    # that table is checked above, so these constants cannot go stale silently.
     require(
-        abs(
-            summary["metrics"]["national_equal_election_macro_mae_pp"]
-            - v28_summary["metrics"]["national_equal_election_macro_mae_pp"]
-        )
+        abs(summary["metrics"]["national_equal_election_macro_mae_pp"] - V28_NATIONAL_MACRO_PP)
         < 1e-9,
         "the expansion moved the national macro; level conservation is broken",
     )
     require(
-        summary["metrics"]["regional_equal_election_macro_mae_pp"]
-        < v28_summary["metrics"]["regional_equal_election_macro_mae_pp"],
+        summary["metrics"]["regional_equal_election_macro_mae_pp"] < V28_REGIONAL_MACRO_PP,
         "V29 does not improve the regional macro it was promoted for",
     )
 

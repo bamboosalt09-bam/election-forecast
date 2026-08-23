@@ -76,14 +76,14 @@
     },
     {
       "path": "scripts/finalize_active_presidential_model_v29.py",
-      "bytes": 8120,
-      "sha256": "ef4a1c9373276440daccffd397672f6326470ce5a61052aa6a2ce7371645f3e6",
+      "bytes": 8798,
+      "sha256": "8f5cd79425971d32e83e92c01c110198c750c8f25796c1901865be7ec232e3bf",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "scripts/audit_public_active_presidential_model_v29.py",
-      "bytes": 5262,
-      "sha256": "81fb8a2603a73971e71cf416b9225d6473e085e5e91c2fa28ab07590ff95fe8b",
+      "bytes": 5320,
+      "sha256": "7a66f76b367dfc4ca48ab902d9ba04a5431d767fccb122d072c0c2c0c2f32903",
       "hash_mode": "normalized_text_lf"
     },
     {
