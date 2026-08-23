@@ -5,15 +5,15 @@ for transparency, but they are not the same publication surface.
 
 | Boundary | Canonical location | Install package | Meaning |
 | --- | --- | --- | --- |
-| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V27 engine modules and declared public/derived inputs | Yes | Locally runnable V27 code and inputs; the unversioned active alias must match the current pointer |
-| Frozen active evidence | `outputs/active_presidential_nested_v27/` | Yes | Immutable V27 predictions, intervals and promotion audits |
-| Rollback evidence | V23-V26 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
-| Corrected demonstration | `outputs/prospective_pres_2025_v27/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
-| Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V27 output |
+| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V28 engine modules and declared public/derived inputs | Yes | Locally runnable V28 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
+| Frozen active evidence | `outputs/active_presidential_nested_v28/` | Yes | Immutable V28 predictions, intervals and promotion audits |
+| Rollback evidence | V23-V27 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
+| Corrected demonstration | `outputs/prospective_pres_2025_v28/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
+| Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V28 output |
 | Local/private acquisition | ignored caches, checkpoints, full text, credentials and uncertain-rights exports | No | Must be reacquired under the provider's terms or remain local |
 
 The wheel contains a hash-indexed runtime archive. The source distribution
-contains the same runnable V27 source plus current publication, security and
+contains the same runnable V28 source plus current publication, security and
 rights documents. It deliberately excludes superseded visualization archives,
 old corrected demonstrations and non-promoted output grids. The GitHub
 repository remains the complete public research record.

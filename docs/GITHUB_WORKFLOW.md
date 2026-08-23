@@ -3,8 +3,8 @@
 ## Repository role
 
 This repository is the source of truth for code, tests, model configuration,
-small canonical inputs, and the frozen artifacts needed to audit active V27.
-V26 through V23 remain tracked as immutable rollback boundaries.
+small canonical inputs, and the frozen artifacts needed to audit active V28.
+V27 through V23 remain tracked as immutable rollback boundaries.
 OneDrive and local backup directories are recovery storage only and are not Git
 working trees.
 
@@ -17,7 +17,7 @@ working trees.
 
 ## Model lifecycle
 
-V27 is frozen and V26 through V23 remain frozen rollback models. Experiments
+V28 is frozen and V27 through V23 remain frozen rollback models. Experiments
 must use a new versioned output directory and must not overwrite any frozen
 version's code, configuration, predictions, or manifests. Promotion of a later version requires
 all of the following in one pull request:
@@ -35,8 +35,8 @@ model selection, and pre-evaluation comparison.
 
 ## Data boundary
 
-Git tracks small canonical inputs, the active V27 audit bundle, and the frozen
-V26 through V23 rollback bundles. It does not
+Git tracks small canonical inputs, the active V28 audit bundle, and the frozen
+V27 through V23 rollback bundles. It does not
 track full transcript corpora, API caches, virtual environments, shadow
 classifier corpora, backups, or bulk experiment outputs. Those files remain in
 external storage and are identified by source metadata and checksums when they
@@ -45,7 +45,7 @@ are required for a reproducible experiment.
 ## CI tiers
 
 The normal GitHub-hosted CI runs the repository-boundary audit, the regression
-suite, and the frozen V27 audit. Full Assembly reprocessing and large NLP
+suite, and the frozen V28 audit. Full Assembly reprocessing and historical NLP
 experiments are manual jobs for a controlled local or self-hosted runner. A
 self-hosted runner must not execute untrusted pull-request code.
 

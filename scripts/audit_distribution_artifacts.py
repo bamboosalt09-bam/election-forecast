@@ -2,7 +2,7 @@
 
 The check is intentionally independent of setuptools.  It opens the produced
 archives directly, rejects unsafe or non-public members, and verifies the
-hash-indexed V27 runtime embedded in the wheel.
+hash-indexed V28 runtime embedded in the wheel.
 """
 
 from __future__ import annotations
@@ -16,13 +16,16 @@ import tarfile
 from zipfile import ZipFile
 
 
-FROZEN_V27_SHA256 = (
-    "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b"
+FROZEN_V28_SHA256 = (
+    "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
 )
 FORBIDDEN_FILES = {
     "presidential_issue_engine/fixed_dataset/kospi_daily.csv",
     "data/raw/kospi_history_source.txt",
     "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
+    "data/raw/assembly_issue_character_overlay.csv",
+    "data/raw/auto_issue_seed/mega_issue_axis.csv",
+    "data/raw/auto_issue_seed/mega_issue_attribution.csv",
 }
 FORBIDDEN_PREFIXES = (
     "data/cache/",
@@ -36,7 +39,9 @@ FORBIDDEN_PREFIXES = (
     "data/shadow/",
     "data/raw/official_sources/cache/",
     "data/raw/official_sources/checkpoints/",
+    "presidential_issue_engine/report/through2022_rederived/overlay_variants/",
 )
+FORBIDDEN_WHEEL_MODULE_PREFIX = "election_forecast/stance_"
 RESEARCH_DISTRIBUTION_PREFIXES = (
     "research/",
     "outputs/automatic_controls_v23_ablation_v3/",
@@ -51,12 +56,13 @@ REQUIRED_RUNTIME_FILES = {
     "LICENSE",
     "NOTICE",
     "scripts/run_current_presidential_model.py",
-    "scripts/run_active_presidential_model_v27.py",
-    "scripts/run_prospective_forecast_v27.py",
-    "scripts/audit_public_active_presidential_model_v27.py",
-    "scripts/verify_v27_clean_reproduction.py",
+    "scripts/run_active_presidential_model_v28.py",
+    "scripts/run_prospective_forecast_v28.py",
+    "scripts/audit_public_active_presidential_model_v28.py",
+    "scripts/verify_v28_clean_reproduction.py",
     "presidential_issue_engine/issue_vote_engine.py",
-    "outputs/active_presidential_nested_v27/nested_predictions.csv",
+    "data/raw/auto_issue_seed/candidate_issue_profile.csv",
+    "outputs/active_presidential_nested_v28/nested_predictions.csv",
 }
 
 
@@ -95,16 +101,18 @@ def _audit_runtime(payload: bytes) -> int:
         names = [_safe_member(name) for name in runtime.namelist()]
         for name in names:
             _assert_public(name)
+            if name.startswith(FORBIDDEN_WHEEL_MODULE_PREFIX) and name.endswith(".py"):
+                raise RuntimeError(f"inactive external-model module included in wheel: {name}")
         if "_runtime_manifest.json" not in names:
             raise RuntimeError("wheel runtime manifest is missing")
         manifest = json.loads(runtime.read("_runtime_manifest.json"))
-        if manifest.get("active_version") != "v27":
-            raise RuntimeError("wheel runtime does not declare active V27")
+        if manifest.get("active_version") != "v28":
+            raise RuntimeError("wheel runtime does not declare active V28")
         if manifest.get("source_boundary") != "git-tracked-public-files-only":
             raise RuntimeError("wheel runtime has an unexpected source boundary")
         if manifest.get("post_2022_outcomes_used") is not False:
             raise RuntimeError("wheel runtime does not preserve the outcome-free boundary")
-        if manifest.get("frozen_prediction_sha256") != FROZEN_V27_SHA256:
+        if manifest.get("frozen_prediction_sha256") != FROZEN_V28_SHA256:
             raise RuntimeError("wheel runtime frozen V27 hash declaration drifted")
 
         records = manifest.get("files")
@@ -133,9 +141,9 @@ def _audit_runtime(payload: bytes) -> int:
             if record.get("sha256") != hashlib.sha256(content).hexdigest():
                 raise RuntimeError(f"wheel runtime hash mismatch: {relative}")
         frozen = runtime.read(
-            "outputs/active_presidential_nested_v27/nested_predictions.csv"
+            "outputs/active_presidential_nested_v28/nested_predictions.csv"
         )
-        if hashlib.sha256(frozen).hexdigest() != FROZEN_V27_SHA256:
+        if hashlib.sha256(frozen).hexdigest() != FROZEN_V28_SHA256:
             raise RuntimeError("embedded frozen V27 prediction hash drifted")
         return len(indexed)
 
@@ -146,11 +154,11 @@ def audit_wheel(path: Path) -> tuple[int, int]:
         for name in names:
             _assert_public(name)
         runtime_names = [
-            name for name in names if name.endswith("election_forecast/_v27_runtime.zip")
+            name for name in names if name.endswith("election_forecast/_v28_runtime.zip")
         ]
         if len(runtime_names) != 1:
             raise RuntimeError(
-                f"wheel must contain exactly one V27 runtime archive: {path.name}"
+                f"wheel must contain exactly one V28 runtime archive: {path.name}"
             )
         runtime_files = _audit_runtime(wheel.read(runtime_names[0]))
         return len(names), runtime_files
@@ -208,7 +216,7 @@ def main() -> None:
     print(f"source_distributions={len(sdists)} members={sdist_members}")
     print(f"wheels={len(wheels)} members={wheel_members}")
     print(f"verified_runtime_files={runtime_files}")
-    print(f"frozen_v27_sha256={FROZEN_V27_SHA256}")
+    print(f"frozen_v28_sha256={FROZEN_V28_SHA256}")
 
 
 if __name__ == "__main__":

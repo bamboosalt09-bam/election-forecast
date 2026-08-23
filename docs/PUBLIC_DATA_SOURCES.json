@@ -1,6 +1,6 @@
 {
   "schema": "election_forecast_public_data_sources_v1",
-  "policy": "Only Git-tracked public or project-authored derived inputs may enter the packaged V27 runtime. Raw caches, credentials, full-text corpora and uncertain-rights market exports are excluded.",
+  "policy": "Only Git-tracked public or project-authored derived inputs may enter the packaged V28 runtime. Raw caches, credentials, full-text corpora, external-model-derived tables and uncertain-rights market exports are excluded.",
   "sources": [
     {
       "id": "project_authored_and_derived_tables",
@@ -33,24 +33,25 @@
       "notes": "This decision does not relicense unrelated NEC website publications. Items without an open-data or KOGL indication remain excluded."
     },
     {
-      "id": "national_assembly_open_data",
+      "id": "national_assembly_library_legislative_datasets",
       "coverage_prefixes": [
         "data/raw/official_sources/assembly_"
       ],
-      "provider": "National Assembly Secretariat / Open Assembly Data",
-      "source_url": "https://open.assembly.go.kr/portal/data/service/selectAPIServicePage.do/OOWY4R001216HX11439",
-      "terms_url": "https://www.data.go.kr/data/15126133/openapi.do",
-      "license_or_basis": "Public Data Portal listing: no restriction on permitted use",
+      "provider": "National Assembly Library / National Academic Information Cloud",
+      "source_url": "https://losi-open.nanet.go.kr/user/dataset/datasetList.do?category_cd=2&category_name=%EC%9E%85%EB%B2%95%EC%A0%95%EB%B3%B4",
+      "terms_url": "https://losi-open.nanet.go.kr/user/agreement.do",
+      "license_or_basis": "Provider terms allow commercial use and independent programs with attribution; unchanged paid redistribution is prohibited and source copyright is retained",
       "redistribution_decision": "include-derived-with-attribution",
-      "attribution": "National Assembly Secretariat, Republic of Korea",
-      "notes": "Only rosters, meeting manifests and aggregate match/context tables are tracked. Full meeting text and source HTML/PDF caches are excluded."
+      "attribution": "National Assembly Library, Republic of Korea",
+      "notes": "Historical XLSX/ZIP filenames match the official legislative-dataset catalogue. Only rosters, manifests and project-derived aggregates are tracked. Full workbooks, meeting text and sentence corpora are excluded."
     },
     {
       "id": "bok_ecos_statistics",
       "coverage_prefixes": [
         "data/raw/official_sources/bok_ecos_",
         "presidential_issue_engine/fixed_dataset/economic_indicators.csv",
-        "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv"
+        "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv",
+        "presidential_issue_engine/fixed_dataset/kospi_election_context.csv"
       ],
       "provider": "Bank of Korea ECOS",
       "source_url": "https://ecos.bok.or.kr/api/",
@@ -58,7 +59,7 @@
       "license_or_basis": "Public Data Portal listing: no restriction on permitted use",
       "redistribution_decision": "include-derived-with-attribution",
       "attribution": "Bank of Korea Economic Statistics System (ECOS)",
-      "notes": "The downloaded KOSPI row cache is not tracked or packaged. Only its provenance manifest is public."
+      "notes": "The downloaded KOSPI row cache is not tracked or packaged. V28 includes only 15 D-1 election-by-slot context rows calculated from that series, plus the provenance manifest."
     },
     {
       "id": "kosis_reb_housing_statistics",

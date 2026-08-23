@@ -1,7 +1,7 @@
 # Contributing and extending the forecast engine
 
 Contributions are welcome, but frozen model versions are immutable evidence.
-Do not edit files under `outputs/active_presidential_nested_v23` through `v27`,
+Do not edit files under `outputs/active_presidential_nested_v23` through `v28`,
 their versioned fixed datasets, or their finalization manifests in place.
 
 ## Development setup
@@ -9,7 +9,7 @@ their versioned fixed datasets, or their finalization manifests in place.
 ```bash
 python -m pip install -e ".[dev,viz]"
 python -m pytest -q
-python scripts/audit_public_active_presidential_model_v27.py
+python scripts/audit_public_active_presidential_model_v28.py
 ```
 
 Before submitting a change, run `python scripts/audit_github_baseline.py` as
@@ -65,4 +65,3 @@ A model-affecting pull request should include the hypothesis, isolated
 ablation, per-election effects, conservation checks, frozen-boundary audit and
 an explicit statement of whether any evaluated outcome informed development.
 Historical improvement alone is not sufficient evidence for future accuracy.
-

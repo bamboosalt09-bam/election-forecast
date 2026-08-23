@@ -1,23 +1,23 @@
 {
   "schema": "current_presidential_model_pointer_v1",
-  "active_version": "v27",
-  "lifecycle_status": "frozen_pre_2025_evaluation",
-  "canonical_document": "docs/FINAL_MODEL_V27_20260822.md",
-  "finalization_manifest": "outputs/active_presidential_nested_v27/finalization_manifest.json",
-  "runner": "scripts/run_active_presidential_model_v27.py",
-  "prospective_runner": "scripts/run_prospective_forecast_v27.py",
+  "active_version": "v28",
+  "lifecycle_status": "frozen_external_model_runtime_free",
+  "canonical_document": "docs/FINAL_MODEL_V28_20260822.md",
+  "finalization_manifest": "outputs/active_presidential_nested_v28/finalization_manifest.json",
+  "runner": "scripts/run_active_presidential_model_v28.py",
+  "prospective_runner": "scripts/run_prospective_forecast_v28.py",
   "config": "data/config/active_presidential_model_v23.json",
-  "version_wrapper": "scripts/run_active_presidential_model_v27.py",
+  "version_wrapper": "scripts/run_active_presidential_model_v28.py",
   "base_config_version": "v23",
-  "output": "outputs/active_presidential_nested_v27",
-  "predecessor": "v26",
-  "rollback_pointer": "outputs/active_presidential_nested_v26/finalization_manifest.json",
-  "regional_equal_election_macro_mae_pp": 2.6139029869761212,
-  "national_equal_election_macro_mae_pp": 0.7209938807856883,
+  "output": "outputs/active_presidential_nested_v28",
+  "predecessor": "v27",
+  "rollback_pointer": "outputs/active_presidential_nested_v27/finalization_manifest.json",
+  "regional_equal_election_macro_mae_pp": 2.638410502170951,
+  "national_equal_election_macro_mae_pp": 0.726249711635409,
   "winner_accuracy": 0.8,
   "prediction_rows": 232,
-  "prediction_sha256": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
-  "predictive_intervals": "outputs/active_presidential_nested_v27/predictive_interval_manifest.json",
+  "prediction_sha256": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
+  "predictive_intervals": "outputs/active_presidential_nested_v28/predictive_interval_manifest.json",
   "predictive_interval_levels": [
     0.5,
     0.8,
@@ -25,5 +25,9 @@
     0.95
   ],
   "predictive_interval_status": "historical_chronological_calibration",
+  "external_neural_model_runtime": false,
+  "external_model_derived_inputs": [
+    "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+  ],
   "post_2022_outcomes_used": false
 }

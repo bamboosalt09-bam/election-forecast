@@ -8,9 +8,9 @@ import pytest
 from presidential_issue_engine import make_poster_figures as figures
 
 
-def test_current_inputs_are_v27_and_separate_forecast_from_history():
-    assert figures.ACTIVE_DIR.name == "active_presidential_nested_v27"
-    assert figures.FORECAST_DIR.name == "prospective_pres_2025_v27"
+def test_current_inputs_are_v28_and_separate_forecast_from_history():
+    assert figures.ACTIVE_DIR.name == "active_presidential_nested_v28"
+    assert figures.FORECAST_DIR.name == "prospective_pres_2025_v28"
     assert not figures._history()["election_id"].astype(str).str.contains("2025").any()
     forecast = figures._forecast()
     assert set(forecast["election_id"]) == {"pres_2025"}
@@ -50,4 +50,4 @@ def test_readme_does_not_present_legacy_figures_as_current():
     readme = (figures.ROOT / "README.md").read_text(encoding="utf-8")
     assert "poster_figures/12_baseline_comparison.png" not in readme
     assert "poster_figures/14_prospective_forecast_v25.png" not in readme
-    assert "poster_figures/v27_pres_2025_regional_map.png" in readme
+    assert "poster_figures/v28_pres_2025_regional_map.png" in readme

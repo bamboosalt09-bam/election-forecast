@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 import tomllib
 
@@ -12,8 +13,10 @@ CURRENT_POINTER = ROOT / "data/config/current_presidential_model.json"
 ACTIVE_ALIAS = ROOT / "data/config/active_presidential_model.json"
 LEGACY_BASE = ROOT / "data/config/active_presidential_model_v16.json"
 RELEASE_VERSION = "0.27.0"
-MAIN_VERSION = "0.27.1.dev0"
+MAIN_VERSION = "0.28.0.dev0"
 V27_SHA256 = "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b"
+V28_SHA256 = "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
+V27_PREDICTIONS = ROOT / "outputs/active_presidential_nested_v27/nested_predictions.csv"
 
 
 def require(condition: bool, message: str) -> None:
@@ -31,14 +34,18 @@ def main() -> None:
     legacy = load_json(LEGACY_BASE)
 
     require(alias == current, "public active alias differs from current pointer")
-    require(current.get("active_version") == "v27", "current pointer is not V27")
+    require(current.get("active_version") == "v28", "current pointer is not V28")
     require(
-        current.get("prediction_sha256") == V27_SHA256,
-        "current pointer does not pin the frozen V27 prediction",
+        current.get("prediction_sha256") == V28_SHA256,
+        "current pointer does not preserve the frozen V28 prediction hash",
     )
     require(
-        current.get("runner") == "scripts/run_active_presidential_model_v27.py",
-        "current pointer runner is not V27",
+        hashlib.sha256(V27_PREDICTIONS.read_bytes()).hexdigest() == V27_SHA256,
+        "frozen V27 rollback prediction hash drifted",
+    )
+    require(
+        current.get("runner") == "scripts/run_active_presidential_model_v28.py",
+        "current pointer runner is not V28",
     )
     require(
         legacy.get("policy_version") == "active_strict_nested_v16_regional_identity",
@@ -63,10 +70,12 @@ def main() -> None:
     require(f'__version__ = "{MAIN_VERSION}"' in package_source, "package version mismatch")
     require(f'PACKAGE_VERSION = "{MAIN_VERSION}"' in cli_source, "CLI fallback version mismatch")
     require("active_presidential_model_v16.json" in base_source, "base runner reads public active alias")
-    require("run_active_presidential_model_v27 import main" in current_source, "current runner is not V27")
+    require("run_active_presidential_model_v28 import main" in current_source, "current runner is not V28")
 
     print("[current public surface audit: PASS]")
     print(f"active_version={current['active_version']}")
+    print(f"v28_prediction_sha256={V28_SHA256}")
+    print(f"v27_rollback_sha256={V27_SHA256}")
     print(f"package_version={package_version}")
     print(f"frozen_release_version={RELEASE_VERSION}")
 

@@ -71,6 +71,16 @@ HOUSING_PRICE_INDEX_SIDO = "presidential_issue_engine/fixed_dataset/housing_pric
 HOUSING_PRICE_INDEX_SGG = "presidential_issue_engine/fixed_dataset/housing_price_index_sgg.csv"
 HOUSING_SLOT_ALIGNMENT = "presidential_issue_engine/fixed_dataset/housing_slot_alignment.csv"
 KOSPI_DAILY = "presidential_issue_engine/fixed_dataset/kospi_daily.csv"
+KOSPI_ELECTION_CONTEXT = (
+    "presidential_issue_engine/fixed_dataset/kospi_election_context.csv"
+)
+EXTERNAL_MODEL_SEED_BLOCK_ENV = "POLL_PROJECT_BLOCK_EXTERNAL_MODEL_SEEDS"
+EXTERNAL_MODEL_SEED_PATHS = frozenset(
+    {
+        "data/raw/auto_issue_seed/mega_issue_axis.csv",
+        "data/raw/auto_issue_seed/mega_issue_attribution.csv",
+    }
+)
 INTEREST_RATE_INDICATORS = "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv"
 ENHANCED_CANDIDATE_ISSUE_PROFILE = "data/raw/candidate_issue_profile.csv"
 ENHANCED_MEGA_ISSUE_AXIS = "data/raw/mega_issue_axis.csv"
@@ -370,7 +380,12 @@ def _read_csv_if_exists(path: str) -> pd.DataFrame:
 
 def _registered_issue_seed_path(manual_path: str, automatic_path: str) -> str:
     if _rederived_bool("automatic_issue_seed_enabled", True):
-        return automatic_path
+        selected = automatic_path
+        if os.getenv(EXTERNAL_MODEL_SEED_BLOCK_ENV, "0") == "1":
+            normalized = str(selected).replace("\\", "/")
+            if normalized in EXTERNAL_MODEL_SEED_PATHS:
+                return ""
+        return selected
     if _rederived_bool("manual_issue_seed_enabled", False):
         return manual_path
     return ""
@@ -1697,6 +1712,37 @@ def _load_kospi_daily() -> pd.DataFrame:
     return out.sort_values("date").drop_duplicates("date", keep="last")
 
 
+def _load_kospi_election_context(
+    election_dates: dict[str, str] | None = None,
+) -> pd.DataFrame:
+    """Load the redistributable D-1 aggregates used by the active runtime."""
+
+    if election_dates is None:
+        election_dates = ELECTION_DATES
+    columns = [
+        "election_id",
+        "slot",
+        "kospi_context_effect",
+        "kospi_market_stress_index",
+        "kospi_close",
+        "kospi_return_3m",
+        "kospi_return_12m",
+        "kospi_drawdown_12m",
+        "kospi_volatility_3m",
+        "kospi_latest_date",
+    ]
+    frame = _read_csv_if_exists(KOSPI_ELECTION_CONTEXT)
+    required = {*columns, "available_date"}
+    if frame.empty or not required.issubset(frame.columns):
+        return pd.DataFrame(columns=columns)
+    out = filter_available_by_election(
+        frame,
+        election_dates,
+        source_name="kospi_election_context",
+    )
+    return out[columns]
+
+
 def _economic_context_features(
     indicators: pd.DataFrame,
     alignment: pd.DataFrame,
@@ -2238,7 +2284,7 @@ def _macro_issue_reinforcement_table(
         alignment,
         election_dates,
     )
-    market = _kospi_context_features(_load_kospi_daily(), alignment, election_dates)
+    market = _load_kospi_election_context(election_dates)
     rates = _interest_rate_context_features(
         _load_interest_rate_indicators(),
         alignment,
@@ -4785,10 +4831,7 @@ def assemble() -> pd.DataFrame:
         frame[column] = frame[column].fillna(0.0)
     for column in ["housing_baseline_period", "housing_current_period"]:
         frame[column] = frame[column].fillna("not_available")
-    kospi_features = _kospi_context_features(
-        _load_kospi_daily(),
-        _load_economic_slot_alignment(),
-    )
+    kospi_features = _load_kospi_election_context()
     frame = frame.merge(kospi_features, on=["election_id", "slot"], how="left")
     for column in [
         "kospi_context_effect",

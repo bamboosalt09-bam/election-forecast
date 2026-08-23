@@ -1,4 +1,4 @@
-"""Build hooks for the self-contained V27 runtime bundle."""
+"""Build hooks for the self-contained V28 runtime bundle."""
 
 from __future__ import annotations
 
@@ -15,31 +15,31 @@ from setuptools.command.sdist import sdist as _sdist
 
 
 ROOT = Path(__file__).resolve().parent
-RUNTIME_ARCHIVE = "_v27_runtime.zip"
+RUNTIME_ARCHIVE = "_v28_runtime.zip"
 FIXED_TIMESTAMP = (2026, 8, 22, 0, 0, 0)
-V27_ENTRY_MODULES = (
+V28_ENTRY_MODULES = (
     "scripts.run_current_presidential_model",
-    "scripts.run_active_presidential_model_v27",
-    "scripts.run_prospective_forecast_v27",
-    "scripts.audit_public_active_presidential_model_v27",
-    "scripts.verify_v27_clean_reproduction",
+    "scripts.run_active_presidential_model_v28",
+    "scripts.run_prospective_forecast_v28",
+    "scripts.audit_public_active_presidential_model_v28",
+    "scripts.verify_v28_clean_reproduction",
     "presidential_issue_engine.make_poster_figures",
 )
 LOCAL_MODULE_PREFIXES = ("scripts", "presidential_issue_engine", "common")
 RUNTIME_OUTPUT_PREFIXES = (
-    "outputs/active_presidential_nested_v27/",
+    "outputs/active_presidential_nested_v28/",
     "outputs/automatic_controls_v22/",
     "outputs/automatic_controls_v23/",
     "outputs/automatic_controls_v26/",
     "outputs/footprint_candidate_base_v9/",
     "outputs/preliminary_slot_assignment/",
     "outputs/preliminary_slot_assignment_v23/",
-    "outputs/prospective_pres_2025_v27/",
+    "outputs/prospective_pres_2025_v28/",
     "outputs/unified_exact_lineage_v21/",
 )
 RUNTIME_ROLLBACK_FILES = {
     f"outputs/active_presidential_nested_v{version}/nested_predictions.csv"
-    for version in (23, 24, 25, 26)
+    for version in (23, 24, 25, 26, 27)
 }
 SDIST_PUBLICATION_FILES = {
     ".github/dependabot.yml",
@@ -54,8 +54,10 @@ SDIST_PUBLICATION_FILES = {
     "docs/ARCHITECTURE.md",
     "docs/COMPETITION_COMPLIANCE_2026.md",
     "docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md",
-    "docs/FINAL_MODEL_V27_20260822.md",
+    "docs/FINAL_MODEL_V28_20260822.md",
+    "docs/EXPERIMENT_REMOVE_EXTERNAL_MODEL_OVERLAY_20260822.md",
     "docs/GITHUB_BASELINE_V27_20260822.json",
+    "docs/GITHUB_BASELINE_V28_20260823.json",
     "docs/PUBLIC_DATA_SOURCES.json",
     "docs/REPRODUCIBILITY.md",
     "docs/REPOSITORY_BOUNDARIES.md",
@@ -74,6 +76,27 @@ PUBLIC_EXCLUDED_FILES = {
     "presidential_issue_engine/fixed_dataset/kospi_daily.csv",
     "data/raw/kospi_history_source.txt",
     "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
+    "data/raw/assembly_issue_character_overlay.csv",
+    "data/raw/auto_issue_seed/mega_issue_axis.csv",
+    "data/raw/auto_issue_seed/mega_issue_attribution.csv",
+    "src/election_forecast/stance_context_model.py",
+    "src/election_forecast/stance_context_v15.py",
+    "src/election_forecast/stance_context_v16.py",
+    "src/election_forecast/stance_context_v17.py",
+    "src/election_forecast/stance_context_v18.py",
+    "src/election_forecast/stance_context_v19.py",
+    "src/election_forecast/stance_context_v20.py",
+    "src/election_forecast/stance_context_v21.py",
+    "src/election_forecast/stance_context_v22.py",
+    "src/election_forecast/stance_context_v23s.py",
+    "src/election_forecast/stance_context_v24s.py",
+    "src/election_forecast/stance_context_v25s.py",
+    "src/election_forecast/stance_explanatory_overlay.py",
+    "src/election_forecast/stance_intensity.py",
+    "src/election_forecast/stance_precision.py",
+    "src/election_forecast/stance_target_policy.py",
+    "src/election_forecast/stance_text_model.py",
+    "src/election_forecast/stance_v3.py",
 }
 PUBLIC_EXCLUDED_PREFIXES = (
     "data/cache/",
@@ -87,6 +110,7 @@ PUBLIC_EXCLUDED_PREFIXES = (
     "data/shadow/",
     "data/raw/official_sources/cache/",
     "data/raw/official_sources/checkpoints/",
+    "presidential_issue_engine/report/through2022_rederived/overlay_variants/",
 )
 
 
@@ -146,9 +170,9 @@ def _resolve_relative(module: str, imported: str | None, level: int) -> str:
 
 
 def _python_dependency_closure() -> set[str]:
-    """Trace repository-local imports from the public V27 entry points."""
+    """Trace repository-local imports from the public V28 entry points."""
 
-    pending = list(V27_ENTRY_MODULES)
+    pending = list(V28_ENTRY_MODULES)
     visited: set[str] = set()
     files: set[str] = set()
     while pending:
@@ -189,11 +213,11 @@ def _python_dependency_closure() -> set[str]:
     return files
 
 
-def v27_runtime_files() -> list[str]:
-    """Select the complete, public V27 runtime from admitted source files."""
+def v28_runtime_files() -> list[str]:
+    """Select the complete, public V28 runtime from admitted source files."""
 
     finalization = json.loads(
-        (ROOT / "outputs/active_presidential_nested_v27/finalization_manifest.json").read_text(
+        (ROOT / "outputs/active_presidential_nested_v28/finalization_manifest.json").read_text(
             encoding="utf-8"
         )
     )
@@ -214,10 +238,11 @@ def v27_runtime_files() -> list[str]:
         elif relative.startswith(
             (
                 "presidential_issue_engine/report/tables/v24/",
-                "presidential_issue_engine/report/through2022_rederived/",
                 "data/",
             )
         ):
+            included.append(relative)
+        elif relative == "presidential_issue_engine/report/through2022_rederived/nested_outer_results.csv":
             included.append(relative)
         elif relative.startswith(RUNTIME_OUTPUT_PREFIXES):
             included.append(relative)
@@ -243,11 +268,11 @@ def _zip_info(name: str) -> ZipInfo:
     return info
 
 
-def build_v27_runtime_archive(destination: Path) -> None:
-    """Create a deterministic, hash-indexed archive of the public V27 runtime."""
+def build_v28_runtime_archive(destination: Path) -> None:
+    """Create a deterministic, hash-indexed archive of the public V28 runtime."""
 
     records = []
-    files = v27_runtime_files()
+    files = v28_runtime_files()
     for relative in files:
         payload = (ROOT / relative).read_bytes()
         records.append(
@@ -258,9 +283,9 @@ def build_v27_runtime_archive(destination: Path) -> None:
             }
         )
     manifest = {
-        "schema": "election_forecast_v27_packaged_runtime_v1",
-        "active_version": "v27",
-        "frozen_prediction_sha256": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
+        "schema": "election_forecast_v28_packaged_runtime_v1",
+        "active_version": "v28",
+        "frozen_prediction_sha256": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
         "source_boundary": "git-tracked-public-files-only",
         "post_2022_outcomes_used": False,
         "files": records,
@@ -275,20 +300,25 @@ def build_v27_runtime_archive(destination: Path) -> None:
 
 
 class build_py(_build_py):
-    """Add the complete V27 runtime after normal Python modules are built."""
+    """Add the complete V28 runtime after normal Python modules are built."""
 
     def run(self) -> None:
         super().run()
-        build_v27_runtime_archive(Path(self.build_lib) / "election_forecast" / RUNTIME_ARCHIVE)
+        for relative in PUBLIC_EXCLUDED_FILES:
+            if relative.startswith("src/election_forecast/"):
+                built = Path(self.build_lib) / relative.removeprefix("src/")
+                if built.is_file():
+                    built.unlink()
+        build_v28_runtime_archive(Path(self.build_lib) / "election_forecast" / RUNTIME_ARCHIVE)
 
 
 class sdist(_sdist):
-    """Publish the installable V27 source, not the repository research archive."""
+    """Publish the installable V28 source, not the repository research archive."""
 
     def get_file_list(self) -> None:
         super().get_file_list()
         sources = set(_source_files())
-        admitted = set(v27_runtime_files())
+        admitted = set(v28_runtime_files())
         admitted.update(path for path in sources if path.startswith("src/"))
         admitted.update(SDIST_PUBLICATION_FILES)
         self.filelist.files = [
