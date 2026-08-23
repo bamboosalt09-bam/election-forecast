@@ -1,0 +1,25 @@
+{
+  "schema": "presidential_model_promotion_v1",
+  "status": "promoted_third_share_dispersion_expansion",
+  "active_version": "v29",
+  "predecessor": "v28",
+  "post_2022_outcomes_used": false,
+  "point_metrics": {
+    "variant": "v29_third_share_dispersion_expansion",
+    "regional_equal_election_macro_mae_pp": 2.5736074405126663,
+    "national_equal_election_macro_mae_pp": 0.7262497116354087,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "accepted_scope": [
+    "third_share_indexed_regional_dispersion_expansion"
+  ],
+  "rejected_scope": [
+    "swept_gain_0_50_better_regional_but_fitted_on_scored_panel"
+  ],
+  "selection_disclosure": "Adopted at gain 1.0, where the expansion factor is the predicted third share itself and no constant is selected. A swept gain of 0.50 gives a better regional macro (2.555129 against 2.573607) and was rejected because it is a constant chosen on the same five scored outcomes it is then measured against. The national macro is unchanged to nine decimals at every gain, so this choice costs nothing on that axis. The decision to build a dispersion correction at all was made by reading the residuals of those same five outcomes and is in-sample.",
+  "rollback": {
+    "version": "v28",
+    "prediction_sha256": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
+  }
+}

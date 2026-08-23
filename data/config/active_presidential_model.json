@@ -1,23 +1,23 @@
 {
   "schema": "current_presidential_model_pointer_v1",
-  "active_version": "v28",
-  "lifecycle_status": "frozen_external_model_runtime_free",
-  "canonical_document": "docs/FINAL_MODEL_V28_20260822.md",
-  "finalization_manifest": "outputs/active_presidential_nested_v28/finalization_manifest.json",
-  "runner": "scripts/run_active_presidential_model_v28.py",
-  "prospective_runner": "scripts/run_prospective_forecast_v28.py",
+  "active_version": "v29",
+  "lifecycle_status": "frozen_third_share_dispersion_expansion",
+  "canonical_document": "docs/FINAL_MODEL_V29_20260823.md",
+  "finalization_manifest": "outputs/active_presidential_nested_v29/finalization_manifest.json",
+  "runner": "scripts/run_active_presidential_model_v29.py",
+  "prospective_runner": "scripts/run_prospective_forecast_v29.py",
   "config": "data/config/active_presidential_model_v23.json",
-  "version_wrapper": "scripts/run_active_presidential_model_v28.py",
+  "version_wrapper": "scripts/run_active_presidential_model_v29.py",
   "base_config_version": "v23",
-  "output": "outputs/active_presidential_nested_v28",
-  "predecessor": "v27",
-  "rollback_pointer": "outputs/active_presidential_nested_v27/finalization_manifest.json",
-  "regional_equal_election_macro_mae_pp": 2.638410502170951,
-  "national_equal_election_macro_mae_pp": 0.726249711635409,
+  "output": "outputs/active_presidential_nested_v29",
+  "predecessor": "v28",
+  "rollback_pointer": "outputs/active_presidential_nested_v28/finalization_manifest.json",
+  "regional_equal_election_macro_mae_pp": 2.5736074405126663,
+  "national_equal_election_macro_mae_pp": 0.7262497116354087,
   "winner_accuracy": 0.8,
   "prediction_rows": 232,
-  "prediction_sha256": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
-  "predictive_intervals": "outputs/active_presidential_nested_v28/predictive_interval_manifest.json",
+  "prediction_sha256": "fed959cdba1e127f91c2ab640a378d1f44a4a3e79b4c4a76893cf8d7c6153904",
+  "predictive_intervals": "outputs/active_presidential_nested_v29/predictive_interval_manifest.json",
   "predictive_interval_levels": [
     0.5,
     0.8,
@@ -29,5 +29,11 @@
   "external_model_derived_inputs": [
     "data/raw/auto_issue_seed/candidate_issue_profile.csv"
   ],
-  "post_2022_outcomes_used": false
+  "post_2022_outcomes_used": false,
+  "prospective_demonstration": {
+    "artifact": "outputs/prospective_pres_2025_v28",
+    "regenerated_for_v29": false,
+    "blocked_by": "docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md",
+    "reason": "The prospective harness has been unrunnable since the V28 external-model boundary was enforced process-wide, because it asserts byte-identical reproduction of a V25 history frozen before that boundary. The published artifact predates the enforcement and therefore used the seed inputs V28 excludes; regenerating it changes the published forecast."
+  }
 }

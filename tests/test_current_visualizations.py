@@ -8,8 +8,8 @@ import pytest
 from presidential_issue_engine import make_poster_figures as figures
 
 
-def test_current_inputs_are_v28_and_separate_forecast_from_history():
-    assert figures.ACTIVE_DIR.name == "active_presidential_nested_v28"
+def test_current_inputs_are_v29_and_separate_forecast_from_history():
+    assert figures.ACTIVE_DIR.name == "active_presidential_nested_v29"
     assert figures.FORECAST_DIR.name == "prospective_pres_2025_v28"
     assert not figures._history()["election_id"].astype(str).str.contains("2025").any()
     forecast = figures._forecast()

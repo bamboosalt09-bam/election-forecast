@@ -39,17 +39,21 @@ def _pointer() -> dict[str, object]:
 
 def test_v26_remains_in_the_declared_rollback_chain() -> None:
     pointer = _pointer()
-    assert pointer["active_version"] == "v28"
-    assert pointer["predecessor"] == "v27"
+    assert pointer["active_version"] == "v29"
+    assert pointer["predecessor"] == "v28"
     assert pointer["rollback_pointer"] == (
-        "outputs/active_presidential_nested_v27/finalization_manifest.json"
+        "outputs/active_presidential_nested_v28/finalization_manifest.json"
     )
-    v27 = json.loads(
-        (ROOT / "outputs/active_presidential_nested_v27/finalization_manifest.json").read_text(
-            encoding="utf-8"
+    # walk the chain rather than naming one link, so a further promotion keeps
+    # this test honest instead of silently only checking the newest hop
+    version = "v28"
+    while version != "v26":
+        manifest = json.loads(
+            (ROOT / f"outputs/active_presidential_nested_{version}/finalization_manifest.json")
+            .read_text(encoding="utf-8")
         )
-    )
-    assert v27["rollback"]["version"] == "v26"
+        version = manifest["rollback"]["version"]
+    assert version == "v26"
     assert _sha256(ACTIVE_DIR / "nested_predictions.csv") == (
         "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3"
     )

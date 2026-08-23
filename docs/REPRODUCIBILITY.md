@@ -11,8 +11,8 @@ Canonical prediction artifacts:
 
 ```text
 V28 active:
-outputs/active_presidential_nested_v28/nested_predictions.csv
-SHA-256: 23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba
+outputs/active_presidential_nested_v29/nested_predictions.csv
+SHA-256: fed959cdba1e127f91c2ab640a378d1f44a4a3e79b4c4a76893cf8d7c6153904
 
 V27 rollback (pre-removal predecessor):
 outputs/active_presidential_nested_v27/nested_predictions.csv
@@ -50,7 +50,7 @@ wrapper enters its runtime guard.
 python -m pip install election_forecast-0.28.0.dev0-py3-none-any.whl
 election-forecast audit-current-presidential
 election-forecast verify-current-presidential
-election-forecast run-current-presidential --output-dir outputs/reproduction_v28
+election-forecast run-current-presidential --output-dir outputs/reproduction_v29
 ```
 
 The wheel embeds the Git-tracked public V28 runtime as a deterministic archive.
@@ -63,11 +63,11 @@ election×slot aggregates actually consumed by V28.
 ### Source checkout
 
 ```bash
-python -m pip install -e ".[dev,reproduce-v28]"
-python scripts/run_active_presidential_model_v28.py --output-dir outputs/reproduction_v28
-python scripts/verify_v28_clean_reproduction.py
-python scripts/build_active_v28_predictive_intervals.py
-python scripts/audit_public_active_presidential_model_v28.py
+python -m pip install -e ".[dev,reproduce-v29]"
+python scripts/run_active_presidential_model_v29.py --output-dir outputs/reproduction_v29
+python scripts/verify_v29_clean_reproduction.py
+python scripts/build_active_v29_predictive_intervals.py
+python scripts/audit_public_active_presidential_model_v29.py
 python scripts/audit_github_baseline.py
 python scripts/audit_public_data_rights.py
 python scripts/audit_publication_security.py
@@ -85,7 +85,7 @@ numeric diagnostic within `0.0012` share (`0.12%p`). The rebuilt byte hash and
 observed maxima are always reported; this tolerance is not used to redefine
 the frozen artifact.
 
-Exact V28 regeneration uses Windows, Python 3.13, the `reproduce-v28`
+Exact V28 regeneration uses Windows, Python 3.13, the `reproduce-v29`
 optional dependency set and single-threaded BLAS (`OMP_NUM_THREADS`,
 `OPENBLAS_NUM_THREADS`, `MKL_NUM_THREADS`, `BLIS_NUM_THREADS` and
 `VECLIB_MAXIMUM_THREADS` set to `1`). The ordinary package remains usable and tested on

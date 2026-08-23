@@ -1,0 +1,5 @@
+﻿election_id,training_elections,training_election_count,training_rows,common_sigma,regional_sigma,local_sigma,region_weight_log_sigma,region_weight_training_transitions,forecast_region_weight_source,target_outcome_used_to_construct_bounds
+pres_2007,pres_2002,1,48,0.1076449881103182,0.1204616875211206,0.36138506256336184,0.0,0,latest_prior_presidential_contest_votes,False
+pres_2012,pres_2002|pres_2007,2,96,0.08177367872131881,0.1186431489360314,0.34211258075947126,0.029908294176916664,1,latest_prior_presidential_contest_votes,False
+pres_2017,pres_2002|pres_2007|pres_2012,3,130,0.07159467569799434,0.11972486211095165,0.3066760572786724,0.042836809776292006,2,latest_prior_presidential_contest_votes,False
+pres_2022,pres_2002|pres_2007|pres_2012|pres_2017,4,181,0.11314897145755282,0.1575922562477988,0.7065831686979525,0.09706467474760576,3,latest_prior_presidential_contest_votes,False

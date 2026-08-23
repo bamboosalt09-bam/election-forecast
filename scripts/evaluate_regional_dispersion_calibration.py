@@ -42,6 +42,10 @@ for _path in (ROOT, ROOT / "src", ROOT / "scripts", ROOT / "presidential_issue_e
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 
+from presidential_issue_engine.third_share_dispersion_expansion import (  # noqa: F401
+    apply_third_share_dispersion_expansion,
+    predicted_third_share,  # re-exported: the sweep's guards address it here
+)
 from scripts.active_model_pointer import active_output_dir
 
 ACTIVE_DIR = active_output_dir()
@@ -53,34 +57,18 @@ def _name_column(frame: pd.DataFrame) -> str:
     return "candidate_name_x" if "candidate_name_x" in frame.columns else "candidate_name"
 
 
-def predicted_third_share(group: pd.DataFrame, name: str) -> float:
-    """The model's own third-place national share - no outcome is read."""
-
-    national = group.groupby(name).apply(
-        lambda part: np.average(part.layer_pred, weights=part.contest_votes)
-    ).sort_values(ascending=False)
-    return float(national.iloc[2]) if len(national) > 2 else 0.0
-
-
 def rescale(frame: pd.DataFrame, gain: float) -> pd.DataFrame:
-    """Expand regional deviations around each candidate's own national level."""
+    """Expand regional deviations around each candidate's own national level.
 
-    name = _name_column(frame)
-    parts: list[pd.DataFrame] = []
-    for _election, group in frame.groupby("election_id", sort=False):
-        out = group.copy()
-        factor = 1.0 + gain * predicted_third_share(group, name)
-        levels = out.groupby(name).apply(
-            lambda part: np.average(part.layer_pred, weights=part.contest_votes)
-        )
-        level = out[name].map(levels)
-        out["layer_pred"] = (level + factor * (out["layer_pred"] - level)).clip(
-            lower=1e-6
-        )
-        total = out.groupby("region_id")["layer_pred"].transform("sum")
-        out["layer_pred"] = out["layer_pred"] / total
-        parts.append(out)
-    return pd.concat(parts, ignore_index=True)
+    Delegates to the shipped transform rather than restating it, so a sweep can
+    never describe a mechanism the model does not actually apply. An earlier
+    private copy here clipped negative shares and renormalised, which injected
+    vote mass and made the higher gains look like they cost national accuracy
+    when the cost was the clipping.
+    """
+
+    adjusted, _audit = apply_third_share_dispersion_expansion(frame, gain=gain)
+    return adjusted
 
 
 def metrics(frame: pd.DataFrame, label: str) -> pd.DataFrame:

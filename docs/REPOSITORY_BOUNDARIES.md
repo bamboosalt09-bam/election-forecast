@@ -6,7 +6,7 @@ for transparency, but they are not the same publication surface.
 | Boundary | Canonical location | Install package | Meaning |
 | --- | --- | --- | --- |
 | Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V28 engine modules and declared public/derived inputs | Yes | Locally runnable V28 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
-| Frozen active evidence | `outputs/active_presidential_nested_v28/` | Yes | Immutable V28 predictions, intervals and promotion audits |
+| Frozen active evidence | `outputs/active_presidential_nested_v29/` | Yes | Immutable V28 predictions, intervals and promotion audits |
 | Rollback evidence | V23-V27 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
 | Corrected demonstration | `outputs/prospective_pres_2025_v28/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
 | Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V28 output |

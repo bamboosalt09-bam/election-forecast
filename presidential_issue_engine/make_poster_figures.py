@@ -1,4 +1,9 @@
-"""Generate current V28 visualizations from finalized artifacts only.
+"""Generate current V29 visualizations from finalized artifacts only.
+
+The 2025 panels still read the V28 demonstration directory, which is the
+artifact the project publishes; see
+docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md for why it has not been
+regenerated under V29.
 
 The map uses a hash-pinned, SGIS-derived 2025-04-01 administrative snapshot. See
 ``docs/VISUALIZATION_DATA.md`` for provenance and reproduction details.
@@ -29,7 +34,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path(__file__).resolve().parent / "poster_figures"
-ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v28"
+ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v29"
 FORECAST_DIR = ROOT / "outputs" / "prospective_pres_2025_v28"
 REGIONS = Path(__file__).resolve().parent / "fixed_dataset" / "regions_master.csv"
 MAP_URL = (
@@ -87,7 +92,7 @@ def _history() -> pd.DataFrame:
     frame = pd.read_csv(ACTIVE_DIR / "nested_predictions.csv", encoding="utf-8-sig")
     required = {"election_id","region_id","slot","candidate_name","actual","layer_pred"}
     if missing := required - set(frame):
-        raise ValueError(f"V28 history missing columns: {sorted(missing)}")
+        raise ValueError(f"V29 history missing columns: {sorted(missing)}")
     if frame["election_id"].astype(str).str.contains("2025").any():
         raise ValueError("2025 leaked into retrospective visualization")
     return frame.merge(_regions(), on="region_id", how="left", validate="many_to_one")
@@ -147,7 +152,7 @@ def public_overview():
     fig, ax = plt.subplots(figsize=(13.6, 7.4))
     ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
     fig.patch.set_facecolor("#F4F7FA")
-    ax.text(.05, .92, "Election Forecast · V28", fontsize=25, fontweight="bold", color=NAVY)
+    ax.text(.05, .92, "Election Forecast · V29", fontsize=25, fontweight="bold", color=NAVY)
     ax.text(.05, .865, "설치·감사·재현 가능한 한국 대통령선거 예측 연구 엔진", fontsize=13, color="#415466")
 
     cards = [
@@ -164,7 +169,7 @@ def public_overview():
         ax.text(x+.03, .615, note, fontsize=9.5, color=GRAY)
 
     sections = [
-        ("공개 실행", "wheel 안에 실제 V28 런타임 포함\n파일별 SHA-256 확인 후 격리 실행"),
+        ("공개 실행", "wheel 안에 실제 V29 런타임 포함\n파일별 SHA-256 확인 후 격리 실행"),
         ("병합 필수 검사", "동결/롤백 감사 · clean 재현\nwheel 외부 재현 · 데이터 권리 · 보안"),
         ("연구 경계", "2025는 결과 확인 뒤 결함을 고친 시연\nuntouched prospective validation은 아직 없음"),
     ]
@@ -184,7 +189,7 @@ def architecture_diagram():
     fig, ax = plt.subplots(figsize=(15.2, 8.1))
     ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
     fig.patch.set_facecolor("white")
-    ax.text(.05, .93, "V28 공개 실행 구조", fontsize=23, fontweight="bold", color=NAVY)
+    ax.text(.05, .93, "V29 공개 실행 구조", fontsize=23, fontweight="bold", color=NAVY)
     ax.text(.05, .885, "설치 경계와 연구 경계를 포함한 실제 런타임 계통", fontsize=12, color=GRAY)
 
     nodes = [
@@ -192,7 +197,7 @@ def architecture_diagram():
         (.25, .68, .16, .10, "PIT 입력", "공개·파생 자료"),
         (.45, .68, .16, .10, "Nested Ridge", "6개 slot-free 변수"),
         (.65, .68, .16, .10, "구조 후처리", "유권자·충격·제3후보"),
-        (.45, .43, .16, .10, "V28 지역 분산", "전국 체급 보존"),
+        (.45, .43, .16, .10, "V29 지역 분산", "전국 체급 보존"),
         (.25, .43, .16, .10, "동결 산출물", "232행·예측구간"),
         (.05, .43, .16, .10, "감사·재현", "롤백·wheel 외부"),
     ]
@@ -211,7 +216,7 @@ def architecture_diagram():
 
     ax.add_patch(FancyBboxPatch((.05,.16),.88,.11,boxstyle="round,pad=.012,rounding_size=.012",facecolor="#F1F3F5",edgecolor="#C7CED5",linewidth=1.0))
     ax.text(.075,.225,"연구 보관 구역",fontsize=11,fontweight="bold",color="#4F5B66")
-    ax.text(.075,.185,"과거 모델 그림 · 비활성 외부 언어모델 실험 · 비승격 ablation은 공개 V28 런타임과 분리",fontsize=10,color="#5F6D78")
+    ax.text(.075,.185,"과거 모델 그림 · 비활성 외부 언어모델 실험 · 비승격 ablation은 공개 V29 런타임과 분리",fontsize=10,color="#5F6D78")
     ax.text(.95,.07,"후보별 전국 수준과 지역별 100% 합계 보존",ha="right",fontsize=9.5,color=GRAY)
     return fig
 
@@ -222,7 +227,7 @@ def model_performance():
     fig, ax = plt.subplots(figsize=(8.6,5.2))
     bars = ax.bar(["지역 MAE","전국 MAE"], values, color=[BLUE,RED], width=.58)
     ax.set_ylabel("동일 선거 가중 MAE (%p)")
-    ax.set_title("V28 회고 개발 패널 성능", fontsize=18, fontweight="bold", color=NAVY)
+    ax.set_title("V29 회고 개발 패널 성능", fontsize=18, fontweight="bold", color=NAVY)
     ax.grid(axis="y", alpha=.2)
     for bar,value in zip(bars,values):
         ax.text(bar.get_x()+bar.get_width()/2, value+.07, f"{value:.3f}%p", ha="center", fontweight="bold")
@@ -237,7 +242,7 @@ def performance_by_election():
     fig, ax = plt.subplots(figsize=(10.2,5.4))
     bars = ax.bar(frame["year"], frame["regional_weighted_mae_pp"], color=BLUE)
     ax.set_ylabel("지역 MAE (%p)")
-    ax.set_title("V28 선거별 지역 오차", fontsize=18, fontweight="bold", color=NAVY)
+    ax.set_title("V29 선거별 지역 오차", fontsize=18, fontweight="bold", color=NAVY)
     ax.grid(axis="y", alpha=.2)
     for bar,value in zip(bars,frame["regional_weighted_mae_pp"]):
         ax.text(bar.get_x()+bar.get_width()/2,value+.08,f"{value:.2f}",ha="center")
@@ -248,7 +253,7 @@ def performance_by_election():
 def regional_pred_vs_actual(election_id: str):
     election = _history().loc[lambda x: x["election_id"].eq(election_id)]
     if election.empty:
-        raise ValueError(f"no V28 rows for {election_id}")
+        raise ValueError(f"no V29 rows for {election_id}")
     slots = sorted(election["slot"].astype(str).unique())
     fig, axes = plt.subplots(1,len(slots),figsize=(5.7*len(slots),8.2),sharex=True,squeeze=False)
     for axis,slot in zip(axes[0],slots):
@@ -260,7 +265,7 @@ def regional_pred_vs_actual(election_id: str):
         axis.set_title(f"{slot} · {rows['candidate_name'].iloc[0]}",color=NAVY,fontweight="bold")
         axis.set_xlabel("득표율 (%)")
     axes[0][0].legend(loc="lower right")
-    fig.suptitle(f"{election_id[-4:]} 대선 V28 지역 예측과 실제",fontsize=18,fontweight="bold",color=NAVY)
+    fig.suptitle(f"{election_id[-4:]} 대선 V29 지역 예측과 실제",fontsize=18,fontweight="bold",color=NAVY)
     fig.tight_layout(); return fig
 
 
@@ -321,12 +326,12 @@ def prospective_map():
 
 def main() -> None:
     _require_viz(); setup_style()
-    figures={"v28_public_overview":public_overview(),"v28_architecture":architecture_diagram(),
-        "v28_model_performance":model_performance(),"v28_performance_by_election":performance_by_election(),
-        **{f"v28_regional_{e}":regional_pred_vs_actual(e) for e in ("pres_2002","pres_2007","pres_2012","pres_2017","pres_2022")},
+    figures={"v29_public_overview":public_overview(),"v29_architecture":architecture_diagram(),
+        "v29_model_performance":model_performance(),"v29_performance_by_election":performance_by_election(),
+        **{f"v29_regional_{e}":regional_pred_vs_actual(e) for e in ("pres_2002","pres_2007","pres_2012","pres_2017","pres_2022")},
         "v28_pres_2025_regional_bars":prospective_bars(),"v28_pres_2025_regional_map":prospective_map()}
     for name,figure in figures.items(): _save(figure,name)
-    print(f"Generated {len(figures)} current V28 PNG files in {OUT}")
+    print(f"Generated {len(figures)} current V29 PNG files in {OUT}")
 
 
 if __name__ == "__main__":

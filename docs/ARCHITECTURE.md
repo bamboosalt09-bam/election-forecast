@@ -37,14 +37,14 @@ flowchart TD
 ## Runtime chain
 
 - Public historical pointer: `scripts/run_current_presidential_model.py`
-- V28 wrapper: `scripts/run_active_presidential_model_v28.py`
+- V28 wrapper: `scripts/run_active_presidential_model_v29.py`
 - V26 shock ladder and event alignment: `scripts/run_active_presidential_model_v26.py`
 - V25/V24 structural stack: `scripts/run_active_presidential_model_v25.py`
 - Core engine: `presidential_issue_engine/issue_vote_engine.py`
 - V27 terminal transform: `presidential_issue_engine/party_regionalism_dispersion.py`
 - External-model-runtime-free boundary: `presidential_issue_engine/external_model_free_runtime.py`
-- Public integrity audit: `scripts/audit_public_active_presidential_model_v28.py`
-- Installed-runtime verifier: `src/election_forecast/v28_runtime.py`
+- Public integrity audit: `scripts/audit_public_active_presidential_model_v29.py`
+- Installed-runtime verifier: `src/election_forecast/v29_runtime.py`
 - Wheel build boundary: `setup.py`
 
 The version wrappers are intentionally layered. A successor must use a new
