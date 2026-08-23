@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.run_active_presidential_model_v28 import main
+from scripts.run_active_presidential_model_v29 import main
 
 
 if __name__ == "__main__":
