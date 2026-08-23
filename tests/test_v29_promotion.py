@@ -135,11 +135,60 @@ def test_2017_is_capped_at_the_feasible_factor() -> None:
     assert float(frame.layer_pred.min()) >= 0.0
 
 
-def test_the_2025_demonstration_is_disclosed_as_not_regenerated() -> None:
-    """Shipping V29 beside a V28-era forecast must not be silent."""
+def test_the_2025_demonstration_is_regenerated_and_its_change_disclosed() -> None:
+    """Regenerating changed a published forecast; the record must say by how much.
+
+    The artifact that V29 supersedes was built before the V28 external-model
+    boundary was enforced, so it used seed inputs V28 documents as removed.
+    Replacing it silently would hide both that fact and the size of the change.
+    """
 
     demonstration = _pointer()["prospective_demonstration"]
-    assert demonstration["regenerated_for_v29"] is False
-    assert demonstration["artifact"] == "outputs/prospective_pres_2025_v28"
-    blocker = ROOT / str(demonstration["blocked_by"])
-    assert blocker.is_file(), "the pointer must name a diagnosis that exists"
+    assert demonstration["regenerated_for_v29"] is True
+    assert demonstration["artifact"] == "outputs/prospective_pres_2025_v29"
+    assert demonstration["supersedes"] == "outputs/prospective_pres_2025_v28"
+    assert (ROOT / str(demonstration["blocked_by"] if "blocked_by" in demonstration
+                       else "docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md")).is_file()
+
+    change = demonstration["change_from_published_v28_artifact"]
+    assert change["winner_unchanged"] is True
+    # the expansion conserves national levels, so all national movement is the
+    # boundary; if that ever stops being true the disclosure is wrong
+    assert change["third_share_expansion_national_max_pp"] == 0.0
+    assert change["boundary_enforcement_national_max_pp"] > 0.0
+    assert (
+        change["third_share_expansion_regional_mean_pp"]
+        > change["boundary_enforcement_regional_mean_pp"]
+    ), "the regional movement is the transform, not the boundary"
+
+
+def test_the_2025_artifact_is_compositional_and_outcome_free() -> None:
+    forecast = ROOT / "outputs/prospective_pres_2025_v29"
+    predictions = pd.read_csv(forecast / "prospective_predictions.csv", encoding="utf-8-sig")
+    totals = predictions.groupby("region_id")["predicted_share"].sum()
+    assert totals.round(10).eq(1.0).all()
+    assert float(predictions["predicted_share"].min()) >= 0.0
+
+    manifest = json.loads((forecast / "run_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["version"] == "v29"
+    assert manifest["performance_metrics_computed"] is False
+    assert manifest["v29_third_share_dispersion_expansion"]["outcome_fields_used"] == []
+
+    audit = pd.read_csv(
+        forecast / "third_share_dispersion_expansion_audit.csv", encoding="utf-8-sig"
+    )
+    assert (audit["max_candidate_level_shift_pp"].abs() < 1e-9).all()
+    assert bool(audit.iloc[0]["feasibility_capped"]), "2025 hits the feasibility cap"
+
+
+def test_the_boundary_history_reference_is_not_a_promoted_model() -> None:
+    """The harness's baseline must never be mistaken for a shipped artifact."""
+
+    manifest = json.loads(
+        (ROOT / "outputs/external_model_free_v25_baseline/baseline_manifest.json")
+        .read_text(encoding="utf-8")
+    )
+    assert manifest["promoted"] is False
+    assert manifest["scored"] is False
+    assert manifest["runtime"] == "external_model_free"
+    assert _pointer()["output"] != "outputs/external_model_free_v25_baseline"

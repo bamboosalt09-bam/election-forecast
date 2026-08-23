@@ -8,7 +8,8 @@ for transparency, but they are not the same publication surface.
 | Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V28 engine modules and declared public/derived inputs | Yes | Locally runnable V28 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
 | Frozen active evidence | `outputs/active_presidential_nested_v29/` | Yes | Immutable V28 predictions, intervals and promotion audits |
 | Rollback evidence | V23-V27 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
-| Corrected demonstration | `outputs/prospective_pres_2025_v28/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
+| Corrected demonstration | `outputs/prospective_pres_2025_v29/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
+| Boundary history reference | `outputs/external_model_free_v25_baseline/` | Yes | V25 pipeline under the external-model boundary; verification reference only, never promoted or scored |
 | Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V28 output |
 | Local/private acquisition | ignored caches, checkpoints, full text, credentials and uncertain-rights exports | No | Must be reacquired under the provider's terms or remain local |
 

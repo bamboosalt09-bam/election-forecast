@@ -1,4 +1,34 @@
-# Reproducibility and Frozen V28 Boundary
+# Reproducibility and the Frozen V29 Boundary
+
+## What is and is not reproducible from this repository
+
+| artifact | reproducible from the public tree | check |
+| --- | --- | --- |
+| V29 scored historical model | **yes**, byte for byte | `clean-reproduction` |
+| V29 packaged runtime | **yes**, from the built wheel | `wheel-reproduction` |
+| 2025 D-1 demonstration | **yes, with one boundary** | `prospective-reproduction` |
+
+The 2025 demonstration is built from official Assembly proceedings. Its
+collected form carries verbatim excerpts and is not redistributed, and the
+historical speaker-issue matches it needs lived only under `archives/`, which
+the repository boundary forbids tracking. Three derived files ship in their
+place - the 2025 rows with each excerpt replaced by its character count, the
+output of the keyword matching that does read the words, and the historical
+matches gzipped. Together they are 3.7 MB against 154 MB of untracked inputs,
+and none carries a source sentence.
+
+So the boundary is this: from the public tree the forecast is rebuilt and
+compared **downstream of the keyword matching**, and the matching itself is
+taken as given. Confirming that these proceedings produce these issue weights
+needs the proceedings; confirming that these issue weights produce this forecast
+does not. `verify_v29_prospective_reproduction.py` reports which of the two it
+did rather than letting a weaker reproduction look like a stronger one.
+
+[PRES_2025_INPUT_GUIDE.md](PRES_2025_INPUT_GUIDE.md) gives the full procedure for
+collecting the proceedings and recomputing every derived file from them.
+
+None of this was known until the 2025 path was given a CI job; no job had run
+it before.
 
 ## Frozen scope
 

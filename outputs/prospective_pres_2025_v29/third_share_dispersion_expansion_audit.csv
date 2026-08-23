@@ -1,0 +1,2 @@
+﻿election_id,predicted_third_share,gain,expansion_factor,applied_factor,feasibility_capped,max_candidate_level_shift_pp,outcome_fields_used
+pres_2025,0.08661497662551018,1.0,1.0866149766255102,1.0812786927312301,True,5.551115123125783e-15,none

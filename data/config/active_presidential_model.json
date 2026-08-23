@@ -31,9 +31,19 @@
   ],
   "post_2022_outcomes_used": false,
   "prospective_demonstration": {
-    "artifact": "outputs/prospective_pres_2025_v28",
-    "regenerated_for_v29": false,
-    "blocked_by": "docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md",
-    "reason": "The prospective harness has been unrunnable since the V28 external-model boundary was enforced process-wide, because it asserts byte-identical reproduction of a V25 history frozen before that boundary. The published artifact predates the enforcement and therefore used the seed inputs V28 excludes; regenerating it changes the published forecast."
+    "artifact": "outputs/prospective_pres_2025_v29",
+    "regenerated_for_v29": true,
+    "history_reference": "outputs/external_model_free_v25_baseline",
+    "supersedes": "outputs/prospective_pres_2025_v28",
+    "change_from_published_v28_artifact": {
+      "boundary_enforcement_regional_max_pp": 0.0359,
+      "boundary_enforcement_regional_mean_pp": 0.0103,
+      "boundary_enforcement_national_max_pp": 0.006484,
+      "third_share_expansion_regional_max_pp": 2.6703,
+      "third_share_expansion_regional_mean_pp": 0.697,
+      "third_share_expansion_national_max_pp": 0.0,
+      "winner_unchanged": true
+    },
+    "note": "The published V28 artifact predated process-wide enforcement of the V28 external-model boundary, so it used seed inputs V28 documents as removed. Regenerating under the enforced boundary moves the national levels by 0.0065pp and the regions by 0.0103pp on average; the larger regional movement is the V29 dispersion expansion, which conserves the national levels exactly. See docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md."
   }
 }

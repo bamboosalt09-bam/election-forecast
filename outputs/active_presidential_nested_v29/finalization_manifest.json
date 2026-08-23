@@ -76,8 +76,8 @@
     },
     {
       "path": "scripts/finalize_active_presidential_model_v29.py",
-      "bytes": 8798,
-      "sha256": "8f5cd79425971d32e83e92c01c110198c750c8f25796c1901865be7ec232e3bf",
+      "bytes": 10606,
+      "sha256": "0258fa28f40b5846129b415f3b9863a5cd60e91da6de4ad50cff6cc6e0a3e535",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -90,6 +90,18 @@
       "path": "scripts/verify_v29_clean_reproduction.py",
       "bytes": 1887,
       "sha256": "4bc0931d5cc82eb4141633f73f05da66f3899af82cf17f62f5b86cd474bd84f5",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/verify_v29_prospective_reproduction.py",
+      "bytes": 4274,
+      "sha256": "006a097ba6bd27955555f08cd8798a27ce7b4a60d728df3e8e881141c6694e1a",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/build_external_model_free_v25_baseline.py",
+      "bytes": 3012,
+      "sha256": "a08189da5e97921863bb961f5ba86b88f32efdde846990c4661733a1fa3de9b7",
       "hash_mode": "normalized_text_lf"
     },
     {

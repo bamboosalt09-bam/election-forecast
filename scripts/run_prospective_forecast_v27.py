@@ -19,11 +19,20 @@ from scripts import run_prospective_forecast as base  # noqa: E402
 OUTPUT_DIR = ROOT / "outputs" / "prospective_pres_2025_v27"
 
 
+#: Overridden by the V28 wrapper, which runs inside the external-model
+#: boundary and therefore cannot reproduce a V25 history frozen before it.
+CANONICAL_HISTORY_DIR: Path | None = None
+
+
 def run() -> Path:
     # V26 and V25 are identical for the already-saturated 2025 crisis target;
     # V26's historical ladder difference is separately pinned by V27 rollback.
     with tempfile.TemporaryDirectory(prefix="prospective_v27_base_") as temporary:
-        source_dir = base.run("v25", output_dir_override=Path(temporary))
+        source_dir = base.run(
+            "v25",
+            output_dir_override=Path(temporary),
+            canonical_dir=CANONICAL_HISTORY_DIR,
+        )
         _promote_from_source(source_dir)
     return OUTPUT_DIR
 

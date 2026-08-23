@@ -1,9 +1,7 @@
 """Generate current V29 visualizations from finalized artifacts only.
 
-The 2025 panels still read the V28 demonstration directory, which is the
-artifact the project publishes; see
-docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md for why it has not been
-regenerated under V29.
+The 2025 panels read the V29 demonstration, regenerated once the prospective
+harness was repaired; see docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md.
 
 The map uses a hash-pinned, SGIS-derived 2025-04-01 administrative snapshot. See
 ``docs/VISUALIZATION_DATA.md`` for provenance and reproduction details.
@@ -35,7 +33,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path(__file__).resolve().parent / "poster_figures"
 ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v29"
-FORECAST_DIR = ROOT / "outputs" / "prospective_pres_2025_v28"
+FORECAST_DIR = ROOT / "outputs" / "prospective_pres_2025_v29"
 REGIONS = Path(__file__).resolve().parent / "fixed_dataset" / "regions_master.csv"
 MAP_URL = (
     "https://raw.githubusercontent.com/vuski/admdongkor/"
@@ -278,7 +276,7 @@ def prospective_bars():
         axis.set_xlim(0,100); axis.grid(axis="x",alpha=.2)
         axis.set_title(f"{slot} · {rows['candidate_name'].iloc[0]}",color=NAVY,fontweight="bold")
         axis.set_xlabel("예측 득표율 (%)")
-    fig.suptitle("2025 대선 V28 D-1 지역 예측\n실제 결과 미사용 · 성능평가 대상 아님",fontsize=18,fontweight="bold",color=NAVY)
+    fig.suptitle("2025 대선 V29 D-1 지역 예측\n실제 결과 미사용 · 성능평가 대상 아님",fontsize=18,fontweight="bold",color=NAVY)
     fig.tight_layout(); return fig
 
 
@@ -318,7 +316,7 @@ def prospective_map():
         cell.set_edgecolor("#D6DDE4"); cell.set_linewidth(.55)
         if row and row % 2 == 0: cell.set_facecolor("#F7F9FB")
     table_ax.axis("off"); table_ax.set_title("시·도별 예측 득표율",fontsize=17,fontweight="bold",color=NAVY,pad=10)
-    fig.suptitle("2025 대선 V28 D-1 예측 지도",fontsize=21,fontweight="bold",color=NAVY,y=.975)
+    fig.suptitle("2025 대선 V29 D-1 예측 지도",fontsize=21,fontweight="bold",color=NAVY,y=.975)
     fig.text(.5,.025,"각 원은 해당 시·도의 예측 득표 구성(합계 100%) · 원 크기는 인구를 뜻하지 않음\n예측 기준 2025-06-02 (D-1) · 실제 결과 미사용 · 경계: 통계청 SGIS 기반 admdongkor 2025-04-01 (CC BY 4.0 / 공공누리 제1유형)",ha="center",va="bottom",fontsize=9.0,color=GRAY)
     fig.subplots_adjust(left=.03,right=.98,bottom=.11,top=.88,wspace=.02)
     return fig
@@ -329,7 +327,7 @@ def main() -> None:
     figures={"v29_public_overview":public_overview(),"v29_architecture":architecture_diagram(),
         "v29_model_performance":model_performance(),"v29_performance_by_election":performance_by_election(),
         **{f"v29_regional_{e}":regional_pred_vs_actual(e) for e in ("pres_2002","pres_2007","pres_2012","pres_2017","pres_2022")},
-        "v28_pres_2025_regional_bars":prospective_bars(),"v28_pres_2025_regional_map":prospective_map()}
+        "v29_pres_2025_regional_bars":prospective_bars(),"v29_pres_2025_regional_map":prospective_map()}
     for name,figure in figures.items(): _save(figure,name)
     print(f"Generated {len(figures)} current V29 PNG files in {OUT}")
 

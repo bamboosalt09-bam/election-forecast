@@ -34,6 +34,8 @@ jobs:
         run: python scripts/audit_github_baseline.py
       - name: Verify current public pointers and package version
         run: python scripts/audit_current_public_surface.py
+      - name: Verify every version declaration agrees with the pointer
+        run: python scripts/audit_version_consistency.py
 
   tests:
     runs-on: ubuntu-latest
@@ -89,6 +91,25 @@ jobs:
         run: python -m pip install -e ".[dev,reproduce-v29]"
       - name: Reproduce V29 in an isolated output directory
         run: python scripts/verify_v29_clean_reproduction.py
+
+  prospective-reproduction:
+    # The published 2025 forecast had no CI job, so it went unreproducible the
+    # moment the V28 boundary was enforced and stayed that way while eight
+    # other jobs reported green. This one runs the forecast the project ships.
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install project
+        run: python -m pip install -e ".[dev]"
+      - name: Reproduce the frozen 2025 demonstration
+        run: python scripts/verify_v29_prospective_reproduction.py
 
   public-data-and-security:
     runs-on: ubuntu-latest

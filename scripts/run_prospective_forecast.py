@@ -108,6 +108,27 @@ OFFICIAL_2025_MINUTES = (
     / "data/raw/official_sources/assembly_pres_2025_minutes"
     / "assembly_stance_rows_2025_h1.csv"
 )
+#: The redistributable derivation of the file above. The collected rows carry
+#: verbatim excerpts from official proceedings, which this project does not
+#: redistribute, so a clean checkout has only this form - identical except that
+#: text_excerpt is replaced by its length, which is all any consumer uses. See
+#: scripts/build_redistributable_pres_2025_stance_rows.py.
+PUBLIC_2025_MINUTES = (
+    ROOT
+    / "data/raw/official_sources/assembly_pres_2025_minutes"
+    / "assembly_stance_rows_2025_h1_public.csv.gz"
+)
+#: Keyword matching runs over the excerpts, which the public form does not
+#: carry, so its precomputed output ships alongside. See
+#: scripts/build_redistributable_pres_2025_stance_rows.py and
+#: docs/PRES_2025_INPUT_GUIDE.md.
+PUBLIC_2025_ISSUE_MATCHES = (
+    ROOT
+    / "data/raw/official_sources/assembly_pres_2025_minutes"
+    / "assembly_issue_matches_2025_h1_public.csv.gz"
+)
+if not OFFICIAL_2025_MINUTES.exists() and PUBLIC_2025_MINUTES.exists():
+    OFFICIAL_2025_MINUTES = PUBLIC_2025_MINUTES
 ISSUE_CONTEXT_RULES = (
     ROOT / "presidential_issue_engine/fixed_dataset/issue_context_rules.csv"
 )
@@ -820,6 +841,55 @@ def _combine_historical_and_target_rows(
     )
 
 
+def _precomputed_target_matches(
+    target: pd.DataFrame,
+) -> tuple[pd.DataFrame, dict[str, int]]:
+    """Load the shipped rematch output when the excerpts are not available.
+
+    Keyword matching reads the excerpt text, which the redistributable form of
+    the proceedings does not carry, so this step cannot be recomputed from a
+    clean checkout - its result is published instead. The reproduction boundary
+    that creates is stated in docs/REPRODUCIBILITY.md: everything downstream of
+    this table is recomputed and compared, the matching itself is taken as
+    given.
+    """
+
+    if not PUBLIC_2025_ISSUE_MATCHES.exists():
+        raise RuntimeError(
+            "the target source carries no text_excerpt and the precomputed issue "
+            f"matches are absent: {PUBLIC_2025_ISSUE_MATCHES}"
+        )
+    matches = pd.read_csv(PUBLIC_2025_ISSUE_MATCHES, encoding="utf-8-sig")
+    expected = {
+        "election_id",
+        "period",
+        "speaker",
+        "issue_name",
+        "issue_weight",
+        "matched_term_count",
+    }
+    missing = sorted(expected - set(matches.columns))
+    if missing:
+        raise RuntimeError(f"precomputed 2025 issue matches are missing: {missing}")
+    if not matches["election_id"].astype(str).eq(TARGET_ELECTION).all():
+        raise RuntimeError("precomputed 2025 issue matches cover another election")
+    if matches.empty:
+        raise RuntimeError("precomputed 2025 issue matches are empty")
+    diagnostics = {
+        "sentence_issue_rows": int(len(target)),
+        "unique_sentence_rows": int(
+            target.drop_duplicates(["source_id", "source_row_id", "sentence_index"]).shape[0]
+        ),
+        "reconstructed_speech_rows": int(
+            target[["source_id", "source_row_id"]].drop_duplicates().shape[0]
+        ),
+        "historical_compatible_match_rows": int(len(matches)),
+        "matches_recomputed": False,
+    }
+    return matches, diagnostics
+
+
+
 def _historical_compatible_target_matches(
     target: pd.DataFrame,
 ) -> tuple[pd.DataFrame, dict[str, int]]:
@@ -842,6 +912,8 @@ def _historical_compatible_target_matches(
         "speaker",
         "text_excerpt",
     }
+    if "text_excerpt" not in target.columns:
+        return _precomputed_target_matches(target)
     missing = sorted(required - set(target.columns))
     if missing:
         raise RuntimeError(
@@ -950,11 +1022,17 @@ def _automatic_target_mega_controls(
         "agenda",
         "issue_name",
         "issue_weight",
-        "text_excerpt",
     }
     missing = sorted(required - set(source.columns))
     if missing:
         raise RuntimeError(f"official target mega-control source is missing: {missing}")
+    # The excerpt itself is never read here - only its presence was ever
+    # required - so either the collected text or its derived length satisfies it.
+    if not {"text_excerpt", "text_length"} & set(source.columns):
+        raise RuntimeError(
+            "official target mega-control source carries neither text_excerpt "
+            "nor text_length"
+        )
 
     meeting = pd.to_datetime(source["meeting_date"], errors="coerce")
     available = pd.to_datetime(source["available_date"], errors="coerce")
@@ -1700,6 +1778,7 @@ def _execute_existing_pipeline(
     config_path: Path,
     sources: dict[str, Path],
     selected: pd.DataFrame,
+    canonical_dir: Path | None = None,
 ) -> tuple[
     pd.DataFrame,
     pd.DataFrame,
@@ -2033,7 +2112,7 @@ def _execute_existing_pipeline(
             for name, frame in all_audits.items()
         }
 
-        canonical_output = (
+        canonical_output = canonical_dir or (
             active_v25.DEFAULT_OUTPUT if version == "v25" else active_v24.DEFAULT_OUTPUT
         )
         canonical = pd.read_csv(
@@ -2273,7 +2352,23 @@ def _input_manifest(
     return out
 
 
-def run(version: str = "v23", *, output_dir_override: Path | None = None) -> Path:
+def run(
+    version: str = "v23",
+    *,
+    output_dir_override: Path | None = None,
+    canonical_dir: Path | None = None,
+) -> Path:
+    """Build the 2025 forecast on the ``version`` pipeline.
+
+    ``canonical_dir`` overrides the frozen history this run is checked against.
+    The check exists to prove the harness does not alter history, and it can
+    only do that against a baseline built under the *same* runtime. The V28
+    external-model boundary changes what the engine reads, so a run inside it
+    cannot match a V25 artifact frozen before it - see
+    docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md. Callers that enter the
+    boundary pass the matching baseline instead of weakening the check.
+    """
+
     assert_election_scope()
     cutoff = forecast_cutoff(TARGET_ELECTION, ELECTION_DATES)
     if cutoff is None or cutoff.date().isoformat() != FORECAST_CUTOFF:
@@ -2331,7 +2426,9 @@ def run(version: str = "v23", *, output_dir_override: Path | None = None) -> Pat
             v24_audits,
             historical_reproduction,
         ) = (
-            _execute_existing_pipeline(version, config_path, sources, selected)
+            _execute_existing_pipeline(
+                version, config_path, sources, selected, canonical_dir
+            )
         )
         if "mega_issue_intensity" in sources:
             for key in (
