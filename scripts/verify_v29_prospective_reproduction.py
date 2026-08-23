@@ -1,17 +1,21 @@
 """Rebuild the frozen 2025 demonstration and compare it with the artifact.
 
-The published forecast had no reproduction check of its own. Freezing
-``kospi_context_effect`` into the KOSPI fixed dataset - a column that is the
-interaction of the market aggregates with a configurable economic
-responsibility score, not a market aggregate - silently disabled the runtime
-override of that score. The prospective harness began rejecting every run
-through its own historical reproduction guard, while every historical CI job
-stayed green because none of them runs this path. This script is what would
-have caught it.
+The published forecast had no reproduction check of its own. Enforcing the V28
+external-model boundary process-wide made its path unrunnable, and every
+historical CI job stayed green throughout, because none of them runs it.
+
+Running it also surfaced a second fact nobody had tested: the 2025 forecast
+depended on the full Assembly stance extraction, which carries verbatim
+excerpts and is not redistributed - so it could not be rebuilt from the public
+tree at all. Every consumer of that file turned out to use only the excerpt's
+length, so a derived form is published instead and the demonstration is now
+reproducible from what the repository ships. Where even that is missing this
+script says so and verifies nothing, rather than reporting success.
 """
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import sys
 import tempfile
@@ -29,7 +33,41 @@ KEYS = ["election_id", "region_id", "candidate_name"]
 TOLERANCE = 1e-12
 
 
+def unresolved_inputs() -> list[str]:
+    """Required 2025 inputs that resolve to nothing on this checkout.
+
+    The collected Assembly stance rows carry verbatim excerpts and are not
+    redistributed, but their derived form is, and every consumer takes only the
+    excerpt's length. So the question is not whether the private file is here -
+    it is whether the input resolves at all.
+    """
+
+    from scripts import run_prospective_forecast as harness
+
+    unresolved: list[str] = []
+    if not harness.OFFICIAL_2025_MINUTES.exists():
+        unresolved.append(
+            harness.OFFICIAL_2025_MINUTES.relative_to(ROOT).as_posix()
+            + " (and no redistributable form beside it)"
+        )
+    return unresolved
+
+
 def main() -> None:
+    absent = unresolved_inputs()
+    if absent:
+        print("[V29 prospective reproduction: SKIPPED - required input unresolved]")
+        for relative in absent:
+            print(f"  missing: {relative}")
+        for note in (
+            "The 2025 demonstration could not be rebuilt on this checkout.",
+            "Build the redistributable stance rows with",
+            "scripts/build_redistributable_pres_2025_stance_rows.py, or restore the",
+            "collected file. Nothing was verified.",
+        ):
+            print(note)
+        return
+
     original = v29.OUTPUT_DIR
     with tempfile.TemporaryDirectory(prefix="election_forecast_v29_prospective_") as temporary:
         destination = Path(temporary) / "prospective_pres_2025_v29"

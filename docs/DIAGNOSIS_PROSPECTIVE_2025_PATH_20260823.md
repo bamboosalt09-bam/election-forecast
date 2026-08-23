@@ -95,3 +95,27 @@ published forecast became unreproducible.
 `scripts/verify_v29_prospective_reproduction.py` is now a CI job
 (`prospective-reproduction`). It rebuilds the 2025 demonstration and compares it
 with the frozen artifact, so this class of failure is visible from now on.
+
+## And running it in CI found one more thing
+
+The job fails on a clean checkout, for a reason unrelated to any of the above:
+
+```
+FileNotFoundError: data/raw/official_sources/assembly_pres_2025_minutes/
+                   assembly_stance_rows_2025_h1.csv
+```
+
+That file is a 35 MB full-transcript stance extraction, listed under
+`excluded_paths` in `docs/PUBLIC_DATA_SOURCES.json` and deliberately excluded
+from both Git and the wheel.
+
+**The historical model is reproducible from the public tree. The 2025
+demonstration is not.** `clean-reproduction` rebuilds V29's scored panel from
+what the repository ships and matches it byte for byte; the 2025 forecast
+cannot be rebuilt without an input the project does not redistribute. Nobody
+knew, because no job had ever run that path.
+
+The check now detects the absence up front and reports a loud skip naming the
+missing file and stating that nothing was verified, rather than crashing deep
+in the pipeline. A silent green would repeat the exact failure this whole
+document is about. Where the input is present the full comparison still runs.

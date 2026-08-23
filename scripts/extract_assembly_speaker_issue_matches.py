@@ -54,6 +54,25 @@ DEFAULT_2025_SUPPLEMENT = (
     ROOT
     / "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv"
 )
+#: The redistributable derivation of the file above, used when the collected one
+#: is absent. It carries text_length instead of text_excerpt, which is the only
+#: thing this module takes from the excerpts - see
+#: scripts/build_redistributable_pres_2025_stance_rows.py. Without it the 2025
+#: demonstration cannot be rebuilt from a clean checkout at all.
+PUBLIC_2025_SUPPLEMENT = (
+    ROOT
+    / "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1_public.csv.gz"
+)
+
+
+def resolve_2025_supplement(source: Path) -> Path:
+    """Prefer the collected rows; fall back to their redistributable form."""
+
+    if source.exists():
+        return source
+    if source == DEFAULT_2025_SUPPLEMENT and PUBLIC_2025_SUPPLEMENT.exists():
+        return PUBLIC_2025_SUPPLEMENT
+    return source
 DEFAULT_2025_OUT = ROOT / "outputs/assembly_speaker_issue_matches_pres_2025.csv"
 
 KEYWORDS = ROOT / "presidential_issue_engine/fixed_dataset/issue_keywords.csv"
@@ -129,6 +148,23 @@ FORBIDDEN_OUTCOME_COLUMN_TOKENS = (
     "\ub2f9\uc120",
     "\uc21c\uc704",
 )
+
+
+def _text_length(selected: pd.DataFrame) -> pd.Series:
+    """Character count of each excerpt, however the source supplies it.
+
+    The collected rows carry the excerpt; the redistributable derivation carries
+    only its length. Nothing downstream reads the text itself.
+    """
+
+    if "text_excerpt" in selected.columns:
+        return selected["text_excerpt"].astype(str).str.len()
+    if "text_length" in selected.columns:
+        return pd.to_numeric(selected["text_length"], errors="coerce").fillna(0).astype(int)
+    raise ValueError(
+        "the 2025 supplement carries neither text_excerpt nor text_length"
+    )
+
 
 
 def _read_csv(path: Path) -> pd.DataFrame:
@@ -369,6 +405,7 @@ def convert_pres_2025_official_supplement(
     output; it does not infer or hand-enter any issue or candidate signal.
     """
 
+    source = resolve_2025_supplement(source)
     if not source.exists():
         return pd.DataFrame(columns=OUTPUT_COLUMNS)
     frame = _read_csv(source).fillna("")
@@ -397,7 +434,6 @@ def convert_pres_2025_official_supplement(
         "member_id",
         "issue_name",
         "issue_weight",
-        "text_excerpt",
     }
     missing = sorted(required - set(frame.columns))
     if missing:
@@ -451,7 +487,7 @@ def convert_pres_2025_official_supplement(
             "issue_name": selected["issue_name"].astype(str),
             "issue_weight": selected["issue_weight"].astype(float),
             "matched_term_count": 1,
-            "text_length": selected["text_excerpt"].astype(str).str.len(),
+            "text_length": _text_length(selected),
         }
     )[OUTPUT_COLUMNS]
     out_path.parent.mkdir(parents=True, exist_ok=True)

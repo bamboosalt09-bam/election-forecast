@@ -89,6 +89,24 @@ def main() -> None:
                 f"tracked file exceeds {max_bytes} bytes: {relative}"
             )
 
+    # Paths the provenance registry declares non-redistributable must never be
+    # tracked, whatever put them there. `git add -f` on a directory overrides
+    # .gitignore silently, and the file this guards is 48,588 verbatim excerpts
+    # from official proceedings - the mistake is unrecoverable, because a push
+    # cannot be unpublished.
+    registry = json.loads(
+        (ROOT / "docs" / "PUBLIC_DATA_SOURCES.json").read_text(encoding="utf-8")
+    )
+    tracked_set = set(tracked)
+    for relative in registry.get("excluded_paths", []):
+        if relative.endswith("/"):
+            violations.extend(
+                f"non-redistributable path is tracked: {path}"
+                for path in sorted(p for p in tracked_set if p.startswith(relative))
+            )
+        elif relative in tracked_set:
+            violations.append(f"non-redistributable path is tracked: {relative}")
+
     if violations:
         raise RuntimeError("\n".join(violations))
 
