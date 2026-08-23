@@ -2,7 +2,7 @@
 
 `presidential_issue_engine/make_poster_figures.py` now generates only current
 V29 figures. Retrospective charts read the finalized through-2022 development
-panel. Forecast charts read the separate `pres_2025` V28 D-1 artifact, which V29 has not regenerated, and never
+panel. Forecast charts read the separate `pres_2025` V29 D-1 artifact and never
 read the realized 2025 result.
 
 The old numbered PNGs were moved to
@@ -11,9 +11,7 @@ history, are excluded from the packaged runtime and must not be cited as V29.
 
 The current public set adds a V29 overview and an execution architecture figure
 to the performance, election-level, regional and 2025 D-1 map views. Every
-current filename starts with `v29_`, except the two 2025 panels, which keep
-`v28_` because the demonstration they read has not been regenerated (see
-`docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md`) and every chart reads only the declared V29
+current filename starts with `v29_` and every chart reads only the declared V29
 historical or corrected-demonstration artifact.
 
 ## Map source

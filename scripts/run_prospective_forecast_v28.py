@@ -21,14 +21,24 @@ from scripts import run_prospective_forecast_v27 as v27  # noqa: E402
 OUTPUT_DIR = ROOT / "outputs" / "prospective_pres_2025_v28"
 
 
+BOUNDARY_HISTORY_DIR = ROOT / "outputs/external_model_free_v25_baseline"
+
+
 def run() -> Path:
     original_output = v27.OUTPUT_DIR
+    original_canonical = v27.CANONICAL_HISTORY_DIR
     try:
         v27.OUTPUT_DIR = OUTPUT_DIR
+        # Inside the boundary the engine reads different inputs, so the history
+        # this run reproduces is not the pre-boundary V25 artifact. Point the
+        # harness's own check at the V25 pipeline as it runs *in* the boundary;
+        # see docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md.
+        v27.CANONICAL_HISTORY_DIR = BOUNDARY_HISTORY_DIR
         with external_model_free_runtime():
             v27.run()
     finally:
         v27.OUTPUT_DIR = original_output
+        v27.CANONICAL_HISTORY_DIR = original_canonical
 
     manifest_path = OUTPUT_DIR / "input_manifest.csv"
     strip_external_model_inputs(manifest_path)

@@ -1,0 +1,11 @@
+{
+  "schema": "external_model_free_baseline_v1",
+  "role": "prospective_harness_history_reference",
+  "pipeline": "v25",
+  "runtime": "external_model_free",
+  "promoted": false,
+  "scored": false,
+  "post_2022_outcomes_used": false,
+  "prediction_sha256": "0f9d68e4df64edbb71061717e0750ecbb91eb700522d8d97173d99c3534e3b1d",
+  "why": "The V25 artifact was frozen before the external-model boundary existed, so a run inside the boundary cannot reproduce it. This is the same pipeline under the runtime the prospective harness actually uses."
+}

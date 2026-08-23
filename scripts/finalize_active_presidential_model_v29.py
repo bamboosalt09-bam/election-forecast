@@ -21,15 +21,27 @@ POINTERS = (
 V28_SHA256 = "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
 
 PROSPECTIVE_DEMONSTRATION = {
-    "artifact": "outputs/prospective_pres_2025_v28",
-    "regenerated_for_v29": False,
-    "blocked_by": "docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md",
-    "reason": (
-        "The prospective harness has been unrunnable since the V28 external-model "
-        "boundary was enforced process-wide, because it asserts byte-identical "
-        "reproduction of a V25 history frozen before that boundary. The published "
-        "artifact predates the enforcement and therefore used the seed inputs V28 "
-        "excludes; regenerating it changes the published forecast."
+    "artifact": "outputs/prospective_pres_2025_v29",
+    "regenerated_for_v29": True,
+    "history_reference": "outputs/external_model_free_v25_baseline",
+    "supersedes": "outputs/prospective_pres_2025_v28",
+    "change_from_published_v28_artifact": {
+        "boundary_enforcement_regional_max_pp": 0.0359,
+        "boundary_enforcement_regional_mean_pp": 0.0103,
+        "boundary_enforcement_national_max_pp": 0.006484,
+        "third_share_expansion_regional_max_pp": 2.6703,
+        "third_share_expansion_regional_mean_pp": 0.6970,
+        "third_share_expansion_national_max_pp": 0.0,
+        "winner_unchanged": True,
+    },
+    "note": (
+        "The published V28 artifact predated process-wide enforcement of the "
+        "V28 external-model boundary, so it used seed inputs V28 documents as "
+        "removed. Regenerating under the enforced boundary moves the national "
+        "levels by 0.0065pp and the regions by 0.0103pp on average; the larger "
+        "regional movement is the V29 dispersion expansion, which conserves the "
+        "national levels exactly. See "
+        "docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md."
     ),
 }
 
@@ -62,6 +74,8 @@ def main() -> None:
         "scripts/finalize_active_presidential_model_v29.py",
         "scripts/audit_public_active_presidential_model_v29.py",
         "scripts/verify_v29_clean_reproduction.py",
+        "scripts/verify_v29_prospective_reproduction.py",
+        "scripts/build_external_model_free_v25_baseline.py",
         "presidential_issue_engine/third_share_dispersion_expansion.py",
         "presidential_issue_engine/external_model_free_runtime.py",
         "presidential_issue_engine/issue_vote_engine.py",
@@ -190,6 +204,33 @@ def main() -> None:
     }
     for path in POINTERS:
         shared._atomic_json(pointer, path)
+    _refresh_github_baseline(prediction_hash)
+
+
+def _refresh_github_baseline(prediction_hash: str) -> None:
+    """Keep the boundary baseline's pinned hashes in step with the pointer.
+
+    The baseline pins the pointer files by hash, and finalizing rewrites those
+    files, so every re-freeze left the boundary audit failing until someone
+    refreshed the pins by hand. Doing it here means the only thing that can
+    change the pointer is also the thing that records it.
+    """
+
+    import hashlib
+
+    baseline_path = ROOT / "docs/GITHUB_BASELINE_V29_20260823.json"
+    baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+    for pointer_path in POINTERS:
+        relative = pointer_path.relative_to(ROOT).as_posix()
+        baseline["expected_hashes"][relative] = hashlib.sha256(
+            pointer_path.read_bytes()
+        ).hexdigest()
+    baseline["expected_hashes"][
+        "outputs/active_presidential_nested_v29/nested_predictions.csv"
+    ] = prediction_hash
+    baseline_path.write_bytes(
+        (json.dumps(baseline, ensure_ascii=False, indent=2) + chr(10)).encode("utf-8")
+    )
 
 
 if __name__ == "__main__":

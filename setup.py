@@ -20,7 +20,7 @@ FIXED_TIMESTAMP = (2026, 8, 22, 0, 0, 0)
 V29_ENTRY_MODULES = (
     "scripts.run_current_presidential_model",
     "scripts.run_active_presidential_model_v29",
-    "scripts.run_prospective_forecast_v28",
+    "scripts.run_prospective_forecast_v29",
     "scripts.audit_public_active_presidential_model_v29",
     "scripts.verify_v29_clean_reproduction",
     "presidential_issue_engine.make_poster_figures",
@@ -34,7 +34,7 @@ RUNTIME_OUTPUT_PREFIXES = (
     "outputs/footprint_candidate_base_v9/",
     "outputs/preliminary_slot_assignment/",
     "outputs/preliminary_slot_assignment_v23/",
-    "outputs/prospective_pres_2025_v28/",
+    "outputs/prospective_pres_2025_v29/",
     "outputs/unified_exact_lineage_v21/",
 )
 RUNTIME_ROLLBACK_FILES = {

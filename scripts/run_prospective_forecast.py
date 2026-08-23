@@ -1700,6 +1700,7 @@ def _execute_existing_pipeline(
     config_path: Path,
     sources: dict[str, Path],
     selected: pd.DataFrame,
+    canonical_dir: Path | None = None,
 ) -> tuple[
     pd.DataFrame,
     pd.DataFrame,
@@ -2033,7 +2034,7 @@ def _execute_existing_pipeline(
             for name, frame in all_audits.items()
         }
 
-        canonical_output = (
+        canonical_output = canonical_dir or (
             active_v25.DEFAULT_OUTPUT if version == "v25" else active_v24.DEFAULT_OUTPUT
         )
         canonical = pd.read_csv(
@@ -2273,7 +2274,23 @@ def _input_manifest(
     return out
 
 
-def run(version: str = "v23", *, output_dir_override: Path | None = None) -> Path:
+def run(
+    version: str = "v23",
+    *,
+    output_dir_override: Path | None = None,
+    canonical_dir: Path | None = None,
+) -> Path:
+    """Build the 2025 forecast on the ``version`` pipeline.
+
+    ``canonical_dir`` overrides the frozen history this run is checked against.
+    The check exists to prove the harness does not alter history, and it can
+    only do that against a baseline built under the *same* runtime. The V28
+    external-model boundary changes what the engine reads, so a run inside it
+    cannot match a V25 artifact frozen before it - see
+    docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md. Callers that enter the
+    boundary pass the matching baseline instead of weakening the check.
+    """
+
     assert_election_scope()
     cutoff = forecast_cutoff(TARGET_ELECTION, ELECTION_DATES)
     if cutoff is None or cutoff.date().isoformat() != FORECAST_CUTOFF:
@@ -2331,7 +2348,9 @@ def run(version: str = "v23", *, output_dir_override: Path | None = None) -> Pat
             v24_audits,
             historical_reproduction,
         ) = (
-            _execute_existing_pipeline(version, config_path, sources, selected)
+            _execute_existing_pipeline(
+                version, config_path, sources, selected, canonical_dir
+            )
         )
         if "mega_issue_intensity" in sources:
             for key in (

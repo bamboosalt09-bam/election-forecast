@@ -32,6 +32,8 @@ recursive-include outputs/prospective_pres_2025_v24 *
 recursive-include outputs/prospective_pres_2025_v25 *
 recursive-include outputs/prospective_pres_2025_v27 *
 recursive-include outputs/prospective_pres_2025_v28 *
+recursive-include outputs/prospective_pres_2025_v29 *
+recursive-include outputs/external_model_free_v25_baseline *
 recursive-include outputs/unified_exact_lineage_v21 *
 recursive-include outputs/v24_defect_ablation *
 recursive-include outputs/v24_floor_recalibration_hypotheses *
