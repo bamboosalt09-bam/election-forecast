@@ -98,12 +98,12 @@ def test_the_shipped_headline_is_reproduced_by_the_contest_votes_column() -> Non
     from pathlib import Path
 
     root = Path(__file__).resolve().parents[1]
-    predictions = root / "outputs/active_presidential_nested_v27/nested_predictions.csv"
-    if not predictions.exists():
-        pytest.skip("V27 predictions are not present")
     pointer = json.loads(
         (root / "data/config/current_presidential_model.json").read_text(encoding="utf-8")
     )
+    predictions = root / pointer["output"] / "nested_predictions.csv"
+    if not predictions.exists():
+        pytest.skip(f"{pointer['active_version'].upper()} predictions are not present")
     frame = pd.read_csv(predictions, encoding="utf-8-sig", low_memory=False)
     by_election, _ = exante.evaluate(frame)
     assert by_election["contest_votes_pp"].mean() == pytest.approx(

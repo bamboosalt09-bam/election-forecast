@@ -19,6 +19,8 @@ import pandas as pd
 
 
 OVERLAY_ENV = "POLL_PROJECT_STANCE_ISSUE_OVERLAY_PATH"
+SEED_BLOCK_ENV = "POLL_PROJECT_BLOCK_EXTERNAL_MODEL_SEEDS"
+ENHANCED_ISSUES_ENV = "POLL_PROJECT_ENHANCED_ISSUES"
 OVERLAY_PATH_FRAGMENT = "assembly_issue_character_overlay.csv"
 DERIVED_SEED_FRAGMENTS = (
     "data/raw/auto_issue_seed/mega_issue_axis.csv",
@@ -40,17 +42,19 @@ def external_model_free_runtime() -> Iterator[None]:
     """Disable neural runtime consumers and restore caller state on exit."""
 
     previous = os.environ.get(OVERLAY_ENV)
+    previous_seed_block = os.environ.get(SEED_BLOCK_ENV)
+    previous_enhanced_issues = os.environ.get(ENHANCED_ISSUES_ENV)
     patched: list[tuple[object, dict[str, object], dict[str, object]]] = []
     os.environ[OVERLAY_ENV] = "disabled"
+    os.environ[SEED_BLOCK_ENV] = "1"
+    os.environ[ENHANCED_ISSUES_ENV] = "0"
     for module in _engine_modules():
         config = module.THROUGH_2022_REDERIVED_LAYER_CONFIG
         registry = module.THROUGH_2022_LAYER_REGISTRY
         patched.append((module, dict(config), dict(registry)))
         config["overlay_gain"] = 0.0
-        config["automatic_issue_seed_enabled"] = False
         config["manual_issue_seed_enabled"] = False
         registry["issue_character_overlay"] = {"enabled": False}
-        registry["automatic_issue_seed"] = {"enabled": False}
     try:
         yield
     finally:
@@ -63,6 +67,14 @@ def external_model_free_runtime() -> Iterator[None]:
             os.environ.pop(OVERLAY_ENV, None)
         else:
             os.environ[OVERLAY_ENV] = previous
+        if previous_seed_block is None:
+            os.environ.pop(SEED_BLOCK_ENV, None)
+        else:
+            os.environ[SEED_BLOCK_ENV] = previous_seed_block
+        if previous_enhanced_issues is None:
+            os.environ.pop(ENHANCED_ISSUES_ENV, None)
+        else:
+            os.environ[ENHANCED_ISSUES_ENV] = previous_enhanced_issues
 
 
 def strip_external_model_inputs(manifest_path: Path) -> None:

@@ -285,7 +285,7 @@ def build_v28_runtime_archive(destination: Path) -> None:
     manifest = {
         "schema": "election_forecast_v28_packaged_runtime_v1",
         "active_version": "v28",
-        "frozen_prediction_sha256": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
+        "frozen_prediction_sha256": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
         "source_boundary": "git-tracked-public-files-only",
         "post_2022_outcomes_used": False,
         "files": records,

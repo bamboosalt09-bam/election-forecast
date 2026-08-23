@@ -12,9 +12,9 @@ Canonical prediction artifacts:
 ```text
 V28 active:
 outputs/active_presidential_nested_v28/nested_predictions.csv
-SHA-256: f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b
+SHA-256: 23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba
 
-V27 rollback (prediction-equivalent predecessor):
+V27 rollback (pre-removal predecessor):
 outputs/active_presidential_nested_v27/nested_predictions.csv
 SHA-256: f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b
 
@@ -38,7 +38,9 @@ only the frozen internal base used by the versioned runner lineage. V28 keeps
 V27's statistical chain but disables neural inference and excludes the direct
 sentence-level stance overlay. The disclosed frozen historical
 `candidate_issue_profile.csv` remains because full removal materially changes
-the postprocess. Historical predictions remain byte-identical.
+the postprocess. V28 differs slightly from V27 because it now blocks the two
+excluded automatic mega seeds even when a legacy engine is loaded after the
+wrapper enters its runtime guard.
 
 ## Reproduce the checks
 

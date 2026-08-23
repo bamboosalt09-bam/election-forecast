@@ -1,8 +1,8 @@
 # V28 architecture
 
-V28 is the active, frozen presidential model. It preserves V27 predictions and
-removes neural inference, weights, source sentences and the direct stance
-overlay from the packaged-runtime path. One frozen historical candidate-issue
+V28 is the active, frozen presidential model. It preserves V27 as a rollback and
+removes neural inference, weights, source sentences, the direct stance overlay
+and two automatic mega seeds from the packaged-runtime path. One frozen historical candidate-issue
 aggregate remains as a disclosed postprocess input. The diagram below follows the
 actual public entry points rather than older poster-era experiments.
 
@@ -59,7 +59,8 @@ the packaged runtime.
 
 ## Preserved invariants
 
-V28 retains V27's terminal regional transform. It preserves each
+V28 retains V27's terminal regional transform but not byte-identical predictions.
+It preserves each
 candidate's vote-weighted national level and restores every election-region
 composition to 100 percent. The public audit additionally pins the 232-row
 panel, the V23-V27 rollback hashes, the V28 prediction hash, interval metadata,

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 
 import numpy as np
@@ -11,16 +12,16 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-V27_HASH = "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b"
+V28_HASH = "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
 
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def test_v28_is_prediction_equivalent_and_external_model_runtime_free() -> None:
+def test_v28_is_frozen_and_external_model_runtime_free() -> None:
     active = ROOT / "outputs/active_presidential_nested_v28"
-    assert _sha(active / "nested_predictions.csv") == V27_HASH
+    assert _sha(active / "nested_predictions.csv") == V28_HASH
     manifest = pd.read_csv(active / "input_manifest.csv")
     paths = manifest.path.astype(str).str.replace("\\", "/", regex=False)
     assert not paths.str.contains("assembly_issue_character_overlay", regex=False).any()
@@ -38,6 +39,40 @@ def test_v28_is_prediction_equivalent_and_external_model_runtime_free() -> None:
     assert summary["external_model_derived_inputs"] == [
         "data/raw/auto_issue_seed/candidate_issue_profile.csv"
     ]
+    assert summary["external_model_seed_boundary_enforced"] is True
+
+
+def test_v28_seed_boundary_survives_nested_config_replacement() -> None:
+    from presidential_issue_engine import issue_vote_engine as engine
+    from presidential_issue_engine.external_model_free_runtime import (
+        ENHANCED_ISSUES_ENV,
+        SEED_BLOCK_ENV,
+        external_model_free_runtime,
+    )
+
+    previous = os.environ.get(SEED_BLOCK_ENV)
+    previous_enhanced = os.environ.get(ENHANCED_ISSUES_ENV)
+    with external_model_free_runtime():
+        from scripts import evaluate_electorate_layers as electorate_evaluation
+
+        assert os.environ[ENHANCED_ISSUES_ENV] == "0"
+        assert electorate_evaluation._read_csv(
+            electorate_evaluation.OVERLAY_PATH
+        ).empty
+        assert engine._registered_issue_seed_path(
+            engine.ENHANCED_CANDIDATE_ISSUE_PROFILE,
+            engine.AUTO_CANDIDATE_ISSUE_PROFILE,
+        ) == engine.AUTO_CANDIDATE_ISSUE_PROFILE
+        assert engine._registered_issue_seed_path(
+            engine.ENHANCED_MEGA_ISSUE_AXIS,
+            engine.AUTO_MEGA_ISSUE_AXIS,
+        ) == ""
+        assert engine._registered_issue_seed_path(
+            engine.ENHANCED_MEGA_ISSUE_ATTRIBUTION,
+            engine.AUTO_MEGA_ISSUE_ATTRIBUTION,
+        ) == ""
+    assert os.environ.get(SEED_BLOCK_ENV) == previous
+    assert os.environ.get(ENHANCED_ISSUES_ENV) == previous_enhanced
 
 
 def test_v28_prospective_is_outcome_free_and_compositional() -> None:

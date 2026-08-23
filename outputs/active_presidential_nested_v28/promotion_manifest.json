@@ -6,15 +6,15 @@
   "post_2022_outcomes_used": false,
   "point_metrics": {
     "variant": "v28_external_model_free",
-    "regional_equal_election_macro_mae_pp": 2.6139029869761212,
-    "national_equal_election_macro_mae_pp": 0.7209938807856883,
+    "regional_equal_election_macro_mae_pp": 2.638410502170951,
+    "national_equal_election_macro_mae_pp": 0.726249711635409,
     "winner_accuracy": 0.8,
     "rows": 232
   },
   "accepted_scope": [
     "remove_external_model_derived_stance_overlay"
   ],
-  "selection_disclosure": "Adopted to remove neural runtime, model weights, sentence corpora, the direct stance overlay and unused descendants. The frozen historical candidate-issue aggregate remains disclosed because full removal materially degrades the development panel; historical predictions remain byte-identical to V27.",
+  "selection_disclosure": "Adopted to remove neural runtime, model weights, sentence corpora, the direct stance overlay and two mega-issue seed descendants. The frozen historical candidate-issue aggregate remains disclosed because full removal materially degrades the development panel. A late-loaded legacy module initially re-enabled the two seed descendants; V28 now enforces their removal process-wide and therefore differs slightly from the frozen V27 rollback.",
   "rollback": {
     "version": "v27",
     "prediction_sha256": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b"

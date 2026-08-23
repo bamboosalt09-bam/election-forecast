@@ -18,8 +18,8 @@
   ],
   "metrics": {
     "variant": "v28_external_model_free",
-    "regional_equal_election_macro_mae_pp": 2.6139029869761212,
-    "national_equal_election_macro_mae_pp": 0.7209938807856883,
+    "regional_equal_election_macro_mae_pp": 2.638410502170951,
+    "national_equal_election_macro_mae_pp": 0.726249711635409,
     "winner_accuracy": 0.8,
     "rows": 232
   },
@@ -35,14 +35,14 @@
   },
   "verification": {
     "v27_rollback_hash_match": true,
-    "v28_prediction_hash": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
-    "v28_historical_predictions_byte_identical_to_v27": true
+    "v28_prediction_hash": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
+    "v28_historical_predictions_byte_identical_to_v27": false
   },
   "artifacts": [
     {
       "path": "scripts/run_active_presidential_model_v28.py",
-      "bytes": 2446,
-      "sha256": "1c0a2247e49651b80eb35be33b42fc848083b9095e0a0c89e0b6aa1116fa081d",
+      "bytes": 2745,
+      "sha256": "806a1dca530c901d837f43c0501acfe788e99a6af37dc73addec5cf170557155",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -58,9 +58,15 @@
       "hash_mode": "normalized_text_lf"
     },
     {
+      "path": "scripts/evaluate_electorate_layers.py",
+      "bytes": 29471,
+      "sha256": "614cc445d2d9450aefecdf36d8937c85ba2954780008a3bece3439a04d2c91da",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
       "path": "scripts/finalize_active_presidential_model_v28.py",
-      "bytes": 6547,
-      "sha256": "d286e7e1b8dedf7db1214d7d74abaa46d336a87428e4ad5f977a3146dc30f87d",
+      "bytes": 6736,
+      "sha256": "e23ba13f648dccb6822c2374488052fea22646a74d881db0a43f5dcadba36a19",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -77,14 +83,14 @@
     },
     {
       "path": "presidential_issue_engine/external_model_free_runtime.py",
-      "bytes": 3454,
-      "sha256": "4c1e8946b4bb7047e1fb99961cd96f638f916605cc5016df3a01897a83e3baf2",
+      "bytes": 4000,
+      "sha256": "e94008a63a96f0e24e23cd998dada73147165629d144e349045e41b5b025c164",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "presidential_issue_engine/issue_vote_engine.py",
-      "bytes": 266581,
-      "sha256": "b7fe1343231759e0b6919aee3cf441139851f0ea22164b1e22b3ccaa11334d74",
+      "bytes": 267060,
+      "sha256": "00a7afd61837714047cbaa64d83884c637d33f8161273c9ceedfd18d7cbac6ea",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -95,38 +101,38 @@
     },
     {
       "path": "docs/FINAL_MODEL_V28_20260822.md",
-      "bytes": 1887,
-      "sha256": "1f4f52143210ca5d8c21d384489ef6b4451a3f663b1579b96e49384ef6e9567a",
+      "bytes": 2244,
+      "sha256": "b5d9218639ff4245be152dc9228900e36b98bb2b078406e5392c7446523e3af6",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "docs/EXPERIMENT_REMOVE_EXTERNAL_MODEL_OVERLAY_20260822.md",
-      "bytes": 2283,
-      "sha256": "78ac56efec9801431667871784ae78d03eb7e5658f0f10cb6d89651ec4961b7d",
+      "bytes": 2957,
+      "sha256": "cd04951a292d646436d30613434383f02344f0e4920de84cfa40e5c0155f14b7",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "outputs/active_presidential_nested_v28/nested_predictions.csv",
-      "bytes": 674835,
-      "sha256": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
+      "bytes": 604365,
+      "sha256": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
       "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v28/summary.json",
-      "bytes": 9894,
-      "sha256": "583e2aa73d87ff3841d07fc4318b1061e9664cfa31b332278bc9f94ea504c926",
+      "bytes": 10164,
+      "sha256": "fa9b32b9c19161555bc9f5a22f5794905d96cb9e7f825704f671d0a7e75a041f",
       "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v28/by_election.csv",
-      "bytes": 454,
-      "sha256": "4f0f0c29c480a44fc708b7fb174dd1e16b55ef464e0412d94f2791191e39e99b",
+      "bytes": 456,
+      "sha256": "58d874d11fac9f5c78f6524174a9ddaeaf4369039e910eef046c3391409f0be4",
       "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v28/national_predictions.csv",
-      "bytes": 1793,
-      "sha256": "8ccb52592fbbb9398caa0e271dcd73e2e5b84f687a8e2a93ecebff48ee7cbc59",
+      "bytes": 1791,
+      "sha256": "4fd4768548a8bf8490e5844b69e217c82fac5d2015ca37e4221b6eacace4f781",
       "hash_mode": "raw_bytes"
     },
     {
@@ -137,32 +143,32 @@
     },
     {
       "path": "outputs/active_presidential_nested_v28/national_predictive_intervals.csv",
-      "bytes": 8965,
-      "sha256": "35d395d223214db4677de3df6f741e994f3f0acc7cf1fb3d95e28f31124156f4",
+      "bytes": 8971,
+      "sha256": "362bb359bd235f25a55fc24a39c089277fbb8292cee91f997ce573efb159840c",
       "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v28/predictive_interval_summary.csv",
-      "bytes": 320,
-      "sha256": "4438ecb124069caaae72dec815431bcac7acba5c91a2c0a6604a277bd4d27377",
+      "bytes": 321,
+      "sha256": "d2089e73428daa730221b2cf95e72691105c3e18d43ac9158a9555bb8789eca4",
       "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v28/predictive_interval_components.csv",
-      "bytes": 896,
-      "sha256": "4609d27f479514f4b72a5d5517b3fce326eeea6fa9830a97a148d59084c379db",
+      "bytes": 895,
+      "sha256": "9436da0d15e373195ebe12fad4ba2df9228a08b9f50a018afd5efe5dc25a6026",
       "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v28/predictive_interval_manifest.json",
-      "bytes": 2587,
-      "sha256": "5dd69aa2b7c26dc3706899ac385a9ca3cfc7729fe6ffb1d156e42df3d6cceec4",
+      "bytes": 2588,
+      "sha256": "fbe4b32c28b83e3508f18c1818be1872277f511767e1e2eee94accb2c1920e54",
       "hash_mode": "raw_bytes"
     },
     {
       "path": "outputs/active_presidential_nested_v28/promotion_manifest.json",
-      "bytes": 971,
-      "sha256": "a4dce94f193561ef999b7df28c45ca2379b2c5aefdf94f55b5b6a44abbe2629c",
+      "bytes": 1109,
+      "sha256": "62d70228f43c5768c0e4200ac0444e4e0fbce49456d683ec1c08dc3c042ad397",
       "hash_mode": "raw_bytes"
     }
   ],

@@ -32,8 +32,8 @@
   "general_regional_identity_outcome_fields_used": [],
   "metrics": {
     "variant": "v28_external_model_free",
-    "regional_equal_election_macro_mae_pp": 2.6139029869761212,
-    "national_equal_election_macro_mae_pp": 0.7209938807856883,
+    "regional_equal_election_macro_mae_pp": 2.638410502170951,
+    "national_equal_election_macro_mae_pp": 0.726249711635409,
     "winner_accuracy": 0.8,
     "rows": 232
   },
@@ -50,11 +50,11 @@
   },
   "future_deployment_stage": "structural_mega_shock_regime",
   "future_deployment_inner_losses": {
-    "strict_base": 6.165891085807993,
-    "structural": 5.546591247391263,
-    "structural_mega": 5.267374190517558,
-    "structural_mega_shock": 4.992300624487586,
-    "structural_mega_shock_regime": 3.952596519480823
+    "strict_base": 6.184745140759192,
+    "structural": 5.586838186148441,
+    "structural_mega": 5.307790288564712,
+    "structural_mega_shock": 5.031636140052745,
+    "structural_mega_shock_regime": 3.9728600566787016
   },
   "minimum_stage_selection_elections": 0,
   "direct_mega_issue_shift": "candidate_stage_only",
@@ -175,12 +175,12 @@
   "undated_issue_importance_policy": "neutral_default_0.5",
   "undated_region_issue_sensitivity_policy": "neutral_default_0.3",
   "historical_candidate_set_warning": "Nested execution blocks target-fold stage-selection leakage, but the stage definitions and numeric gains were historically developed on the through-2022 sample and cannot become an untouched holdout retroactively.",
-  "frozen_reproduction_difference": 0.1105335098367251,
+  "frozen_reproduction_difference": 0.11058435200858034,
   "frozen_reproduction_guard": "measured but not required for a versioned upstream issue-layer change",
   "pre_v25_extension_metrics": {
     "variant": "fully_nested_postprocess",
-    "regional_equal_election_macro_mae_pp": 3.952596519480823,
-    "national_equal_election_macro_mae_pp": 2.478812706781737,
+    "regional_equal_election_macro_mae_pp": 3.9728600566787016,
+    "national_equal_election_macro_mae_pp": 2.4957567459589955,
     "winner_accuracy": 0.8,
     "rows": 232
   },
@@ -218,8 +218,8 @@
   },
   "pre_v27_extension_metrics": {
     "variant": "v26_graded_mega_intensity_event_aligned",
-    "regional_equal_election_macro_mae_pp": 2.7122332621133673,
-    "national_equal_election_macro_mae_pp": 0.7209938807856904,
+    "regional_equal_election_macro_mae_pp": 2.7384161865920635,
+    "national_equal_election_macro_mae_pp": 0.7262497116354087,
     "winner_accuracy": 0.8,
     "rows": 232
   },
@@ -235,5 +235,11 @@
   "external_model_derived_inputs": [
     "data/raw/auto_issue_seed/candidate_issue_profile.csv"
   ],
+  "removed_external_model_derived_inputs": [
+    "data/raw/assembly_issue_character_overlay.csv",
+    "data/raw/auto_issue_seed/mega_issue_axis.csv",
+    "data/raw/auto_issue_seed/mega_issue_attribution.csv"
+  ],
+  "external_model_seed_boundary_enforced": true,
   "parliamentary_source_policy": "official_records_plus_disclosed_frozen_historical_candidate_issue_aggregate"
 }

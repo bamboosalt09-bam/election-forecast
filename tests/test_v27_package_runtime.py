@@ -91,7 +91,7 @@ def test_v28_runtime_archive_manifest_matches_payload(tmp_path: Path) -> None:
         records = {record["path"]: record for record in manifest["files"]}
         frozen = "outputs/active_presidential_nested_v28/nested_predictions.csv"
         assert records[frozen]["sha256"] == (
-            "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b"
+            "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
         )
         for relative, record in records.items():
             payload = archive.read(relative)

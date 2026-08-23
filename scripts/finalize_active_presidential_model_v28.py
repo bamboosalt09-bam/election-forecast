@@ -30,6 +30,7 @@ def main() -> None:
         "scripts/run_active_presidential_model_v28.py",
         "scripts/run_prospective_forecast_v28.py",
         "scripts/build_active_v28_predictive_intervals.py",
+        "scripts/evaluate_electorate_layers.py",
         "scripts/finalize_active_presidential_model_v28.py",
         "scripts/audit_public_active_presidential_model_v28.py",
         "scripts/verify_v28_clean_reproduction.py",
@@ -56,7 +57,7 @@ def main() -> None:
         "post_2022_outcomes_used": False,
         "point_metrics": summary["metrics"],
         "accepted_scope": ["remove_external_model_derived_stance_overlay"],
-        "selection_disclosure": "Adopted to remove neural runtime, model weights, sentence corpora, the direct stance overlay and unused descendants. The frozen historical candidate-issue aggregate remains disclosed because full removal materially degrades the development panel; historical predictions remain byte-identical to V27.",
+        "selection_disclosure": "Adopted to remove neural runtime, model weights, sentence corpora, the direct stance overlay and two mega-issue seed descendants. The frozen historical candidate-issue aggregate remains disclosed because full removal materially degrades the development panel. A late-loaded legacy module initially re-enabled the two seed descendants; V28 now enforces their removal process-wide and therefore differs slightly from the frozen V27 rollback.",
         "rollback": {"version": "v27", "prediction_sha256": V27_SHA256},
     }
     shared._atomic_json(promotion, ACTIVE_DIR / "promotion_manifest.json")

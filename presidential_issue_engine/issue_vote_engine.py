@@ -74,6 +74,13 @@ KOSPI_DAILY = "presidential_issue_engine/fixed_dataset/kospi_daily.csv"
 KOSPI_ELECTION_CONTEXT = (
     "presidential_issue_engine/fixed_dataset/kospi_election_context.csv"
 )
+EXTERNAL_MODEL_SEED_BLOCK_ENV = "POLL_PROJECT_BLOCK_EXTERNAL_MODEL_SEEDS"
+EXTERNAL_MODEL_SEED_PATHS = frozenset(
+    {
+        "data/raw/auto_issue_seed/mega_issue_axis.csv",
+        "data/raw/auto_issue_seed/mega_issue_attribution.csv",
+    }
+)
 INTEREST_RATE_INDICATORS = "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv"
 ENHANCED_CANDIDATE_ISSUE_PROFILE = "data/raw/candidate_issue_profile.csv"
 ENHANCED_MEGA_ISSUE_AXIS = "data/raw/mega_issue_axis.csv"
@@ -373,7 +380,12 @@ def _read_csv_if_exists(path: str) -> pd.DataFrame:
 
 def _registered_issue_seed_path(manual_path: str, automatic_path: str) -> str:
     if _rederived_bool("automatic_issue_seed_enabled", True):
-        return automatic_path
+        selected = automatic_path
+        if os.getenv(EXTERNAL_MODEL_SEED_BLOCK_ENV, "0") == "1":
+            normalized = str(selected).replace("\\", "/")
+            if normalized in EXTERNAL_MODEL_SEED_PATHS:
+                return ""
+        return selected
     if _rederived_bool("manual_issue_seed_enabled", False):
         return manual_path
     return ""

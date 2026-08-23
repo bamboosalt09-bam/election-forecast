@@ -26,14 +26,14 @@
     "scripts/verify_v28_clean_reproduction.py"
   ],
   "expected_hashes": {
-    "data/config/current_presidential_model.json": "3c667720cd64c2db7f64079f444136d44a6c42734101fdbe83189d477b0c8538",
-    "data/config/active_presidential_model.json": "3c667720cd64c2db7f64079f444136d44a6c42734101fdbe83189d477b0c8538",
+    "data/config/current_presidential_model.json": "d02793219ef0054b3964f0ac1fafc6e7f8a670b753fc333637e78937e4825f9f",
+    "data/config/active_presidential_model.json": "d02793219ef0054b3964f0ac1fafc6e7f8a670b753fc333637e78937e4825f9f",
     "outputs/active_presidential_nested_v23/nested_predictions.csv": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
     "outputs/active_presidential_nested_v24/nested_predictions.csv": "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a",
     "outputs/active_presidential_nested_v25/nested_predictions.csv": "218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b",
     "outputs/active_presidential_nested_v26/nested_predictions.csv": "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3",
     "outputs/active_presidential_nested_v27/nested_predictions.csv": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
-    "outputs/active_presidential_nested_v28/nested_predictions.csv": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b"
+    "outputs/active_presidential_nested_v28/nested_predictions.csv": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
   },
   "verified_at_promotion": {
     "v23_rollback_hash_match": true,
@@ -41,8 +41,8 @@
     "v25_rollback_hash_match": true,
     "v26_rollback_hash_match": true,
     "v27_rollback_hash_match": true,
-    "v28_prediction_hash": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
-    "v28_historical_predictions_byte_identical_to_v27": true
+    "v28_prediction_hash": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
+    "v28_historical_predictions_byte_identical_to_v27": false
   },
   "tracked_file_max_bytes": 26214400,
   "allowed_output_prefixes": [

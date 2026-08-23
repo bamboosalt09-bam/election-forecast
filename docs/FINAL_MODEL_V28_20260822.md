@@ -6,17 +6,22 @@ unused automatic issue-seed descendants are also excluded. The frozen
 historical `data/raw/auto_issue_seed/candidate_issue_profile.csv` remains an
 active postprocess input and is included with explicit provenance disclosure.
 Official parliamentary records and deterministic issue matching remain active.
+The two excluded mega seeds are blocked by a process-wide guard so legacy
+modules loaded after the V28 wrapper cannot silently re-enable them.
 
 ## Frozen development metrics
 
-- regional equal-election macro MAE: `2.6139029869761212%p`
-- national equal-election macro MAE: `0.7209938807856883%p`
+- regional equal-election macro MAE: `2.638410502170951%p`
+- national equal-election macro MAE: `0.726249711635409%p`
 - winner accuracy: `0.8`
 - scored rows: `232`
 - post-2022 outcomes used: `false`
 
-The historical prediction table is byte-identical to V27.  V28 is promoted as
-a dependency and provenance simplification, not a performance improvement.
+The historical prediction table differs slightly from V27 because the final
+runtime audit found that a late-loaded legacy module could re-enable the two
+excluded mega seeds. Enforcing the boundary changed regional macro MAE by
+`+0.024507515%p`, national macro MAE by `+0.005255831%p`, and did not change
+winner accuracy. V27 remains frozen as the pre-removal rollback.
 
 ## AI boundary
 

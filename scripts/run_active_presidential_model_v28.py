@@ -51,6 +51,12 @@ def run(output_dir: Path | None = None) -> Path:
     payload["external_model_derived_inputs"] = [
         "data/raw/auto_issue_seed/candidate_issue_profile.csv"
     ]
+    payload["removed_external_model_derived_inputs"] = [
+        "data/raw/assembly_issue_character_overlay.csv",
+        "data/raw/auto_issue_seed/mega_issue_axis.csv",
+        "data/raw/auto_issue_seed/mega_issue_attribution.csv",
+    ]
+    payload["external_model_seed_boundary_enforced"] = True
     payload["parliamentary_source_policy"] = (
         "official_records_plus_disclosed_frozen_historical_candidate_issue_aggregate"
     )

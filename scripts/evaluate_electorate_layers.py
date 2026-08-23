@@ -63,6 +63,12 @@ FIXED_STRUCTURAL_CONFIG = layers.ElectorateLayerConfig(preference_gain=0.04)
 
 
 def _read_csv(path: Path) -> pd.DataFrame:
+    overlay_policy = os.getenv("POLL_PROJECT_STANCE_ISSUE_OVERLAY_PATH", "")
+    if (
+        path.name == "assembly_issue_character_overlay.csv"
+        and overlay_policy.strip().lower() in {"disabled", "off", "none"}
+    ):
+        return pd.DataFrame()
     if not path.exists():
         return pd.DataFrame()
     return pd.read_csv(path, encoding="utf-8-sig")

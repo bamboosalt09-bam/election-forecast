@@ -30,7 +30,7 @@
   "post_2022_outcomes_used": false,
   "development_outcome_warning": "V28 removes neural runtime and the direct historical stance overlay, while disclosing one retained compact candidate-issue aggregate. Coverage remains historical calibration, not holdout evidence.",
   "input": "outputs/active_presidential_nested_v28/nested_predictions.csv",
-  "input_sha256": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
+  "input_sha256": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
   "outputs": {
     "intervals": "outputs/active_presidential_nested_v28/national_predictive_intervals.csv",
     "summary": "outputs/active_presidential_nested_v28/predictive_interval_summary.csv",
@@ -43,7 +43,7 @@
       "candidates": 11,
       "equal_election_coverage": 0.9166666666666666,
       "candidate_weighted_coverage": 0.9090909090909091,
-      "equal_election_mean_width_pp": 4.35182872469889
+      "equal_election_mean_width_pp": 4.385633704527091
     },
     {
       "nominal_level": 0.8,
@@ -51,7 +51,7 @@
       "candidates": 11,
       "equal_election_coverage": 0.9166666666666666,
       "candidate_weighted_coverage": 0.9090909090909091,
-      "equal_election_mean_width_pp": 8.274614263468798
+      "equal_election_mean_width_pp": 8.326964663201466
     },
     {
       "nominal_level": 0.9,
@@ -59,7 +59,7 @@
       "candidates": 11,
       "equal_election_coverage": 1.0,
       "candidate_weighted_coverage": 1.0,
-      "equal_election_mean_width_pp": 10.633775962236701
+      "equal_election_mean_width_pp": 10.70555930426707
     },
     {
       "nominal_level": 0.95,
@@ -67,7 +67,7 @@
       "candidates": 11,
       "equal_election_coverage": 1.0,
       "candidate_weighted_coverage": 1.0,
-      "equal_election_mean_width_pp": 12.68995258969578
+      "equal_election_mean_width_pp": 12.763098669120676
     }
   ]
 }
