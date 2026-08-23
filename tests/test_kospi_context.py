@@ -86,13 +86,16 @@ def test_active_engine_exposes_time_varying_macro_diagnostics_without_direct_pre
 
     assert "macro_context_signal" not in issue_vote_engine.PREDICTORS
     assert "macro_context_signal" not in out.columns
-    active_kospi = (
+    fixed_dataset = (
         Path(__file__).resolve().parents[1]
         / "presidential_issue_engine"
         / "fixed_dataset"
-        / "kospi_daily.csv"
     )
-    if active_kospi.exists():
+    active_kospi_sources = (
+        fixed_dataset / "kospi_election_context.csv",
+        fixed_dataset / "kospi_daily.csv",
+    )
+    if any(path.exists() for path in active_kospi_sources):
         assert out["kospi_latest_date"].ne("not_available").any()
     else:
         assert out["kospi_latest_date"].eq("not_available").all()
