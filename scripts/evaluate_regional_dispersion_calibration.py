@@ -30,6 +30,7 @@ was found by reading those outcomes' residuals.
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import warnings
 from pathlib import Path
@@ -42,7 +43,22 @@ for _path in (ROOT, ROOT / "src", ROOT / "scripts", ROOT / "presidential_issue_e
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 
-ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v26"
+def _active_output_dir() -> Path:
+    """Follow the active pointer so a promotion does not strand the diagnostic.
+
+    These reports were written against V26 and silently kept reporting it after
+    V27 and V28 were promoted, which is how V27 figures ended up in a README
+    section headed V28.
+    """
+
+    pointer = ROOT / "data" / "config" / "current_presidential_model.json"
+    try:
+        return ROOT / json.loads(pointer.read_text(encoding="utf-8"))["output"]
+    except Exception:  # noqa: BLE001 - a missing pointer must not break the report
+        return ROOT / "outputs" / "active_presidential_nested_v28"
+
+
+ACTIVE_DIR = _active_output_dir()
 OUTPUT_DIR = ROOT / "outputs" / "regional_dispersion_calibration"
 DEFAULT_GAINS = (0.0, 0.25, 0.5, 0.75, 1.0, 1.5, 2.0)
 

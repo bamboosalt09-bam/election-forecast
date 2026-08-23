@@ -10,6 +10,16 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 REGISTER = ROOT / "docs/PUBLIC_DATA_SOURCES.json"
 AUDITED_ROOTS = ("data/", "presidential_issue_engine/fixed_dataset/")
+# Files whose content was produced with an external pretrained model. These
+# cannot sit inside a family whose basis is this project's own authorship: the
+# candidate-issue aggregate was classified under project_authored_and_derived_tables
+# and inherited an Apache-2.0 basis that describes project code, not an
+# external-model-derived artefact. Each must be covered by a family that names
+# the model and states a basis for distributing the derivative.
+EXTERNAL_MODEL_DERIVED_PATHS = (
+    "data/raw/auto_issue_seed/candidate_issue_profile.csv",
+)
+EXTERNAL_MODEL_BASIS_TERMS = ("model", "weight")
 ALLOWED_DECISIONS = {
     "include-derived-no-source-text",
     "include-derived-with-attribution",
@@ -56,6 +66,34 @@ def main() -> None:
     for path in candidates:
         if path.startswith(AUDITED_ROOTS) and not any(path.startswith(prefix) for prefix in coverage):
             violations.append(f"tracked data lacks public-source coverage: {path}")
+
+    for path in EXTERNAL_MODEL_DERIVED_PATHS:
+        if path not in candidates:
+            continue
+        owners = [
+            source
+            for source in register["sources"]
+            if any(path.startswith(prefix) for prefix in source.get("coverage_prefixes", []))
+        ]
+        if not owners:
+            violations.append(f"external-model-derived file is unregistered: {path}")
+            continue
+        # The file also sits inside a broad directory family, so the most
+        # specific covering prefix decides which basis applies.
+        def _specificity(source: dict[str, object]) -> int:
+            return max(
+                (len(prefix) for prefix in source.get("coverage_prefixes", [])
+                 if path.startswith(prefix)),
+                default=0,
+            )
+
+        owner = max(owners, key=_specificity)
+        basis = str(owner.get("license_or_basis", "")).casefold()
+        if not all(term in basis for term in EXTERNAL_MODEL_BASIS_TERMS):
+            violations.append(
+                "external-model-derived file lacks a model-aware basis: "
+                f"{path} ({owner.get('id')})"
+            )
 
     if violations:
         raise RuntimeError("\n".join(violations))
