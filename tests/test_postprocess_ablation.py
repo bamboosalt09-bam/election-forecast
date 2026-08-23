@@ -15,9 +15,9 @@ import pandas as pd
 import pytest
 
 from scripts import evaluate_postprocess_ablation as ablation
+from scripts.active_model_pointer import active_output_dir
 
-ROOT = Path(__file__).resolve().parents[1]
-SCORED_DIR = ROOT / "outputs" / "active_presidential_nested_v26"
+SCORED_DIR = active_output_dir()
 AUDITS = {
     "veto": "strong_incumbent_veto_audit.csv",
     "ceiling": "third_candidate_lineage_ceiling_audit.csv",

@@ -13,6 +13,7 @@ import pandas as pd
 import pytest
 
 from scripts import evaluate_ex_ante_weighting as exante
+from scripts.active_model_pointer import active_output_dir, active_version
 
 
 def _panel() -> pd.DataFrame:
@@ -95,15 +96,13 @@ def test_the_shipped_headline_is_reproduced_by_the_contest_votes_column() -> Non
     """The report must reproduce the pointer's own regional figure, not a variant."""
 
     import json
-    from pathlib import Path
 
-    root = Path(__file__).resolve().parents[1]
-    pointer = json.loads(
-        (root / "data/config/current_presidential_model.json").read_text(encoding="utf-8")
-    )
-    predictions = root / pointer["output"] / "nested_predictions.csv"
+    from scripts.active_model_pointer import POINTER
+
+    pointer = json.loads(POINTER.read_text(encoding="utf-8"))
+    predictions = active_output_dir() / "nested_predictions.csv"
     if not predictions.exists():
-        pytest.skip(f"{pointer['active_version'].upper()} predictions are not present")
+        pytest.skip(f"{active_version().upper()} predictions are not present")
     frame = pd.read_csv(predictions, encoding="utf-8-sig", low_memory=False)
     by_election, _ = exante.evaluate(frame)
     assert by_election["contest_votes_pp"].mean() == pytest.approx(
@@ -114,12 +113,9 @@ def test_the_shipped_headline_is_reproduced_by_the_contest_votes_column() -> Non
 def test_ex_ante_weightings_are_not_silently_better_than_the_headline() -> None:
     """If an ex-ante figure ever beat the headline, the claim would need rechecking."""
 
-    from pathlib import Path
-
-    root = Path(__file__).resolve().parents[1]
-    predictions = root / "outputs/active_presidential_nested_v26/nested_predictions.csv"
+    predictions = active_output_dir() / "nested_predictions.csv"
     if not predictions.exists():
-        pytest.skip("V26 predictions are not present")
+        pytest.skip(f"{active_version().upper()} predictions are not present")
     frame = pd.read_csv(predictions, encoding="utf-8-sig", low_memory=False)
     by_election, _ = exante.evaluate(frame)
     matched = by_election.loc[by_election["prior_election_votes_pp"].notna()]

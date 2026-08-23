@@ -29,7 +29,6 @@ printed.
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 import warnings
 from pathlib import Path
@@ -41,22 +40,9 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-def _active_output_dir() -> Path:
-    """Follow the active pointer so a promotion does not strand the diagnostic.
+from scripts.active_model_pointer import active_output_dir
 
-    These reports were written against V26 and silently kept reporting it after
-    V27 and V28 were promoted, which is how V27 figures ended up in a README
-    section headed V28.
-    """
-
-    pointer = ROOT / "data" / "config" / "current_presidential_model.json"
-    try:
-        return ROOT / json.loads(pointer.read_text(encoding="utf-8"))["output"]
-    except Exception:  # noqa: BLE001 - a missing pointer must not break the report
-        return ROOT / "outputs" / "active_presidential_nested_v28"
-
-
-ACTIVE_DIR = _active_output_dir()
+ACTIVE_DIR = active_output_dir()
 OUTPUT_DIR = ROOT / "outputs" / "ex_ante_weighting"
 # chronological, so "previous" is well defined
 ORDER = ("pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022")
