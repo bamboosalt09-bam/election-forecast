@@ -1,3 +1,4 @@
+<!-- active-model-version: v29 -->
 # V29 architecture
 
 V29 is the active, frozen presidential model. It preserves V28 as a rollback,

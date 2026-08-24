@@ -1,3 +1,4 @@
+<!-- active-model-version: v29 -->
 # GitHub Workflow
 
 ## Repository role

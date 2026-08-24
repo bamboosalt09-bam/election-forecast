@@ -207,7 +207,7 @@ jobs:
         with:
           python-version: "3.13"
           cache: pip
-      - name: Audit the inherited exact V27-V29 dependency lock
+      - name: Audit the exact V29 dependency lock
         run: |
           python -m pip install pip-audit
-          python -m pip_audit -r requirements-v27.lock --strict --progress-spinner off
+          python -m pip_audit -r requirements-v29.lock --strict --progress-spinner off

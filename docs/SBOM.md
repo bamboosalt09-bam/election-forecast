@@ -1,16 +1,19 @@
+<!-- active-model-version: v29 -->
 # V29 software bill of materials
 
 This is the human-readable SBOM required by Attachment 1 of the 2026 Open
-Source Developer Competition result report. `requirements-v27.lock` records
-the complete tested Python 3.13 runtime reproduction resolution, including
-transitive packages. Visualization is an optional extra; its two direct
+Source Developer Competition result report. `requirements-v29.lock` records
+the complete tested Python 3.13 runtime reproduction resolution for the active
+model, including transitive packages, and is the file CI audits.
+`requirements-v27.lock` is retained as the V27-era record; it differs in
+`pandas` (3.0.3) and `pypdf` (6.16.1) and must not be used to reproduce V29. Visualization is an optional extra; its two direct
 packages are recorded below at the versions used for the published figures.
 
 | Library | Tested version | License | Official repository | Purpose |
 | --- | ---: | --- | --- | --- |
-| NumPy | 2.5.2 | BSD-3-Clause | https://github.com/numpy/numpy | Arrays and deterministic numerical transforms |
+| NumPy | 2.4.6 | BSD-3-Clause | https://github.com/numpy/numpy | Arrays and deterministic numerical transforms |
 | pandas | 3.0.5 | BSD-3-Clause | https://github.com/pandas-dev/pandas | Input joins, PIT filtering and output tables |
-| SciPy | 1.18.1 | BSD-3-Clause | https://github.com/scipy/scipy | Scientific numerical routines used by the fitted stack |
+| SciPy | 1.18.0 | BSD-3-Clause | https://github.com/scipy/scipy | Scientific numerical routines used by the fitted stack |
 | scikit-learn | 1.9.0 | BSD-3-Clause | https://github.com/scikit-learn/scikit-learn | Ridge regression and preprocessing |
 | Pydantic | 2.13.4 | MIT | https://github.com/pydantic/pydantic | Input schema validation |
 | Beautiful Soup | 4.15.0 | MIT | https://git.launchpad.net/beautifulsoup | Public-page parsing utilities |
@@ -23,18 +26,28 @@ packages are recorded below at the versions used for the published figures.
 | python-dotenv | 1.2.3 | BSD-3-Clause | https://github.com/theskumar/python-dotenv | Local-only environment configuration |
 | PyYAML | 6.0.3 | MIT | https://github.com/yaml/pyyaml | Configuration parsing |
 | openpyxl | 3.1.5 | MIT | https://foss.heptapod.net/openpyxl/openpyxl | Spreadsheet import/export tools |
-| pypdf | 6.16.1 | BSD-3-Clause | https://github.com/py-pdf/pypdf | Official-minute metadata extraction |
+| pypdf | 6.16.2 | BSD-3-Clause | https://github.com/py-pdf/pypdf | Official-minute metadata extraction |
 | matplotlib | 3.11.0 | PSF-based | https://github.com/matplotlib/matplotlib | Current figures |
 | Shapely | 2.1.2 | BSD-3-Clause | https://github.com/shapely/shapely | Administrative-boundary dissolve for maps |
 
 V29 exposes no external-model optional dependency extra. Historical stance
-experiments, weights and model-derived tables are excluded from the active
+experiments, model weights and sentence corpora are excluded from the active
 runtime and wheel.
+
+**One model-derived table is the exception, and it is active.**
+`data/raw/auto_issue_seed/candidate_issue_profile.csv` is a compact aggregate
+produced with the open-weight encoder `jhgan/ko-sroberta-nli`; it ships, it is
+read by the historical postprocess, and it is registered with its own rights
+basis in `PUBLIC_DATA_SOURCES.json` rather than under project authorship. It
+contains no model weight and no source sentence. Removing it is not free: a
+full-removal diagnostic moved regional macro MAE from `2.613903%p` to
+`4.935929%p` and winner accuracy from `0.8` to `0.6`. Saying model-derived
+tables are excluded without naming this one would be false.
 
 ## Reproduction environment
 
 ```bash
-python -m pip install -r requirements-v27.lock
+python -m pip install -r requirements-v29.lock
 python -m pip install --no-deps .
 election-forecast audit-current-presidential
 election-forecast verify-current-presidential

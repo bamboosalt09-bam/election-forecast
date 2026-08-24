@@ -5,6 +5,7 @@ include SECURITY.md
 include STRUCTURE.md
 include CONTRIBUTING.md
 include requirements-v27.lock
+include requirements-v29.lock
 include setup.py
 recursive-include docs *.md *.json
 recursive-include scripts *.py

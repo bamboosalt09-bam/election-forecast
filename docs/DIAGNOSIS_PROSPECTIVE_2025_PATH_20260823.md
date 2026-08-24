@@ -98,24 +98,32 @@ with the frozen artifact, so this class of failure is visible from now on.
 
 ## And running it in CI found one more thing
 
-The job fails on a clean checkout, for a reason unrelated to any of the above:
+The job failed on a clean checkout, for a reason unrelated to any of the above:
 
 ```
 FileNotFoundError: data/raw/official_sources/assembly_pres_2025_minutes/
                    assembly_stance_rows_2025_h1.csv
 ```
 
-That file is a 35 MB full-transcript stance extraction, listed under
-`excluded_paths` in `docs/PUBLIC_DATA_SOURCES.json` and deliberately excluded
-from both Git and the wheel.
+That file is a 35 MB stance extraction carrying 48,588 verbatim excerpts, listed
+under `excluded_paths` in `docs/PUBLIC_DATA_SOURCES.json` and deliberately
+excluded from both Git and the wheel. Hiding it locally and rebuilding had
+*passed*, but only because a second untracked input - 118.9 MB of 15th-22nd
+Assembly issue matches under `archives/` - was still on the machine. Tracing
+every repository file the run opens found exactly those two.
 
-**The historical model is reproducible from the public tree. The 2025
-demonstration is not.** `clean-reproduction` rebuilds V29's scored panel from
-what the repository ships and matches it byte for byte; the 2025 forecast
-cannot be rebuilt without an input the project does not redistribute. Nobody
-knew, because no job had ever run that path.
+**Subsequently repaired.** Three derived files now ship in their place, together
+3.7 MB and free of source text: the 2025 rows with each excerpt replaced by its
+length, the keyword rematch output, and the historical matches gzipped. Verified
+with both private inputs hidden, and confirmed on a clean GitHub runner. So the
+statement this section originally ended with - that the 2025 demonstration is
+not reproducible from the public tree - **no longer holds**, with one boundary
+that does: the keyword matching is taken as given rather than recomputed.
+`PRES_2025_INPUT_GUIDE.md` states that boundary and the procedure for
+recomputing it from the official proceedings.
 
-The check now detects the absence up front and reports a loud skip naming the
-missing file and stating that nothing was verified, rather than crashing deep
-in the pipeline. A silent green would repeat the exact failure this whole
-document is about. Where the input is present the full comparison still runs.
+`scripts/verify_v29_prospective_reproduction.py` runs as the CI job
+`prospective-reproduction`. Where an input genuinely cannot be resolved it
+reports a loud skip naming the file and stating that nothing was verified,
+rather than reporting success - a silent green would repeat the exact failure
+this whole document is about.

@@ -28,17 +28,31 @@ ALIAS = ROOT / "data/config/active_presidential_model.json"
 
 problems: list[str] = []
 
-#: The documents a reader is pointed at to learn what the active model is.
-#: Each has to say so in prose - a version token buried in a script path is not
-#: a declaration, and before the V29 sync every one of these named V28 as active
-#: while already citing v29 file paths.
+#: Every document that describes the *current* model, as opposed to recording a
+#: past one. Each carries a machine-readable marker on its first line, because
+#: prose is not a reliable declaration: before the V29 sync these files named
+#: V28 as active while already citing v29 script paths, so a token search passed
+#: them all.
 CORE_PUBLIC_DOCUMENTS = (
     "README.md",
     "docs/ARCHITECTURE.md",
     "docs/REPRODUCIBILITY.md",
     "docs/COMPETITION_COMPLIANCE_2026.md",
+    "docs/HANDOFF_CURRENT_STATE.md",
+    "docs/REPOSITORY_BOUNDARIES.md",
+    "docs/SBOM.md",
+    "docs/AI_MODEL_SPEC.md",
+    "docs/VISUALIZATION_DATA.md",
+    "docs/GITHUB_WORKFLOW.md",
+    "docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md",
+    "docs/PRES_2025_INPUT_GUIDE.md",
 )
-#: How those documents assert activeness, in both languages they use.
+ACTIVE_VERSION_MARKER = re.compile(r"<!--\s*active-model-version:\s*(v\d+)\s*-->")
+#: The prose assertions are still checked, but only above the first dated or
+#: superseded heading. A handoff log legitimately records "active V23" inside a
+#: 2026-08-02 section; what must not happen is the *preamble* naming an old
+#: version, which is exactly how HANDOFF_CURRENT_STATE went stale.
+HISTORICAL_HEADING = re.compile(r"^#{2,}\s.*(?:\d{4}-\d{2}-\d{2}|20\d{6}|[Ss]uperseded)", re.MULTILINE)
 ACTIVENESS_PATTERNS = (
     r"[Aa]ctive (V\d+)",
     r"(V\d+) is the active",
@@ -141,23 +155,32 @@ def main() -> None:
     #    and the protection rule updated in lockstep - and when that is missed,
     #    main blocks on a check that will never report again, with every job
     #    green and nothing to point at.
-    # 10. the documents a reader consults must declare this version as active,
-    #     and must not declare a different one. A bare token search would not do:
-    #     these files cite v29 script paths regardless of what their prose says.
+    # 10. every current-state document must carry the marker for this version,
+    #     and any activeness sentence in it must agree. A marker that disagrees
+    #     with its own prose is worse than either alone.
     upper = version.upper()
     for relative in CORE_PUBLIC_DOCUMENTS:
         text = _read(relative)
+        marked = ACTIVE_VERSION_MARKER.findall(text)
+        if not marked:
+            problems.append(
+                f"{relative} carries no <!-- active-model-version: {version} --> marker"
+            )
+        elif set(marked) != {version}:
+            problems.append(
+                f"{relative} is marked {', '.join(sorted(set(marked)))}, pointer says {version}"
+            )
+        cut = HISTORICAL_HEADING.search(text)
+        preamble = text[: cut.start()] if cut else text
         declared = {
             match
             for pattern in ACTIVENESS_PATTERNS
-            for match in re.findall(pattern, text)
+            for match in re.findall(pattern, preamble)
         }
-        if not declared:
-            problems.append(f"{relative} never states which version is active")
-        elif declared != {upper}:
-            stale = sorted(declared - {upper})
+        stale = sorted(declared - {upper})
+        if stale:
             problems.append(
-                f"{relative} declares {', '.join(stale)} active, pointer says {upper}"
+                f"{relative} still calls {', '.join(stale)} active in prose"
             )
 
     workflow = _read(".github/workflows/ci.yml")
