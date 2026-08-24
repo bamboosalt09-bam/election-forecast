@@ -14,9 +14,20 @@ ACTIVE_ALIAS = ROOT / "data/config/active_presidential_model.json"
 LEGACY_BASE = ROOT / "data/config/active_presidential_model_v16.json"
 RELEASE_VERSION = "0.29.0"
 MAIN_VERSION = "0.30.0.dev0"
-V28_SHA256 = "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba"
 V30_SHA256 = "afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e"
-V28_PREDICTIONS = ROOT / "outputs/active_presidential_nested_v28/nested_predictions.csv"
+#: Every frozen predecessor, not just one. This pinned V28 alone and kept
+#: doing so after V29 was promoted and then rolled back under V30, so the
+#: newest rollback - the one a bad promotion is most likely to disturb -
+#: was the one nothing here checked.
+ROLLBACK_SHA256 = {
+    "v23": "dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b",
+    "v24": "edefb5e0f24cfa1ad4d2d5e7934e7158de2113cdf9cb11e42853e208cd00726a",
+    "v25": "218e5d6c732f65c5c9259b38aabff0f381f2df9ced970a136d1a954a2fb51a1b",
+    "v26": "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3",
+    "v27": "f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b",
+    "v28": "23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba",
+    "v29": "fed959cdba1e127f91c2ab640a378d1f44a4a3e79b4c4a76893cf8d7c6153904",
+}
 
 
 def require(condition: bool, message: str) -> None:
@@ -39,9 +50,16 @@ def main() -> None:
         current.get("prediction_sha256") == V30_SHA256,
         "current pointer does not preserve the frozen V30 prediction hash",
     )
+    for version, expected in sorted(ROLLBACK_SHA256.items()):
+        predictions = ROOT / f"outputs/active_presidential_nested_{version}/nested_predictions.csv"
+        require(predictions.is_file(), f"frozen {version.upper()} rollback prediction is missing")
+        require(
+            hashlib.sha256(predictions.read_bytes()).hexdigest() == expected,
+            f"frozen {version.upper()} rollback prediction hash drifted",
+        )
     require(
-        hashlib.sha256(V28_PREDICTIONS.read_bytes()).hexdigest() == V28_SHA256,
-        "frozen V28 rollback prediction hash drifted",
+        str(current.get("predecessor")) in ROLLBACK_SHA256,
+        "the pointer's predecessor is not a pinned rollback",
     )
     require(
         current.get("runner") == "scripts/run_active_presidential_model_v30.py",
@@ -75,7 +93,8 @@ def main() -> None:
     print("[current public surface audit: PASS]")
     print(f"active_version={current['active_version']}")
     print(f"v30_prediction_sha256={V30_SHA256}")
-    print(f"v28_rollback_sha256={V28_SHA256}")
+    print(f"pinned_rollbacks={','.join(sorted(ROLLBACK_SHA256))}")
+    print(f"predecessor={current['predecessor']}")
     print(f"package_version={package_version}")
     print(f"frozen_release_version={RELEASE_VERSION}")
 

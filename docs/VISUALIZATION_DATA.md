@@ -7,8 +7,11 @@ panel. Forecast charts read the separate `pres_2025` V30 D-1 artifact and never
 read the realized 2025 result.
 
 The old numbered PNGs were moved to
-`research/visualizations/legacy_v23_v25/`. They are superseded V23/V25 research
+`research/visualizations/legacy_v23_v25/`, and the V27, V28 and V29 figure sets
+to `research/visualizations/legacy_v27_v29/`. They are superseded research
 history, are excluded from the packaged runtime and must not be cited as V30.
+Only the current set stays in `poster_figures/`, so the directory listing and
+the figures the README displays are the same thing.
 
 The current public set adds a V30 overview and an execution architecture figure
 to the performance, election-level, regional and 2025 D-1 map views. Every
