@@ -65,7 +65,7 @@ ACTIVE_VERSION_MARKER = re.compile(r"<!--\s*active-model-version:\s*(v\d+)\s*-->
 #: superseded heading. A handoff log legitimately records "active V23" inside a
 #: 2026-08-02 section; what must not happen is the *preamble* naming an old
 #: version, which is exactly how HANDOFF_CURRENT_STATE went stale.
-HISTORICAL_HEADING = re.compile(r"^#{2,}\s.*(?:\d{4}-\d{2}-\d{2}|20\d{6}|[Ss]uperseded)", re.MULTILINE)
+HISTORICAL_HEADING = re.compile(r"^#{2,}\s.*(?:\b\d{4}-\d{2}-\d{2}\b|\b20\d{6}\b|[Ss]uperseded)", re.MULTILINE)
 ACTIVENESS_PATTERNS = (
     r"[Aa]ctive (V\d+)",
     r"(V\d+) is the active",
@@ -301,7 +301,22 @@ def main() -> None:
             f"active nor a declared rollback",
         )
 
-    # 12. the canonical dependency lock, wherever it is named as the reproduction
+    # 12. version tokens inside the rights registry. It is JSON, so it carries
+    #     no marker, and its prose went stale three separate times - the policy
+    #     line, the boundary coverage prefix, and a BOK note still describing
+    #     what "V28 includes". Any version named in there must be the active one;
+    #     rollbacks have no business being described as what ships.
+    registry = _read("docs/PUBLIC_DATA_SOURCES.json")
+    named = {token.lower() for token in re.findall(r"\bV(\d+)\b", registry)}
+    named = {f"v{token}" for token in named}
+    stale_registry = sorted(named - {version})
+    check(
+        not stale_registry,
+        "docs/PUBLIC_DATA_SOURCES.json describes "
+        f"{', '.join(stale_registry)} where {version} is active",
+    )
+
+    # 13. the canonical dependency lock, wherever it is named as the reproduction
     #     environment. Three documents pointed at the superseded V27 lock while
     #     CI audited the V29 one.
     lock = f"requirements-{version}.lock"
