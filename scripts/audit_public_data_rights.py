@@ -9,7 +9,15 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTER = ROOT / "docs/PUBLIC_DATA_SOURCES.json"
-AUDITED_ROOTS = ("data/", "presidential_issue_engine/fixed_dataset/")
+# poster_figures/ is audited because the maps are drawn over downloaded SGIS
+# administrative boundaries and carry a CC BY 4.0 / KOGL attribution line in the
+# image itself. It was outside this list, so the registry could declare coverage
+# of poster_figures/v27_ while the published map was v29_ and nothing failed.
+AUDITED_ROOTS = (
+    "data/",
+    "presidential_issue_engine/fixed_dataset/",
+    "presidential_issue_engine/poster_figures/",
+)
 # Files whose content was produced with an external pretrained model. These
 # cannot sit inside a family whose basis is this project's own authorship: the
 # candidate-issue aggregate was classified under project_authored_and_derived_tables

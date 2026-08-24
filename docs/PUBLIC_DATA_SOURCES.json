@@ -77,7 +77,7 @@
     {
       "id": "sgis_administrative_boundaries",
       "coverage_prefixes": [
-        "presidential_issue_engine/poster_figures/v27_"
+        "presidential_issue_engine/poster_figures/"
       ],
       "provider": "vuski/admdongkor; Statistics Korea SGIS basis",
       "source_url": "https://github.com/vuski/admdongkor",
@@ -85,7 +85,7 @@
       "license_or_basis": "CC BY 4.0 and Korea Open Government License Type 1 attribution",
       "redistribution_decision": "include-generated-with-attribution",
       "attribution": "Statistics Korea SGIS and vuski/admdongkor",
-      "notes": "The wheel does not bundle the source GeoJSON. Visualization generation downloads one hash-pinned dated snapshot."
+      "notes": "The wheel does not bundle the source GeoJSON. Visualization generation downloads one hash-pinned dated snapshot. Coverage is the figures directory rather than a version prefix: it read poster_figures/v27_ while the published map was v29_pres_2025_regional_map.png, so the attribution obligation was declared for figures nobody displays and undeclared for the one that ships. Every map figure derives from the same boundary snapshot, so the prefix has no reason to carry a version."
     },
     {
       "id": "external_model_derived_candidate_issue_aggregate",
