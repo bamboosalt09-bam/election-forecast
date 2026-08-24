@@ -51,27 +51,70 @@ from `0.8` to `0.6`, so describing the file as an inert leftover would be untrue
 family whose basis does not mention a model, which is how it was previously
 classified.
 
-## Unresolved rights risk, stated plainly
+## Record: an absent licence tag, and what was decided about it
 
-One dependency is disclosed rather than settled.
-`data/raw/auto_issue_seed/candidate_issue_profile.csv` is a compact numeric
-aggregate computed with the open-weight encoder `jhgan/ko-sroberta-nli`, whose
-model card **published no licence tag** at audit time.
+### What is absent
 
-The file ships on the argument that it is not a copy or adaptation of the
-weights: it embeds no weight, no architecture and no source sentence. That
-argument is stated here, not adjudicated by anyone. No grant is claimed from the
-model author, and the missing tag is treated as missing rather than as
-permission.
+`jhgan/ko-sroberta-nli` published no licence tag on its model card at audit time.
+That absence is recorded here rather than resolved, because it is not this
+project's to resolve.
 
-If the author later publishes restrictive terms, or a reviewer disagrees that a
-numeric aggregate falls outside them, the file has to be dropped and the model
-rerun without it. The cost of that is measured rather than guessed: regional
+An absent tag means two things at once, and both belong in the record: no
+explicit grant was given, and **no explicit restriction was stated either**.
+
+### What is and is not distributed
+
+No model is distributed. There are **zero** model files in this repository - no
+weights, no architecture, no checkpoint, in any format. The encoder was run
+locally, once, and its outputs were kept.
+
+What ships is `data/raw/auto_issue_seed/candidate_issue_profile.csv`: 88.1 KB,
+247 rows, twenty numeric and categorical columns - candidate, issue, association
+strength and evidence counts. No source sentence, no embedding, no weight.
+
+### The problem that was anticipated
+
+Two readings were foreseeable and neither is favourable if left unaddressed.
+
+A reader could take "external-model-derived" to mean a model was redistributed.
+It was not, and the section above says so in terms that can be checked against
+the file list.
+
+A reader could ask what basis the derived table ships on, and find it filed
+under the project's own Apache-2.0 authorship - which would have been a false
+claim, since Apache-2.0 describes this project's code and not an artefact
+produced with someone else's encoder.
+
+### How it was handled
+
+The aggregate was moved out of `project_authored_and_derived_tables` into its
+own source family, `external_model_derived_candidate_issue_aggregate`, whose
+stated basis is what is actually relied on: that the file embeds no weight,
+architecture or source sentence and so is not a copy or adaptation of the model.
+No grant is claimed from the model author, and the missing tag is disclosed as
+missing rather than read as permission.
+
+`scripts/audit_public_data_rights.py` fails if this file is ever covered only by
+a family whose basis does not mention a model. Adding that check immediately
+caught that the file sat in two families at once.
+
+### If the reading changes
+
+Should the author later publish restrictive terms, or should a reviewer conclude
+that a numeric aggregate falls inside them, the file is dropped and the model
+runs without it. The consequence is measured rather than estimated: regional
 macro MAE `2.613902987%p` to `4.935929128%p`, winner accuracy `0.8` to `0.6`.
+That is why it is disclosed rather than quietly removed - the cost of removal is
+real, and a reader is entitled to weigh it themselves.
 
-Article 9 is satisfied independently of this question - the encoder is
-open-weight, it ran locally, and V29 executes no model at all. The open question
-is redistribution of the derived table, not embedded AI.
+### Proportion
+
+The heavier rights question in this project is not the encoder. It is the
+National Assembly proceedings the aggregate was computed over, whose provider
+terms prohibit sharing supplied information unchanged. That is why the verbatim
+corpus is excluded and only derived forms ship - see
+`PRES_2025_INPUT_GUIDE.md`. Article 9 is satisfied independently of any of this:
+the encoder is open-weight, it ran locally, and V29 executes no model at all.
 
 ## Submission checklist that remains outside code
 
