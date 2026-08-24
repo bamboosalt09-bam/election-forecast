@@ -57,7 +57,7 @@ REQUIRED_RUNTIME_FILES = {
     "NOTICE",
     "scripts/run_current_presidential_model.py",
     "scripts/run_active_presidential_model_v29.py",
-    "scripts/run_prospective_forecast_v28.py",
+    "scripts/run_prospective_forecast_v29.py",
     "scripts/audit_public_active_presidential_model_v29.py",
     "scripts/verify_v29_clean_reproduction.py",
     "presidential_issue_engine/issue_vote_engine.py",
@@ -113,7 +113,7 @@ def _audit_runtime(payload: bytes) -> int:
         if manifest.get("post_2022_outcomes_used") is not False:
             raise RuntimeError("wheel runtime does not preserve the outcome-free boundary")
         if manifest.get("frozen_prediction_sha256") != FROZEN_V29_SHA256:
-            raise RuntimeError("wheel runtime frozen V28 hash declaration drifted")
+            raise RuntimeError("wheel runtime frozen V29 hash declaration drifted")
 
         records = manifest.get("files")
         if not isinstance(records, list):
@@ -144,7 +144,7 @@ def _audit_runtime(payload: bytes) -> int:
             "outputs/active_presidential_nested_v29/nested_predictions.csv"
         )
         if hashlib.sha256(frozen).hexdigest() != FROZEN_V29_SHA256:
-            raise RuntimeError("embedded frozen V27 prediction hash drifted")
+            raise RuntimeError("embedded frozen V29 prediction hash drifted")
         return len(indexed)
 
 
@@ -183,7 +183,7 @@ def audit_sdist(path: Path) -> int:
             "LICENSE",
             "NOTICE",
             "SECURITY.md",
-            "requirements-v27.lock",
+            "requirements-v29.lock",
             "setup.py",
             "scripts/audit_public_data_rights.py",
             "scripts/audit_publication_security.py",

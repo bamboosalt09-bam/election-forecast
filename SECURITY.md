@@ -1,9 +1,10 @@
+<!-- active-model-version: v29 -->
 # Security policy
 
 ## Supported release
 
 Security fixes are applied to the current `main` branch and the active package
-release. Frozen V23-V28 research artifacts are immutable evidence: a security
+release. Frozen V23-V29 research artifacts are immutable evidence: a security
 fix that changes model behavior must be released as a new version rather than
 rewriting a frozen artifact.
 
@@ -18,15 +19,15 @@ credentials in the report.
 
 ## Security boundary
 
-- The public V28 runner is local and does not require a hosted inference API.
+- The public V29 runner is local and does not require a hosted inference API.
 - The packaged runtime admits Git-tracked files only, rejects path traversal,
   and verifies every extracted file with SHA-256 before execution.
 - API credentials belong in local environment variables. `.env`, caches,
   checkpoints, full-text parliamentary corpora and raw market exports are not
   distributed.
-- Optional historical stance-model experiments are not part of the active V28
+- Optional historical stance-model experiments are not part of the active V29
   runtime or the competition demonstration.
 
 Automated checks scan the public boundary, source/data licenses, pinned GitHub
 Actions, the exact dependency lock against vulnerability advisories, dependency
-updates, the frozen V28 artifact and clean reproduction.
+updates, the frozen V29 artifact and clean reproduction.

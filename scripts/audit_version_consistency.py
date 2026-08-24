@@ -55,7 +55,11 @@ CORE_PUBLIC_DOCUMENTS = (
     "docs/GITHUB_WORKFLOW.md",
     "docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md",
     "docs/PRES_2025_INPUT_GUIDE.md",
+    "SECURITY.md",
 )
+#: Versions that may legitimately appear in paths: the active one and its
+#: frozen rollbacks, which the audits pin by design.
+ROLLBACK_VERSIONS = frozenset({"v23", "v24", "v25", "v26", "v27", "v28"})
 ACTIVE_VERSION_MARKER = re.compile(r"<!--\s*active-model-version:\s*(v\d+)\s*-->")
 #: The prose assertions are still checked, but only above the first dated or
 #: superseded heading. A handoff log legitimately records "active V23" inside a
@@ -258,6 +262,54 @@ def main() -> None:
             problems.append(
                 f"{relative} still calls {', '.join(stale)} active in prose"
             )
+
+    # 11. the audits' own required-file lists name versioned paths, and nothing
+    #     was checking them. A distribution audit that still demands the
+    #     predecessor's prospective runner passes right up until a wheel is
+    #     built without it.
+    #
+    #     Rollback versions are allowed in *artifact* paths - the frozen
+    #     prediction CSVs are pinned by design - but not in executable ones. A
+    #     first attempt at this check exempted rollbacks everywhere and so let
+    #     `scripts/run_prospective_forecast_v28.py` through, which is the exact
+    #     defect it exists to catch. Intermediate directories such as
+    #     automatic_controls_v22 carry unrelated version numbers and are not
+    #     examined at all.
+    executable_paths = re.compile(
+        r"(?:scripts/(?:run_active_presidential_model|run_prospective_forecast|"
+        r"audit_public_active_presidential_model|build_active|"
+        r"finalize_active_presidential_model|verify)_?\w*?(v\d+)\w*\.py"
+        r"|src/election_forecast/(v\d+)_runtime)"
+    )
+    artifact_paths = re.compile(
+        r"outputs/(?:active_presidential_nested|prospective_pres_2025)_(v\d+)/"
+    )
+    for relative in ("scripts/audit_distribution_artifacts.py", "setup.py"):
+        text = _read(relative)
+        executable = {g for match in executable_paths.findall(text) for g in match if g}
+        stale = sorted(v for v in executable if v != version)
+        check(
+            not stale,
+            f"{relative} requires the {', '.join(stale)} runner or loader "
+            f"where {version} is active",
+        )
+        artifacts = set(artifact_paths.findall(text))
+        unknown = sorted(v for v in artifacts if v != version and v not in ROLLBACK_VERSIONS)
+        check(
+            not unknown,
+            f"{relative} names {', '.join(unknown)} artifact paths that are neither "
+            f"active nor a declared rollback",
+        )
+
+    # 12. the canonical dependency lock, wherever it is named as the reproduction
+    #     environment. Three documents pointed at the superseded V27 lock while
+    #     CI audited the V29 one.
+    lock = f"requirements-{version}.lock"
+    check((ROOT / lock).is_file(), f"the canonical lock {lock} does not exist")
+    for relative in ("docs/SBOM.md", "docs/COMPETITION_COMPLIANCE_2026.md",
+                     "README.md", "scripts/audit_distribution_artifacts.py"):
+        text = _read(relative)
+        check(lock in text, f"{relative} never names the canonical lock {lock}")
 
     workflow = _read(".github/workflows/ci.yml")
     versioned_jobs = re.findall(r"^  ([a-z0-9-]*v\d+[a-z0-9-]*):", workflow, re.MULTILINE)

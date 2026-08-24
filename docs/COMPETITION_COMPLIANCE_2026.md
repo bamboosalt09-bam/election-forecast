@@ -17,7 +17,7 @@ The attachments themselves are not redistributed by this repository.
 | Rule reference | Repository control | Evidence |
 | --- | --- | --- |
 | Article 8: directly authored code under an OSI-approved license | Apache-2.0 at repository root; NOTICE separates third-party data and software | `LICENSE`, `NOTICE` |
-| Article 8: disclose all third-party software, sources and licenses | Human-readable direct-dependency SBOM plus exact tested lock. Data rights are registered per source family and enforced in CI; where a model card published no licence tag the absence is disclosed as such rather than assumed permissive. | `docs/SBOM.md`, `requirements-v27.lock`, `docs/PUBLIC_DATA_SOURCES.json` |
+| Article 8: disclose all third-party software, sources and licenses | Human-readable direct-dependency SBOM plus exact tested lock. Data rights are registered per source family and enforced in CI; where a model card published no licence tag the absence is disclosed as such rather than assumed permissive. | `docs/SBOM.md`, `requirements-v29.lock`, `docs/PUBLIC_DATA_SOURCES.json` |
 | Article 9: embedded AI must run independently and be at least open weights | Active V29 runs no model at all: no external AI weight, no direct stance overlay and no hosted inference API. One external-model-derived input remains active - the compact `data/raw/auto_issue_seed/candidate_issue_profile.csv` aggregate - and is registered with its own rights basis rather than under project authorship. The encoder that produced it, `jhgan/ko-sroberta-nli`, is open-weight and ran locally, so the historical use satisfies both limbs of this Article even though nothing executes now. | `docs/AI_MODEL_SPEC.md`, `docs/PUBLIC_DATA_SOURCES.json`, `scripts/audit_public_data_rights.py` |
 | Article 10: complete source must be public and reviewable | Public source tree plus a self-contained wheel that embeds the actual V29 runtime | `setup.py`, `src/election_forecast/v29_runtime.py` |
 | Article 10: winning repository remains public for five years | Repository policy records the obligation; deletion/private conversion must not occur during that period | this document and release checklist |
@@ -50,6 +50,71 @@ from `0.8` to `0.6`, so describing the file as an inert leftover would be untrue
 `scripts/audit_public_data_rights.py` fails if this file is ever covered only by a
 family whose basis does not mention a model, which is how it was previously
 classified.
+
+## Record: an absent licence tag, and what was decided about it
+
+### What is absent
+
+`jhgan/ko-sroberta-nli` published no licence tag on its model card at audit time.
+That absence is recorded here rather than resolved, because it is not this
+project's to resolve.
+
+An absent tag means two things at once, and both belong in the record: no
+explicit grant was given, and **no explicit restriction was stated either**.
+
+### What is and is not distributed
+
+No model is distributed. There are **zero** model files in this repository - no
+weights, no architecture, no checkpoint, in any format. The encoder was run
+locally, once, and its outputs were kept.
+
+What ships is `data/raw/auto_issue_seed/candidate_issue_profile.csv`: 88.1 KB,
+247 rows, twenty numeric and categorical columns - candidate, issue, association
+strength and evidence counts. No source sentence, no embedding, no weight.
+
+### The problem that was anticipated
+
+Two readings were foreseeable and neither is favourable if left unaddressed.
+
+A reader could take "external-model-derived" to mean a model was redistributed.
+It was not, and the section above says so in terms that can be checked against
+the file list.
+
+A reader could ask what basis the derived table ships on, and find it filed
+under the project's own Apache-2.0 authorship - which would have been a false
+claim, since Apache-2.0 describes this project's code and not an artefact
+produced with someone else's encoder.
+
+### How it was handled
+
+The aggregate was moved out of `project_authored_and_derived_tables` into its
+own source family, `external_model_derived_candidate_issue_aggregate`, whose
+stated basis is what is actually relied on: that the file embeds no weight,
+architecture or source sentence and so is not a copy or adaptation of the model.
+No grant is claimed from the model author, and the missing tag is disclosed as
+missing rather than read as permission.
+
+`scripts/audit_public_data_rights.py` fails if this file is ever covered only by
+a family whose basis does not mention a model. Adding that check immediately
+caught that the file sat in two families at once.
+
+### If the reading changes
+
+Should the author later publish restrictive terms, or should a reviewer conclude
+that a numeric aggregate falls inside them, the file is dropped and the model
+runs without it. The consequence is measured rather than estimated: regional
+macro MAE `2.613902987%p` to `4.935929128%p`, winner accuracy `0.8` to `0.6`.
+That is why it is disclosed rather than quietly removed - the cost of removal is
+real, and a reader is entitled to weigh it themselves.
+
+### Proportion
+
+The heavier rights question in this project is not the encoder. It is the
+National Assembly proceedings the aggregate was computed over, whose provider
+terms prohibit sharing supplied information unchanged. That is why the verbatim
+corpus is excluded and only derived forms ship - see
+`PRES_2025_INPUT_GUIDE.md`. Article 9 is satisfied independently of any of this:
+the encoder is open-weight, it ran locally, and V29 executes no model at all.
 
 ## Submission checklist that remains outside code
 
