@@ -17,7 +17,7 @@ The attachments themselves are not redistributed by this repository.
 | Rule reference | Repository control | Evidence |
 | --- | --- | --- |
 | Article 8: directly authored code under an OSI-approved license | Apache-2.0 at repository root; NOTICE separates third-party data and software | `LICENSE`, `NOTICE` |
-| Article 8: disclose all third-party software, sources and licenses | Human-readable direct-dependency SBOM plus exact tested lock. Data rights are registered per source family and enforced in CI; where a model card published no licence tag the absence is disclosed as such rather than assumed permissive. | `docs/SBOM.md`, `requirements-v27.lock`, `docs/PUBLIC_DATA_SOURCES.json` |
+| Article 8: disclose all third-party software, sources and licenses | Human-readable direct-dependency SBOM plus exact tested lock. Data rights are registered per source family and enforced in CI; where a model card published no licence tag the absence is disclosed as such rather than assumed permissive. | `docs/SBOM.md`, `requirements-v29.lock`, `docs/PUBLIC_DATA_SOURCES.json` |
 | Article 9: embedded AI must run independently and be at least open weights | Active V29 runs no model at all: no external AI weight, no direct stance overlay and no hosted inference API. One external-model-derived input remains active - the compact `data/raw/auto_issue_seed/candidate_issue_profile.csv` aggregate - and is registered with its own rights basis rather than under project authorship. The encoder that produced it, `jhgan/ko-sroberta-nli`, is open-weight and ran locally, so the historical use satisfies both limbs of this Article even though nothing executes now. | `docs/AI_MODEL_SPEC.md`, `docs/PUBLIC_DATA_SOURCES.json`, `scripts/audit_public_data_rights.py` |
 | Article 10: complete source must be public and reviewable | Public source tree plus a self-contained wheel that embeds the actual V29 runtime | `setup.py`, `src/election_forecast/v29_runtime.py` |
 | Article 10: winning repository remains public for five years | Repository policy records the obligation; deletion/private conversion must not occur during that period | this document and release checklist |
@@ -50,6 +50,28 @@ from `0.8` to `0.6`, so describing the file as an inert leftover would be untrue
 `scripts/audit_public_data_rights.py` fails if this file is ever covered only by a
 family whose basis does not mention a model, which is how it was previously
 classified.
+
+## Unresolved rights risk, stated plainly
+
+One dependency is disclosed rather than settled.
+`data/raw/auto_issue_seed/candidate_issue_profile.csv` is a compact numeric
+aggregate computed with the open-weight encoder `jhgan/ko-sroberta-nli`, whose
+model card **published no licence tag** at audit time.
+
+The file ships on the argument that it is not a copy or adaptation of the
+weights: it embeds no weight, no architecture and no source sentence. That
+argument is stated here, not adjudicated by anyone. No grant is claimed from the
+model author, and the missing tag is treated as missing rather than as
+permission.
+
+If the author later publishes restrictive terms, or a reviewer disagrees that a
+numeric aggregate falls outside them, the file has to be dropped and the model
+rerun without it. The cost of that is measured rather than guessed: regional
+macro MAE `2.613902987%p` to `4.935929128%p`, winner accuracy `0.8` to `0.6`.
+
+Article 9 is satisfied independently of this question - the encoder is
+open-weight, it ran locally, and V29 executes no model at all. The open question
+is redistribution of the derived table, not embedded AI.
 
 ## Submission checklist that remains outside code
 
