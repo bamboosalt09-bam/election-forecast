@@ -34,9 +34,10 @@ python scripts/audit_publication_security.py
 python -m pytest -q
 ```
 
-동결 V29의 기준 재산출 환경은 Windows, Python 3.13과 V27에서 이어받은
-`requirements-v27.lock`입니다. 일반 설치의 Python 3.11+ 지원과 동결 수치
-환경은 구분됩니다.
+동결 V29의 기준 재산출 환경은 Windows, Python 3.13과
+`requirements-v29.lock`입니다. `requirements-v27.lock`은 V27 당시의 기록으로만
+남아 있으며 V29 재현에 쓰면 안 됩니다(`pandas`·`pypdf` 핀이 다릅니다).
+일반 설치의 Python 3.11+ 지원과 동결 수치 환경은 구분됩니다.
 
 ## 결과 요약
 
@@ -343,6 +344,8 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 | `research/` | 활성 패키지에서 제외한 구식 시각화와 비승격 연구 기록 |
 | `docs/` | 설계·감사·승격·재현성 기록 |
 | `tests/` | PIT, 누수, 입력 경계, 회귀 테스트 |
+
+문서 124개 중 무엇이 현행이고 무엇이 이력인지는 [문서 색인](docs/INDEX.md)에 정리돼 있습니다 — 파일명이 아니라 활성 버전 marker와 참조 도달성으로 나누며, CI가 트리와 일치하는지 확인합니다.
 
 공개 저장소의 연구 이력과 설치 배포물의 경계는 [저장소·배포 경계](docs/REPOSITORY_BOUNDARIES.md)에 고정합니다. wheel과 sdist에는 현재 V29 실행·감사에 필요한 코드·입력·공개 문서만 들어갑니다. 외부모델 가중치·문장 코퍼스·직접 overlay·구형 시연·비승격 실험 산출물은 제외하며, 필요한 동결 후보×이슈 집계표 1개만 파생 이력과 함께 포함합니다.
 

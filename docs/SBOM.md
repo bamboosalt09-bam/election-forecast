@@ -54,4 +54,4 @@ election-forecast verify-current-presidential
 ```
 
 Package metadata remains the source of supported dependency ranges. The lock
-is the reviewed exact environment for the frozen V27 reproduction check.
+is the reviewed exact environment for the frozen V29 reproduction check.
