@@ -207,8 +207,21 @@ def build_summary(by_election: pd.DataFrame) -> dict[str, object]:
         "uniform_national_swing_mae_pp",
         "national_uniform_mae_pp",
     )
+    # The filename is generic and the directory is not versioned, so the
+    # artifact has to say which model it measured. It said so only because
+    # someone added the two fields by hand, and this script rebuilds the file
+    # from scratch - the next re-run silently dropped them. Derived here, they
+    # survive re-running.
+    measured = PREDICTIONS.parent.name.rsplit("_", 1)[-1]
     return {
         "schema": "forecast_baseline_summary_v1",
+        "model_version": measured,
+        "model_version_note": (
+            f"These baselines were computed against the {measured.upper()} active "
+            "model and have not been recomputed since; the generic filename does "
+            "not imply the current active version. See "
+            "data/config/current_presidential_model.json."
+        ),
         "elections": int(len(by_election)),
         "weighting": "contest_votes within election; equal weight across elections",
         "uniform_national_swing_is_oracle_aided": True,
@@ -231,9 +244,12 @@ def main() -> None:
     summary = build_summary(by_election)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     by_election.to_csv(OUTPUT_DIR / "baseline_by_election.csv", index=False, encoding="utf-8-sig")
-    (OUTPUT_DIR / "baseline_summary.json").write_text(
-        json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
-        encoding="utf-8",
+    # write_bytes, not write_text: on Windows the latter translates LF to
+    # CRLF and rewrites every line of a file nothing meant to change
+    (OUTPUT_DIR / "baseline_summary.json").write_bytes(
+        (json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False) + "\n").encode(
+            "utf-8"
+        )
     )
     print(by_election.to_string(index=False))
     print(json.dumps(summary, ensure_ascii=False, indent=2))

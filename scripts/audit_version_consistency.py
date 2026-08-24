@@ -56,6 +56,9 @@ CORE_PUBLIC_DOCUMENTS = (
     "docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md",
     "docs/PRES_2025_INPUT_GUIDE.md",
     "SECURITY.md",
+    # ships in the sdist and describes the current layout, but carried no
+    # marker and so sat at V27 through three promotions without complaint
+    "STRUCTURE.md",
 )
 #: Versions that may legitimately appear in paths: the active one and its
 #: frozen rollbacks, which the audits pin by design.
