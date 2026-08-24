@@ -70,7 +70,15 @@ def _referenced_paths(sources: list[str]) -> set[str]:
 
 def classify() -> tuple[list[str], list[str], list[str]]:
     tracked = _tracked()
-    docs = sorted(p for p in tracked if p.startswith("docs/") and "/" not in p[5:])
+    # the index never lists itself: it is generated from the tree, so including
+    # it would make the first commit of the file change what a regeneration
+    # produces and leave --check failing for everyone afterwards
+    self_path = OUTPUT.relative_to(ROOT).as_posix()
+    docs = sorted(
+        p
+        for p in tracked
+        if p.startswith("docs/") and "/" not in p[5:] and p != self_path
+    )
     scanned = [
         p
         for p in tracked
