@@ -36,6 +36,8 @@ jobs:
         run: python scripts/audit_current_public_surface.py
       - name: Verify every version declaration agrees with the pointer
         run: python scripts/audit_version_consistency.py
+      - name: Verify the document index matches the tree
+        run: python scripts/build_docs_index.py --check
 
   tests:
     runs-on: ubuntu-latest

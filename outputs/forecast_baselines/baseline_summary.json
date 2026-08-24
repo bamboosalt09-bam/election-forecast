@@ -1,5 +1,7 @@
 {
   "schema": "forecast_baseline_summary_v1",
+  "model_version": "v23",
+  "model_version_note": "These baselines were computed against the V23 active model and have not been recomputed since; the generic filename does not imply the current active version. See data/config/current_presidential_model.json.",
   "elections": 5,
   "weighting": "contest_votes within election; equal weight across elections",
   "uniform_national_swing_is_oracle_aided": true,

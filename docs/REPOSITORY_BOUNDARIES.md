@@ -11,6 +11,7 @@ for transparency, but they are not the same publication surface.
 | Rollback evidence | V23-V28 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
 | Corrected demonstration | `outputs/prospective_pres_2025_v29/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
 | Boundary history reference | `outputs/external_model_free_v25_baseline/` | Yes | V25 pipeline under the external-model boundary; verification reference only, never promoted or scored |
+| Document record | `docs/` dated experiments, diagnoses and superseded final models | Yes | Indexed in `docs/INDEX.md`; accurate for the state each describes, never current |
 | Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V29 output |
 | Local/private acquisition | ignored caches, checkpoints, full text, credentials and uncertain-rights exports | No | Must be reacquired under the provider's terms or remain local |
 
