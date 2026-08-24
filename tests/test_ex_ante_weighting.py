@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from presidential_issue_engine import forecast_time_region_weights as ftw
 from scripts import evaluate_ex_ante_weighting as exante
 from scripts.active_model_pointer import active_output_dir, active_version
 
@@ -45,8 +46,12 @@ def test_prior_weights_come_from_the_preceding_election_only() -> None:
     volumes = exante.regional_volumes(_panel())
     prior, substituted = exante.prior_election_weights(volumes)
 
-    assert set(prior["election_id"]) == {"pres_2007"}, "the first election has no prior"
-    weights = prior.set_index("region_id")["weight"].to_dict()
+    # Both scored elections now have a predecessor: 2007 has 2002 in the panel,
+    # and 2002 has 1997 from the shipped warmup table.
+    assert set(prior["election_id"]) == {"pres_2002", "pres_2007"}
+    weights = (
+        prior.loc[prior.election_id.eq("pres_2007")].set_index("region_id")["weight"].to_dict()
+    )
     # 2007's weights must be 2002's volumes, not 2007's own
     assert weights == {"r1": 100.0, "r2": 300.0}
     assert substituted.get("pres_2007", 0) == 0
@@ -84,12 +89,26 @@ def test_equal_region_weighting_ignores_volume() -> None:
     )
 
 
-def test_the_first_election_has_no_prior_weighting() -> None:
-    by_election, _ = exante.evaluate(_panel())
+def test_the_first_election_is_weighted_from_the_shipped_warmup_table() -> None:
+    """It used to be undefined; V30 ships 1997's turnout, so it no longer is.
+
+    The synthetic panel's regions do not exist in the real 1997 table, so every
+    one of them takes the warmup mean - which is the substitution rule working,
+    not a fallback to equal weights.
+    """
+
+    by_election, substituted = exante.evaluate(_panel())
     first = by_election.loc[by_election.election_id.eq("pres_2002")].iloc[0]
-    assert np.isnan(first["prior_election_votes_pp"])
+    assert not np.isnan(first["prior_election_votes_pp"])
     assert not np.isnan(first["contest_votes_pp"])
     assert not np.isnan(first["equal_region_pp"])
+    assert substituted["pres_2002"] == 2, "both synthetic regions take the 1997 mean"
+
+    warmup = pd.read_csv(ftw.WARMUP_TURNOUT, encoding="utf-8-sig")
+    volumes = exante.regional_volumes(_panel())
+    prior, _ = exante.prior_election_weights(volumes)
+    weights = prior.loc[prior.election_id.eq("pres_2002"), "weight"].unique()
+    assert weights == pytest.approx([float(warmup["valid_votes"].mean())])
 
 
 def test_the_shipped_headline_is_reproduced_by_the_contest_votes_column() -> None:
