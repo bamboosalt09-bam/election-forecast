@@ -2,7 +2,7 @@
 # checks by name, so a job called v28-clean-reproduction has to be renamed at
 # every promotion - and the protection rule updated in lockstep, or main blocks
 # on a check that will never report again. That is exactly what happened when
-# these were renamed from v28 to v30.
+# these were renamed from v28 to v29.
 
 name: CI
 

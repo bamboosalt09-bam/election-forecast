@@ -50,7 +50,8 @@ name:
 | `docs/GITHUB_BASELINE_20260822.json` | v26 |
 | `docs/GITHUB_BASELINE_V27_20260822.json` | v27 |
 | `docs/GITHUB_BASELINE_V28_20260823.json` | v28 |
-| `docs/GITHUB_BASELINE_V29_20260823.json` | **v30, current** |
+| `docs/GITHUB_BASELINE_V29_20260823.json` | v29 |
+| `docs/GITHUB_BASELINE_V30_20260824.json` | **v30, current** |
 
 They are not renamed because frozen finalizer scripts reference them by path.
 Every one carries its own `active_version` field, which is authoritative.
