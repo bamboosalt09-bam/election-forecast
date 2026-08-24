@@ -7,6 +7,9 @@ name = "election-forecast"
 version = "0.30.0.dev0"
 description = "Point-in-time Korean presidential election forecasting engine; active V30 with forecast-time regional weighting."
 readme = "README.md"
+authors = [
+    { name = "Election Forecast contributors", email = "bamboosalt09-bam@users.noreply.github.com" },
+]
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 requires-python = ">=3.11"
