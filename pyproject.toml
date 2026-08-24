@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "election-forecast"
-version = "0.29.0.dev0"
-description = "Point-in-time Korean presidential election forecasting engine; active V29 with the third-share regional dispersion expansion."
+version = "0.30.0.dev0"
+description = "Point-in-time Korean presidential election forecasting engine; active V30 with forecast-time regional weighting."
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
@@ -38,7 +38,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
-reproduce-v29 = [
+reproduce-v30 = [
     "numpy==2.4.6",
     "pandas==3.0.5",
     "scipy==1.18.0",
@@ -61,7 +61,7 @@ news-collector = "news_collector.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-election_forecast = ["_v29_runtime.zip"]
+election_forecast = ["_v30_runtime.zip"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]

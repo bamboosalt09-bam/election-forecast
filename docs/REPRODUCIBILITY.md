@@ -1,12 +1,12 @@
-<!-- active-model-version: v29 -->
-# Reproducibility and the Frozen V29 Boundary
+<!-- active-model-version: v30 -->
+# Reproducibility and the Frozen V30 Boundary
 
 ## What is and is not reproducible from this repository
 
 | artifact | reproducible from the public tree | check |
 | --- | --- | --- |
-| V29 scored historical model | **yes**, byte for byte | `clean-reproduction` |
-| V29 packaged runtime | **yes**, from the built wheel | `wheel-reproduction` |
+| V30 scored historical model | **yes**, byte for byte | `clean-reproduction` |
+| V30 packaged runtime | **yes**, from the built wheel | `wheel-reproduction` |
 | 2025 D-1 demonstration | **yes, with one boundary** | `prospective-reproduction` |
 
 The 2025 demonstration is built from official Assembly proceedings. Its
@@ -22,7 +22,7 @@ So the boundary is this: from the public tree the forecast is rebuilt and
 compared **downstream of the keyword matching**, and the matching itself is
 taken as given. Confirming that these proceedings produce these issue weights
 needs the proceedings; confirming that these issue weights produce this forecast
-does not. `verify_v29_prospective_reproduction.py` reports which of the two it
+does not. `verify_v30_prospective_reproduction.py` reports which of the two it
 did rather than letting a weaker reproduction look like a stronger one.
 
 [PRES_2025_INPUT_GUIDE.md](PRES_2025_INPUT_GUIDE.md) gives the full procedure for
@@ -33,15 +33,19 @@ it before.
 
 ## Frozen scope
 
-Active V29 is a through-2022 development model. Its runner, V23 base
+Active V30 is a through-2022 development model. Its runner, V23 base
 configuration, V24 versioned panel, predictions, interval records, and
-promotion manifests are frozen. V28 through V23 remain immutable rollback
+promotion manifests are frozen. V29 through V23 remain immutable rollback
 boundaries. New experiments must use a new versioned path.
 
 Canonical prediction artifacts:
 
 ```text
-V29 active:
+V30 active:
+outputs/active_presidential_nested_v30/nested_predictions.csv
+SHA-256: afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e
+
+V29 rollback (target-turnout-weighted predecessor):
 outputs/active_presidential_nested_v29/nested_predictions.csv
 SHA-256: fed959cdba1e127f91c2ab640a378d1f44a4a3e79b4c4a76893cf8d7c6153904
 
@@ -66,11 +70,11 @@ outputs/active_presidential_nested_v23/nested_predictions.csv
 SHA-256: dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b
 ```
 
-`data/config/current_presidential_model.json` selects V29, and
+`data/config/current_presidential_model.json` selects V30, and
 `data/config/active_presidential_model.json` is an identical public
 compatibility alias. The explicit `active_presidential_model_v16.json` file is
-only the frozen internal base used by the versioned runner lineage. V29 keeps
-V28's statistical chain and its external-model boundary — no neural inference,
+only the frozen internal base used by the versioned runner lineage. V30 keeps
+V29's statistical chain and its external-model boundary — no neural inference,
 no direct sentence-level stance overlay, and the two excluded automatic mega
 seeds blocked even when a legacy engine loads after the wrapper enters its
 runtime guard — and adds a third-share-indexed expansion of the regional
@@ -85,31 +89,31 @@ remains because full removal materially changes the postprocess.
 python -m pip install election_forecast-0.29.0.dev0-py3-none-any.whl
 election-forecast audit-current-presidential
 election-forecast verify-current-presidential
-election-forecast run-current-presidential --output-dir outputs/reproduction_v29
+election-forecast run-current-presidential --output-dir outputs/reproduction_v30
 ```
 
-The wheel embeds the Git-tracked public V29 runtime as a deterministic archive.
+The wheel embeds the Git-tracked public V30 runtime as a deterministic archive.
 On first use it rejects path traversal, extracts into a versioned user cache and
-verifies every file's size and SHA-256 before executing the V29
+verifies every file's size and SHA-256 before executing the V30
 runner. Local caches, credentials, full-text corpora and the uncertain-rights
 daily KOSPI export are excluded. The wheel includes only the 15 attributed D-1
-election×slot aggregates actually consumed by V29.
+election×slot aggregates actually consumed by V30.
 
 ### Source checkout
 
 ```bash
-python -m pip install -e ".[dev,reproduce-v29]"
-python scripts/run_active_presidential_model_v29.py --output-dir outputs/reproduction_v29
-python scripts/verify_v29_clean_reproduction.py
-python scripts/build_active_v29_predictive_intervals.py
-python scripts/audit_public_active_presidential_model_v29.py
+python -m pip install -e ".[dev,reproduce-v30]"
+python scripts/run_active_presidential_model_v30.py --output-dir outputs/reproduction_v30
+python scripts/verify_v30_clean_reproduction.py
+python scripts/build_active_v30_predictive_intervals.py
+python scripts/audit_public_active_presidential_model_v30.py
 python scripts/audit_github_baseline.py
 python scripts/audit_public_data_rights.py
 python scripts/audit_publication_security.py
 python -m pytest -q
 ```
 
-The public audit checks pointer fields, V23~V28 rollback hashes, V29 prediction
+The public audit checks pointer fields, V23~V29 rollback hashes, V30 prediction
 and artifact hashes, compositional rows, gain 1, and chronological intervals.
 The clean-reproduction command rebuilds predictions in a temporary directory.
 It always pins the stored frozen artifact's raw-byte SHA-256. Rebuilt tables
@@ -120,7 +124,7 @@ numeric diagnostic within `0.0012` share (`0.12%p`). The rebuilt byte hash and
 observed maxima are always reported; this tolerance is not used to redefine
 the frozen artifact.
 
-Exact V29 regeneration uses Windows, Python 3.13, the `reproduce-v29`
+Exact V30 regeneration uses Windows, Python 3.13, the `reproduce-v30`
 optional dependency set and single-threaded BLAS (`OMP_NUM_THREADS`,
 `OPENBLAS_NUM_THREADS`, `MKL_NUM_THREADS`, `BLIS_NUM_THREADS` and
 `VECLIB_MAXIMUM_THREADS` set to `1`). The ordinary package remains usable and tested on
@@ -148,11 +152,11 @@ untouched holdout.
 ## 2025 prospective run
 
 ```bash
-python scripts/run_prospective_forecast_v29.py
+python scripts/run_prospective_forecast_v30.py
 ```
 
 The run uses the 2025-06-02 D-1 cutoff and prior-2022 regional vote volumes for
-V29's conservation weights. The manifest asserts that no 2025 outcome field or
+V30's conservation weights. The manifest asserts that no 2025 outcome field or
 performance metric was used.
 
 ## Metric scope
@@ -160,5 +164,5 @@ performance metric was used.
 The primary regional metric weights candidate-region absolute errors by
 `contest_votes` within each election, then averages elections equally. The
 national metric also uses realised regional contest votes and is therefore a
-post-election aggregation diagnostic. V29 through V24 share the 232-row panel;
+post-election aggregation diagnostic. V30 through V24 share the 232-row panel;
 V23's older headline uses a different 199-row panel.

@@ -1,12 +1,16 @@
-<!-- active-model-version: v29 -->
-# V29 software bill of materials
+<!-- active-model-version: v30 -->
+# V30 software bill of materials
 
 This is the human-readable SBOM required by Attachment 1 of the 2026 Open
-Source Developer Competition result report. `requirements-v29.lock` records
+Source Developer Competition result report. `requirements-v30.lock` records
 the complete tested Python 3.13 runtime reproduction resolution for the active
 model, including transitive packages, and is the file CI audits.
-`requirements-v27.lock` is retained as the V27-era record; it differs in
-`pandas` (3.0.3) and `pypdf` (6.16.1) and must not be used to reproduce V29. Visualization is an optional extra; its two direct
+`requirements-v30.lock` is byte-identical to `requirements-v29.lock`: V30
+changes a weight, not a dependency, and the reproduction was run in the same
+environment. It is copied rather than aliased so each frozen version names
+its own lock. `requirements-v27.lock` is retained as the V27-era record; it
+differs in `pandas` (3.0.3) and `pypdf` (6.16.1) and must not be used to
+reproduce V30. Visualization is an optional extra; its two direct
 packages are recorded below at the versions used for the published figures.
 
 | Library | Tested version | License | Official repository | Purpose |
@@ -30,7 +34,7 @@ packages are recorded below at the versions used for the published figures.
 | matplotlib | 3.11.0 | PSF-based | https://github.com/matplotlib/matplotlib | Current figures |
 | Shapely | 2.1.2 | BSD-3-Clause | https://github.com/shapely/shapely | Administrative-boundary dissolve for maps |
 
-V29 exposes no external-model optional dependency extra. Historical stance
+V30 exposes no external-model optional dependency extra. Historical stance
 experiments, model weights and sentence corpora are excluded from the active
 runtime and wheel.
 
@@ -47,11 +51,11 @@ tables are excluded without naming this one would be false.
 ## Reproduction environment
 
 ```bash
-python -m pip install -r requirements-v29.lock
+python -m pip install -r requirements-v30.lock
 python -m pip install --no-deps .
 election-forecast audit-current-presidential
 election-forecast verify-current-presidential
 ```
 
 Package metadata remains the source of supported dependency ranges. The lock
-is the reviewed exact environment for the frozen V29 reproduction check.
+is the reviewed exact environment for the frozen V30 reproduction check.

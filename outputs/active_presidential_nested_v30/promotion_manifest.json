@@ -1,0 +1,25 @@
+{
+  "schema": "presidential_model_promotion_v1",
+  "status": "promoted_third_share_dispersion_expansion",
+  "active_version": "v30",
+  "predecessor": "v29",
+  "post_2022_outcomes_used": false,
+  "point_metrics": {
+    "variant": "v30_forecast_time_weighted_dispersion",
+    "regional_equal_election_macro_mae_pp": 2.5664447526782004,
+    "national_equal_election_macro_mae_pp": 0.7204374174124484,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "accepted_scope": [
+    "third_share_indexed_regional_dispersion_expansion"
+  ],
+  "rejected_scope": [
+    "swept_gain_0_50_better_regional_but_fitted_on_scored_panel"
+  ],
+  "selection_disclosure": "V30 changes only which regional weight the two terminal transforms read. V27 and V29 weighted each candidate's national level by contest_votes - the target election's own turnout, which exists only after the count, so a postprocess using it consumed an outcome of the election it was predicting. Each scored election now uses its predecessor's regional valid votes; 2002 uses 1997, whose turnout is carried in fixed_dataset/pres_1997_regional_turnout.csv because 1997 is a warmup election outside the scored panel. The transform forms, the gain, the Ridge stack and the V28 external-model boundary are unchanged. Closing the leak improved both headline figures - regional 2.573607 to 2.566445, national 0.726250 to 0.720437 - which is recorded as an outcome, not as the reason: the change was made because the old weight was not available at forecast time.",
+  "rollback": {
+    "version": "v29",
+    "prediction_sha256": "fed959cdba1e127f91c2ab640a378d1f44a4a3e79b4c4a76893cf8d7c6153904"
+  }
+}

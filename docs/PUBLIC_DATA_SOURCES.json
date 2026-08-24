@@ -1,20 +1,62 @@
 {
   "schema": "election_forecast_public_data_sources_v1",
-  "policy": "Only Git-tracked public or project-authored derived inputs may enter the packaged V29 runtime. Raw caches, credentials, full-text corpora and uncertain-rights market exports are excluded. One external-model-derived table is a declared exception and does ship - data/raw/auto_issue_seed/candidate_issue_profile.csv, registered under external_model_derived_candidate_issue_aggregate with its own rights basis. Stating that external-model-derived tables are excluded without naming it would be false.",
+  "policy": "Only Git-tracked public or project-authored derived inputs may enter the packaged V30 runtime. Raw caches, credentials, full-text corpora and uncertain-rights market exports are excluded. One external-model-derived table is a declared exception and does ship - data/raw/auto_issue_seed/candidate_issue_profile.csv, registered under external_model_derived_candidate_issue_aggregate with its own rights basis. Stating that external-model-derived tables are excluded without naming it would be false.",
   "sources": [
     {
-      "id": "project_authored_and_derived_tables",
+      "id": "bok_ecos_statistics",
       "coverage_prefixes": [
-        "data/",
-        "presidential_issue_engine/fixed_dataset/"
+        "data/raw/official_sources/bok_ecos_",
+        "presidential_issue_engine/fixed_dataset/economic_indicators.csv",
+        "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv",
+        "presidential_issue_engine/fixed_dataset/kospi_election_context.csv"
       ],
-      "provider": "Election Forecast contributors",
-      "source_url": "https://github.com/bamboosalt09-bam/election-forecast",
-      "terms_url": "LICENSE",
-      "license_or_basis": "Apache-2.0 for project-authored schemas, annotations and transforms; source facts retain the official-source terms listed below",
+      "provider": "Bank of Korea ECOS",
+      "source_url": "https://ecos.bok.or.kr/api/",
+      "terms_url": "https://www.data.go.kr/data/15059635/openapi.do",
+      "license_or_basis": "Public Data Portal listing: no restriction on permitted use",
+      "redistribution_decision": "include-derived-with-attribution",
+      "attribution": "Bank of Korea Economic Statistics System (ECOS)",
+      "notes": "The downloaded KOSPI row cache is not tracked or packaged. V30 includes only 15 D-1 election-by-slot context rows calculated from that series, plus the provenance manifest."
+    },
+    {
+      "id": "external_model_derived_candidate_issue_aggregate",
+      "coverage_prefixes": [
+        "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+      ],
+      "provider": "jhgan/ko-sroberta-nli (Hugging Face public weights)",
+      "source_url": "https://huggingface.co/jhgan/ko-sroberta-nli",
+      "terms_url": "https://huggingface.co/jhgan/ko-sroberta-nli",
+      "license_or_basis": "No explicit license tag was published on the model card at audit time, so no redistribution grant is claimed for the model. The retained file is a compact numeric candidate-issue aggregate computed with that encoder; it embeds no model weight, no model architecture and no source sentence, and it is not itself a copy or adaptation of the weights. It is distributed on that basis, not on a licence from the model author, and the absence of a tag is disclosed rather than assumed permissive.",
       "redistribution_decision": "include-derived-no-source-text",
-      "attribution": "Election Forecast contributors and the applicable official provider",
-      "notes": "The package contains compact numerical or categorical inputs, not downloaded articles, full parliamentary transcripts or API caches. The external-model-derived candidate-issue aggregate is registered separately under external_model_derived_candidate_issue_aggregate; this family's Apache-2.0 basis covers project authorship only."
+      "attribution": "Aggregate derived by this project using the public jhgan/ko-sroberta-nli encoder over official National Assembly proceedings.",
+      "notes": "Separated from project_authored_and_derived_tables because that family's basis is Apache-2.0 project authorship, which does not describe an external-model-derived artefact. Competition Article 9 asks that embedded AI be open weights and run independently: this encoder is open-weight and ran locally, and V30 does not run it at all. Removing this file is not cost-free - the full-removal diagnostic moved regional macro MAE from 2.613902987%p to 4.935929128%p and winner accuracy from 0.8 to 0.6 - so it is disclosed rather than dropped. See docs/AI_MODEL_SPEC.md and docs/FINAL_MODEL_V29_20260823.md.",
+      "absent_licence_record": "The model card published no licence tag at audit time. That is recorded, not resolved: it means no explicit grant was given and no explicit restriction was stated. No model is distributed here - zero weight, architecture or checkpoint files exist in this repository - and what ships is an 88.1 KB, 247-row numeric table. If the reading ever changes, the file is dropped and the model runs without it at a measured cost: regional macro MAE 2.613902987%p to 4.935929128%p, winner accuracy 0.8 to 0.6. The reasoning and the decisions taken are recorded in docs/COMPETITION_COMPLIANCE_2026.md."
+    },
+    {
+      "id": "kosis_reb_housing_statistics",
+      "coverage_prefixes": [
+        "presidential_issue_engine/fixed_dataset/housing_price_index_"
+      ],
+      "provider": "KOSIS / Korea Real Estate Board",
+      "source_url": "https://kosis.kr/",
+      "terms_url": "https://kosis.kr/nsistN/kosisUseGuide.do",
+      "license_or_basis": "KOSIS public-data use policy; commercial and non-commercial reuse allowed with source indication, subject to the no-unmodified-table-resale condition",
+      "redistribution_decision": "include-derived-with-attribution",
+      "attribution": "KOSIS and Korea Real Estate Board",
+      "notes": "Repository files are model-ready derived regional series, not a resale of an unmodified KOSIS table."
+    },
+    {
+      "id": "national_assembly_library_legislative_datasets",
+      "coverage_prefixes": [
+        "data/raw/official_sources/assembly_"
+      ],
+      "provider": "National Assembly Library / National Academic Information Cloud",
+      "source_url": "https://losi-open.nanet.go.kr/user/dataset/datasetList.do?category_cd=2&category_name=%EC%9E%85%EB%B2%95%EC%A0%95%EB%B3%B4",
+      "terms_url": "https://losi-open.nanet.go.kr/user/agreement.do",
+      "license_or_basis": "Provider terms allow commercial use and independent programs with attribution; unchanged paid redistribution is prohibited and source copyright is retained",
+      "redistribution_decision": "include-derived-with-attribution",
+      "attribution": "National Assembly Library, Republic of Korea",
+      "notes": "Historical XLSX/ZIP filenames match the official legislative-dataset catalogue. Only rosters, manifests and project-derived aggregates are tracked. Full workbooks, meeting text and sentence corpora are excluded."
     },
     {
       "id": "nec_open_election_data",
@@ -33,73 +75,17 @@
       "notes": "This decision does not relicense unrelated NEC website publications. Items without an open-data or KOGL indication remain excluded."
     },
     {
-      "id": "national_assembly_library_legislative_datasets",
+      "id": "nikh_1997_presidential_regional_turnout",
       "coverage_prefixes": [
-        "data/raw/official_sources/assembly_"
+        "presidential_issue_engine/fixed_dataset/pres_1997_regional_turnout.csv"
       ],
-      "provider": "National Assembly Library / National Academic Information Cloud",
-      "source_url": "https://losi-open.nanet.go.kr/user/dataset/datasetList.do?category_cd=2&category_name=%EC%9E%85%EB%B2%95%EC%A0%95%EB%B3%B4",
-      "terms_url": "https://losi-open.nanet.go.kr/user/agreement.do",
-      "license_or_basis": "Provider terms allow commercial use and independent programs with attribution; unchanged paid redistribution is prohibited and source copyright is retained",
+      "provider": "국사편찬위원회 한국사데이터베이스 (National Institute of Korean History)",
+      "source_url": "https://db.history.go.kr/id/tcct_1997_12_18_0010",
+      "terms_url": "https://db.history.go.kr",
+      "license_or_basis": "Official National Election Commission returns for the 15th presidential election (1997-12-18), republished as a public historical record. The repository file is a 16-row factual extract - electorate, votes cast and valid votes per region - with no narrative text reproduced.",
       "redistribution_decision": "include-derived-with-attribution",
-      "attribution": "National Assembly Library, Republic of Korea",
-      "notes": "Historical XLSX/ZIP filenames match the official legislative-dataset catalogue. Only rosters, manifests and project-derived aggregates are tracked. Full workbooks, meeting text and sentence corpora are excluded."
-    },
-    {
-      "id": "bok_ecos_statistics",
-      "coverage_prefixes": [
-        "data/raw/official_sources/bok_ecos_",
-        "presidential_issue_engine/fixed_dataset/economic_indicators.csv",
-        "presidential_issue_engine/fixed_dataset/interest_rate_indicators.csv",
-        "presidential_issue_engine/fixed_dataset/kospi_election_context.csv"
-      ],
-      "provider": "Bank of Korea ECOS",
-      "source_url": "https://ecos.bok.or.kr/api/",
-      "terms_url": "https://www.data.go.kr/data/15059635/openapi.do",
-      "license_or_basis": "Public Data Portal listing: no restriction on permitted use",
-      "redistribution_decision": "include-derived-with-attribution",
-      "attribution": "Bank of Korea Economic Statistics System (ECOS)",
-      "notes": "The downloaded KOSPI row cache is not tracked or packaged. V29 includes only 15 D-1 election-by-slot context rows calculated from that series, plus the provenance manifest."
-    },
-    {
-      "id": "kosis_reb_housing_statistics",
-      "coverage_prefixes": [
-        "presidential_issue_engine/fixed_dataset/housing_price_index_"
-      ],
-      "provider": "KOSIS / Korea Real Estate Board",
-      "source_url": "https://kosis.kr/",
-      "terms_url": "https://kosis.kr/nsistN/kosisUseGuide.do",
-      "license_or_basis": "KOSIS public-data use policy; commercial and non-commercial reuse allowed with source indication, subject to the no-unmodified-table-resale condition",
-      "redistribution_decision": "include-derived-with-attribution",
-      "attribution": "KOSIS and Korea Real Estate Board",
-      "notes": "Repository files are model-ready derived regional series, not a resale of an unmodified KOSIS table."
-    },
-    {
-      "id": "sgis_administrative_boundaries",
-      "coverage_prefixes": [
-        "presidential_issue_engine/poster_figures/"
-      ],
-      "provider": "vuski/admdongkor; Statistics Korea SGIS basis",
-      "source_url": "https://github.com/vuski/admdongkor",
-      "terms_url": "https://github.com/vuski/admdongkor/blob/master/LICENSE-DATA",
-      "license_or_basis": "CC BY 4.0 and Korea Open Government License Type 1 attribution",
-      "redistribution_decision": "include-generated-with-attribution",
-      "attribution": "Statistics Korea SGIS and vuski/admdongkor",
-      "notes": "The wheel does not bundle the source GeoJSON. Visualization generation downloads one hash-pinned dated snapshot. Coverage is the figures directory rather than a version prefix: it read poster_figures/v27_ while the published map was v29_pres_2025_regional_map.png, so the attribution obligation was declared for figures nobody displays and undeclared for the one that ships. Every map figure derives from the same boundary snapshot, so the prefix has no reason to carry a version."
-    },
-    {
-      "id": "external_model_derived_candidate_issue_aggregate",
-      "coverage_prefixes": [
-        "data/raw/auto_issue_seed/candidate_issue_profile.csv"
-      ],
-      "provider": "jhgan/ko-sroberta-nli (Hugging Face public weights)",
-      "source_url": "https://huggingface.co/jhgan/ko-sroberta-nli",
-      "terms_url": "https://huggingface.co/jhgan/ko-sroberta-nli",
-      "license_or_basis": "No explicit license tag was published on the model card at audit time, so no redistribution grant is claimed for the model. The retained file is a compact numeric candidate-issue aggregate computed with that encoder; it embeds no model weight, no model architecture and no source sentence, and it is not itself a copy or adaptation of the weights. It is distributed on that basis, not on a licence from the model author, and the absence of a tag is disclosed rather than assumed permissive.",
-      "redistribution_decision": "include-derived-no-source-text",
-      "attribution": "Aggregate derived by this project using the public jhgan/ko-sroberta-nli encoder over official National Assembly proceedings.",
-      "notes": "Separated from project_authored_and_derived_tables because that family's basis is Apache-2.0 project authorship, which does not describe an external-model-derived artefact. Competition Article 9 asks that embedded AI be open weights and run independently: this encoder is open-weight and ran locally, and V29 does not run it at all. Removing this file is not cost-free - the full-removal diagnostic moved regional macro MAE from 2.613902987%p to 4.935929128%p and winner accuracy from 0.8 to 0.6 - so it is disclosed rather than dropped. See docs/AI_MODEL_SPEC.md and docs/FINAL_MODEL_V29_20260823.md.",
-      "absent_licence_record": "The model card published no licence tag at audit time. That is recorded, not resolved: it means no explicit grant was given and no explicit restriction was stated. No model is distributed here - zero weight, architecture or checkpoint files exist in this repository - and what ships is an 88.1 KB, 247-row numeric table. If the reading ever changes, the file is dropped and the model runs without it at a measured cost: regional macro MAE 2.613902987%p to 4.935929128%p, winner accuracy 0.8 to 0.6. The reasoning and the decisions taken are recorded in docs/COMPETITION_COMPLIANCE_2026.md."
+      "attribution": "국사편찬위원회 한국사데이터베이스; underlying returns by the National Election Commission",
+      "notes": "1997 is the warmup predecessor of the first scored election, so its regional volumes are the forecast-time weight V30 uses for 2002. The transcription was verified by summation against the published national totals: electorate 32,290,416, votes cast 26,042,633, valid votes 25,642,438. An earlier attempt from a secondary source summed 8,864 votes short and was discarded rather than adjusted."
     },
     {
       "id": "official_assembly_proceedings_derived",
@@ -115,6 +101,33 @@
       "redistribution_decision": "include-derived-no-source-text",
       "attribution": "National Assembly of the Republic of Korea and Election Forecast contributors",
       "notes": "These are the derived inputs that let a clean checkout rebuild the 2025 forecast; without them it needs 154 MB of files this repository does not track. The 15th-22nd matches are the same rows as the archived copy, gzipped - 3.1 MB against 118.9 MB. Reproduction from the public tree covers everything downstream of the keyword matching and takes the matching itself as given. source_sha256 is retained per 2025 row so a holder of the official minutes can verify provenance without the text being redistributed. See docs/PRES_2025_INPUT_GUIDE.md."
+    },
+    {
+      "id": "project_authored_and_derived_tables",
+      "coverage_prefixes": [
+        "data/",
+        "presidential_issue_engine/fixed_dataset/"
+      ],
+      "provider": "Election Forecast contributors",
+      "source_url": "https://github.com/bamboosalt09-bam/election-forecast",
+      "terms_url": "LICENSE",
+      "license_or_basis": "Apache-2.0 for project-authored schemas, annotations and transforms; source facts retain the official-source terms listed below",
+      "redistribution_decision": "include-derived-no-source-text",
+      "attribution": "Election Forecast contributors and the applicable official provider",
+      "notes": "The package contains compact numerical or categorical inputs, not downloaded articles, full parliamentary transcripts or API caches. The external-model-derived candidate-issue aggregate is registered separately under external_model_derived_candidate_issue_aggregate; this family's Apache-2.0 basis covers project authorship only."
+    },
+    {
+      "id": "sgis_administrative_boundaries",
+      "coverage_prefixes": [
+        "presidential_issue_engine/poster_figures/"
+      ],
+      "provider": "vuski/admdongkor; Statistics Korea SGIS basis",
+      "source_url": "https://github.com/vuski/admdongkor",
+      "terms_url": "https://github.com/vuski/admdongkor/blob/master/LICENSE-DATA",
+      "license_or_basis": "CC BY 4.0 and Korea Open Government License Type 1 attribution",
+      "redistribution_decision": "include-generated-with-attribution",
+      "attribution": "Statistics Korea SGIS and vuski/admdongkor",
+      "notes": "The wheel does not bundle the source GeoJSON. Visualization generation downloads one hash-pinned dated snapshot. Coverage is the figures directory rather than a version prefix: it read poster_figures/v27_ while the published map was v30_pres_2025_regional_map.png, so the attribution obligation was declared for figures nobody displays and undeclared for the one that ships. Every map figure derives from the same boundary snapshot, so the prefix has no reason to carry a version."
     }
   ],
   "excluded_paths": [

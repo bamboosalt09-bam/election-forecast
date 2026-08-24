@@ -1,23 +1,23 @@
 {
   "schema": "current_presidential_model_pointer_v1",
-  "active_version": "v29",
-  "lifecycle_status": "frozen_third_share_dispersion_expansion",
-  "canonical_document": "docs/FINAL_MODEL_V29_20260823.md",
-  "finalization_manifest": "outputs/active_presidential_nested_v29/finalization_manifest.json",
-  "runner": "scripts/run_active_presidential_model_v29.py",
-  "prospective_runner": "scripts/run_prospective_forecast_v29.py",
+  "active_version": "v30",
+  "lifecycle_status": "frozen_forecast_time_regional_weighting",
+  "canonical_document": "docs/FINAL_MODEL_V30_20260824.md",
+  "finalization_manifest": "outputs/active_presidential_nested_v30/finalization_manifest.json",
+  "runner": "scripts/run_active_presidential_model_v30.py",
+  "prospective_runner": "scripts/run_prospective_forecast_v30.py",
   "config": "data/config/active_presidential_model_v23.json",
-  "version_wrapper": "scripts/run_active_presidential_model_v29.py",
+  "version_wrapper": "scripts/run_active_presidential_model_v30.py",
   "base_config_version": "v23",
-  "output": "outputs/active_presidential_nested_v29",
-  "predecessor": "v28",
-  "rollback_pointer": "outputs/active_presidential_nested_v28/finalization_manifest.json",
-  "regional_equal_election_macro_mae_pp": 2.5736074405126663,
-  "national_equal_election_macro_mae_pp": 0.7262497116354087,
+  "output": "outputs/active_presidential_nested_v30",
+  "predecessor": "v29",
+  "rollback_pointer": "outputs/active_presidential_nested_v29/finalization_manifest.json",
+  "regional_equal_election_macro_mae_pp": 2.5664447526782004,
+  "national_equal_election_macro_mae_pp": 0.7204374174124484,
   "winner_accuracy": 0.8,
   "prediction_rows": 232,
-  "prediction_sha256": "fed959cdba1e127f91c2ab640a378d1f44a4a3e79b4c4a76893cf8d7c6153904",
-  "predictive_intervals": "outputs/active_presidential_nested_v29/predictive_interval_manifest.json",
+  "prediction_sha256": "afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e",
+  "predictive_intervals": "outputs/active_presidential_nested_v30/predictive_interval_manifest.json",
   "predictive_interval_levels": [
     0.5,
     0.8,
@@ -31,10 +31,11 @@
   ],
   "post_2022_outcomes_used": false,
   "prospective_demonstration": {
-    "artifact": "outputs/prospective_pres_2025_v29",
-    "regenerated_for_v29": true,
+    "artifact": "outputs/prospective_pres_2025_v30",
+    "regenerated_for_v30": true,
     "history_reference": "outputs/external_model_free_v25_baseline",
     "supersedes": "outputs/prospective_pres_2025_v28",
+    "identical_to_v29_artifact": true,
     "change_from_published_v28_artifact": {
       "boundary_enforcement_regional_max_pp": 0.0359,
       "boundary_enforcement_regional_mean_pp": 0.0103,
@@ -42,8 +43,9 @@
       "third_share_expansion_regional_max_pp": 2.6703,
       "third_share_expansion_regional_mean_pp": 0.697,
       "third_share_expansion_national_max_pp": 0.0,
+      "forecast_time_weight_regional_max_pp": 0.0,
       "winner_unchanged": true
     },
-    "note": "The published V28 artifact predated process-wide enforcement of the V28 external-model boundary, so it used seed inputs V28 documents as removed. Regenerating under the enforced boundary moves the national levels by 0.0065pp and the regions by 0.0103pp on average; the larger regional movement is the V29 dispersion expansion, which conserves the national levels exactly. See docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md."
+    "note": "The published V28 artifact predated process-wide enforcement of the V28 external-model boundary, so it used seed inputs V28 documents as removed. Regenerating under the enforced boundary moves the national levels by 0.0065pp and the regions by 0.0103pp on average; the larger regional movement is the V29 dispersion expansion, which conserves the national levels exactly. V30's reweighting leaves this artifact byte-identical to the V29 one, because the 2025 path already refused the target election's turnout and used 2022 volumes - that refusal is what V30 extends to the scored panel. See docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md."
   }
 }

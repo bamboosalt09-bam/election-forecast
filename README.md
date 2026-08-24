@@ -1,4 +1,4 @@
-<!-- active-model-version: v29 -->
+<!-- active-model-version: v30 -->
 # Election Forecast
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
@@ -6,7 +6,7 @@
 
 재현 가능한 선거 예측 프레임워크와 국회 회의록 분석 파이프라인입니다.
 
-국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V29는 2022년까지의 선거만 채점·선택에 사용합니다. V29는 V28의 외부모델 경계를 그대로 유지한 채, 제3후보가 압축시킨 지역 분산을 각 후보 자신의 전국 체급 주위로 확대하는 변환 하나를 더합니다. 확대 계수가 예측 3위 득표율 그 자체(gain 1.0)여서 채점 패널이 고를 상수가 없고, 전국 체급이 구성적으로 보존되므로 전국 지표는 소수점 아홉 자리까지 움직이지 않습니다. V28은 롤백으로 동결되어 있습니다.
+국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V30은 2022년까지의 선거만 채점·선택에 사용합니다. V30은 V29의 통계 사슬과 외부모델 경계를 그대로 둔 채, 종단 변환 두 개가 각 후보의 전국 체급을 찾을 때 쓰던 가중치를 **목표 선거 자신의 지역 투표량(`contest_votes`)에서 직전 선거의 지역 유효투표수로** 바꿉니다. 목표 선거의 투표량은 개표 후에야 존재하므로 예측 시점에 알 수 없고, 2025 전향 경로는 이미 그것을 거부하고 직전 선거 투표량으로 대체하고 있었습니다. 이제 두 경로가 같은 방식으로 가중합니다. V29는 롤백으로 동결되어 있습니다.
 
 ## Quickstart
 
@@ -14,46 +14,46 @@
 python -m pip install .
 election-forecast --version
 election-forecast show-active-version
-election-forecast run-current-presidential --output-dir outputs/reproduction_v29
+election-forecast run-current-presidential --output-dir outputs/reproduction_v30
 election-forecast audit-current-presidential
 election-forecast verify-current-presidential
 ```
 
-설치 wheel에는 실제 V29 실행 소스, 공개·파생 입력, V23~V28 롤백 감사
+설치 wheel에는 실제 V30 실행 소스, 공개·파생 입력, V23~V29 롤백 감사
 산출물이 해시 매니페스트와 함께 들어갑니다. 따라서 소스 체크아웃이 없는
 디렉터리에서도 위 감사와 재현 검사를 실행할 수 있습니다. 개발·시각화까지
 필요하면 다음처럼 설치합니다.
 
 ```bash
-python -m pip install -e ".[dev,viz,reproduce-v29]"
+python -m pip install -e ".[dev,viz,reproduce-v30]"
 python scripts/compute_forecast_baselines.py
 python presidential_issue_engine/make_poster_figures.py
-python scripts/audit_public_active_presidential_model_v29.py
+python scripts/audit_public_active_presidential_model_v30.py
 python scripts/audit_public_data_rights.py
 python scripts/audit_publication_security.py
 python -m pytest -q
 ```
 
-동결 V29의 기준 재산출 환경은 Windows, Python 3.13과
-`requirements-v29.lock`입니다. `requirements-v27.lock`은 V27 당시의 기록으로만
-남아 있으며 V29 재현에 쓰면 안 됩니다(`pandas`·`pypdf` 핀이 다릅니다).
+동결 V30의 기준 재산출 환경은 Windows, Python 3.13과
+`requirements-v30.lock`입니다. `requirements-v27.lock`은 V27 당시의 기록으로만
+남아 있으며 V30 재현에 쓰면 안 됩니다(`pandas`·`pypdf` 핀이 다릅니다).
 일반 설치의 Python 3.11+ 지원과 동결 수치 환경은 구분됩니다.
 
 ## 결과 요약
 
-| 지표 | 활성 V29 |
+| 지표 | 활성 V30 |
 |---|---:|
-| 지역 `contest_votes` 가중·선거 동일가중 MAE | **2.5736%p** |
-| 전국 후보·선거 동일가중 MAE | **0.7262%p** |
+| 지역 `contest_votes` 가중·선거 동일가중 MAE | **2.5664%p** |
+| 전국 후보·선거 동일가중 MAE | **0.7204%p** |
 | 승자 적중률 | **80% (4/5)** |
 | 채점 선거 | 2002, 2007, 2012, 2017, 2022 |
 | 결과 불변성 감사 | 215/215 통과 |
 
-![V29 회고 개발 패널 성능](presidential_issue_engine/poster_figures/v29_model_performance.png)
+![V30 회고 개발 패널 성능](presidential_issue_engine/poster_figures/v30_model_performance.png)
 
-![V29 공개 실행 구조](presidential_issue_engine/poster_figures/v29_architecture.png)
+![V30 공개 실행 구조](presidential_issue_engine/poster_figures/v30_architecture.png)
 
-![2017 지역별 V29 예측과 실제](presidential_issue_engine/poster_figures/v29_regional_pres_2017.png)
+![2017 지역별 V30 예측과 실제](presidential_issue_engine/poster_figures/v30_regional_pres_2017.png)
 
 ### 폴드별 훈련 깊이
 
@@ -72,7 +72,7 @@ python -m pytest -q
 2002는 패널 유일의 승자 오답이기도 합니다. 다만 지역 MAE는 2.957로 중간이고 전국 MAE만 최악인데, 이는 지역 형태는 맞고 **두 거대후보 간 수준이 틀린** 형태입니다. 예측변수 6개를 선거 하나로 적합한 폴드에서 예상되는 양상입니다. 전체 검진은 [2002 진단](docs/DIAGNOSIS_PRES_2002_20260822.md)에 있습니다.
 
 ```bash
-python scripts/diagnose_fold_training_depth.py --active-dir outputs/active_presidential_nested_v29
+python scripts/diagnose_fold_training_depth.py --active-dir outputs/active_presidential_nested_v30
 ```
 
 지역 MAE는 후보×지역 오차를 실제 `contest_votes`로 가중한 사후 진단입니다. 전국 MAE 역시 실제 지역 투표량을 집계 가중치로 쓰므로 사전 예측 지표와 구분해야 합니다. 다섯 채점 선거는 모델 개발 표본이며 untouched holdout이 아닙니다.
@@ -85,22 +85,22 @@ python scripts/diagnose_fold_training_depth.py --active-dir outputs/active_presi
 
 | 선거 | 상쇄율 | 전국 오차 | 지역 절대 |
 |---|---:|---:|---:|
-| **2002** | **0.281** | **2.385** | 2.957 |
-| 2022 | 0.540 | 0.346 | 1.187 |
-| 2007 | 0.819 | 0.648 | **3.730** |
+| **2002** | **0.281** | **2.392** | 2.964 |
+| 2022 | 0.544 | 0.340 | 1.186 |
+| 2007 | 0.832 | 0.597 | **3.711** |
 | 2012 | 0.934 | 0.157 | 2.387 |
-| 2017 | **0.963** | **0.095** | 2.607 |
+| 2017 | **0.950** | **0.116** | 2.585 |
 
-전국 수치는 지역이 얼마나 맞았는지만이 아니라 **오차가 얼마나 서로를 지우는지**에도 크게 좌우됩니다. V29에서도 2007은 지역 최악(3.730)인데 81.9%가 상쇄돼 전국은 0.648입니다. 패널 평균 상쇄율은 0.691이고, 상쇄율 대 전국오차는 r = −0.851인 반면 지역정확도 대 전국오차는 r = 0.328입니다.
+전국 수치는 지역이 얼마나 맞았는지만이 아니라 **오차가 얼마나 서로를 지우는지**에도 크게 좌우됩니다. V30에서도 2007은 지역 최악(3.711)인데 83.2%가 상쇄돼 전국은 0.597입니다. 패널 평균 상쇄율은 0.692이고, 상쇄율 대 전국오차는 r = −0.853인 반면 지역정확도 대 전국오차는 r = 0.323입니다.
 
-극단은 홍준표 2017입니다 — 전국 오차 **+0.058%p**, 지역 절대오차 **2.874%p**, 상쇄율 **0.980**. V27의 지역 양극화 보정에 이어 V29의 분산 확대까지 그의 지역 절대오차를 줄였지만(V26 3.377 → V29 2.874), 전국값이 정확해 보이는 데 상쇄가 지배적으로 기여한다는 사실은 그대로입니다.
+극단은 홍준표 2017입니다 — 전국 오차 **−0.030%p**, 지역 절대오차 **2.850%p**, 상쇄율 **0.989**. V27의 지역 양극화 보정과 V29의 분산 확대에 이어 V30의 예측시점 가중까지 그의 지역 절대오차를 줄였지만(V26 3.377 → V30 2.850), 전국값이 정확해 보이는 데 상쇄가 지배적으로 기여한다는 사실은 그대로입니다.
 
-2002가 패널 최악인 이유도 이것입니다. 지역 오차는 2.957로 중간인데 **상쇄율이 0.281로 최저** — 오차가 보상적이 아니라 계통적입니다. V29에서 2002의 상쇄율이 0.240에서 올라간 것은 개선이 아니라 분모인 지역 절대오차가 커진 결과입니다.
+2002가 패널 최악인 이유도 이것입니다. 지역 오차는 2.964로 중간인데 **상쇄율이 0.281로 최저** — 오차가 보상적이 아니라 계통적입니다. V26의 0.240에서 2002의 상쇄율이 올라간 것은 개선이 아니라 분모인 지역 절대오차가 커진 결과입니다.
 
-따라서 **전국 0.7262%p를 지역 수준이 맞다는 증거로 읽으면 안 됩니다.** 전체 논의의 출발점은 [오차 상쇄 진단](docs/DIAGNOSIS_ERROR_CANCELLATION_20260822.md)에 있습니다. 위 표는 V29 실측이며, 해당 문서 본문의 상세 수치는 V26 시점의 최초 진단이라 값이 다릅니다.
+따라서 **전국 0.7204%p를 지역 수준이 맞다는 증거로 읽으면 안 됩니다.** 전체 논의의 출발점은 [오차 상쇄 진단](docs/DIAGNOSIS_ERROR_CANCELLATION_20260822.md)에 있습니다. 위 표는 V30 실측이며, 해당 문서 본문의 상세 수치는 V26 시점의 최초 진단이라 값이 다릅니다.
 
 ```bash
-python scripts/diagnose_error_cancellation.py --active-dir outputs/active_presidential_nested_v29
+python scripts/diagnose_error_cancellation.py --active-dir outputs/active_presidential_nested_v30
 ```
 
 ### 사전(ex-ante) 가중 병기
@@ -118,7 +118,7 @@ python scripts/diagnose_error_cancellation.py --active-dir outputs/active_presid
 공통 네 선거에서 사후 가중이 사는 이득은 약 **0.130%p**입니다(2.4779 대 2.6074). 등가 지역은 3.0494%p로, 큰 지역보다 작은 지역에서 오차가 더 크다는 패턴도 남아 있습니다.
 
 ```bash
-python scripts/evaluate_ex_ante_weighting.py --active-dir outputs/active_presidential_nested_v29
+python scripts/evaluate_ex_ante_weighting.py --active-dir outputs/active_presidential_nested_v30
 ```
 
 ## 구성요소
@@ -137,8 +137,8 @@ python scripts/evaluate_ex_ante_weighting.py --active-dir outputs/active_preside
 - `presidential_issue_engine/audit_point_in_time.py --deep`: 입력 날짜, fold 범위, 목표 결과 변조 불변성 검사
 - `presidential_issue_engine/audit_weight_selection_boundary.py`: 2022년까지의 학습 경계와 격리된 2025 입력 검사
 - `scripts/audit_slot_predictor_leakage.py`: 실제 순위로 정해진 슬롯 변수를 활성 모델이 쓰지 않는지 검사
-- `scripts/audit_public_active_presidential_model_v29.py`: V23~V28 롤백 경계, V29 포인터·산출물·예측구간·신경망 런타임 부재·음수 지분 부재와 잔류 파생 집계표 공개 검사
-- `scripts/audit_current_public_surface.py`: 공개 활성 별칭·V29 포인터·내부 V16 기반·패키지 개발 버전의 동기화 검사
+- `scripts/audit_public_active_presidential_model_v30.py`: V23~V29 롤백 경계, V30 포인터·산출물·예측구간·신경망 런타임 부재·음수 지분 부재와 잔류 파생 집계표 공개 검사
+- `scripts/audit_current_public_surface.py`: 공개 활성 별칭·V30 포인터·내부 V16 기반·패키지 개발 버전의 동기화 검사
 - `scripts/audit_version_consistency.py`: 포인터를 단일 기준으로 패키지 버전 4곳·CLI 배너·런타임 로더 유일성·동결 해시 3곳·CI 잡 이름의 버전 부재까지 일치 검사
 
 최신 실행 로그는 `outputs/audit_logs/`에 저장합니다. 동결 범위와 매니페스트 해석은 [REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md)를 참조하십시오.
@@ -161,9 +161,9 @@ python scripts/describe_inputs.py sources pres_2025
 
 ### 대선 예측 엔진
 
-V29는 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. V28의 Ridge 모형·예측변수·투표지 패널·충격 구조·지역 분산층과 외부모델 경계를 모두 유지하고, 제3후보 지수 기반 분산 확대층을 추가합니다. 역사 후처리가 소비하는 동결 후보×이슈 집계표는 별도로 공개합니다. 후보별 전국 체급과 지역별 100% 합계는 바꾸지 않습니다.
+V30은 결과 기반 A/B/C 슬롯을 쓰지 않는 strict chronological nested Ridge 파이프라인입니다. V28의 Ridge 모형·예측변수·투표지 패널·충격 구조·지역 분산층과 외부모델 경계를 모두 유지하고, 제3후보 지수 기반 분산 확대층을 추가합니다. 역사 후처리가 소비하는 동결 후보×이슈 집계표는 별도로 공개합니다. 후보별 전국 체급과 지역별 100% 합계는 바꾸지 않습니다.
 
-현재 실행 구조는 [V29 architecture](docs/ARCHITECTURE.md), 안전한 수정·재사용 절차는 [CONTRIBUTING](CONTRIBUTING.md)에 정리되어 있습니다.
+현재 실행 구조는 [V30 architecture](docs/ARCHITECTURE.md), 안전한 수정·재사용 절차는 [CONTRIBUTING](CONTRIBUTING.md)에 정리되어 있습니다.
 
 후처리 계층은 콘크리트·비판적·유동 지지층, 제3후보 경쟁력, 지역 정체성, 정권 심판과 거대 이슈 반응을 분리합니다. 모든 선거에 같은 증거 기반 규칙을 적용하며, 2025 실제 결과는 가중치 선택이나 ablation에 사용하지 않습니다. 전체 사양과 개발표본 한계는 [FINAL_MODEL_V29_20260823.md](docs/FINAL_MODEL_V29_20260823.md)에 있습니다.
 
@@ -188,7 +188,7 @@ python scripts/evaluate_postprocess_ablation.py
 
 | 방법 | 지역 매크로 MAE | 비고 |
 |---|---:|---:|
-| 활성 V29 | **2.5736%p** | 232개 후보×지역 행 |
+| 활성 V30 | **2.5736%p** | 232개 후보×지역 행 |
 | 동결 V26 | 2.7122%p | 232개 후보×지역 행 |
 | 동결 V25 | 2.7739%p | 232개 후보×지역 행 |
 | 동결 V24 | 2.7698%p | 232개 후보×지역 행 |
@@ -202,23 +202,23 @@ python scripts/evaluate_postprocess_ablation.py
 ## 2025 전향 시연
 
 ```bash
-python scripts/run_prospective_forecast_v29.py
+python scripts/run_prospective_forecast_v30.py
 ```
 
-이 러너는 V26 실행 계보, V27에서 계승한 지역 양극화층, V28의 외부모델 경계, 그리고 V29의 제3후보 분산 확대층을 거쳐 2025-06-02(D-1)까지 공개된 후보 명부·국회 발언 맥락만 사용합니다. 외부모델 파생 overlay와 2025 실제 결과를 읽지 않고 성능지표도 계산하지 않습니다. 보존 가중치는 2022 지역 투표량이며 입력 SHA-256과 결과정보 미사용 선언을 `run_manifest.json`에 기록합니다.
+이 러너는 V26 실행 계보, V27에서 계승한 지역 양극화층, V28의 외부모델 경계, 그리고 V30의 제3후보 분산 확대층을 거쳐 2025-06-02(D-1)까지 공개된 후보 명부·국회 발언 맥락만 사용합니다. 외부모델 파생 overlay와 2025 실제 결과를 읽지 않고 성능지표도 계산하지 않습니다. 보존 가중치는 2022 지역 투표량이며 입력 SHA-256과 결과정보 미사용 선언을 `run_manifest.json`에 기록합니다.
 
-산출물은 `outputs/prospective_pres_2025_v29/`이며, 발행돼 있던 V28 산출물을 대체합니다. **그 V28 산출물은 V28 경계가 프로세스 전체로 강제되기 *이전*에 만들어져, V28이 제거했다고 문서화한 시드 입력을 쓰고 있었습니다.** 재생성으로 달라진 폭은 원인별로 나뉩니다:
+산출물은 `outputs/prospective_pres_2025_v30/`이며, 발행돼 있던 V28 산출물을 대체합니다. **그 V28 산출물은 V28 경계가 프로세스 전체로 강제되기 *이전*에 만들어져, V28이 제거했다고 문서화한 시드 입력을 쓰고 있었습니다.** 재생성으로 달라진 폭은 원인별로 나뉩니다:
 
 | 변화 원인 | 지역 최대 | 지역 평균 | 전국 최대 |
 | --- | ---: | ---: | ---: |
 | 경계를 실제로 지킨 것 | 0.0359%p | 0.0103%p | 0.006484%p |
-| V29 분산 확대 | 2.6703%p | 0.6970%p | **0** |
+| V30 분산 확대 | 2.6703%p | 0.6970%p | **0** |
 
 승자와 후보 순위는 그대로입니다. 전국 이동은 전부 경계 쪽이고 그 크기가 0.0065%p에 그친다는 점은, 산출물이 경계와 어긋나 있었음에도 V28의 제거 주장 자체는 실질적으로 참이었다는 증거이기도 합니다. 2025의 확대 계수는 실현 가능 상한에 걸려 `1.086615`에서 `1.081279`로 제한됩니다.
 
-재현은 `scripts/verify_v29_prospective_reproduction.py`가 CI(`prospective-reproduction`)에서 매번 수행합니다. 공개 트리만으로 재현되며, 그 경계와 회의록으로부터의 재계산 절차는 [2025 입력 안내](docs/PRES_2025_INPUT_GUIDE.md)에 있습니다.
+재현은 `scripts/verify_v30_prospective_reproduction.py`가 CI(`prospective-reproduction`)에서 매번 수행합니다. 공개 트리만으로 재현되며, 그 경계와 회의록으로부터의 재계산 절차는 [2025 입력 안내](docs/PRES_2025_INPUT_GUIDE.md)에 있습니다.
 
-![2025 D-1 V29 지역별 예측 지도](presidential_issue_engine/poster_figures/v29_pres_2025_regional_map.png)
+![2025 D-1 V30 지역별 예측 지도](presidential_issue_engine/poster_figures/v30_pres_2025_regional_map.png)
 
 지도 위 원형은 각 시·도의 후보별 예측 구성으로 합계가 100%이며, 원
 크기는 인구나 투표수를 뜻하지 않습니다. 경계는 통계청 SGIS 기반
@@ -266,9 +266,9 @@ python scripts/run_prospective_forecast_v29.py
 
 ## 최고 회고 성능과 활성 버전
 
-활성 V29의 지역 MAE는 **2.5736%p**, 전국 진단 MAE는 **0.7262%p**입니다. 지역은 V28의 `2.6384%p`에서 개선됐고 전국은 아홉 자리까지 동일한데, 이는 결과가 아니라 변환의 성질입니다 — 후보 체급이 모든 지역에서 합 1이므로 균일 확대는 지역 합을 1로 남기고 재정규화가 항등이 됩니다. 실측 최대 체급 이동은 `5.6e-15%p`입니다. 두 값 모두 개발표본 진단이며 untouched holdout 성능이 아닙니다.
+활성 V30의 지역 MAE는 **2.5736%p**, 전국 진단 MAE는 **0.7262%p**입니다. 지역은 V28의 `2.6384%p`에서 개선됐고 전국은 아홉 자리까지 동일한데, 이는 결과가 아니라 변환의 성질입니다 — 후보 체급이 모든 지역에서 합 1이므로 균일 확대는 지역 합을 1로 남기고 재정규화가 항등이 됩니다. 실측 최대 체급 이동은 `5.6e-15%p`입니다. 두 값 모두 개발표본 진단이며 untouched holdout 성능이 아닙니다.
 
-V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서 단일 정확 계보 원장으로 통합하면서 지역 회고 MAE가 약 **0.178%p** 악화되었고, 이는 회고 적합도보다 표현 일관성과 모든 지역에 동일한 규칙을 우선한 의도적 교환입니다. V23~V28은 롤백 가능한 동결 선행판이고, V29가 현재 공식 포인터입니다.
+V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서 단일 정확 계보 원장으로 통합하면서 지역 회고 MAE가 약 **0.178%p** 악화되었고, 이는 회고 적합도보다 표현 일관성과 모든 지역에 동일한 규칙을 우선한 의도적 교환입니다. V23~V29는 롤백 가능한 동결 선행판이고, V30이 현재 공식 포인터입니다.
 
 ### V26이 바꾼 것
 
@@ -291,13 +291,13 @@ V17~V20은 지역별로 분리된 정당 표현을 사용했습니다. V21에서
 python scripts/evaluate_v25_intensity_ladder.py
 ```
 
-### V29가 바꾼 것
+### V30이 바꾼 것
 
 예측 지역 분산은 2002·2012·2022에서 실현 분산과 맞고, 제3후보가 큰 2007과 2017에서만 부족합니다. 그 두 선거에서만 실현값의 예측값 회귀 기울기가 1을 넘고(이회창 2007은 2에 가깝습니다) 나머지는 1입니다. 정규화 추정량이 마땅히 가지는 축소가 아니라 **보정 격차**입니다.
 
-V29는 각 후보의 지역 편차를 그 후보 자신의 득표가중 전국 체급 주위로 `1 + 예측 3위 득표율`배 확대하고 지역별로 재정규화합니다. 지수가 곧 보정 크기이므로 어디에 개입할지 따로 정하는 지표가 필요 없습니다 — 2012는 3위 득표율이 정확히 0이라 계수 `1.0000`, 한 톨도 바뀌지 않습니다.
+V30은 각 후보의 지역 편차를 그 후보 자신의 득표가중 전국 체급 주위로 `1 + 예측 3위 득표율`배 확대하고 지역별로 재정규화합니다. 지수가 곧 보정 크기이므로 어디에 개입할지 따로 정하는 지표가 필요 없습니다 — 2012는 3위 득표율이 정확히 0이라 계수 `1.0000`, 한 톨도 바뀌지 않습니다.
 
-| 선거 | 3위 득표율 | 적용 계수 | 지역 MAE V28 → V29 |
+| 선거 | 3위 득표율 | 적용 계수 | 지역 MAE V28 → V30 |
 | --- | ---: | ---: | ---: |
 | pres_2002 | 0.0445 | 1.0445 | 2.795 → 2.957 |
 | pres_2007 | 0.1646 | 1.1646 | 4.044 → **3.730** |
@@ -309,7 +309,7 @@ V29는 각 후보의 지역 편차를 그 후보 자신의 득표가중 전국 �
 
 **gain은 적합하지 않았습니다.** 스윕에서 0.50이 지역 `2.555129%p`로 승격값 `2.573607%p`보다 좋습니다. 채택하지 않은 이유는 하나입니다 — 0.50은 채점 대상인 그 다섯 결과에서 쓸어서 고른 상수이고, 그 이점은 그것을 찾는 데 쓴 선택 자유도보다 작습니다. gain 1.0에서는 계수가 예측 3위 득표율 그 자체라 고를 상수가 없습니다. 전국 지표는 스윕 전 구간에서 평평하므로 이 선택이 그쪽에서 치르는 비용은 없습니다.
 
-이 보정이 승격되지 않고 남아 있던 이유도 기록해 둡니다. 원래 실험의 결론은 *"네 기법 모두 전국 지표를 악화시킨다"* 였는데, **V26에서 측정된 뒤 V27·V28 승격 후 재측정된 적이 없었고**, 게다가 그 악화는 평가 하네스가 따로 들고 있던 변환 사본이 음수를 클리핑해 표 질량을 주입한 결과였습니다. 두 결함이 서로를 가리고 있었습니다. 자세한 내용은 [V29 실험 기록](docs/EXPERIMENT_V29_THIRD_SHARE_DISPERSION_20260823.md)에 있습니다.
+이 보정이 승격되지 않고 남아 있던 이유도 기록해 둡니다. 원래 실험의 결론은 *"네 기법 모두 전국 지표를 악화시킨다"* 였는데, **V26에서 측정된 뒤 V27·V28 승격 후 재측정된 적이 없었고**, 게다가 그 악화는 평가 하네스가 따로 들고 있던 변환 사본이 음수를 클리핑해 표 질량을 주입한 결과였습니다. 두 결함이 서로를 가리고 있었습니다. 자세한 내용은 [V30 실험 기록](docs/EXPERIMENT_V29_THIRD_SHARE_DISPERSION_20260823.md)에 있습니다.
 
 **2025 시연을 재생성했습니다.** 2025 예측 경로는 V28 경계가 프로세스 전체로 강제된 이후 실행 불가 상태였고, 발행돼 있던 산출물은 그 강제 *이전*에 만들어져 **V28이 제거했다고 문서화한 시드 입력을 쓰고 있었습니다.** 가드의 비교 기준을 같은 런타임에서 만든 것으로 바꿔 고쳤습니다. 승자와 순위는 그대로이고, 원인별 변화폭은 [2025 전향 시연](#2025-전향-시연)에, 전체 경위는 [2025 경로 진단](docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md)에 있습니다.
 
@@ -327,19 +327,19 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 
 | 경로 | 역할 |
 |---|---|
-| `src/election_forecast/` | 공개 API, CLI와 검증된 V29 패키지 런타임 로더 |
+| `src/election_forecast/` | 공개 API, CLI와 검증된 V30 패키지 런타임 로더 |
 | `presidential_issue_engine/` | 회의록·이슈·지역 지형·nested 평가 엔진 |
 | `scripts/` | 수집, 빌드, 평가, 감사, 실행 진입점 |
 | `data/raw/` | 날짜와 출처가 있는 입력·공식자료 레지스트리 |
 | `data/config/` | 버전별 모델 설정과 활성 포인터 |
 | `data/config/active_presidential_model_v16.json` | 후대 버전 실행 계보용 동결 V16 내부 기반 설정 |
-| `outputs/active_presidential_nested_v29/` | 읽기 전용 V29 활성 산출물과 시간순 예측구간 |
+| `outputs/active_presidential_nested_v30/` | 읽기 전용 V30 활성 산출물과 시간순 예측구간 |
 | `outputs/automatic_controls_v26/` | V26 등급화 거대 이슈 강도 제어 |
 | `outputs/active_presidential_nested_v26/` | 읽기 전용 V26 롤백 산출물 |
 | `outputs/active_presidential_nested_v25/` | 읽기 전용 V25 롤백 산출물 |
 | `outputs/active_presidential_nested_v24/` | 읽기 전용 V24 롤백 산출물 |
 | `outputs/active_presidential_nested_v23/` | 읽기 전용 V23 롤백 산출물 |
-| `outputs/prospective_pres_2025_v29/` | 실제 결과 없이 생성한 V29 D-1 시연 산출물 |
+| `outputs/prospective_pres_2025_v30/` | 실제 결과 없이 생성한 V30 D-1 시연 산출물 |
 | `outputs/external_model_free_v25_baseline/` | 2025 하네스가 과거를 바꾸지 않았음을 검증하는 경계 내 V25 기준선 |
 | `research/` | 활성 패키지에서 제외한 구식 시각화와 비승격 연구 기록 |
 | `docs/` | 설계·감사·승격·재현성 기록 |
@@ -347,7 +347,7 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 
 문서 124개 중 무엇이 현행이고 무엇이 이력인지는 [문서 색인](docs/INDEX.md)에 정리돼 있습니다 — 파일명이 아니라 활성 버전 marker와 참조 도달성으로 나누며, CI가 트리와 일치하는지 확인합니다.
 
-공개 저장소의 연구 이력과 설치 배포물의 경계는 [저장소·배포 경계](docs/REPOSITORY_BOUNDARIES.md)에 고정합니다. wheel과 sdist에는 현재 V29 실행·감사에 필요한 코드·입력·공개 문서만 들어갑니다. 외부모델 가중치·문장 코퍼스·직접 overlay·구형 시연·비승격 실험 산출물은 제외하며, 필요한 동결 후보×이슈 집계표 1개만 파생 이력과 함께 포함합니다.
+공개 저장소의 연구 이력과 설치 배포물의 경계는 [저장소·배포 경계](docs/REPOSITORY_BOUNDARIES.md)에 고정합니다. wheel과 sdist에는 현재 V30 실행·감사에 필요한 코드·입력·공개 문서만 들어갑니다. 외부모델 가중치·문장 코퍼스·직접 overlay·구형 시연·비승격 실험 산출물은 제외하며, 필요한 동결 후보×이슈 집계표 1개만 파생 이력과 함께 포함합니다.
 
 정식 활성 포인터는 `data/config/current_presidential_model.json`입니다.
 `active_presidential_model.json`은 같은 내용을 제공하는 공개 호환 별칭이며,
@@ -356,7 +356,7 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 
 ## 동결 정책
 
-`outputs/active_presidential_nested_v29/`와 V28~V23 롤백 경계는 읽기 전용입니다. V29 예측 SHA-256은 `fed959cdba1e127f91c2ab640a378d1f44a4a3e79b4c4a76893cf8d7c6153904`, V28 롤백은 `23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba`, V27 롤백은 `f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b`, V26 롤백은 `9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3`, V23 롤백은 `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`입니다.
+`outputs/active_presidential_nested_v30/`와 V28~V23 롤백 경계는 읽기 전용입니다. V30 예측 SHA-256은 `afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e`, V28 롤백은 `23d6efd825244caa1f7b06b84e94cf581f00c6184aeb80769d8bb3d4c2a19fba`, V27 롤백은 `f40775599dde107abc6cf2312c648ad9c780f33c7a0adc4ccf3d74fd5049c55b`, V26 롤백은 `9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3`, V23 롤백은 `dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b`입니다.
 
 ## 용도 범위
 
@@ -366,4 +366,4 @@ V27은 정당 지역 prior를 득표 하한으로 강제하지 않습니다. 현
 
 프로젝트가 작성한 소스 코드와 문서는 [Apache License 2.0](LICENSE)으로 배포됩니다. 데이터셋, 모델 가중치, 제3자 소프트웨어와 외부 자료는 각 원출처의 라이선스·이용조건을 따르며 이 저장소의 라이선스로 재허가되지 않습니다. 범위는 [NOTICE](NOTICE)를 참조하십시오.
 
-입력 계열별 출처와 재배포 판정은 [데이터 출처·재배포 원장](docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md)과 [기계 판독 원장](docs/PUBLIC_DATA_SOURCES.json)을 참조하십시오. 권리가 불명확한 원본, 전체 회의록, API 캐시와 로컬 KOSPI 일별 내역은 Git과 설치 패키지에서 제외됩니다. V29는 재현에 필요한 D-1 선거×슬롯 KOSPI 집계 15행만 출처와 함께 포함합니다. 대회 규정 대응표, SBOM과 AI 명세는 각각 [규정 대응표](docs/COMPETITION_COMPLIANCE_2026.md), [SBOM](docs/SBOM.md), [AI 명세](docs/AI_MODEL_SPEC.md)에 있습니다.
+입력 계열별 출처와 재배포 판정은 [데이터 출처·재배포 원장](docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md)과 [기계 판독 원장](docs/PUBLIC_DATA_SOURCES.json)을 참조하십시오. 권리가 불명확한 원본, 전체 회의록, API 캐시와 로컬 KOSPI 일별 내역은 Git과 설치 패키지에서 제외됩니다. V30은 재현에 필요한 D-1 선거×슬롯 KOSPI 집계 15행만 출처와 함께 포함합니다. 대회 규정 대응표, SBOM과 AI 명세는 각각 [규정 대응표](docs/COMPETITION_COMPLIANCE_2026.md), [SBOM](docs/SBOM.md), [AI 명세](docs/AI_MODEL_SPEC.md)에 있습니다.

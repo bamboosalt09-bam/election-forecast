@@ -82,6 +82,10 @@ def _mechanical_sites(version: str, package_version: str, prediction_hash: str):
         ("src/election_forecast/__init__.py", r'__version__ = "([^"]+)"', package_version),
         ("src/election_forecast/cli.py", r'PACKAGE_VERSION = "([^"]+)"', package_version),
         ("scripts/audit_current_public_surface.py", r'MAIN_VERSION = "([^"]+)"', package_version),
+        # the CLI guard pins the same literal; a promotion that leaves it
+        # behind fails a test rather than a declaration check, which is a
+        # slower way to learn the same thing
+        ("tests/test_v27_public_cli.py", r'cli\.PACKAGE_VERSION == "([^"]+)"', package_version),
         ("src/election_forecast/cli.py", r'ACTIVE_MODEL_VERSION = "([^"]+)"', version.upper()),
         ("setup.py", r'"frozen_prediction_sha256": "([0-9a-f]{64})"', prediction_hash),
         ("scripts/audit_distribution_artifacts.py", r'FROZEN_V\d+_SHA256 = \(\s*"([0-9a-f]{64})"', prediction_hash),
