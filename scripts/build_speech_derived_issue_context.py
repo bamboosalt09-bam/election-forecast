@@ -36,28 +36,26 @@ LINKS = ROOT / "data" / "candidate_issue_link.csv"
 SALIENCE = ROOT / "data" / "issue_salience_assembly.csv"
 CHARACTER = ROOT / "data" / "raw" / "assembly_issue_character_overlay.csv"
 CANDIDATES = ROOT / "presidential_issue_engine" / "fixed_dataset" / "presidential_results_standardized.csv"
-_ARCHIVED_MATCHES = (
-    ROOT
-    / "archives"
-    / "experiments"
-    / "manual_seed_lineage_v17_rejected_20260728"
-    / "artifacts"
-    / "assembly_speaker_issue_matches_15_22.csv"
-)
-#: The published form of the file above: identical rows, gzipped, 3.1 MB against
-#: 118.9 MB. The archive is not tracked - the repository boundary forbids it, and
-#: its directory is a rejected experiment - so a clean checkout has only this.
-#: See scripts/build_redistributable_assembly_issue_matches.py.
-PUBLIC_MATCHES = (
+#: The speaker-level issue matches for the five scored elections. This is the
+#: published copy, and it is the only one the active path reads.
+#:
+#: It used to read `archives/experiments/manual_seed_lineage_v17_rejected_
+#: 20260728/artifacts/...` directly - the active forecast depending on an
+#: artifact filed under a *rejected* experiment, in a directory the repository
+#: boundary forbids tracking, so a clean checkout could not run this path at
+#: all. The two files are byte-equal in content (195,758 rows, identical
+#: columns); only the location and the 39x compression differ. The archive is
+#: now purely a historical record and nothing active looks at it.
+#:
+#: Rebuild with scripts/build_redistributable_assembly_issue_matches.py.
+DEFAULT_MATCHES = (
     ROOT
     / "data"
     / "raw"
     / "official_sources"
     / "assembly_speaker_issue_matches_15_22.csv.gz"
 )
-DEFAULT_MATCHES = (
-    _ARCHIVED_MATCHES if _ARCHIVED_MATCHES.exists() else PUBLIC_MATCHES
-)
+
 DEFAULT_OUTPUT = ROOT / "outputs" / "speech_derived_issue_context_v1"
 FORECAST_CONTEXT_DIR = (
     ROOT / "data" / "raw" / "official_sources" / "assembly_pres_2025_context"
