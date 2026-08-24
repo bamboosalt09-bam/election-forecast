@@ -18,6 +18,7 @@ recursive-include outputs/active_presidential_nested_v25 *
 recursive-include outputs/active_presidential_nested_v26 *
 recursive-include outputs/active_presidential_nested_v27 *
 recursive-include outputs/active_presidential_nested_v28 *
+recursive-include outputs/active_presidential_nested_v29 *
 recursive-include outputs/active_presidential_nested_v30 *
 recursive-include outputs/audit_logs *
 recursive-include outputs/automatic_controls_v22 *
