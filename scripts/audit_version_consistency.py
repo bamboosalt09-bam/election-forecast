@@ -11,6 +11,14 @@ renamed CI job blocks main forever with every check green.
 This is the single check that makes all of those the same failure. The pointer
 at data/config/current_presidential_model.json is the source of truth; every
 other declaration must agree with it.
+
+``--fix`` rewrites the declarations whose correct value is *computable* from the
+pointer: the document markers, the package version wherever it is repeated, the
+CLI banner and the frozen prediction hash. It deliberately does not touch prose,
+rename modules or invent documents - those need judgment, and a tool that
+guessed at them would produce confident nonsense. Fixer and checker share one
+table, so they cannot drift apart: whatever ``--fix`` writes is exactly what the
+check reads back.
 """
 
 from __future__ import annotations
@@ -19,6 +27,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import argparse
 import sys
 import tomllib
 
@@ -60,6 +69,47 @@ ACTIVENESS_PATTERNS = (
 )
 
 
+#: Sites whose correct content follows mechanically from the pointer. Each entry
+#: is (path, pattern with one capturing group, callable returning the value).
+#: The check compares the group; --fix rewrites it. One table, both directions.
+def _mechanical_sites(version: str, package_version: str, prediction_hash: str):
+    sites = [
+        ("pyproject.toml", r'(?m)^version = "([^"]+)"', package_version),
+        ("src/election_forecast/__init__.py", r'__version__ = "([^"]+)"', package_version),
+        ("src/election_forecast/cli.py", r'PACKAGE_VERSION = "([^"]+)"', package_version),
+        ("scripts/audit_current_public_surface.py", r'MAIN_VERSION = "([^"]+)"', package_version),
+        ("src/election_forecast/cli.py", r'ACTIVE_MODEL_VERSION = "([^"]+)"', version.upper()),
+        ("setup.py", r'"frozen_prediction_sha256": "([0-9a-f]{64})"', prediction_hash),
+        ("scripts/audit_distribution_artifacts.py", r'FROZEN_V\d+_SHA256 = \(\s*"([0-9a-f]{64})"', prediction_hash),
+        (
+            "scripts/audit_current_public_surface.py",
+            rf'V{version[1:]}_SHA256 = "([0-9a-f]{{64}})"',
+            prediction_hash,
+        ),
+    ]
+    sites += [
+        (relative, r"<!--\s*active-model-version:\s*(v\d+)\s*-->", version)
+        for relative in CORE_PUBLIC_DOCUMENTS
+    ]
+    return sites
+
+
+def apply_fixes(sites) -> list[str]:
+    """Rewrite each mechanical site to its computed value; report what changed."""
+
+    changed: list[str] = []
+    for relative, pattern, expected in sites:
+        path = ROOT / relative
+        text = path.read_text(encoding="utf-8")
+        found = re.search(pattern, text)
+        if found is None or found.group(1) == expected:
+            continue
+        start, end = found.span(1)
+        path.write_bytes((text[:start] + expected + text[end:]).encode("utf-8"))
+        changed.append(f"{relative}: {found.group(1)} -> {expected}")
+    return changed
+
+
 def check(condition: bool, message: str) -> None:
     if not condition:
         problems.append(message)
@@ -78,9 +128,35 @@ def _single(pattern: str, text: str, label: str) -> str | None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--fix",
+        action="store_true",
+        help="rewrite the declarations whose value follows from the pointer, then re-check",
+    )
+    arguments = parser.parse_args()
+
     pointer = json.loads(POINTER.read_text(encoding="utf-8"))
     version = str(pointer["active_version"])            # e.g. "v29"
     check(re.fullmatch(r"v\d+", version) is not None, f"unexpected active_version: {version}")
+
+    if arguments.fix:
+        # pyproject is the package version's own source; the pointer supplies
+        # the rest. Nothing here is guessed - every value is read, not invented.
+        changed = apply_fixes(
+            _mechanical_sites(
+                version,
+                str(tomllib.loads(_read("pyproject.toml"))["project"]["version"]),
+                hashlib.sha256(
+                    (ROOT / str(pointer["output"]) / "nested_predictions.csv").read_bytes()
+                ).hexdigest(),
+            )
+        )
+        for line in changed:
+            print(f"  fixed {line}")
+        if not changed:
+            print("  nothing mechanical to fix")
+        print()
 
     # 1. the alias must be the same document, not a copy that drifted
     check(json.loads(ALIAS.read_text(encoding="utf-8")) == pointer,
