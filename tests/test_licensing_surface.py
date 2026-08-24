@@ -21,13 +21,17 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-#: Upstream Apache License 2.0, as published by the ASF.
-CANONICAL_APACHE_2_0 = "1eb85fc97224598dad1852b5d6483bbcf0aa8608790dcc657a5a2a761ae9c8c6"
+#: Upstream Apache License 2.0, as published by the ASF, hashed with LF line
+#: endings. The bytes on disk depend on the checkout: this repository's Windows
+#: working copy has CRLF and hashes to 1eb85fc9..., which is what the first
+#: version of this test pinned - so it passed locally and failed on Linux CI.
+#: Normalising before hashing pins the document rather than the checkout.
+CANONICAL_APACHE_2_0 = "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
 PLACEHOLDERS = ("[yyyy]", "[name of copyright owner]", "TBD", "TODO", "<", "your name")
 
 
 def test_license_is_the_unmodified_upstream_text() -> None:
-    payload = (ROOT / "LICENSE").read_bytes()
+    payload = (ROOT / "LICENSE").read_bytes().replace(b"\r\n", b"\n")
     assert hashlib.sha256(payload).hexdigest() == CANONICAL_APACHE_2_0, (
         "LICENSE must stay byte-identical to upstream Apache-2.0; the project's "
         "own copyright statement goes in NOTICE, not in the appendix template"
