@@ -20,12 +20,12 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def test_v27_remains_in_the_declared_rollback_chain_under_v29() -> None:
+def test_v27_remains_in_the_declared_rollback_chain_under_v30() -> None:
     pointer = json.loads((ROOT / "data/config/current_presidential_model.json").read_text(encoding="utf-8"))
-    assert pointer["active_version"] == "v29"
-    assert pointer["predecessor"] == "v28"
-    assert pointer["runner"] == "scripts/run_active_presidential_model_v29.py"
-    assert pointer["prospective_runner"] == "scripts/run_prospective_forecast_v29.py"
+    assert pointer["active_version"] == "v30"
+    assert pointer["predecessor"] == "v29"
+    assert pointer["runner"] == "scripts/run_active_presidential_model_v30.py"
+    assert pointer["prospective_runner"] == "scripts/run_prospective_forecast_v30.py"
     assert sha(ROOT / "outputs/active_presidential_nested_v26/nested_predictions.csv") == "9b66b813f97c3c2804a178ebb5b9104fa4a58553c75812f75affbb3b17773dd3"
 
 

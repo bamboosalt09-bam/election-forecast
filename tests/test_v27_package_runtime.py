@@ -10,7 +10,7 @@ from zipfile import ZipFile
 import pytest
 
 from election_forecast.cli import build_parser
-from election_forecast.v29_runtime import MANIFEST_NAME, _verify_tree
+from election_forecast.v30_runtime import MANIFEST_NAME, _verify_tree
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,25 +24,25 @@ def _build_support():
     return module
 
 
-def test_v29_runtime_selection_is_complete_and_fail_closed() -> None:
+def test_v30_runtime_selection_is_complete_and_fail_closed() -> None:
     support = _build_support()
     public_sources = support._source_files()
     assert not any(path.startswith("data/shadow/") for path in public_sources)
     assert not any(path.startswith("data/raw_lake/") for path in public_sources)
     assert not any(path.startswith("data/imports/") for path in public_sources)
-    selected = set(support.v29_runtime_files())
+    selected = set(support.v30_runtime_files())
     required = {
         "scripts/run_current_presidential_model.py",
-        "scripts/run_active_presidential_model_v29.py",
+        "scripts/run_active_presidential_model_v30.py",
         "scripts/run_prospective_forecast_v28.py",
-        "scripts/audit_public_active_presidential_model_v29.py",
-        "scripts/build_active_v29_predictive_intervals.py",
-        "scripts/verify_v29_clean_reproduction.py",
+        "scripts/audit_public_active_presidential_model_v30.py",
+        "scripts/build_active_v30_predictive_intervals.py",
+        "scripts/verify_v30_clean_reproduction.py",
         "presidential_issue_engine/issue_vote_engine.py",
         "presidential_issue_engine/party_regionalism_dispersion.py",
         "presidential_issue_engine/make_poster_figures.py",
         "common/shared_schema/election.py",
-        "outputs/active_presidential_nested_v29/nested_predictions.csv",
+        "outputs/active_presidential_nested_v30/nested_predictions.csv",
     }
     assert required <= selected
     assert "presidential_issue_engine/fixed_dataset/kospi_daily.csv" not in selected
@@ -80,18 +80,18 @@ def test_v29_runtime_selection_is_complete_and_fail_closed() -> None:
     assert selected <= tracked_set
 
 
-def test_v29_runtime_archive_manifest_matches_payload(tmp_path: Path) -> None:
+def test_v30_runtime_archive_manifest_matches_payload(tmp_path: Path) -> None:
     support = _build_support()
     archive_path = tmp_path / "runtime.zip"
-    support.build_v29_runtime_archive(archive_path)
+    support.build_v30_runtime_archive(archive_path)
     with ZipFile(archive_path) as archive:
         manifest = json.loads(archive.read("_runtime_manifest.json"))
-        assert manifest["active_version"] == "v29"
+        assert manifest["active_version"] == "v30"
         assert manifest["post_2022_outcomes_used"] is False
         records = {record["path"]: record for record in manifest["files"]}
-        frozen = "outputs/active_presidential_nested_v29/nested_predictions.csv"
+        frozen = "outputs/active_presidential_nested_v30/nested_predictions.csv"
         assert records[frozen]["sha256"] == (
-            "fed959cdba1e127f91c2ab640a378d1f44a4a3e79b4c4a76893cf8d7c6153904"
+            "afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e"
         )
         for relative, record in records.items():
             payload = archive.read(relative)

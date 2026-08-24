@@ -13,12 +13,20 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from presidential_issue_engine import forecast_time_region_weights  # noqa: E402
 from presidential_issue_engine import party_regionalism_dispersion  # noqa: E402
 from scripts import run_active_presidential_model_v24 as v24  # noqa: E402
 from scripts import run_active_presidential_model_v26 as v26  # noqa: E402
 
 DEFAULT_OUTPUT = ROOT / "outputs" / "active_presidential_nested_v27"
 FINAL_VARIANT = "v27_core_weighted_party_regional_dispersion"
+
+
+#: Which column weights each candidate's national level in the terminal
+#: transform. V27 froze this as contest_votes - the target election's own
+#: turnout, which exists only after the count. V30 overrides it with
+#: forecast-time weights; V27 itself stays as it was frozen.
+WEIGHT_COLUMN = "contest_votes"
 
 
 def run(output_dir: Path | None = None) -> Path:
@@ -28,8 +36,11 @@ def run(output_dir: Path | None = None) -> Path:
     path = destination / "nested_predictions.csv"
     predictions = pd.read_csv(path, encoding="utf-8-sig", low_memory=False)
     predictions["v26_pre_regional_polarization_pred"] = predictions["layer_pred"]
+    if WEIGHT_COLUMN not in predictions.columns:
+        predictions[WEIGHT_COLUMN] = forecast_time_region_weights.build(predictions)
     predictions, audit = party_regionalism_dispersion.apply_party_regionalism_dispersion(
-        predictions, gain=party_regionalism_dispersion.DEFAULT_GAIN
+        predictions, weight_column=WEIGHT_COLUMN,
+        gain=party_regionalism_dispersion.DEFAULT_GAIN
     )
     v24._atomic_csv_crlf(predictions, path)
     v24._atomic_csv_crlf(audit, destination / "party_regionalism_dispersion_audit.csv")

@@ -23,14 +23,14 @@ from election_forecast.presidential.standardize_results import standardize_presi
 from election_forecast.presidential.transfer import apply_transfer_adjustments, load_transfer_events
 from election_forecast.presidential.utility_model import compute_utilities
 from election_forecast.presidential.vote_share import utility_to_vote_share
-from election_forecast.v29_runtime import ensure_v29_runtime
+from election_forecast.v30_runtime import ensure_v30_runtime
 
 
 try:
     PACKAGE_VERSION = version("election-forecast")
 except PackageNotFoundError:  # source-tree execution before installation
-    PACKAGE_VERSION = "0.29.0.dev0"
-ACTIVE_MODEL_VERSION = "V29"
+    PACKAGE_VERSION = "0.30.0.dev0"
+ACTIVE_MODEL_VERSION = "V30"
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -38,13 +38,13 @@ def _repository_script(name: str) -> Path:
     source_path = REPOSITORY_ROOT / "scripts" / name
     if source_path.is_file():
         return source_path
-    runtime_path = ensure_v29_runtime() / "scripts" / name
+    runtime_path = ensure_v30_runtime() / "scripts" / name
     if not runtime_path.is_file():
-        raise SystemExit(f"the verified V29 runtime does not contain {name}")
+        raise SystemExit(f"the verified V30 runtime does not contain {name}")
     return runtime_path
 
 
-def _v29_root(script: Path) -> Path:
+def _v30_root(script: Path) -> Path:
     return script.resolve().parents[1]
 
 
@@ -52,25 +52,25 @@ def build_parser() -> argparse.ArgumentParser:
     """Build the CLI parser."""
 
     parser = argparse.ArgumentParser(
-        description="Korean presidential election forecast engine (active frozen model V29)"
+        description="Korean presidential election forecast engine (active frozen model V30)"
     )
     parser.add_argument("--version", action="version", version=f"%(prog)s {PACKAGE_VERSION} ({ACTIVE_MODEL_VERSION})")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     run_current = subparsers.add_parser(
         "run-current-presidential",
-        help="Reproduce the active frozen V29 historical model",
+        help="Reproduce the active frozen V30 historical model",
     )
     run_current.add_argument("--output-dir")
 
     subparsers.add_parser(
         "audit-current-presidential",
-        help="Audit the active V29 artifact and V23-V28 rollback boundaries",
+        help="Audit the active V30 artifact and V23-V28 rollback boundaries",
     )
 
     subparsers.add_parser(
         "verify-current-presidential",
-        help="Rebuild V29 in isolation and compare it with the frozen artifact",
+        help="Rebuild V30 in isolation and compare it with the frozen artifact",
     )
 
     subparsers.add_parser(
@@ -178,24 +178,24 @@ def main() -> None:
 
     if args.command == "run-current-presidential":
         script = _repository_script("run_current_presidential_model.py")
-        runtime_root = _v29_root(script)
+        runtime_root = _v30_root(script)
         output_dir = (
             Path(args.output_dir).expanduser().resolve()
             if args.output_dir
-            else (Path.cwd() / "outputs" / "reproduction_v29").resolve()
+            else (Path.cwd() / "outputs" / "reproduction_v30").resolve()
         )
         command = [sys.executable, str(script), "--output-dir", str(output_dir)]
         raise SystemExit(subprocess.run(command, cwd=runtime_root, check=False).returncode)
 
     if args.command == "audit-current-presidential":
-        script = _repository_script("audit_public_active_presidential_model_v29.py")
+        script = _repository_script("audit_public_active_presidential_model_v30.py")
         command = [sys.executable, str(script)]
-        raise SystemExit(subprocess.run(command, cwd=_v29_root(script), check=False).returncode)
+        raise SystemExit(subprocess.run(command, cwd=_v30_root(script), check=False).returncode)
 
     if args.command == "verify-current-presidential":
-        script = _repository_script("verify_v29_clean_reproduction.py")
+        script = _repository_script("verify_v30_clean_reproduction.py")
         command = [sys.executable, str(script)]
-        raise SystemExit(subprocess.run(command, cwd=_v29_root(script), check=False).returncode)
+        raise SystemExit(subprocess.run(command, cwd=_v30_root(script), check=False).returncode)
 
     if args.command == "forecast":
         raw_data = load_raw_data(args.data_dir)
