@@ -59,7 +59,14 @@ CORE_PUBLIC_DOCUMENTS = (
 )
 #: Versions that may legitimately appear in paths: the active one and its
 #: frozen rollbacks, which the audits pin by design.
-ROLLBACK_VERSIONS = frozenset({"v23", "v24", "v25", "v26", "v27", "v28"})
+#: Every promoted version below the active one. Derived rather than listed:
+#: the literal set went stale the moment V29 became a rollback, and a stale
+#: rollback set makes the checks below quietly more permissive, not louder.
+FIRST_ROLLBACK = 23
+
+
+def rollback_versions(active: str) -> frozenset[str]:
+    return frozenset(f"v{n}" for n in range(FIRST_ROLLBACK, int(active[1:])))
 ACTIVE_VERSION_MARKER = re.compile(r"<!--\s*active-model-version:\s*(v\d+)\s*-->")
 #: The prose assertions are still checked, but only above the first dated or
 #: superseded heading. A handoff log legitimately records "active V23" inside a
@@ -298,7 +305,7 @@ def main() -> None:
             f"where {version} is active",
         )
         artifacts = set(artifact_paths.findall(text))
-        unknown = sorted(v for v in artifacts if v != version and v not in ROLLBACK_VERSIONS)
+        unknown = sorted(v for v in artifacts if v != version and v not in rollback_versions(version))
         check(
             not unknown,
             f"{relative} names {', '.join(unknown)} artifact paths that are neither "
@@ -329,6 +336,26 @@ def main() -> None:
                      "README.md", "scripts/audit_distribution_artifacts.py"):
         text = _read(relative)
         check(lock in text, f"{relative} never names the canonical lock {lock}")
+
+    # 14. the source distribution must carry the active output directory and
+    #     every rollback one. The promotion pass that produced V30 rewrote
+    #     MANIFEST.in's active line from v29 to v30, dropping V29 from the
+    #     sdist. The directly built wheel still had it from the checkout, so
+    #     everything local passed; only the wheel built *from the sdist* was
+    #     missing the rollback whose hash it verifies.
+    manifest = _read("MANIFEST.in")
+    included = set(
+        re.findall(
+            r"recursive-include outputs/active_presidential_nested_(v\d+)\b", manifest
+        )
+    )
+    missing = sorted({version} | set(rollback_versions(version)) - included, key=lambda v: int(v[1:]))
+    missing = [v for v in missing if v not in included]
+    check(
+        not missing,
+        "MANIFEST.in omits the output directory for "
+        f"{', '.join(missing)}, so the sdist-built wheel cannot verify it",
+    )
 
     workflow = _read(".github/workflows/ci.yml")
     versioned_jobs = re.findall(r"^  ([a-z0-9-]*v\d+[a-z0-9-]*):", workflow, re.MULTILINE)
