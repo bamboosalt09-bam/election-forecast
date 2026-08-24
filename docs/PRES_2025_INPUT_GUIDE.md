@@ -45,16 +45,18 @@ verify any row against its source without the project redistributing the text.
 ### `assembly_speaker_issue_matches_15_22.csv.gz` — the historical matches
 
 The forecast is built against the five scored elections, and their speaker-level
-issue matches come from a 195,758-row table that lives under
-`archives/experiments/manual_seed_lineage_v17_rejected_20260728/`. Two things
-made that a poor dependency: the repository boundary forbids tracking
-`archives/`, and the directory name says the experiment was *rejected* even
-though the active forecast path reads it.
+issue matches are a 195,758-row table. It used to be read straight out of
+`archives/experiments/manual_seed_lineage_v17_rejected_20260728/`, which was a
+poor dependency twice over: the repository boundary forbids tracking
+`archives/`, so a clean checkout could not run this path, and the directory name
+says the experiment was *rejected* even though the active forecast read it.
 
-Neither is a rights problem — the table already carries `text_length` rather
+Neither was a rights problem — the table already carries `text_length` rather
 than `text_excerpt`. It is published gzipped instead: the same rows, 3.07 MB
 against 118.9 MB, because `committee`, `agenda` and `source_file` repeat
-heavily.
+heavily. **The published copy is now the only one the active path reads**; the
+two are identical in content, and the archive is a historical record that
+nothing active consults.
 
 Rebuild it with:
 

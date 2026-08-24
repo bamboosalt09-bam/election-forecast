@@ -21,8 +21,29 @@ DEFAULT_OUTPUT = ROOT / "outputs" / "active_presidential_nested_v29"
 FINAL_VARIANT = "v29_third_share_dispersion_expansion"
 
 
-def run(output_dir: Path | None = None) -> Path:
+def run(output_dir: Path | None = None, gain: float | None = None) -> Path:
+    """Run V29, optionally at a gain other than the promoted one.
+
+    The promoted gain is 1.0, where the expansion factor is the predicted third
+    share itself and no constant is selected. A swept gain of 0.50 scores better
+    on the five scored outcomes and was rejected for exactly that reason - it is
+    a constant chosen on the panel it is then measured against. It stays
+    available because "better on the panel" is still worth being able to
+    measure; it is not pre-registered and adopting it would need its own
+    promotion.
+
+    Writing a non-default gain into the promoted directory is refused. A
+    frozen artifact that silently holds something other than the promoted
+    configuration is the one outcome this must not allow.
+    """
+
+    selected = third_share_dispersion_expansion.DEFAULT_GAIN if gain is None else float(gain)
     destination = Path(output_dir) if output_dir is not None else DEFAULT_OUTPUT
+    if selected != third_share_dispersion_expansion.DEFAULT_GAIN and destination == DEFAULT_OUTPUT:
+        raise SystemExit(
+            f"refusing to write gain {selected} into the promoted directory "
+            f"{DEFAULT_OUTPUT.relative_to(ROOT).as_posix()}; pass --output-dir"
+        )
     destination.mkdir(parents=True, exist_ok=True)
     v28.run(output_dir=destination)
 
@@ -30,7 +51,7 @@ def run(output_dir: Path | None = None) -> Path:
     predictions = pd.read_csv(path, encoding="utf-8-sig", low_memory=False)
     predictions["v28_pre_third_share_expansion_pred"] = predictions["layer_pred"]
     predictions, audit = third_share_dispersion_expansion.apply_third_share_dispersion_expansion(
-        predictions, gain=third_share_dispersion_expansion.DEFAULT_GAIN
+        predictions, gain=selected
     )
     v24._atomic_csv_crlf(predictions, path)
     v24._atomic_csv_crlf(audit, destination / "third_share_dispersion_expansion_audit.csv")
@@ -69,8 +90,17 @@ def run(output_dir: Path | None = None) -> Path:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=None)
+    parser.add_argument(
+        "--gain",
+        type=float,
+        default=None,
+        help=(
+            "expansion gain; defaults to the promoted 1.0. Any other value "
+            "requires --output-dir and is stamped as non-promoted in the summary."
+        ),
+    )
     args = parser.parse_args()
-    destination = run(args.output_dir)
+    destination = run(args.output_dir, gain=args.gain)
     print(v24.report(destination).to_string(index=False))
 
 

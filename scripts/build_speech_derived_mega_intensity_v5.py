@@ -22,14 +22,17 @@ from presidential_issue_engine.speech_derived_mega_intensity import (  # noqa: E
 from scripts import run_active_presidential_model as active  # noqa: E402
 
 
+#: The published speaker-level issue matches. Formerly read straight out of
+#: archives/experiments/manual_seed_lineage_v17_rejected_20260728/, which the
+#: repository boundary forbids tracking; the two are identical in content.
 SOURCE = (
     ROOT
-    / "archives"
-    / "experiments"
-    / "manual_seed_lineage_v17_rejected_20260728"
-    / "artifacts"
-    / "assembly_speaker_issue_matches_15_22.csv"
+    / "data"
+    / "raw"
+    / "official_sources"
+    / "assembly_speaker_issue_matches_15_22.csv.gz"
 )
+
 OUTPUT_DIR = ROOT / "outputs" / "speech_derived_mega_intensity_v5"
 TAXONOMY = ROOT / "data" / "raw" / "mega_issue_taxonomy.csv"
 

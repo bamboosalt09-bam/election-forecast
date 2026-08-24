@@ -9,13 +9,14 @@ import pytest
 from election_forecast.features.issue_matcher import IssueContextRule
 from scripts import run_prospective_forecast as prospective
 
-# Building the 2025 target context reads bulk Assembly material that is kept
-# outside Git, so these tests exercise nothing on a fresh public checkout.
+# Building the 2025 target context used to need bulk Assembly material kept
+# outside Git, so these tests skipped on every public checkout - including CI.
+# Both inputs now have published derived forms, so what is required is whatever
+# the runtime actually resolves, and these tests run.
 BULK_TARGET_SOURCES = (
+    prospective.OFFICIAL_2025_MINUTES,
     prospective.ROOT
-    / "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
-    prospective.ROOT
-    / "archives/experiments/manual_seed_lineage_v17_rejected_20260728/artifacts/assembly_speaker_issue_matches_15_22.csv",
+    / "data/raw/official_sources/assembly_speaker_issue_matches_15_22.csv.gz",
 )
 
 

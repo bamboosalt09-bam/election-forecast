@@ -558,7 +558,7 @@ targets for coefficient selection.
 - `outputs/active_presidential_nested_v16/chungcheong_identity_audit.csv`
 - `outputs/active_presidential_nested_v16/regional_identity_audit.csv`
 - `outputs/active_presidential_nested_v16/input_manifest.csv`
-- `archives/experiments/manual_seed_lineage_v17_rejected_20260728/`
+- `archives/experiments/manual_seed_lineage_v17_rejected_20260728/` (historical record; the active path reads `data/raw/official_sources/assembly_speaker_issue_matches_15_22.csv.gz`)
 - `outputs/regional_identity_v16_camp_donor_experiment/decision.json`
 - `docs/REGIONAL_IDENTITY_V16_20260728.md`
 - `archives/experiments/regional_identity_v16_20260728/archive_manifest.csv`
