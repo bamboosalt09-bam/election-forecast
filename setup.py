@@ -232,7 +232,7 @@ def v31_runtime_files() -> list[str]:
     """Select the complete, public V30 runtime from admitted source files."""
 
     finalization = json.loads(
-        (ROOT / "outputs/active_presidential_nested_v30/finalization_manifest.json").read_text(
+        (ROOT / "outputs/active_presidential_nested_v31/finalization_manifest.json").read_text(
             encoding="utf-8"
         )
     )
@@ -298,7 +298,7 @@ def build_v31_runtime_archive(destination: Path) -> None:
             }
         )
     manifest = {
-        "schema": "election_forecast_v30_packaged_runtime_v1",
+        "schema": "election_forecast_v31_packaged_runtime_v1",
         "active_version": "v31",
         "frozen_prediction_sha256": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
         "source_boundary": "git-tracked-public-files-only",
