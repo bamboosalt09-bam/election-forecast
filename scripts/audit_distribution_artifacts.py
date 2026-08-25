@@ -16,8 +16,8 @@ import tarfile
 from zipfile import ZipFile
 
 
-FROZEN_V30_SHA256 = (
-    "afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e"
+FROZEN_V31_SHA256 = (
+    "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069"
 )
 FORBIDDEN_FILES = {
     "presidential_issue_engine/fixed_dataset/kospi_daily.csv",
@@ -56,13 +56,13 @@ REQUIRED_RUNTIME_FILES = {
     "LICENSE",
     "NOTICE",
     "scripts/run_current_presidential_model.py",
-    "scripts/run_active_presidential_model_v30.py",
-    "scripts/run_prospective_forecast_v30.py",
-    "scripts/audit_public_active_presidential_model_v30.py",
-    "scripts/verify_v30_clean_reproduction.py",
+    "scripts/run_active_presidential_model_v31.py",
+    "scripts/run_prospective_forecast_v31.py",
+    "scripts/audit_public_active_presidential_model_v31.py",
+    "scripts/verify_v31_clean_reproduction.py",
     "presidential_issue_engine/issue_vote_engine.py",
     "data/raw/auto_issue_seed/candidate_issue_profile.csv",
-    "outputs/active_presidential_nested_v30/nested_predictions.csv",
+    "outputs/active_presidential_nested_v31/nested_predictions.csv",
 }
 
 
@@ -106,14 +106,14 @@ def _audit_runtime(payload: bytes) -> int:
         if "_runtime_manifest.json" not in names:
             raise RuntimeError("wheel runtime manifest is missing")
         manifest = json.loads(runtime.read("_runtime_manifest.json"))
-        if manifest.get("active_version") != "v30":
+        if manifest.get("active_version") != "v31":
             raise RuntimeError("wheel runtime does not declare active V30")
         if manifest.get("source_boundary") != "git-tracked-public-files-only":
             raise RuntimeError("wheel runtime has an unexpected source boundary")
         if manifest.get("post_2022_outcomes_used") is not False:
             raise RuntimeError("wheel runtime does not preserve the outcome-free boundary")
-        if manifest.get("frozen_prediction_sha256") != FROZEN_V30_SHA256:
-            raise RuntimeError("wheel runtime frozen V30 hash declaration drifted")
+        if manifest.get("frozen_prediction_sha256") != FROZEN_V31_SHA256:
+            raise RuntimeError("wheel runtime frozen V31 hash declaration drifted")
 
         records = manifest.get("files")
         if not isinstance(records, list):
@@ -141,10 +141,10 @@ def _audit_runtime(payload: bytes) -> int:
             if record.get("sha256") != hashlib.sha256(content).hexdigest():
                 raise RuntimeError(f"wheel runtime hash mismatch: {relative}")
         frozen = runtime.read(
-            "outputs/active_presidential_nested_v30/nested_predictions.csv"
+            "outputs/active_presidential_nested_v31/nested_predictions.csv"
         )
-        if hashlib.sha256(frozen).hexdigest() != FROZEN_V30_SHA256:
-            raise RuntimeError("embedded frozen V30 prediction hash drifted")
+        if hashlib.sha256(frozen).hexdigest() != FROZEN_V31_SHA256:
+            raise RuntimeError("embedded frozen V31 prediction hash drifted")
         return len(indexed)
 
 
@@ -154,11 +154,11 @@ def audit_wheel(path: Path) -> tuple[int, int]:
         for name in names:
             _assert_public(name)
         runtime_names = [
-            name for name in names if name.endswith("election_forecast/_v30_runtime.zip")
+            name for name in names if name.endswith("election_forecast/_v31_runtime.zip")
         ]
         if len(runtime_names) != 1:
             raise RuntimeError(
-                f"wheel must contain exactly one V30 runtime archive: {path.name}"
+                f"wheel must contain exactly one V31 runtime archive: {path.name}"
             )
         runtime_files = _audit_runtime(wheel.read(runtime_names[0]))
         return len(names), runtime_files
@@ -183,7 +183,7 @@ def audit_sdist(path: Path) -> int:
             "LICENSE",
             "NOTICE",
             "SECURITY.md",
-            "requirements-v30.lock",
+            "requirements-v31.lock",
             "setup.py",
             "scripts/audit_public_data_rights.py",
             "scripts/audit_publication_security.py",
@@ -216,7 +216,7 @@ def main() -> None:
     print(f"source_distributions={len(sdists)} members={sdist_members}")
     print(f"wheels={len(wheels)} members={wheel_members}")
     print(f"verified_runtime_files={runtime_files}")
-    print(f"frozen_v30_sha256={FROZEN_V30_SHA256}")
+    print(f"frozen_v31_sha256={FROZEN_V31_SHA256}")
 
 
 if __name__ == "__main__":

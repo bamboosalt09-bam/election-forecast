@@ -5,7 +5,7 @@ include SECURITY.md
 include STRUCTURE.md
 include CONTRIBUTING.md
 include requirements-v27.lock
-include requirements-v30.lock
+include requirements-v31.lock
 include setup.py
 recursive-include docs *.md *.json
 recursive-include scripts *.py
@@ -20,6 +20,8 @@ recursive-include outputs/active_presidential_nested_v27 *
 recursive-include outputs/active_presidential_nested_v28 *
 recursive-include outputs/active_presidential_nested_v29 *
 recursive-include outputs/active_presidential_nested_v30 *
+recursive-include outputs/active_presidential_nested_v31 *
+recursive-include outputs/active_presidential_nested_v31 *
 recursive-include outputs/audit_logs *
 recursive-include outputs/automatic_controls_v22 *
 recursive-include outputs/automatic_controls_v23 *
@@ -34,7 +36,8 @@ recursive-include outputs/prospective_pres_2025_v24 *
 recursive-include outputs/prospective_pres_2025_v25 *
 recursive-include outputs/prospective_pres_2025_v27 *
 recursive-include outputs/prospective_pres_2025_v28 *
-recursive-include outputs/prospective_pres_2025_v30 *
+recursive-include outputs/prospective_pres_2025_v31 *
+recursive-include outputs/prospective_pres_2025_v31 *
 recursive-include outputs/external_model_free_v25_baseline *
 recursive-include outputs/unified_exact_lineage_v21 *
 recursive-include outputs/v24_defect_ablation *

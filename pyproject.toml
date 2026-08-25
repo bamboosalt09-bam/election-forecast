@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "election-forecast"
-version = "0.30.0.dev0"
-description = "Point-in-time Korean presidential election forecasting engine; active V30 with forecast-time regional weighting."
+version = "0.31.0.dev0"
+description = "Point-in-time Korean presidential election forecasting engine; active V31 with a multiplicative regional dispersion expansion."
 readme = "README.md"
 authors = [
     { name = "Election Forecast contributors", email = "bamboosalt09-bam@users.noreply.github.com" },
@@ -41,7 +41,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
-reproduce-v30 = [
+reproduce-v31 = [
     "numpy==2.4.6",
     "pandas==3.0.5",
     "scipy==1.18.0",
@@ -64,7 +64,7 @@ news-collector = "news_collector.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-election_forecast = ["_v30_runtime.zip"]
+election_forecast = ["_v31_runtime.zip"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]

@@ -1,12 +1,12 @@
-<!-- active-model-version: v30 -->
-# V30 architecture
+<!-- active-model-version: v31 -->
+# V31 architecture
 
-V30 is the active, frozen presidential model. It preserves V29 as a rollback,
+V31 is the active, frozen presidential model. It preserves V30 as a rollback,
 keeps V28's external-model boundary unchanged — no neural inference, no weights,
 no source sentences, no direct stance overlay, no automatic mega seeds in the
-packaged-runtime path — and changes one thing: the weight the two terminal
-transforms use to locate each candidate's national level is now the previous
-election's regional valid votes rather than the target election's own turnout.
+packaged-runtime path — and changes one thing: the terminal
+dispersion expansion is multiplicative rather than additive, so no predicted
+share can reach zero and the per-election feasibility cap is gone.
 One frozen historical candidate-issue aggregate remains as a disclosed
 postprocess input. The diagram below follows the actual
 public entry points rather than older poster-era experiments.
@@ -16,7 +16,7 @@ research surfaces are enumerated in `REPOSITORY_BOUNDARIES.md`.
 
 ```mermaid
 flowchart TD
-    P[Installable wheel] --> Q[Hash-verified V30 runtime]
+    P[Installable wheel] --> Q[Hash-verified V31 runtime]
     Q --> A[Point-in-time public and derived inputs]
     A --> B[Candidate, party, region and issue assembly]
     B --> C[Candidate prior and historical terrain]
@@ -28,24 +28,24 @@ flowchart TD
     H --> I[Third-candidate lineage ceiling]
     I --> J[Weak same-lane refusal transfer]
     J --> K[V27 core-weighted regional dispersion]
-    K --> V[V29 third-share dispersion expansion]
+    K --> V[V31 multiplicative dispersion expansion]
     W[Previous election regional valid votes] --> K
     W --> V
     V --> L[Regional 100 percent and national-level conservation]
     L --> M[Predictions, intervals and audit manifests]
-    M --> N[Current V30 visualizations]
+    M --> N[Current V31 visualizations]
 
     O[2025 D-1 reconstructed context] --> B
     O -. corrected demonstration only .-> M
 
-    R[External-model weights, sentences and experiment code] -. excluded from packaged V30 runtime .-> S[Research records]
+    R[External-model weights, sentences and experiment code] -. excluded from packaged V31 runtime .-> S[Research records]
     T[Disclosed frozen candidate-issue aggregate] --> F
 ```
 
 ## Runtime chain
 
 - Public historical pointer: `scripts/run_current_presidential_model.py`
-- V30 wrapper: `scripts/run_active_presidential_model_v30.py`
+- V31 wrapper: `scripts/run_active_presidential_model_v31.py`
 - V28 external-model-free wrapper: `scripts/run_active_presidential_model_v28.py`
 - V26 shock ladder and event alignment: `scripts/run_active_presidential_model_v26.py`
 - V25/V24 structural stack: `scripts/run_active_presidential_model_v25.py`
@@ -53,23 +53,24 @@ flowchart TD
 - V27 terminal transform: `presidential_issue_engine/party_regionalism_dispersion.py`
 - V29 terminal transform: `presidential_issue_engine/third_share_dispersion_expansion.py`
 - V30 forecast-time weights: `presidential_issue_engine/forecast_time_region_weights.py`
+- V31 terminal transform: `presidential_issue_engine/multiplicative_dispersion_expansion.py`
 - External-model-runtime-free boundary: `presidential_issue_engine/external_model_free_runtime.py`
-- Public integrity audit: `scripts/audit_public_active_presidential_model_v30.py`
+- Public integrity audit: `scripts/audit_public_active_presidential_model_v31.py`
 - Version-declaration audit: `scripts/audit_version_consistency.py`
-- Installed-runtime verifier: `src/election_forecast/v30_runtime.py`
+- Installed-runtime verifier: `src/election_forecast/v31_runtime.py`
 - Wheel build boundary: `setup.py`
 
 The version wrappers are intentionally layered. A successor must use a new
-runner and output directory; it must not edit V30 or a rollback version in
+runner and output directory; it must not edit V31 or a rollback version in
 place.
 
 The public repository keeps historical research scripts for transparency, but
-the wheel traces only modules reachable from the V30 historical/prospective,
+the wheel traces only modules reachable from the V31 historical/prospective,
 audit, reproduction and visualization entry points. Optional external-model
 experiments, raw caches and noncanonical research outputs are not admitted to
 the packaged runtime.
 
-## What V30 changes
+## What V30 changed
 
 Both terminal transforms — V27's core-weighted dispersion and V29's third-share
 expansion — work on each candidate's deviations around that candidate's own
@@ -93,6 +94,35 @@ correlate at `0.996`, so the weight barely differed. Both headline figures
 improved — regional macro `2.5736` → `2.5664`, national `0.7262` → `0.7204` —
 which is recorded as an outcome, not as the justification. See
 `EXPERIMENT_V30_FORECAST_TIME_WEIGHTS_20260824.md`.
+
+## What V31 changes
+
+V29's expansion is linear in each candidate's regional deviation, so it has no
+lower bound, and it was capped per election at the largest factor admitting no
+negative share. That cap is *defined* by the first region to reach zero, so the
+region setting it is published at exactly zero whenever the cap binds — where
+the arithmetic stopped, not an estimate. It bound twice: 홍준표's 광주 in 2017
+(3.55% into the transform, 1.68% realised, 0.00% published) and 김문수's 광주 in
+the 2025 demonstration (2.67% in, 0.00% out). Because each region is
+renormalised to 100%, the displaced mass moved onto the other candidates there.
+
+V31 expands the ratio instead of the difference:
+
+    scaled = level * (pred / level) ** (1 + gain * predicted_third_share)
+
+A positive input stays positive at any factor, so the constraint the cap
+enforced holds by the form and the cap is removed rather than adjusted.
+
+The multiplicative form preserves a geometric mean, not the arithmetic national
+level, so levels drift by up to `0.465%p` on their own. The regional sums and
+the candidate levels are therefore alternated to convergence, which restores the
+level to `2.3e-13%p` and introduces no constant: the targets are the input
+levels and one. Convergence takes 1–17 rounds and failure raises.
+
+Regional macro `2.566445` → `2.500701`; national `0.720437` → `0.724291`. The
+national figure is worse and the change was made anyway — a prediction of
+exactly zero for a major-party candidate in a metropolitan region is wrong in
+kind. See `EXPERIMENT_V31_MULTIPLICATIVE_EXPANSION_20260825.md`.
 
 The artifact's `err_pp` and `abs_err_pp` columns now describe `layer_pred`, the
 shipped prediction. They previously described `official_pred`, a pre-layer
@@ -133,11 +163,12 @@ itself, so there is no constant for the scored panel to select; a swept gain of
 
 ## Preserved invariants
 
-V30 retains V27's and V29's terminal regional transforms and V28's
-external-model boundary, and reweights them without changing their form. It
+V31 retains V27's terminal regional transform, V30's forecast-time weighting
+and V28's external-model boundary, and replaces V29's additive expansion with a
+multiplicative one that cannot emit a zero share. It
 preserves each candidate's vote-weighted national level and restores every
 election-region composition to 100 percent. The public audit additionally pins
-the 232-row panel, the V23-V29 rollback hashes, the V30 prediction hash,
+the 232-row panel, the V23-V30 rollback hashes, the V31 prediction hash,
 interval metadata, the absence of any negative share, and the fact that no 2025
 row enters the scored historical artifact.
 

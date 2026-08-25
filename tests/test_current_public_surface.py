@@ -13,12 +13,12 @@ def load_json(relative: str) -> dict[str, object]:
     return json.loads((ROOT / relative).read_text(encoding="utf-8"))
 
 
-def test_public_active_alias_matches_current_v30_pointer() -> None:
+def test_public_active_alias_matches_current_v31_pointer() -> None:
     current = load_json("data/config/current_presidential_model.json")
     alias = load_json("data/config/active_presidential_model.json")
     assert alias == current
-    assert current["active_version"] == "v30"
-    assert current["runner"] == "scripts/run_active_presidential_model_v30.py"
+    assert current["active_version"] == "v31"
+    assert current["runner"] == "scripts/run_active_presidential_model_v31.py"
 
 
 def test_unversioned_base_module_uses_explicit_v16_config() -> None:

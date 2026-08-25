@@ -90,7 +90,7 @@ def test_equal_region_weighting_ignores_volume() -> None:
 
 
 def test_the_first_election_is_weighted_from_the_shipped_warmup_table() -> None:
-    """It used to be undefined; V30 ships 1997's turnout, so it no longer is.
+    """It used to be undefined; V31 ships 1997's turnout, so it no longer is.
 
     The synthetic panel's regions do not exist in the real 1997 table, so every
     one of them takes the warmup mean - which is the substitution rule working,

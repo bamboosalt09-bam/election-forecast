@@ -39,10 +39,10 @@ def _pointer() -> dict[str, object]:
 
 def test_v26_remains_in_the_declared_rollback_chain() -> None:
     pointer = _pointer()
-    assert pointer["active_version"] == "v30"
-    assert pointer["predecessor"] == "v29"
+    assert pointer["active_version"] == "v31"
+    assert pointer["predecessor"] == "v30"
     assert pointer["rollback_pointer"] == (
-        "outputs/active_presidential_nested_v29/finalization_manifest.json"
+        "outputs/active_presidential_nested_v30/finalization_manifest.json"
     )
     # walk the chain rather than naming one link, so a further promotion keeps
     # this test honest instead of silently only checking the newest hop

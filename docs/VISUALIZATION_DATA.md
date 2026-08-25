@@ -1,21 +1,22 @@
-<!-- active-model-version: v30 -->
+<!-- active-model-version: v31 -->
 # Visualization data and licensing
 
 `presidential_issue_engine/make_poster_figures.py` now generates only current
-V30 figures. Retrospective charts read the finalized through-2022 development
-panel. Forecast charts read the separate `pres_2025` V30 D-1 artifact and never
+V31 figures. Retrospective charts read the finalized through-2022 development
+panel. Forecast charts read the separate `pres_2025` V31 D-1 artifact and never
 read the realized 2025 result.
 
 The old numbered PNGs were moved to
 `research/visualizations/legacy_v23_v25/`, and the V27, V28 and V29 figure sets
-to `research/visualizations/legacy_v27_v29/`. They are superseded research
-history, are excluded from the packaged runtime and must not be cited as V30.
+to `research/visualizations/legacy_v27_v29/`, and V30's to
+`research/visualizations/legacy_v30/`. They are superseded research
+history, are excluded from the packaged runtime and must not be cited as V31.
 Only the current set stays in `poster_figures/`, so the directory listing and
 the figures the README displays are the same thing.
 
-The current public set adds a V30 overview and an execution architecture figure
+The current public set adds a V31 overview and an execution architecture figure
 to the performance, election-level, regional and 2025 D-1 map views. Every
-current filename starts with `v30_` and every chart reads only the declared V30
+current filename starts with `v31_` and every chart reads only the declared V31
 historical or corrected-demonstration artifact.
 
 ## Map source

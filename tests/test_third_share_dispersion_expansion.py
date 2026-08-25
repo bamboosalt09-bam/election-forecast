@@ -1,4 +1,4 @@
-"""Guards for the V30 third-share dispersion expansion.
+"""Guards for the V31 third-share dispersion expansion.
 
 The transform is promoted on three claims that are properties of its form
 rather than of the panel it was measured on: it reads no outcome, it conserves

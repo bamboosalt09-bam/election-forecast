@@ -1,4 +1,4 @@
-<!-- active-model-version: v30 -->
+<!-- active-model-version: v31 -->
 # Repository and distribution boundaries
 
 The public repository keeps executable releases and research history together
@@ -6,17 +6,17 @@ for transparency, but they are not the same publication surface.
 
 | Boundary | Canonical location | Install package | Meaning |
 | --- | --- | --- | --- |
-| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V30 engine modules and declared public/derived inputs | Yes | Locally runnable V30 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
-| Frozen active evidence | `outputs/active_presidential_nested_v30/` | Yes | Immutable V30 predictions, intervals and promotion audits |
-| Rollback evidence | V23-V29 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
-| Corrected demonstration | `outputs/prospective_pres_2025_v30/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
+| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V31 engine modules and declared public/derived inputs | Yes | Locally runnable V31 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
+| Frozen active evidence | `outputs/active_presidential_nested_v31/` | Yes | Immutable V31 predictions, intervals and promotion audits |
+| Rollback evidence | V23-V30 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
+| Corrected demonstration | `outputs/prospective_pres_2025_v31/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
 | Boundary history reference | `outputs/external_model_free_v25_baseline/` | Yes | V25 pipeline under the external-model boundary; verification reference only, never promoted or scored |
 | Document record | `docs/` dated experiments, diagnoses and superseded final models | Yes | Indexed in `docs/INDEX.md`; accurate for the state each describes, never current |
-| Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V30 output |
+| Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V31 output |
 | Local/private acquisition | ignored caches, checkpoints, full text, credentials and uncertain-rights exports | No | Must be reacquired under the provider's terms or remain local |
 
 The wheel contains a hash-indexed runtime archive. The source distribution
-contains the same runnable V30 source plus current publication, security and
+contains the same runnable V31 source plus current publication, security and
 rights documents. It deliberately excludes superseded visualization archives,
 old corrected demonstrations and non-promoted output grids. The GitHub
 repository remains the complete public research record.
@@ -51,7 +51,8 @@ name:
 | `docs/GITHUB_BASELINE_V27_20260822.json` | v27 |
 | `docs/GITHUB_BASELINE_V28_20260823.json` | v28 |
 | `docs/GITHUB_BASELINE_V29_20260823.json` | v29 |
-| `docs/GITHUB_BASELINE_V30_20260824.json` | **v30, current** |
+| `docs/GITHUB_BASELINE_V30_20260824.json` | v30 |
+| `docs/GITHUB_BASELINE_V31_20260825.json` | **v31, current** |
 
 They are not renamed because frozen finalizer scripts reference them by path.
 Every one carries its own `active_version` field, which is authoritative.
