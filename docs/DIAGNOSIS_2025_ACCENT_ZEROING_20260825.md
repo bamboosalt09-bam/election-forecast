@@ -121,6 +121,28 @@ is missing cannot know what is inert; naming the columns it is allowed to fill,
 and failing on anything else, converts this class of defect from invisible to
 loud.
 
+## A fourth wrong turn, recorded
+
+The first attempt at the fix rebuilt the accent by calling
+``_attach_candidate_regional_accent`` directly on the target frame. It produced
+values that *looked* right - 51/51 populated, mean reliability 0.6365 against
+the panel's 0.6727 - and were wrong, differing from the canonical computation
+by up to `0.0357` in reliability, because inside the estimator that attachment
+runs after `_candidate_camp_frame` and the rest of the assembly.
+
+This document had already said not to do that:
+
+> the fix is not a column pass-through: the 2025 target rows have to be routed
+> through the same layer estimation the scored rows get.
+
+The correct builder calls `estimate_electorate_layers` and takes its output, so
+it is equal to the canonical path by construction rather than by resemblance.
+Verified against a traced canonical run: maximum difference `5.6e-17`.
+
+A plausible-looking number is the failure mode here. Mean reliability of 0.6365
+next to a panel mean of 0.6727 reads as confirmation; only comparing against
+the canonical values showed it was not.
+
 ## Related
 
 - `DIAGNOSIS_REGIONALISM_DEAD_ENDS_20260825.md` — the regionalism work this came
