@@ -37,7 +37,19 @@ ASSEMBLY = (
     / "nec_assembly_district_history.csv"
 )
 PARTY_TRANSITIONS = ROOT / "data" / "raw" / "party_lineage_transitions.csv"
-TARGETS = ("pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022")
+#: Every target a profile is fitted for, scored and forecast alike. The profile
+#: needs only events strictly before the target's cutoff, so a forecast target
+#: is no different in kind from a scored one - pres_2025 was simply never
+#: listed, and its absence made every lineage_identity_* column zero in the
+#: published 2025 forecast.
+TARGETS = (
+    "pres_2002",
+    "pres_2007",
+    "pres_2012",
+    "pres_2017",
+    "pres_2022",
+    "pres_2025",
+)
 
 
 def _sha256(path: Path) -> str:
@@ -58,7 +70,15 @@ def main() -> None:
     for target in TARGETS:
         cutoff = election_date(target)
         if cutoff is None:
-            continue
+            # Never skip. A configured target with no date used to fall through
+            # here silently, and because the date map had drifted out of step
+            # with election_scope, that is exactly what pres_2025 did: no
+            # profile, no error, and five zeroed columns downstream.
+            raise RuntimeError(
+                f"no election date for configured lineage target {target}; the "
+                "date registry and the target list disagree, and a skipped "
+                "target produces no profile and no warning"
+            )
         fit = fit_lineage_profiles(events, cutoff=pd.Timestamp(cutoff))
         reliability = fit.type_reliability.copy()
         reliability["target_election_id"] = target

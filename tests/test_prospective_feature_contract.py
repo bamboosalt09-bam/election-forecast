@@ -40,14 +40,14 @@ def test_an_unclassified_missing_column_stops_the_run() -> None:
 
     with pytest.raises(contract.ProspectiveFeatureError) as error:
         contract.resolve(_frame(), ["election_id", "some_new_predictor"])
-    assert "no declared kind" in str(error.value)
+    assert "no declared class" in str(error.value)
     assert "some_new_predictor" in str(error.value)
 
 
 def test_a_model_active_family_without_a_builder_stops_the_run() -> None:
     with pytest.raises(contract.ProspectiveFeatureError) as error:
         contract.resolve(_frame(), ["election_id", "regional_accent_reliability"])
-    assert "model-active" in str(error.value)
+    assert "required-derived" in str(error.value)
 
 
 def test_outcome_columns_become_nan_never_zero() -> None:
@@ -58,11 +58,15 @@ def test_outcome_columns_become_nan_never_zero() -> None:
         assert out[column].isna().all(), f"{column} must be NaN, not a value"
 
 
-def test_declared_defaults_carry_a_stated_reason() -> None:
-    for column, (_, reason) in contract.DECLARED_DEFAULTS.items():
-        assert isinstance(reason, str) and len(reason.split()) >= 5, (
-            f"{column} is defaulted without a usable reason"
-        )
+def test_every_declared_class_carries_a_stated_reason() -> None:
+    for mapping, label in (
+        (contract.EXPLICIT_ZERO_COLUMNS, "EXPLICIT_ZERO"),
+        (contract.DIAGNOSTIC_ONLY_COLUMNS, "DIAGNOSTIC_ONLY"),
+    ):
+        for column, reason in mapping.items():
+            assert isinstance(reason, str) and len(reason.split()) >= 5, (
+                f"{column} is declared {label} without a usable reason"
+            )
 
 
 def test_a_builder_that_omits_a_column_stops_the_run() -> None:
@@ -78,10 +82,16 @@ def test_a_builder_that_omits_a_column_stops_the_run() -> None:
     assert "did not produce" in str(error.value)
 
 
-def test_the_two_families_that_were_silently_zeroed_are_model_active() -> None:
-    assert contract.classify("regional_accent_reliability") == "active:regional_accent"
-    assert contract.classify("regional_accent_conservative_share") == "active:regional_accent"
-    assert contract.classify("major_party_core_eligible") == "active:major_party_core_eligible"
+def test_every_family_that_was_silently_zeroed_is_required_derived() -> None:
+    for column, family in (
+        ("regional_accent_reliability", "regional_accent"),
+        ("regional_accent_conservative_share", "regional_accent"),
+        ("major_party_core_eligible", "major_party_core_eligible"),
+        ("lineage_identity_score", "lineage_identity"),
+        ("wasted_vote_resistance", "strategic_lane_context"),
+        ("strategic_transfer_confidence", "strategic_lane_context"),
+    ):
+        assert contract.classify(column) == (contract.REQUIRED_DERIVED, family), column
 
 
 def test_the_contract_run_produces_both_active_families() -> None:

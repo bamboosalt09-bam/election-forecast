@@ -44,3 +44,12 @@ metro_council_district,0.9315278505040114,441,0.9624361430438758,prior_same_date
 metro_council_pr,1.0,0,,direct_party_ballot,pres_2022
 metro_governor,0.8542441451006272,413,0.883505362781045,prior_same_date_direct_party_pair,pres_2022
 presidential,0.25,0,,candidate_ballot_measurement_prior,pres_2022
+assembly_district,0.9464802780141168,854,0.9627912915507472,prior_same_date_direct_party_pair,pres_2025
+assembly_pr,1.0,0,,direct_party_ballot,pres_2025
+local_council_district,0.9409258173838212,450,0.9716336314897688,prior_same_date_direct_party_pair,pres_2025
+local_council_pr,1.0,0,,direct_party_ballot,pres_2025
+local_governor,0.9341334766759677,495,0.9617752333093401,prior_same_date_direct_party_pair,pres_2025
+metro_council_district,0.9386537199025379,492,0.9666477735571126,prior_same_date_direct_party_pair,pres_2025
+metro_council_pr,1.0,0,,direct_party_ballot,pres_2025
+metro_governor,0.8657798572408939,481,0.8913840093091223,prior_same_date_direct_party_pair,pres_2025
+presidential,0.25,0,,candidate_ballot_measurement_prior,pres_2025
