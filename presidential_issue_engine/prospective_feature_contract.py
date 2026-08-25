@@ -84,6 +84,14 @@ EXPLICIT_ZERO_COLUMNS: Mapping[str, str] = {
     "frozen_reproduction_difference": (
         "there is no frozen artifact for a forecast target to reproduce against"
     ),
+    "landscape_legacy_confidence": (
+        "the legacy landscape blend fades as modern landscape evidence accumulates; "
+        "it is already zero for pres_2022 and stays zero from there"
+    ),
+    "landscape_legacy_blend": (
+        "the legacy landscape blend fades as modern landscape evidence accumulates; "
+        "it is already zero for pres_2022 and stays zero from there"
+    ),
 }
 
 #: Not read by any prediction stage. The claim is enforced by
@@ -92,6 +100,9 @@ EXPLICIT_ZERO_COLUMNS: Mapping[str, str] = {
 DIAGNOSTIC_ONLY_COLUMNS: Mapping[str, str] = {
     "frozen_reproduction_guard_required": (
         "a bookkeeping flag recording whether the reproduction guard was demanded"
+    ),
+    "dominant_cumulative_rejection": (
+        "reported by the contest-regime audit and read by no prediction stage"
     ),
 }
 
@@ -104,7 +115,14 @@ REQUIRED_DERIVED_FAMILIES: tuple[tuple[str, Callable[[str], bool]], ...] = (
     (
         "strategic_lane_context",
         lambda column: column
-        in {"wasted_vote_resistance", "strategic_transfer_confidence"},
+        in {
+            "wasted_vote_resistance",
+            "strategic_transfer_confidence",
+            # active in 2002, 2007 and 2017 and zero elsewhere, so a single
+            # reference election makes it look inert; it comes from the same
+            # candidate context table as the other two
+            "major_party_gravity",
+        },
     ),
 )
 
@@ -194,4 +212,53 @@ def resolve(
             out[column] = 0.0
         elif kind == DIAGNOSTIC_ONLY:
             out[column] = False if column.endswith("_required") else 0.0
+
+    audit_required_derived(out, historical_columns, built_families=families, site=site)
     return out
+
+
+def audit_required_derived(
+    frame: pd.DataFrame,
+    historical_columns: Iterable[str],
+    *,
+    built_families: Iterable[str] = (),
+    site: str = "prospective target",
+) -> None:
+    """Refuse a required-derived family that is present but dead.
+
+    ``resolve`` only ever saw columns the target *lacked*. A family the target
+    already carries - because some upstream stage initialises it to zero and
+    then declines to fill it - never entered the missing list, so the contract
+    passed over exactly the case it exists to catch. That is how five
+    ``lineage_identity_*`` columns stayed at zero after the family had been
+    declared required: the routing creates them, defaults them to 0.0, and
+    skipped the target.
+
+    Presence is therefore not evidence. A required-derived family that is
+    identically zero across every row of a target frame is treated as unbuilt -
+    unless a builder produced it on this call, in which case the zero is what
+    the canonical estimator says. ``regional_accent_reform_*`` is exactly that
+    case: share, trend and volatility are zero for all five scored elections
+    too, so a rule reading "all zero means unbuilt" flags the correct answer.
+    """
+
+    built = set(built_families)
+    historical = set(historical_columns)
+    dead: dict[str, list[str]] = {}
+    for column in frame.columns:
+        if column not in historical:
+            continue
+        kind, family = classify(column)
+        if kind != REQUIRED_DERIVED or family in built:
+            continue
+        values = pd.to_numeric(frame[column], errors="coerce")
+        if values.notna().any() and bool((values.fillna(0.0) == 0.0).all()):
+            dead.setdefault(family, []).append(column)
+    if dead:
+        detail = {family: sorted(columns) for family, columns in sorted(dead.items())}
+        raise ProspectiveFeatureError(
+            f"{site} carries required-derived families that are identically zero "
+            f"on every row: {detail}. Zero is a legal value here, so nothing "
+            "downstream can tell this from a real measurement; a family declared "
+            "required must be built, not defaulted."
+        )

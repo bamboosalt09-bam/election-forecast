@@ -16,6 +16,27 @@ for path in (ROOT, ROOT / "src"):
         sys.path.insert(0, str(path))
 
 from election_forecast.features.region_bloc_prior import election_date  # noqa: E402
+from presidential_issue_engine import election_scope  # noqa: E402
+
+
+def _target_cutoff(target: str):
+    """Resolve a target's cutoff from the project's central registry.
+
+    region_bloc_prior keeps its own presidential date map, and that copy had
+    drifted: it stopped at 2022 while election_scope already carried
+    pres_2025. The builder resolved cutoffs through the drifted copy and
+    skipped any target it could not date, so pres_2025 profiles were never
+    generated and nothing reported it.
+
+    Reading election_scope here fixes the builder without changing what
+    region_bloc_prior returns to everything else - frozen artifacts were
+    produced against that map and must keep reproducing.
+    """
+
+    date = election_scope.ELECTION_DATES.get(target)
+    if date is None:
+        date = election_date(target)
+    return pd.Timestamp(date) if date is not None else None
 from presidential_issue_engine.unified_lineage_identity import (  # noqa: E402
     build_exact_lineage_events,
     fit_lineage_profiles,
@@ -68,7 +89,7 @@ def main() -> None:
     reliability_rows: list[pd.DataFrame] = []
     profile_rows: list[pd.DataFrame] = []
     for target in TARGETS:
-        cutoff = election_date(target)
+        cutoff = _target_cutoff(target)
         if cutoff is None:
             # Never skip. A configured target with no date used to fall through
             # here silently, and because the date map had drifted out of step
@@ -79,7 +100,7 @@ def main() -> None:
                 "date registry and the target list disagree, and a skipped "
                 "target produces no profile and no warning"
             )
-        fit = fit_lineage_profiles(events, cutoff=pd.Timestamp(cutoff))
+        fit = fit_lineage_profiles(events, cutoff=cutoff)
         reliability = fit.type_reliability.copy()
         reliability["target_election_id"] = target
         reliability_rows.append(reliability)

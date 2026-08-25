@@ -25,7 +25,7 @@ from presidential_issue_engine import prospective_feature_contract as contract
 
 ROOT = Path(__file__).resolve().parents[1]
 POINTER = ROOT / "data" / "config" / "current_presidential_model.json"
-REFERENCE_ELECTION = "pres_2022"
+SCORED_ELECTIONS = ("pres_2002", "pres_2007", "pres_2012", "pres_2017", "pres_2022")
 
 
 def _pointer() -> dict:
@@ -40,32 +40,55 @@ def _frames() -> tuple[pd.DataFrame, pd.DataFrame] | None:
         return None
     a = pd.read_csv(forecast, encoding="utf-8-sig", low_memory=False)
     b = pd.read_csv(scored, encoding="utf-8-sig", low_memory=False)
-    return a, b.loc[b["election_id"].astype(str).eq(REFERENCE_ELECTION)]
+    return a, b
 
 
 def zeroed_only_in_the_forecast(forecast: pd.DataFrame, scored: pd.DataFrame) -> list[str]:
-    """Columns dead in the forecast and alive in the reference election."""
+    """Columns dead in the forecast and alive in *any* scored election.
+
+    Comparing against one reference election misses columns that election
+    happens not to exercise. strategic_lane_transfer_net is zero in 2007, 2012
+    and 2022 and alive in 2002 and 2017; against pres_2022 alone it looks
+    inert, and the first version of this sweep missed thirteen columns for
+    exactly that reason.
+    """
 
     found = []
     for column in [c for c in forecast.columns if c in scored.columns]:
         a = pd.to_numeric(forecast[column], errors="coerce")
-        b = pd.to_numeric(scored[column], errors="coerce")
-        if a.notna().sum() == 0 or b.notna().sum() == 0:
+        if a.notna().sum() == 0 or not (a.fillna(0.0).abs() < 1e-12).all():
             continue
-        if (a.fillna(0.0).abs() < 1e-12).all() and (b.fillna(0.0).abs() > 1e-12).any():
-            found.append(column)
+        for election in SCORED_ELECTIONS:
+            b = pd.to_numeric(
+                scored.loc[scored["election_id"].astype(str).eq(election), column],
+                errors="coerce",
+            )
+            if b.notna().sum() and (b.fillna(0.0).abs() > 1e-12).any():
+                found.append(column)
+                break
     return found
 
 
 def test_every_column_dead_in_the_forecast_has_a_declared_class() -> None:
+    """Judged on the contract-built forecast where one exists.
+
+    The pointer still selects the pre-contract demonstration, whose zeroed
+    families are the defect being removed; test_prospective_feature_contract
+    records that separately rather than letting it pass here.
+    """
+
     frames = _frames()
     if frames is None:
         pytest.skip("the pointer's artifacts are not present")
-    zeroed = zeroed_only_in_the_forecast(*frames)
+    forecast, scored = frames
+    built = ROOT / "outputs/prospective_pres_2025_v32/prediction_stage_audit.csv"
+    if built.is_file():
+        forecast = pd.read_csv(built, encoding="utf-8-sig", low_memory=False)
+    zeroed = zeroed_only_in_the_forecast(forecast, scored)
     unclassified = [c for c in zeroed if contract.classify(c)[0] == "UNCLASSIFIED"]
     assert not unclassified, (
         f"{len(unclassified)} column(s) are zero across the whole forecast, alive "
-        f"in {REFERENCE_ELECTION}, and belong to no declared class: "
+        f"in at least one scored election, and belong to no declared class: "
         f"{sorted(unclassified)[:12]}"
     )
 
@@ -129,3 +152,36 @@ def test_the_contract_forecast_declares_it_used_no_outcome() -> None:
     contract_record = payload["prospective_feature_contract"]
     assert contract_record["target_election_outcome_fields_used"] == []
     assert contract_record["unclassified_missing_column_behaviour"] == "raise"
+
+
+def test_diagnostic_only_columns_are_read_by_no_prediction_stage() -> None:
+    """The class claims a column is unused; this checks rather than trusts it.
+
+    A read is a subscript that is not the left side of an assignment. Naming
+    the column in an output schema list, or building it in a dict literal, is
+    production - that is how a diagnostic column comes to exist at all.
+    """
+
+    import re
+
+    sources = [
+        path
+        for directory in ("presidential_issue_engine", "scripts")
+        for path in (ROOT / directory).rglob("*.py")
+        if "audit" not in path.name and "evaluate_" not in path.name
+    ]
+    for column in contract.DIAGNOSTIC_ONLY_COLUMNS:
+        subscript = re.compile(rf"""\[\s*["']{re.escape(column)}["']\s*\]""")
+        readers = []
+        for path in sources:
+            for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+                match = subscript.search(line)
+                if not match:
+                    continue
+                after = line[match.end():].lstrip()
+                if after.startswith("=") and not after.startswith("=="):
+                    continue  # an assignment produces it
+                readers.append(f"{path.name}: {line.strip()[:70]}")
+        assert not readers, (
+            f"{column} is declared DIAGNOSTIC_ONLY but is read: {readers[:4]}"
+        )

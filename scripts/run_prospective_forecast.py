@@ -771,7 +771,7 @@ def _candidate_strength_context(
         "Projected from through-2022 speech-derived candidate weights using "
         "D-1 Assembly issue-link attention; no election outcomes or polling"
     )
-    for column in [
+    projection_gaps = [
         "coalition_cohesion",
         "coalition_mobilization_score",
         "wasted_vote_resistance",
@@ -780,8 +780,21 @@ def _candidate_strength_context(
         "third_candidate_overexposure_risk",
         "attention_to_support_gap",
         "conversion_capacity",
-    ]:
-        target[column] = 0.0
+    ]
+    if TARGET_FEATURE_CONTRACT is None:
+        for column in projection_gaps:
+            target[column] = 0.0
+    else:
+        # Fail closed. This fallback runs when the direct speech-derived context
+        # does not cover the target, and it used to answer that by zeroing eight
+        # candidate-context columns - two of which reach a prediction. Under the
+        # contract a coverage gap in the target's own context is a reason to
+        # stop, not a reason to invent zeros.
+        target = TARGET_FEATURE_CONTRACT(
+            target.drop(columns=[c for c in projection_gaps if c in target.columns]),
+            projection_gaps,
+            site="candidate_context_ridge_projection",
+        )
     columns = list(historical_context.columns)
     target_context = target.reindex(columns=columns)
     combined = pd.concat([historical_context, target_context], ignore_index=True)

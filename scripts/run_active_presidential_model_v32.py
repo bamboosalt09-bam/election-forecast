@@ -21,10 +21,14 @@ import shutil
 import sys
 from pathlib import Path
 
+import pandas as pd
+
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from presidential_issue_engine import calibration_guard  # noqa: E402
+from presidential_issue_engine import party_regionalism_dispersion as dispersion  # noqa: E402
 from scripts import run_active_presidential_model_v24 as v24  # noqa: E402
 from scripts import run_active_presidential_model_v31 as v31  # noqa: E402
 
@@ -42,7 +46,20 @@ def run(output_dir: Path | None = None) -> Path:
     destination = Path(output_dir) if output_dir is not None else DEFAULT_OUTPUT
     destination.mkdir(parents=True, exist_ok=True)
 
-    produced = v31.run(output_dir=destination)
+    # The dispersion calibration alternates two constraints for up to 200
+    # rounds and returns its last iterate whether or not the tolerance was met.
+    # Wrapped rather than edited: the module is hash-pinned in the V30 and V31
+    # manifests, so a wrapper keeps those reproducing while this version gets a
+    # check. On a converged run the output is identical.
+    original_calibrate = dispersion._calibrate
+    calibration_reports: list[dict[str, object]] = []
+    try:
+        dispersion._calibrate = calibration_guard.checked(
+            original_calibrate, record=calibration_reports.append
+        )
+        produced = v31.run(output_dir=destination)
+    finally:
+        dispersion._calibrate = original_calibrate
     predictions = Path(produced) / "nested_predictions.csv"
     digest = _sha256(predictions)
     if digest != V31_PREDICTION_SHA256:
@@ -63,6 +80,32 @@ def run(output_dir: Path | None = None) -> Path:
         "scored_panel_effect": "none; byte identical to V31 by construction and by check",
     }
     payload["metrics"]["variant"] = FINAL_VARIANT
+    payload["calibration_acceptance"] = {
+        "tolerance_share": calibration_guard.CALIBRATION_ABS_TOL,
+        "numerical_impact_bound_pp": calibration_guard.NUMERICAL_IMPACT_BOUND_PP,
+        "basis": (
+            "an accuracy contract, not a figure fitted to the observed plateau: "
+            "a reconciliation is accepted when it deforms a prediction by no "
+            "more than a millionth of a percentage point"
+        ),
+        "prior_termination_condition": 1e-11,
+        "prior_condition_note": (
+            "the implementation reaches a residual plateau of roughly 1.9e-9 to "
+            "3.8e-9 on valid input and raising the budget from 200 to 20,000 "
+            "rounds does not reduce it, so the old 1e-11 condition was stricter "
+            "than this implementation's numerical fixed point and the loop was "
+            "in practice always exhausting its budget. Whether that plateau is a "
+            "floating-point floor or a property of the alternation is not "
+            "resolved here"
+        ),
+        "invocations": len(calibration_reports),
+        "reports": calibration_reports,
+    }
+    calibration_frame = pd.DataFrame(calibration_reports)
+    if not calibration_frame.empty:
+        v24._atomic_csv_crlf(
+            calibration_frame, Path(produced) / "calibration_acceptance_audit.csv"
+        )
     v24._atomic_json_crlf(payload, summary_path)
     return Path(produced)
 

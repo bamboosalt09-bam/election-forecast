@@ -40,7 +40,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from presidential_issue_engine import electorate_layers as layers  # noqa: E402
-from presidential_issue_engine import prospective_feature_contract as contract  # noqa: E402
+from presidential_issue_engine import issue_vote_engine as engine  # noqa: E402
+from presidential_issue_engine import prospective_feature_contract as contract
+from presidential_issue_engine import raw_input_read_trace as read_trace  # noqa: E402
 from scripts import run_prospective_forecast as prospective  # noqa: E402
 from scripts import run_active_presidential_model as active  # noqa: E402
 from scripts import run_prospective_forecast_v31 as v31  # noqa: E402
@@ -107,12 +109,45 @@ def _contract(frame: pd.DataFrame, historical_columns, *, site: str) -> pd.DataF
     return contract.resolve(frame, historical_columns, BUILDERS, site=site)
 
 
+def _traced_reader(original):
+    """Record every CSV the engine opens, and refuse the overlay outright.
+
+    Two separate things were true of V28 through V31 and only one of them was
+    documented. The direct sentence-level overlay contributes nothing to a
+    prediction - removing the file reproduces V31 byte for byte, and every
+    ``issue_pref_*`` column has been zero since V28 - and it is excluded from
+    the packaged runtime. But the source execution still *opens* it, through a
+    bare module constant the V28 guard does not touch, while that guard's own
+    docstring says the overlay is not read.
+
+    V32 makes the sentence literally true for the source path as well: the
+    read is refused rather than merely ignored, and every read is recorded
+    where nothing later edits the record. V28 established its claim by
+    deleting the overlay row from the manifest *after* the run and then
+    checking the manifest; a claim about what a process opened has to be
+    checked against what it opened.
+    """
+
+    def read(path: str):
+        text = str(path).replace("\\", "/")
+        for fragment in read_trace.EXTERNAL_MODEL_DERIVED_FRAGMENTS:
+            if text.endswith(fragment):
+                read_trace.record(path, reader=read_trace.REFUSED_READER)
+                return pd.DataFrame()
+        read_trace.record(path, reader="issue_vote_engine._read_csv_if_exists")
+        return original(path)
+
+    return read
+
+
 def run() -> Path:
     original_contract = prospective.TARGET_FEATURE_CONTRACT
     original_output = v31.OUTPUT_DIR
     original_conversion = active.CONVERSION_CONTEXT
+    original_reader = engine._read_csv_if_exists
     try:
         prospective.TARGET_FEATURE_CONTRACT = _contract
+        engine._read_csv_if_exists = _traced_reader(original_reader)
         # The strategic-lane consumer reads this module constant directly, and
         # it points at the history-only table. The prospective path already
         # prepares a context that carries the target - available 2025-06-02,
@@ -121,11 +156,19 @@ def run() -> Path:
         # strategic_transfer_confidence were zeroed for exactly this reason.
         active.CONVERSION_CONTEXT = CONVERSION_CONTEXT_WITH_TARGET
         v31.OUTPUT_DIR = OUTPUT_DIR
-        destination = v31.run()
+        with read_trace.tracing() as rows:
+            destination = v31.run()
+            trace = read_trace.to_frame(rows)
     finally:
         prospective.TARGET_FEATURE_CONTRACT = original_contract
+        engine._read_csv_if_exists = original_reader
         active.CONVERSION_CONTEXT = original_conversion
         v31.OUTPUT_DIR = original_output
+
+    trace_path = read_trace.write(trace, Path(destination) / "raw_input_read_trace.csv")
+    read_trace.assert_no_external_model_derived_reads(
+        trace, site="the V32 prospective run"
+    )
 
     manifest_path = Path(destination) / "run_manifest.json"
     payload = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -138,6 +181,16 @@ def run() -> Path:
         "required_derived_families_built": sorted(BUILDERS),
         "unclassified_missing_column_behaviour": "raise",
         "target_election_outcome_fields_used": [],
+    }
+    payload["raw_input_read_trace"] = {
+        "path": trace_path.name,
+        "rows": int(len(trace)),
+        "external_model_derived_reads": 0,
+        "note": (
+            "recorded at the point of read and never edited. V28 stripped the "
+            "overlay row from the manifest after the run and then checked the "
+            "manifest; this checks the trace itself."
+        ),
     }
     manifest_path.write_bytes(
         (json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")

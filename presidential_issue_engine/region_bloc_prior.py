@@ -6,6 +6,7 @@ combined history table containing presidential, assembly proportional, and local
 council proportional results. When that table is not available yet, callers can
 fall back to standardized presidential results so the engine remains runnable.
 """
+
 from __future__ import annotations
 
 import math
@@ -13,8 +14,6 @@ import re
 from pathlib import Path
 
 import pandas as pd
-
-from presidential_issue_engine import election_scope
 
 
 CONSERVATIVE_BLOC = "\uad6d\ubbfc\uc758\ud798"
@@ -116,17 +115,14 @@ DISTRICT_TERRAIN_TYPE_WEIGHTS = {
 
 DEFAULT_HISTORY_PATH = Path("presidential_issue_engine/fixed_dataset/bloc_history_results.csv")
 
-#: Derived from the project's single registry rather than kept as a second
-#: copy. The copy that used to live here stopped at 2022 while
-#: election_scope already carried pres_2025, and that drift was silent: the
-#: lineage builder resolves a target's cutoff through this map and skips any
-#: target whose date is missing, so pres_2025 profiles were never generated and
-#: nothing reported it. Values for every shared year were identical, so
-#: deriving changes nothing that existed.
 PRESIDENTIAL_ELECTION_DATES = {
-    int(name.split("_")[1]): date
-    for name, date in election_scope.ELECTION_DATES.items()
-    if name.startswith("pres_")
+    1992: "1992-12-18",
+    1997: "1997-12-18",
+    2002: "2002-12-19",
+    2007: "2007-12-19",
+    2012: "2012-12-19",
+    2017: "2017-05-09",
+    2022: "2022-03-09",
 }
 ASSEMBLY_ELECTION_DATES = {
     1992: "1992-03-24",

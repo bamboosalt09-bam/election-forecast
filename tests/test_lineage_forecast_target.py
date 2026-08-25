@@ -47,26 +47,31 @@ def test_the_forecast_target_has_a_lineage_profile() -> None:
     )
 
 
-def test_the_date_registries_agree() -> None:
-    """The drift that hid the missing profile."""
+def test_the_builder_resolves_dates_from_the_central_registry() -> None:
+    """The drift that hid the missing profile, and why it is not fixed in place.
 
-    central = {
-        int(name.split("_")[1]): date
-        for name, date in election_scope.ELECTION_DATES.items()
-        if name.startswith("pres_")
-    }
-    assert region_bloc_prior.PRESIDENTIAL_ELECTION_DATES == central, (
-        "the presidential date map disagrees with election_scope; a target whose "
-        "date is missing here is silently skipped by the lineage builder"
+    region_bloc_prior keeps its own presidential date map, which stops at 2022
+    while election_scope carries pres_2025. Adding 2025 to that map changes
+    what every caller sees - it moved V31's frozen 2025 forecast by 0.0032 -
+    so the map stays as the frozen artifacts were built against, and the
+    lineage builder reads election_scope directly instead.
+    """
+
+    from scripts import build_unified_exact_lineage_v21 as builder
+
+    assert election_scope.ELECTION_DATES.get(FORECAST_TARGET) is not None
+    assert region_bloc_prior.election_date(FORECAST_TARGET) is None, (
+        "the shared date map gained pres_2025; frozen artifacts were built "
+        "against a map without it"
     )
-    assert region_bloc_prior.election_date(FORECAST_TARGET) is not None
+    assert builder._target_cutoff(FORECAST_TARGET) == FORECAST_CUTOFF
 
 
 def test_a_configured_target_without_a_date_is_fatal() -> None:
     """A bare `continue` is what made the gap invisible."""
 
     source = (ROOT / "scripts/build_unified_exact_lineage_v21.py").read_text(encoding="utf-8")
-    marker = source[source.index("cutoff = election_date(target)"):]
+    marker = source[source.index("cutoff = _target_cutoff(target)"):]
     head = marker[: marker.index("fit = fit_lineage_profiles")]
     assert "raise" in head, "a target with no election date must raise, not continue"
     assert "continue" not in head, "the silent skip is back"
@@ -77,9 +82,11 @@ def test_every_configured_target_resolves_to_a_date() -> None:
     block = source[source.index("TARGETS = ("): source.index(")", source.index("TARGETS = ("))]
     targets = [line.strip().strip('",') for line in block.splitlines() if '"pres_' in line]
     assert targets, "could not read the configured targets"
+    from scripts import build_unified_exact_lineage_v21 as builder
+
     for target in targets:
-        assert region_bloc_prior.election_date(target) is not None, (
-            f"{target} is configured but has no election date"
+        assert builder._target_cutoff(target) is not None, (
+            f"{target} is configured but resolves to no election date"
         )
 
 

@@ -7,7 +7,7 @@ Developer Competition rules.
 ## Submitted V31 model
 
 V31 is a self-developed, locally executable statistical forecasting pipeline.
-Its fitted component is scikit-learn Ridge regression (`alpha=0.30`) over six
+Its fitted component is scikit-learn Ridge regression over six
 documented, slot-free predictors, followed by deterministic electorate,
 contest, lineage, transfer and regional-dispersion transforms. There is no
 hosted inference API, neural foundation model, downloaded model weight or
@@ -20,6 +20,27 @@ postprocess; no model weight or source sentence is bundled.
 All model code, input schemas, public/derived inputs, frozen outputs and audit
 manifests needed by V31 are present in the public repository and in the built
 wheel's verified runtime bundle. The model can run locally after installation.
+### Ridge regularisation
+
+The specification previously named a single `alpha=0.30`. The artifact carries
+five. Retrospective outer folds use chronologically selected and then frozen
+fold-specific values, and the through-2022 deployment configuration uses its
+own separately frozen deployment alpha, so the two must not be quoted as one
+number:
+
+| outer fold | frozen alpha |
+| --- | ---: |
+| pres_2002 | 0.3 |
+| pres_2007 | 0.3 |
+| pres_2012 | 0.8 |
+| pres_2017 | 1.2 |
+| pres_2022 | 1.2 |
+
+Each is selected inside its own fold from strictly earlier elections, which is
+why they differ; reading them as one hyperparameter would describe a model the
+panel never ran. The values are reproduced in
+`outputs/active_presidential_nested_v31/fold_audit.csv`.
+
 The fitted Ridge coefficients are regenerated from the chronological
 development panel; there is no separately distributed opaque weight file.
 

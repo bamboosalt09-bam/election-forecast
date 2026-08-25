@@ -1,2 +1,2 @@
-election_id,slot,include_in_scored_contest,available_date,source_type,notes
-pres_2002,C,false,2002-12-18,contest_scope,권영길 실제 출마·득표 원자료는 보존하되 2002 scored contest는 노무현·이회창 양강 기준으로 평가
+﻿election_id,slot,include_in_scored_contest,available_date,source_type,notes
+pres_2002,C,false,2002-12-18,contest_scope,"SUPERSEDED by fixed_dataset/v24/scored_contest_scope.csv. Every version from V24 onward replaces the loader that would read this file (run_active_presidential_model_v24.py installs its own), so this row is read by nothing. The V24 file applies a uniform 1%p floor and includes pres_2002 slot C; the artifact confirms it - all three 2002 slots carry 16 rows each. Kept as the record of the earlier two-party scope."
