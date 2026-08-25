@@ -28,10 +28,18 @@
     "gain_selection": "parameter_free_unit_gain_not_swept",
     "index": "model_predicted_third_placed_national_level",
     "candidate_national_level_preserved": true,
+    "worst_candidate_level_shift_pp": 2.275957200481571e-13,
     "regional_composition_preserved": true,
-    "feasibility_capped_elections": [
-      "pres_2017"
-    ],
+    "feasibility_cap": "not applicable; the multiplicative form cannot reach zero from a positive input, so no cap exists to bind",
+    "feasibility_capped_elections": [],
+    "minimum_predicted_share": 0.0196875963924498,
+    "reconciliation_rounds": {
+      "pres_2002": 17,
+      "pres_2007": 16,
+      "pres_2012": 1,
+      "pres_2017": 12,
+      "pres_2022": 12
+    },
     "outcome_fields_used": []
   },
   "predictive_intervals": {
@@ -47,7 +55,9 @@
   "verification": {
     "v30_rollback_hash_match": true,
     "v31_prediction_hash": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
-    "national_macro_not_worse_than_v30": true
+    "national_macro_change_vs_v30_pp": 0.003853950390363292,
+    "regional_macro_change_vs_v30_pp": -0.06574374547047768,
+    "predecessor_score_was_not_a_promotion_condition": true
   },
   "artifacts": [
     {
@@ -64,8 +74,8 @@
     },
     {
       "path": "scripts/build_active_v31_predictive_intervals.py",
-      "bytes": 1786,
-      "sha256": "378f5f10bbd411176d9b9cd691c2ebde8091432665e067461eb771be5fee8fad",
+      "bytes": 1852,
+      "sha256": "90fe7eaf649702fbd7f8fdb496b723badbab89b53690fbac5927c098a63b9049",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -76,8 +86,8 @@
     },
     {
       "path": "scripts/finalize_active_presidential_model_v31.py",
-      "bytes": 11609,
-      "sha256": "e6eca20d432890c33cefc69a67ab698bf8b0aa797ab87e0d78d004c04f5931c4",
+      "bytes": 14301,
+      "sha256": "a8fe7e2bbbac1592b0905fdfb1287059e2b5205f9a8edcf286ea7a7a4b6616b2",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -214,8 +224,8 @@
     },
     {
       "path": "outputs/active_presidential_nested_v31/predictive_interval_manifest.json",
-      "bytes": 2643,
-      "sha256": "01ec529a727703c4ba75edc7f6feb07cfc188f7b17e05f9a70637297de3e658d",
+      "bytes": 2698,
+      "sha256": "4c2bb9762dad49b8f9f848961717c418225b3ae8be91ec2881c397b573c46b8a",
       "hash_mode": "raw_bytes"
     },
     {

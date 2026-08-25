@@ -1,4 +1,4 @@
-"""Build hooks for the self-contained V30 runtime bundle."""
+"""Build hooks for the self-contained V31 runtime bundle."""
 
 from __future__ import annotations
 

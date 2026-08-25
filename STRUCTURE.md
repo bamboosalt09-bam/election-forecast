@@ -11,7 +11,7 @@
 | `data/config/active_presidential_model.json` | 위 정식 포인터의 호환 별칭 |
 | `data/config/active_presidential_model_v16.json` | 후대 버전 실행 계보가 사용하는 동결 V16 내부 기반 설정 |
 | `outputs/active_presidential_nested_v31/` | 변경 금지 V31 산출물과 승격 감사 |
-| `outputs/active_presidential_nested_v23/` ~ `v29/` | 변경 금지 롤백 증거 |
+| `outputs/active_presidential_nested_v23/` ~ `v30/` | 변경 금지 롤백 증거 |
 | `outputs/prospective_pres_2025_v31/` | 결과 확인 뒤 수정된 demonstration; prospective 검증이 아님 |
 | `research/` | 설치 배포물에서 제외되는 비승격 연구와 구식 시각화 |
 | `docs/` | 설계, 데이터 권리, 규정 준수, 재현·승격 기록 |

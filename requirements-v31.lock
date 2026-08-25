@@ -1,5 +1,8 @@
-# Exact environment resolved for V29 reproduction on Windows / Python 3.13.
-# Produced by installing .[reproduce-v29] into a clean venv and freezing it,
+# Exact environment resolved for V31 reproduction on Windows / Python 3.13.
+# Byte-identical to the V29 and V30 locks: no version since has added or
+# moved a dependency, and each frozen version names its own lock rather
+# than aliasing a predecessor's.
+# Produced by installing .[reproduce-v31] into a clean venv and freezing it,
 # not by editing the V27 lock: numpy, pandas, scipy and scikit-learn were
 # pinned to three different sets across the extra, the V27 lock and the SBOM,
 # so copying any one of them would have inherited that disagreement.

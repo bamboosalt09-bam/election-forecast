@@ -5,10 +5,11 @@ This is the human-readable SBOM required by Attachment 1 of the 2026 Open
 Source Developer Competition result report. `requirements-v31.lock` records
 the complete tested Python 3.13 runtime reproduction resolution for the active
 model, including transitive packages, and is the file CI audits.
-`requirements-v31.lock` is byte-identical to `requirements-v29.lock`: V31
-changes a weight, not a dependency, and the reproduction was run in the same
-environment. It is copied rather than aliased so each frozen version names
-its own lock. `requirements-v27.lock` is retained as the V27-era record; it
+`requirements-v31.lock` resolves to the same 40 pinned packages as the V29 and
+V30 locks - no version since has added or moved a dependency, and each
+reproduction ran in the same environment. The files differ only in their header
+comment, which names the version each was frozen for. They are copied rather
+than aliased so each frozen version names its own lock. `requirements-v27.lock` is retained as the V27-era record; it
 differs in `pandas` (3.0.3) and `pypdf` (6.16.1) and must not be used to
 reproduce V31. Visualization is an optional extra; its two direct
 packages are recorded below at the versions used for the published figures.
