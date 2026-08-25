@@ -98,6 +98,14 @@ def _mechanical_sites(version: str, package_version: str, prediction_hash: str):
             r"pip install election_forecast-([^-]+)-py3-none-any\.whl",
             package_version,
         ),
+        # the hash REPRODUCIBILITY.md publishes as the active artifact. The
+        # promotion sweep relabelled the predecessor's block instead of adding
+        # one, so this document named V30's hash as V31's and nothing noticed.
+        (
+            "docs/REPRODUCIBILITY.md",
+            r"active:\n[^\n]+\nSHA-256: ([0-9a-f]{64})",
+            prediction_hash,
+        ),
         # the CLI guard pins the same literal; a promotion that leaves it
         # behind fails a test rather than a declaration check, which is a
         # slower way to learn the same thing
@@ -211,6 +219,25 @@ def main() -> None:
         declared = _single(pattern, _read(relative), label)
         check(declared == package_version,
               f"{label} is {declared}, pyproject says {package_version}")
+
+    #    and the artifact hash REPRODUCIBILITY.md publishes as the active one.
+    #    The promotion sweep relabelled the predecessor's block rather than
+    #    adding a new one, so this document named V30's hash as V31's while
+    #    every other declaration agreed. A published hash attributed to the
+    #    wrong version is worse than a stale one: it is checkable and false.
+    prediction_hash = hashlib.sha256(
+        (ROOT / str(pointer["output"]) / "nested_predictions.csv").read_bytes()
+    ).hexdigest()
+    published = _single(
+        r"active:\n[^\n]+\nSHA-256: ([0-9a-f]{64})",
+        _read("docs/REPRODUCIBILITY.md"),
+        "the active artifact hash in REPRODUCIBILITY.md",
+    )
+    check(
+        published == prediction_hash,
+        f"docs/REPRODUCIBILITY.md publishes {published[:12]} as the active "
+        f"artifact; the pointer's artifact hashes to {prediction_hash[:12]}",
+    )
 
     # 4. the CLI must announce the active model, not a predecessor
     cli = _read("src/election_forecast/cli.py")

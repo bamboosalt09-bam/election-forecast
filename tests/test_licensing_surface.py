@@ -2,11 +2,13 @@
 
 Two failure modes sit next to each other here and pull in opposite directions.
 
-`LICENSE` must stay byte-identical to the upstream Apache-2.0 text. Its appendix
-ends with `Copyright [yyyy] [name of copyright owner]`, which reads like a blank
-field somebody forgot. It is not: it is the template the licence tells you to
-attach to *your* files, and editing it breaks the exact-text match that GitHub,
-licensee and scancode use to identify the licence.
+`LICENSE` carries the upstream Apache-2.0 text with one deliberate edit: the
+appendix's `Copyright [yyyy] [name of copyright owner]` is filled in, as the
+Apache site instructs. That is the only line anyone has a reason to touch, so
+the test permits exactly that line and nothing else — reversing the
+substitution has to reproduce the upstream hash, which still catches any other
+edit. The trade is that automatic licence detection matches by exact text, so a
+scanner may report this file as Apache-2.0 with modifications.
 
 `NOTICE` is where the project's own copyright statement belongs, so that one
 must be filled in - year and holder - and must not drift into a placeholder.
@@ -30,11 +32,35 @@ CANONICAL_APACHE_2_0 = "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dc
 PLACEHOLDERS = ("[yyyy]", "[name of copyright owner]", "TBD", "TODO", "<", "your name")
 
 
-def test_license_is_the_unmodified_upstream_text() -> None:
+APPENDIX_TEMPLATE = b"Copyright [yyyy] [name of copyright owner]"
+
+
+def test_license_is_upstream_apart_from_the_filled_appendix() -> None:
     payload = (ROOT / "LICENSE").read_bytes().replace(b"\r\n", b"\n")
-    assert hashlib.sha256(payload).hexdigest() == CANONICAL_APACHE_2_0, (
-        "LICENSE must stay byte-identical to upstream Apache-2.0; the project's "
-        "own copyright statement goes in NOTICE, not in the appendix template"
+    assert APPENDIX_TEMPLATE not in payload, "the appendix copyright is still a template"
+
+    filled = re.search(rb"Copyright (\d{4}) (.+)", payload)
+    assert filled, "the appendix carries no `Copyright <year> <holder>` line"
+    restored = payload.replace(filled.group(0), APPENDIX_TEMPLATE, 1)
+    assert hashlib.sha256(restored).hexdigest() == CANONICAL_APACHE_2_0, (
+        "LICENSE differs from upstream Apache-2.0 somewhere other than the "
+        "appendix copyright line"
+    )
+
+
+def test_the_appendix_names_the_same_holder_as_notice() -> None:
+    in_license = re.search(
+        r"Copyright (\d{4}) (.+)", (ROOT / "LICENSE").read_text(encoding="utf-8")
+    )
+    in_notice = re.search(
+        r"^Copyright (\d{4}) (.+)$",
+        (ROOT / "NOTICE").read_text(encoding="utf-8"),
+        re.MULTILINE,
+    )
+    assert in_license and in_notice
+    assert in_license.group(1) == in_notice.group(1), "the copyright years disagree"
+    assert in_license.group(2).strip() == in_notice.group(2).strip(), (
+        "the copyright holders disagree"
     )
 
 
