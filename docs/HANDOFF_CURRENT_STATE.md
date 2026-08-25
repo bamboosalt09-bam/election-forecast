@@ -1,8 +1,8 @@
-<!-- active-model-version: v30 -->
+<!-- active-model-version: v31 -->
 # Current State Handoff
 
 > Authoritative current state: `docs/FINAL_MODEL_V30_20260824.md`. The active
-> pointer is `data/config/current_presidential_model.json`; V29 through V23 are
+> pointer is `data/config/current_presidential_model.json`; V30 through V23 are
 > immutable rollback models. Dated sections below preserve the state and
 > terminology that applied when each experiment was recorded and must not be
 > read as current active-version pointers.
@@ -10,7 +10,7 @@
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_v30_forecast_time_weighted_dispersion`
+- active policy: `active_v31_forecast_time_weighted_dispersion`
 - rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
@@ -22,15 +22,15 @@
 - `data/config/active_presidential_model.json` (identical compatibility alias)
 - `data/config/active_presidential_model_v16.json` (internal frozen base only)
 - `scripts/run_current_presidential_model.py`
-- `scripts/run_active_presidential_model_v30.py`
-- `outputs/active_presidential_nested_v30/`
-- `outputs/prospective_pres_2025_v30/` (corrected demonstration only)
+- `scripts/run_active_presidential_model_v31.py`
+- `outputs/active_presidential_nested_v31/`
+- `outputs/prospective_pres_2025_v31/` (corrected demonstration only)
 - `outputs/external_model_free_v25_baseline/` (harness history reference; never promoted or scored)
 - `presidential_issue_engine/fixed_dataset/pres_1997_regional_turnout.csv` (warmup predecessor volumes for 2002's forecast-time weight)
 
-## V30 promotion (2026-08-24)
+## V31 promotion (2026-08-24)
 
-V30 keeps V29's statistical chain, transform forms, gain and external-model
+V31 keeps V29's statistical chain, transform forms, gain and external-model
 boundary, and changes only the weight the two terminal transforms use to locate
 each candidate's national level: the target election's own regional turnout
 (`contest_votes`, which exists only after the count) is replaced by the previous
@@ -240,7 +240,7 @@ abstention-capable owner/target/polarity classifier with grouped validation.
 - regression suite: `535 passed in 179.48s`
 - active pointer and V23 finalization hashes remained unchanged
 
-### V26-S to V30-S external-model follow-up (2026-08-10)
+### V26-S to V31-S external-model follow-up (2026-08-10)
 
 Cumulative regex patching was replaced by experiments grounded in external
 target-stance extraction, Korean NLI, and selective-classification work. A
@@ -251,11 +251,11 @@ heads, and representation consensus were evaluated in shadow mode.
 V28-S appeared promising on the V16-V17 pseudo-holdout: the embedding-only
 veto retained 68 rows with 97.06% precision and an 8.97% harmful-error upper
 bound. Those errors were inspected, so V16-V17 were then treated as development
-only. V30-S was frozen and tested on 113 newly locked, previously unaudited
+only. V31-S was frozen and tested on 113 newly locked, previously unaudited
 base emissions. It achieved only 84.96% precision with 17 harmful errors and a
 21.71% upper bound. The improvement did not generalize to the harder pool.
 
-- V30-S independent emissions: `113`
+- V31-S independent emissions: `113`
 - correct: `96`
 - harmful: `17`
 - precision: `84.96%`
@@ -268,7 +268,7 @@ base emissions. It achieved only 84.96% precision with 17 harmful errors and a
 - decision: do not promote; fixed embeddings and generic NLI are not a
   sufficient owner-target parser
 - regression suite: `538 passed in 184.00s`
-- backup: `backups/model_checkpoints/20260810_external_stance_v26_v30_shadow`
+- backup: `backups/model_checkpoints/20260810_external_stance_v26_v31_shadow`
 
 The statistics-competition archive is separate. This workspace is the active
 open-source presidential forecast engine.

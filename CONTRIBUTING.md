@@ -9,7 +9,7 @@ their versioned fixed datasets, or their finalization manifests in place.
 ```bash
 python -m pip install -e ".[dev,viz]"
 python -m pytest -q
-python scripts/audit_public_active_presidential_model_v30.py
+python scripts/audit_public_active_presidential_model_v31.py
 ```
 
 Before submitting a change, run `python scripts/audit_github_baseline.py` as

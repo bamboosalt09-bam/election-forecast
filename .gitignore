@@ -64,6 +64,8 @@ outputs/*
 !outputs/active_presidential_nested_v29/**
 !outputs/active_presidential_nested_v30/
 !outputs/active_presidential_nested_v30/**
+!outputs/active_presidential_nested_v31/
+!outputs/active_presidential_nested_v31/**
 !outputs/automatic_controls_v22/
 !outputs/automatic_controls_v22/**
 !outputs/automatic_controls_v23/

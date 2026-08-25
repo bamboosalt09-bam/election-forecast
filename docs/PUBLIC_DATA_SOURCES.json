@@ -1,6 +1,6 @@
 {
   "schema": "election_forecast_public_data_sources_v1",
-  "policy": "Only Git-tracked public or project-authored derived inputs may enter the packaged V30 runtime. Raw caches, credentials, full-text corpora and uncertain-rights market exports are excluded. One external-model-derived table is a declared exception and does ship - data/raw/auto_issue_seed/candidate_issue_profile.csv, registered under external_model_derived_candidate_issue_aggregate with its own rights basis. Stating that external-model-derived tables are excluded without naming it would be false.",
+  "policy": "Only Git-tracked public or project-authored derived inputs may enter the packaged V31 runtime. Raw caches, credentials, full-text corpora and uncertain-rights market exports are excluded. One external-model-derived table is a declared exception and does ship - data/raw/auto_issue_seed/candidate_issue_profile.csv, registered under external_model_derived_candidate_issue_aggregate with its own rights basis. Stating that external-model-derived tables are excluded without naming it would be false.",
   "sources": [
     {
       "id": "bok_ecos_statistics",
@@ -16,7 +16,7 @@
       "license_or_basis": "Public Data Portal listing: no restriction on permitted use",
       "redistribution_decision": "include-derived-with-attribution",
       "attribution": "Bank of Korea Economic Statistics System (ECOS)",
-      "notes": "The downloaded KOSPI row cache is not tracked or packaged. V30 includes only 15 D-1 election-by-slot context rows calculated from that series, plus the provenance manifest."
+      "notes": "The downloaded KOSPI row cache is not tracked or packaged. V31 includes only 15 D-1 election-by-slot context rows calculated from that series, plus the provenance manifest."
     },
     {
       "id": "external_model_derived_candidate_issue_aggregate",
@@ -29,8 +29,8 @@
       "license_or_basis": "No explicit license tag was published on the model card at audit time, so no redistribution grant is claimed for the model. The retained file is a compact numeric candidate-issue aggregate computed with that encoder; it embeds no model weight, no model architecture and no source sentence, and it is not itself a copy or adaptation of the weights. It is distributed on that basis, not on a licence from the model author, and the absence of a tag is disclosed rather than assumed permissive.",
       "redistribution_decision": "include-derived-no-source-text",
       "attribution": "Aggregate derived by this project using the public jhgan/ko-sroberta-nli encoder over official National Assembly proceedings.",
-      "notes": "Separated from project_authored_and_derived_tables because that family's basis is Apache-2.0 project authorship, which does not describe an external-model-derived artefact. Competition Article 9 asks that embedded AI be open weights and run independently: this encoder is open-weight and ran locally, and V30 does not run it at all. Removing this file is not cost-free - the full-removal diagnostic, re-measured on V30, moves regional macro MAE from 2.566444753%p to 4.948234183%p and winner accuracy from 0.8 to 0.6 - so it is disclosed rather than dropped. See docs/AI_MODEL_SPEC.md and docs/FINAL_MODEL_V30_20260824.md.",
-      "absent_licence_record": "The model card published no licence tag at audit time. That is recorded, not resolved: it means no explicit grant was given and no explicit restriction was stated. No model is distributed here - zero weight, architecture or checkpoint files exist in this repository - and what ships is an 88.1 KB, 247-row numeric table. If the reading ever changes, the file is dropped and the model runs without it at a measured cost, re-measured on V30: regional macro MAE 2.566444753%p to 4.948234183%p, winner accuracy 0.8 to 0.6. See docs/EXPERIMENT_EXTERNAL_MODEL_INPUT_REMOVAL_20260825.md. The reasoning and the decisions taken are recorded in docs/COMPETITION_COMPLIANCE_2026.md."
+      "notes": "Separated from project_authored_and_derived_tables because that family's basis is Apache-2.0 project authorship, which does not describe an external-model-derived artefact. Competition Article 9 asks that embedded AI be open weights and run independently: this encoder is open-weight and ran locally, and V31 does not run it at all. Removing this file is not cost-free - the full-removal diagnostic, re-measured on V31, moves regional macro MAE from 2.566444753%p to 4.948234183%p and winner accuracy from 0.8 to 0.6 - so it is disclosed rather than dropped. See docs/AI_MODEL_SPEC.md and docs/FINAL_MODEL_V30_20260824.md.",
+      "absent_licence_record": "The model card published no licence tag at audit time. That is recorded, not resolved: it means no explicit grant was given and no explicit restriction was stated. No model is distributed here - zero weight, architecture or checkpoint files exist in this repository - and what ships is an 88.1 KB, 247-row numeric table. If the reading ever changes, the file is dropped and the model runs without it at a measured cost, re-measured on V31: regional macro MAE 2.566444753%p to 4.948234183%p, winner accuracy 0.8 to 0.6. See docs/EXPERIMENT_EXTERNAL_MODEL_INPUT_REMOVAL_20260825.md. The reasoning and the decisions taken are recorded in docs/COMPETITION_COMPLIANCE_2026.md."
     },
     {
       "id": "kosis_reb_housing_statistics",
@@ -85,7 +85,7 @@
       "license_or_basis": "Official National Election Commission returns for the 15th presidential election (1997-12-18), republished as a public historical record. The repository file is a 16-row factual extract - electorate, votes cast and valid votes per region - with no narrative text reproduced.",
       "redistribution_decision": "include-derived-with-attribution",
       "attribution": "국사편찬위원회 한국사데이터베이스; underlying returns by the National Election Commission",
-      "notes": "1997 is the warmup predecessor of the first scored election, so its regional volumes are the forecast-time weight V30 uses for 2002. The transcription was verified by summation against the published national totals: electorate 32,290,416, votes cast 26,042,633, valid votes 25,642,438. An earlier attempt from a secondary source summed 8,864 votes short and was discarded rather than adjusted."
+      "notes": "1997 is the warmup predecessor of the first scored election, so its regional volumes are the forecast-time weight V31 uses for 2002. The transcription was verified by summation against the published national totals: electorate 32,290,416, votes cast 26,042,633, valid votes 25,642,438. An earlier attempt from a secondary source summed 8,864 votes short and was discarded rather than adjusted."
     },
     {
       "id": "official_assembly_proceedings_derived",
@@ -127,7 +127,7 @@
       "license_or_basis": "CC BY 4.0 and Korea Open Government License Type 1 attribution",
       "redistribution_decision": "include-generated-with-attribution",
       "attribution": "Statistics Korea SGIS and vuski/admdongkor",
-      "notes": "The wheel does not bundle the source GeoJSON. Visualization generation downloads one hash-pinned dated snapshot. Coverage is the figures directory rather than a version prefix: it read poster_figures/v27_ while the published map was v30_pres_2025_regional_map.png, so the attribution obligation was declared for figures nobody displays and undeclared for the one that ships. Every map figure derives from the same boundary snapshot, so the prefix has no reason to carry a version."
+      "notes": "The wheel does not bundle the source GeoJSON. Visualization generation downloads one hash-pinned dated snapshot. Coverage is the figures directory rather than a version prefix: it read poster_figures/v27_ while the published map was v31_pres_2025_regional_map.png, so the attribution obligation was declared for figures nobody displays and undeclared for the one that ships. Every map figure derives from the same boundary snapshot, so the prefix has no reason to carry a version."
     }
   ],
   "excluded_paths": [

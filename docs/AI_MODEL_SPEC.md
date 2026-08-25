@@ -1,24 +1,24 @@
-<!-- active-model-version: v30 -->
+<!-- active-model-version: v31 -->
 # AI and statistical-model specification
 
 This document addresses Attachment 2 and Article 9 of the 2026 Open Source
 Developer Competition rules.
 
-## Submitted V30 model
+## Submitted V31 model
 
-V30 is a self-developed, locally executable statistical forecasting pipeline.
+V31 is a self-developed, locally executable statistical forecasting pipeline.
 Its fitted component is scikit-learn Ridge regression (`alpha=0.30`) over six
 documented, slot-free predictors, followed by deterministic electorate,
 contest, lineage, transfer and regional-dispersion transforms. There is no
 hosted inference API, neural foundation model, downloaded model weight or
-approval-gated model in the submitted V30 execution path. The direct
+approval-gated model in the submitted V31 execution path. The direct
 sentence-level stance overlay is rejected. One compact historical
 candidate-by-issue aggregate derived during an earlier encoder experiment is
 retained and disclosed because removing it materially changes the validated
 postprocess; no model weight or source sentence is bundled.
 
 All model code, input schemas, public/derived inputs, frozen outputs and audit
-manifests needed by V30 are present in the public repository and in the built
+manifests needed by V31 are present in the public repository and in the built
 wheel's verified runtime bundle. The model can run locally after installation.
 The fitted Ridge coefficients are regenerated from the chronological
 development panel; there is no separately distributed opaque weight file.
@@ -30,7 +30,7 @@ development panel; there is no separately distributed opaque weight file.
 - Warm-up history: earlier records as declared by the fold audit.
 - 2025: corrected D-1 demonstration, not untouched out-of-sample validation.
 - Future/prospective validation: absent as of this release.
-- Post-2022 outcomes in the frozen V30 development artifact: none.
+- Post-2022 outcomes in the frozen V31 development artifact: none.
 - Target-election outcome quantities reaching any transform: none. The two
   terminal transforms weight by the *previous* election's regional valid
   votes; 2002 uses a 1997 warmup table. The panel's membership rule and the
@@ -43,13 +43,13 @@ Public source families and redistribution decisions are listed in
 ## Archived external-model experiments
 
 The repository history documents stance-classifier experiments that referenced
-the following public model pages. No model executes in active V30 and their
-weights are not redistributed. The V30 wheel excludes experiment runners,
+the following public model pages. No model executes in active V31 and their
+weights are not redistributed. The V31 wheel excludes experiment runners,
 optional dependency extras, inactive stance modules, source sentences and the
 direct overlay. A disclosed frozen aggregate at
 `data/raw/auto_issue_seed/candidate_issue_profile.csv` remains an active
 historical postprocess input. The frozen V23-V27 rollback record is not itself
-an active V30 input.
+an active V31 input.
 
 | Model | Use in repository | Source/license status | Submission status |
 | --- | --- | --- | --- |

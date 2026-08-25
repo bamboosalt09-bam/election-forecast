@@ -15,31 +15,35 @@ from setuptools.command.sdist import sdist as _sdist
 
 
 ROOT = Path(__file__).resolve().parent
-RUNTIME_ARCHIVE = "_v30_runtime.zip"
+RUNTIME_ARCHIVE = "_v31_runtime.zip"
 FIXED_TIMESTAMP = (2026, 8, 22, 0, 0, 0)
-V30_ENTRY_MODULES = (
+V31_ENTRY_MODULES = (
     "scripts.run_current_presidential_model",
-    "scripts.run_active_presidential_model_v30",
-    "scripts.run_prospective_forecast_v30",
-    "scripts.audit_public_active_presidential_model_v30",
-    "scripts.verify_v30_clean_reproduction",
+    "scripts.run_active_presidential_model_v31",
+    "scripts.run_prospective_forecast_v31",
+    "scripts.audit_public_active_presidential_model_v31",
+    "scripts.verify_v31_clean_reproduction",
+    # the intervals builder is a published entry point in its own right;
+    # under V30 it reached the wheel only because something else imported
+    # it, which is not a property to rely on
+    "scripts.build_active_v31_predictive_intervals",
     "presidential_issue_engine.make_poster_figures",
 )
 LOCAL_MODULE_PREFIXES = ("scripts", "presidential_issue_engine", "common")
 RUNTIME_OUTPUT_PREFIXES = (
-    "outputs/active_presidential_nested_v30/",
+    "outputs/active_presidential_nested_v31/",
     "outputs/automatic_controls_v22/",
     "outputs/automatic_controls_v23/",
     "outputs/automatic_controls_v26/",
     "outputs/footprint_candidate_base_v9/",
     "outputs/preliminary_slot_assignment/",
     "outputs/preliminary_slot_assignment_v23/",
-    "outputs/prospective_pres_2025_v30/",
+    "outputs/prospective_pres_2025_v31/",
     "outputs/unified_exact_lineage_v21/",
 )
 RUNTIME_ROLLBACK_FILES = {
     f"outputs/active_presidential_nested_v{version}/nested_predictions.csv"
-    for version in (23, 24, 25, 26, 27, 28, 29)
+    for version in (23, 24, 25, 26, 27, 28, 29, 30)
 }
 SDIST_PUBLICATION_FILES = {
     ".github/dependabot.yml",
@@ -56,14 +60,18 @@ SDIST_PUBLICATION_FILES = {
     "docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md",
     "docs/FINAL_MODEL_V29_20260823.md",
     "docs/FINAL_MODEL_V30_20260824.md",
+    "docs/FINAL_MODEL_V31_20260825.md",
     "docs/EXPERIMENT_REMOVE_EXTERNAL_MODEL_OVERLAY_20260822.md",
     "docs/EXPERIMENT_V29_THIRD_SHARE_DISPERSION_20260823.md",
     "docs/EXPERIMENT_V30_FORECAST_TIME_WEIGHTS_20260824.md",
     "docs/DIAGNOSIS_SCORING_SCOPE_20260824.md",
+    "docs/EXPERIMENT_V31_MULTIPLICATIVE_EXPANSION_20260825.md",
+    "docs/METRIC_WEIGHTING_20260825.md",
     "docs/GITHUB_BASELINE_V27_20260822.json",
     "docs/GITHUB_BASELINE_V28_20260823.json",
     "docs/GITHUB_BASELINE_V29_20260823.json",
     "docs/GITHUB_BASELINE_V30_20260824.json",
+    "docs/GITHUB_BASELINE_V31_20260825.json",
     "docs/PUBLIC_DATA_SOURCES.json",
     "docs/REPRODUCIBILITY.md",
     "docs/REPOSITORY_BOUNDARIES.md",
@@ -71,7 +79,7 @@ SDIST_PUBLICATION_FILES = {
     "docs/VISUALIZATION_DATA.md",
     "pyproject.toml",
     "requirements-v27.lock",
-    "requirements-v30.lock",
+    "requirements-v31.lock",
     "scripts/audit_distribution_artifacts.py",
     "scripts/audit_current_public_surface.py",
     "scripts/audit_github_baseline.py",
@@ -177,9 +185,9 @@ def _resolve_relative(module: str, imported: str | None, level: int) -> str:
 
 
 def _python_dependency_closure() -> set[str]:
-    """Trace repository-local imports from the public V30 entry points."""
+    """Trace repository-local imports from the public V31 entry points."""
 
-    pending = list(V30_ENTRY_MODULES)
+    pending = list(V31_ENTRY_MODULES)
     visited: set[str] = set()
     files: set[str] = set()
     while pending:
@@ -220,11 +228,11 @@ def _python_dependency_closure() -> set[str]:
     return files
 
 
-def v30_runtime_files() -> list[str]:
+def v31_runtime_files() -> list[str]:
     """Select the complete, public V30 runtime from admitted source files."""
 
     finalization = json.loads(
-        (ROOT / "outputs/active_presidential_nested_v30/finalization_manifest.json").read_text(
+        (ROOT / "outputs/active_presidential_nested_v31/finalization_manifest.json").read_text(
             encoding="utf-8"
         )
     )
@@ -275,11 +283,11 @@ def _zip_info(name: str) -> ZipInfo:
     return info
 
 
-def build_v30_runtime_archive(destination: Path) -> None:
+def build_v31_runtime_archive(destination: Path) -> None:
     """Create a deterministic, hash-indexed archive of the public V30 runtime."""
 
     records = []
-    files = v30_runtime_files()
+    files = v31_runtime_files()
     for relative in files:
         payload = (ROOT / relative).read_bytes()
         records.append(
@@ -290,9 +298,9 @@ def build_v30_runtime_archive(destination: Path) -> None:
             }
         )
     manifest = {
-        "schema": "election_forecast_v30_packaged_runtime_v1",
-        "active_version": "v30",
-        "frozen_prediction_sha256": "afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e",
+        "schema": "election_forecast_v31_packaged_runtime_v1",
+        "active_version": "v31",
+        "frozen_prediction_sha256": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
         "source_boundary": "git-tracked-public-files-only",
         "post_2022_outcomes_used": False,
         "files": records,
@@ -316,16 +324,16 @@ class build_py(_build_py):
                 built = Path(self.build_lib) / relative.removeprefix("src/")
                 if built.is_file():
                     built.unlink()
-        build_v30_runtime_archive(Path(self.build_lib) / "election_forecast" / RUNTIME_ARCHIVE)
+        build_v31_runtime_archive(Path(self.build_lib) / "election_forecast" / RUNTIME_ARCHIVE)
 
 
 class sdist(_sdist):
-    """Publish the installable V30 source, not the repository research archive."""
+    """Publish the installable V31 source, not the repository research archive."""
 
     def get_file_list(self) -> None:
         super().get_file_list()
         sources = set(_source_files())
-        admitted = set(v30_runtime_files())
+        admitted = set(v31_runtime_files())
         admitted.update(path for path in sources if path.startswith("src/"))
         admitted.update(SDIST_PUBLICATION_FILES)
         self.filelist.files = [

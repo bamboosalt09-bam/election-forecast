@@ -9,7 +9,7 @@ import subprocess
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BASELINE = ROOT / "docs" / "GITHUB_BASELINE_V30_20260824.json"
+BASELINE = ROOT / "docs" / "GITHUB_BASELINE_V31_20260825.json"
 
 
 def _sha256(path: Path) -> str:

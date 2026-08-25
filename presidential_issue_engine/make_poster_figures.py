@@ -1,6 +1,6 @@
-"""Generate current V30 visualizations from finalized artifacts only.
+"""Generate current V31 visualizations from finalized artifacts only.
 
-The 2025 panels read the V30 demonstration, regenerated once the prospective
+The 2025 panels read the V31 demonstration, regenerated once the prospective
 harness was repaired; see docs/DIAGNOSIS_PROSPECTIVE_2025_PATH_20260823.md.
 
 The map uses a hash-pinned, SGIS-derived 2025-04-01 administrative snapshot. See
@@ -32,8 +32,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path(__file__).resolve().parent / "poster_figures"
-ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v30"
-FORECAST_DIR = ROOT / "outputs" / "prospective_pres_2025_v30"
+ACTIVE_DIR = ROOT / "outputs" / "active_presidential_nested_v31"
+FORECAST_DIR = ROOT / "outputs" / "prospective_pres_2025_v31"
 REGIONS = Path(__file__).resolve().parent / "fixed_dataset" / "regions_master.csv"
 MAP_URL = (
     "https://raw.githubusercontent.com/vuski/admdongkor/"
@@ -90,7 +90,7 @@ def _history() -> pd.DataFrame:
     frame = pd.read_csv(ACTIVE_DIR / "nested_predictions.csv", encoding="utf-8-sig")
     required = {"election_id","region_id","slot","candidate_name","actual","layer_pred"}
     if missing := required - set(frame):
-        raise ValueError(f"V30 history missing columns: {sorted(missing)}")
+        raise ValueError(f"V31 history missing columns: {sorted(missing)}")
     if frame["election_id"].astype(str).str.contains("2025").any():
         raise ValueError("2025 leaked into retrospective visualization")
     return frame.merge(_regions(), on="region_id", how="left", validate="many_to_one")
@@ -150,7 +150,7 @@ def public_overview():
     fig, ax = plt.subplots(figsize=(13.6, 7.4))
     ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
     fig.patch.set_facecolor("#F4F7FA")
-    ax.text(.05, .92, "Election Forecast · V30", fontsize=25, fontweight="bold", color=NAVY)
+    ax.text(.05, .92, "Election Forecast · V31", fontsize=25, fontweight="bold", color=NAVY)
     ax.text(.05, .865, "설치·감사·재현 가능한 한국 대통령선거 예측 연구 엔진", fontsize=13, color="#415466")
 
     cards = [
@@ -167,7 +167,7 @@ def public_overview():
         ax.text(x+.03, .615, note, fontsize=9.5, color=GRAY)
 
     sections = [
-        ("공개 실행", "wheel 안에 실제 V30 런타임 포함\n파일별 SHA-256 확인 후 격리 실행"),
+        ("공개 실행", "wheel 안에 실제 V31 런타임 포함\n파일별 SHA-256 확인 후 격리 실행"),
         ("병합 필수 검사", "동결/롤백 감사 · clean 재현\nwheel 외부 재현 · 데이터 권리 · 보안"),
         ("연구 경계", "2025는 결과 확인 뒤 결함을 고친 시연\nuntouched prospective validation은 아직 없음"),
     ]
@@ -187,7 +187,7 @@ def architecture_diagram():
     fig, ax = plt.subplots(figsize=(15.2, 8.1))
     ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.axis("off")
     fig.patch.set_facecolor("white")
-    ax.text(.05, .93, "V30 공개 실행 구조", fontsize=23, fontweight="bold", color=NAVY)
+    ax.text(.05, .93, "V31 공개 실행 구조", fontsize=23, fontweight="bold", color=NAVY)
     ax.text(.05, .885, "설치 경계와 연구 경계를 포함한 실제 런타임 계통", fontsize=12, color=GRAY)
 
     nodes = [
@@ -195,7 +195,7 @@ def architecture_diagram():
         (.25, .68, .16, .10, "PIT 입력", "공개·파생 자료"),
         (.45, .68, .16, .10, "Nested Ridge", "6개 slot-free 변수"),
         (.65, .68, .16, .10, "구조 후처리", "유권자·충격·제3후보"),
-        (.45, .43, .16, .10, "V30 지역 분산", "전국 체급 보존"),
+        (.45, .43, .16, .10, "V31 지역 분산", "전국 체급 보존"),
         (.25, .43, .16, .10, "동결 산출물", "232행·예측구간"),
         (.05, .43, .16, .10, "감사·재현", "롤백·wheel 외부"),
     ]
@@ -214,7 +214,7 @@ def architecture_diagram():
 
     ax.add_patch(FancyBboxPatch((.05,.16),.88,.11,boxstyle="round,pad=.012,rounding_size=.012",facecolor="#F1F3F5",edgecolor="#C7CED5",linewidth=1.0))
     ax.text(.075,.225,"연구 보관 구역",fontsize=11,fontweight="bold",color="#4F5B66")
-    ax.text(.075,.185,"과거 모델 그림 · 비활성 외부 언어모델 실험 · 비승격 ablation은 공개 V30 런타임과 분리",fontsize=10,color="#5F6D78")
+    ax.text(.075,.185,"과거 모델 그림 · 비활성 외부 언어모델 실험 · 비승격 ablation은 공개 V31 런타임과 분리",fontsize=10,color="#5F6D78")
     ax.text(.95,.07,"후보별 전국 수준과 지역별 100% 합계 보존",ha="right",fontsize=9.5,color=GRAY)
     return fig
 
@@ -225,7 +225,7 @@ def model_performance():
     fig, ax = plt.subplots(figsize=(8.6,5.2))
     bars = ax.bar(["지역 MAE","전국 MAE"], values, color=[BLUE,RED], width=.58)
     ax.set_ylabel("동일 선거 가중 MAE (%p)")
-    ax.set_title("V30 회고 개발 패널 성능", fontsize=18, fontweight="bold", color=NAVY)
+    ax.set_title("V31 회고 개발 패널 성능", fontsize=18, fontweight="bold", color=NAVY)
     ax.grid(axis="y", alpha=.2)
     for bar,value in zip(bars,values):
         ax.text(bar.get_x()+bar.get_width()/2, value+.07, f"{value:.3f}%p", ha="center", fontweight="bold")
@@ -240,7 +240,7 @@ def performance_by_election():
     fig, ax = plt.subplots(figsize=(10.2,5.4))
     bars = ax.bar(frame["year"], frame["regional_weighted_mae_pp"], color=BLUE)
     ax.set_ylabel("지역 MAE (%p)")
-    ax.set_title("V30 선거별 지역 오차", fontsize=18, fontweight="bold", color=NAVY)
+    ax.set_title("V31 선거별 지역 오차", fontsize=18, fontweight="bold", color=NAVY)
     ax.grid(axis="y", alpha=.2)
     for bar,value in zip(bars,frame["regional_weighted_mae_pp"]):
         ax.text(bar.get_x()+bar.get_width()/2,value+.08,f"{value:.2f}",ha="center")
@@ -251,7 +251,7 @@ def performance_by_election():
 def regional_pred_vs_actual(election_id: str):
     election = _history().loc[lambda x: x["election_id"].eq(election_id)]
     if election.empty:
-        raise ValueError(f"no V30 rows for {election_id}")
+        raise ValueError(f"no V31 rows for {election_id}")
     slots = sorted(election["slot"].astype(str).unique())
     fig, axes = plt.subplots(1,len(slots),figsize=(5.7*len(slots),8.2),sharex=True,squeeze=False)
     for axis,slot in zip(axes[0],slots):
@@ -263,7 +263,7 @@ def regional_pred_vs_actual(election_id: str):
         axis.set_title(f"{slot} · {rows['candidate_name'].iloc[0]}",color=NAVY,fontweight="bold")
         axis.set_xlabel("득표율 (%)")
     axes[0][0].legend(loc="lower right")
-    fig.suptitle(f"{election_id[-4:]} 대선 V30 지역 예측과 실제",fontsize=18,fontweight="bold",color=NAVY)
+    fig.suptitle(f"{election_id[-4:]} 대선 V31 지역 예측과 실제",fontsize=18,fontweight="bold",color=NAVY)
     fig.tight_layout(); return fig
 
 
@@ -276,7 +276,7 @@ def prospective_bars():
         axis.set_xlim(0,100); axis.grid(axis="x",alpha=.2)
         axis.set_title(f"{slot} · {rows['candidate_name'].iloc[0]}",color=NAVY,fontweight="bold")
         axis.set_xlabel("예측 득표율 (%)")
-    fig.suptitle("2025 대선 V30 D-1 지역 예측\n실제 결과 미사용 · 성능평가 대상 아님",fontsize=18,fontweight="bold",color=NAVY)
+    fig.suptitle("2025 대선 V31 D-1 지역 예측\n실제 결과 미사용 · 성능평가 대상 아님",fontsize=18,fontweight="bold",color=NAVY)
     fig.tight_layout(); return fig
 
 
@@ -316,7 +316,7 @@ def prospective_map():
         cell.set_edgecolor("#D6DDE4"); cell.set_linewidth(.55)
         if row and row % 2 == 0: cell.set_facecolor("#F7F9FB")
     table_ax.axis("off"); table_ax.set_title("시·도별 예측 득표율",fontsize=17,fontweight="bold",color=NAVY,pad=10)
-    fig.suptitle("2025 대선 V30 D-1 예측 지도",fontsize=21,fontweight="bold",color=NAVY,y=.975)
+    fig.suptitle("2025 대선 V31 D-1 예측 지도",fontsize=21,fontweight="bold",color=NAVY,y=.975)
     fig.text(.5,.025,"각 원은 해당 시·도의 예측 득표 구성(합계 100%) · 원 크기는 인구를 뜻하지 않음\n예측 기준 2025-06-02 (D-1) · 실제 결과 미사용 · 경계: 통계청 SGIS 기반 admdongkor 2025-04-01 (CC BY 4.0 / 공공누리 제1유형)",ha="center",va="bottom",fontsize=9.0,color=GRAY)
     fig.subplots_adjust(left=.03,right=.98,bottom=.11,top=.88,wspace=.02)
     return fig
@@ -324,12 +324,12 @@ def prospective_map():
 
 def main() -> None:
     _require_viz(); setup_style()
-    figures={"v30_public_overview":public_overview(),"v30_architecture":architecture_diagram(),
-        "v30_model_performance":model_performance(),"v30_performance_by_election":performance_by_election(),
-        **{f"v30_regional_{e}":regional_pred_vs_actual(e) for e in ("pres_2002","pres_2007","pres_2012","pres_2017","pres_2022")},
-        "v30_pres_2025_regional_bars":prospective_bars(),"v30_pres_2025_regional_map":prospective_map()}
+    figures={"v31_public_overview":public_overview(),"v31_architecture":architecture_diagram(),
+        "v31_model_performance":model_performance(),"v31_performance_by_election":performance_by_election(),
+        **{f"v31_regional_{e}":regional_pred_vs_actual(e) for e in ("pres_2002","pres_2007","pres_2012","pres_2017","pres_2022")},
+        "v31_pres_2025_regional_bars":prospective_bars(),"v31_pres_2025_regional_map":prospective_map()}
     for name,figure in figures.items(): _save(figure,name)
-    print(f"Generated {len(figures)} current V30 PNG files in {OUT}")
+    print(f"Generated {len(figures)} current V31 PNG files in {OUT}")
 
 
 if __name__ == "__main__":

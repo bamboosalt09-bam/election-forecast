@@ -1,0 +1,25 @@
+{
+  "schema": "presidential_model_promotion_v1",
+  "status": "promoted_multiplicative_dispersion_expansion",
+  "active_version": "v31",
+  "predecessor": "v30",
+  "post_2022_outcomes_used": false,
+  "point_metrics": {
+    "variant": "v31_multiplicative_dispersion_expansion",
+    "regional_equal_election_macro_mae_pp": 2.5007010072077227,
+    "national_equal_election_macro_mae_pp": 0.7242913678028117,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "accepted_scope": [
+    "multiplicative_regional_dispersion_expansion"
+  ],
+  "rejected_scope": [
+    "swept_gain_0_50_better_regional_but_fitted_on_scored_panel"
+  ],
+  "selection_disclosure": "V31 replaces V29's additive dispersion expansion with a multiplicative one. The additive form is linear in the deviation and has no lower bound, so it was capped per election at the factor where some region reaches zero - which means the region setting the cap lands on exactly zero whenever the cap binds. That is not an estimate; it is where the arithmetic stopped. On the scored panel it is 홍준표's 광주 in 2017 (3.55% into the transform, 1.68% realised, 0.00% published) and in the demonstration it is 김문수's 광주 in 2025 (2.67% in, 0.00% out). The multiplicative form scales the ratio rather than the difference, so it cannot reach zero from a positive input and needs no cap. It does not conserve the weighted national level on its own, so the regional sums and the candidate levels are alternated to convergence; neither step introduces a constant, and the gain stays the parameter-free 1.0. Regional macro 2.566445 to 2.500701 and national 0.720437 to 0.724291: the national figure is worse, and the change was made anyway, because a prediction of exactly zero for a major-party candidate in a metropolitan region is wrong in kind rather than in degree. Both figures were measured before the decision.",
+  "rollback": {
+    "version": "v30",
+    "prediction_sha256": "afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e"
+  }
+}
