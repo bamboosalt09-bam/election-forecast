@@ -8,7 +8,8 @@
   "license": {
     "path": "LICENSE",
     "spdx": "Apache-2.0",
-    "normalized_sha256": "50e6751797c50dedd75ef1b8a0d9e42f5f8472e9fbce91f34718e9f97b0c780a"
+    "normalized_sha256": "7694c93db2e01a40ef9e21ff227126f56aea0353266af51cdd8700734e49be14",
+    "note": "Apache-2.0 with the appendix copyright filled in as the Apache site instructs; every other line is upstream. tests/test_licensing_surface.py verifies that reversing that one substitution reproduces the upstream hash."
   },
   "required_repository_files": [
     "NOTICE",
