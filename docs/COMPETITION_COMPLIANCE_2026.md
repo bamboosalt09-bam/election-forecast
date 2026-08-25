@@ -43,9 +43,13 @@ rather than read as permissive.
 
 Two facts a reviewer should have. The encoder is open-weight and ran locally, which
 is what Article 9 asks of embedded AI, so the historical use would have complied even
-had it remained active. And removal is not cost-free: the full-removal diagnostic
-moved regional macro MAE from `2.613902987%p` to `4.935929128%p` and winner accuracy
-from `0.8` to `0.6`, so describing the file as an inert leftover would be untrue.
+had it remained active. And removal is not cost-free: re-measured on V30 in
+`EXPERIMENT_EXTERNAL_MODEL_INPUT_REMOVAL_20260825.md`, a schema-only injection
+moves regional macro MAE from `2.566444753%p` to `4.948234183%p`, national from
+`0.720437417%p` to `4.144568904%p`, and winner accuracy from `0.8` to `0.6`, so
+describing the file as an inert leftover would be untrue. The V27-era
+measurement (`2.613902987` to `4.935929128`) reached the same conclusion at
+nearly the same magnitude.
 
 `scripts/audit_public_data_rights.py` fails if this file is ever covered only by a
 family whose basis does not mention a model, which is how it was previously
@@ -102,8 +106,11 @@ caught that the file sat in two families at once.
 
 Should the author later publish restrictive terms, or should a reviewer conclude
 that a numeric aggregate falls inside them, the file is dropped and the model
-runs without it. The consequence is measured rather than estimated: regional
-macro MAE `2.613902987%p` to `4.935929128%p`, winner accuracy `0.8` to `0.6`.
+runs without it. The consequence is measured rather than estimated, on the
+current model: regional macro MAE `2.566444753%p` to `4.948234183%p`, winner
+accuracy `0.8` to `0.6`. Measured on the frozen `contest_votes` axis so it is
+comparable with the V27-era figure, which reached the same conclusion at nearly
+the same magnitude.
 That is why it is disclosed rather than quietly removed - the cost of removal is
 real, and a reader is entitled to weigh it themselves.
 

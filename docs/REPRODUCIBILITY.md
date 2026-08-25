@@ -77,16 +77,19 @@ only the frozen internal base used by the versioned runner lineage. V30 keeps
 V29's statistical chain and its external-model boundary — no neural inference,
 no direct sentence-level stance overlay, and the two excluded automatic mega
 seeds blocked even when a legacy engine loads after the wrapper enters its
-runtime guard — and adds a third-share-indexed expansion of the regional
-dispersion. The disclosed frozen historical `candidate_issue_profile.csv`
-remains because full removal materially changes the postprocess.
+runtime guard. It keeps both terminal transforms unchanged in form, and
+changes only the weight they use to locate each candidate's national level:
+the target election's own regional turnout, which exists only after the count,
+is replaced by the previous election's regional valid votes. The disclosed
+frozen historical `candidate_issue_profile.csv` remains because full removal
+materially changes the postprocess.
 
 ## Reproduce the checks
 
 ### Installed wheel (source checkout not required)
 
 ```bash
-python -m pip install election_forecast-0.29.0.dev0-py3-none-any.whl
+python -m pip install election_forecast-0.30.0.dev0-py3-none-any.whl
 election-forecast audit-current-presidential
 election-forecast verify-current-presidential
 election-forecast run-current-presidential --output-dir outputs/reproduction_v30
@@ -164,5 +167,7 @@ performance metric was used.
 The primary regional metric weights candidate-region absolute errors by
 `contest_votes` within each election, then averages elections equally. The
 national metric also uses realised regional contest votes and is therefore a
-post-election aggregation diagnostic. V30 through V24 share the 232-row panel;
+post-election aggregation diagnostic. This is the *metric's* weighting only:
+since V30 no transform reads the target election's turnout, so the diagnostic
+weighting enters no prediction. V30 through V24 share the 232-row panel;
 V23's older headline uses a different 199-row panel.

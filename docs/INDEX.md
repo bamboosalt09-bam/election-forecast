@@ -10,7 +10,7 @@ carries the active-version marker the version audit pins, **reference**
 when something current or executable points at it, and a **record**
 otherwise.
 
-## Current state (14)
+## Current state (16)
 
 These describe the active model. `scripts/audit_version_consistency.py`
 fails if any of them stops declaring the pointer's version.
@@ -20,10 +20,12 @@ fails if any of them stops declaring the pointer's version.
 - [COMPETITION_COMPLIANCE_2026.md](COMPETITION_COMPLIANCE_2026.md)
 - [DATA_PROVENANCE_AND_REDISTRIBUTION.md](DATA_PROVENANCE_AND_REDISTRIBUTION.md)
 - [DIAGNOSIS_SCORING_SCOPE_20260824.md](DIAGNOSIS_SCORING_SCOPE_20260824.md)
+- [EXPERIMENT_EXTERNAL_MODEL_INPUT_REMOVAL_20260825.md](EXPERIMENT_EXTERNAL_MODEL_INPUT_REMOVAL_20260825.md)
 - [EXPERIMENT_V30_FORECAST_TIME_WEIGHTS_20260824.md](EXPERIMENT_V30_FORECAST_TIME_WEIGHTS_20260824.md)
 - [FINAL_MODEL_V30_20260824.md](FINAL_MODEL_V30_20260824.md)
 - [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md)
 - [HANDOFF_CURRENT_STATE.md](HANDOFF_CURRENT_STATE.md)
+- [METRIC_WEIGHTING_20260825.md](METRIC_WEIGHTING_20260825.md)
 - [PRES_2025_INPUT_GUIDE.md](PRES_2025_INPUT_GUIDE.md)
 - [REPOSITORY_BOUNDARIES.md](REPOSITORY_BOUNDARIES.md)
 - [REPRODUCIBILITY.md](REPRODUCIBILITY.md)

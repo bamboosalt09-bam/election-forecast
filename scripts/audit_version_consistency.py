@@ -92,6 +92,12 @@ def _mechanical_sites(version: str, package_version: str, prediction_hash: str):
         ("src/election_forecast/__init__.py", r'__version__ = "([^"]+)"', package_version),
         ("src/election_forecast/cli.py", r'PACKAGE_VERSION = "([^"]+)"', package_version),
         ("scripts/audit_current_public_surface.py", r'MAIN_VERSION = "([^"]+)"', package_version),
+        # the wheel a reader is told to install
+        (
+            "docs/REPRODUCIBILITY.md",
+            r"pip install election_forecast-([^-]+)-py3-none-any\.whl",
+            package_version,
+        ),
         # the CLI guard pins the same literal; a promotion that leaves it
         # behind fails a test rather than a declaration check, which is a
         # slower way to learn the same thing
@@ -194,6 +200,13 @@ def main() -> None:
         ("src/election_forecast/__init__.py", r'__version__ = "([^"]+)"', "__version__"),
         ("src/election_forecast/cli.py", r'PACKAGE_VERSION = "([^"]+)"', "cli PACKAGE_VERSION"),
         ("scripts/audit_current_public_surface.py", r'MAIN_VERSION = "([^"]+)"', "MAIN_VERSION"),
+        # the wheel filename a reader is told to install; --fix rewrites it, and
+        # without this it was the one package-version site nothing verified
+        (
+            "docs/REPRODUCIBILITY.md",
+            r"pip install election_forecast-([^-]+)-py3-none-any\.whl",
+            "documented wheel filename",
+        ),
     ):
         declared = _single(pattern, _read(relative), label)
         check(declared == package_version,
@@ -320,15 +333,37 @@ def main() -> None:
     #     line, the boundary coverage prefix, and a BOK note still describing
     #     what "V28 includes". Any version named in there must be the active one;
     #     rollbacks have no business being described as what ships.
+    #
+    #     A dated measurement legitimately names the version it was taken on, so
+    #     the registry declares those in `historical_version_references` and the
+    #     check honours exactly what is declared. An undeclared mention still
+    #     fails, and the declaration has to say why - which is the part a
+    #     blanket exemption would have thrown away.
     registry = _read("docs/PUBLIC_DATA_SOURCES.json")
+    declared_history = set(json.loads(registry).get("historical_version_references", {}))
     named = {token.lower() for token in re.findall(r"\bV(\d+)\b", registry)}
     named = {f"v{token}" for token in named}
-    stale_registry = sorted(named - {version})
+    stale_registry = sorted(named - {version} - declared_history)
     check(
         not stale_registry,
         "docs/PUBLIC_DATA_SOURCES.json describes "
         f"{', '.join(stale_registry)} where {version} is active",
     )
+    check(
+        version not in declared_history,
+        f"docs/PUBLIC_DATA_SOURCES.json declares the active {version} as historical",
+    )
+    for token, reason in sorted(
+        json.loads(registry).get("historical_version_references", {}).items()
+    ):
+        check(
+            token in named,
+            f"docs/PUBLIC_DATA_SOURCES.json declares {token} historical but never names it",
+        )
+        check(
+            len(str(reason).split()) >= 8,
+            f"the historical declaration for {token} gives no usable reason",
+        )
 
     # 13. the canonical dependency lock, wherever it is named as the reproduction
     #     environment. Three documents pointed at the superseded V27 lock while
@@ -358,6 +393,26 @@ def main() -> None:
         not missing,
         "MANIFEST.in omits the output directory for "
         f"{', '.join(missing)}, so the sdist-built wheel cannot verify it",
+    )
+
+    # 15. the frozen-baseline table in REPOSITORY_BOUNDARIES.md marks one row
+    #     "current". The promotion pass relabelled V29's row instead of adding
+    #     V30's, so the table pointed a reader at a superseded baseline while
+    #     the audit read a different file entirely.
+    baseline_source = _read("scripts/audit_github_baseline.py")
+    baseline_file = "docs/" + _single(
+        r'"(GITHUB_BASELINE_[A-Z0-9_]*\.json)"', baseline_source, "audited baseline"
+    )
+    boundaries = _read("docs/REPOSITORY_BOUNDARIES.md")
+    current_rows = re.findall(
+        r"^\| `(docs/GITHUB_BASELINE_[^`]+)` \| \*\*[^*]*current[^*]*\*\* \|$",
+        boundaries,
+        re.MULTILINE,
+    )
+    check(
+        current_rows == [baseline_file],
+        "docs/REPOSITORY_BOUNDARIES.md marks "
+        f"{current_rows or 'no baseline'} current where the audit reads {baseline_file}",
     )
 
     workflow = _read(".github/workflows/ci.yml")

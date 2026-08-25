@@ -13,9 +13,12 @@ Three weightings are reported side by side:
     prior_election_votes the previous scored election's regional volumes
 
 ``equal_region`` is the conservative floor: it is always available and assumes
-nothing. ``prior_election_votes`` is the closest ex-ante analogue of the
-shipped weighting, and it is only defined from the second scored election
-onward, since the first has no predecessor in the panel.
+nothing. ``prior_election_votes`` is the weighting V30's terminal transforms
+actually use, and since V30 ships 1997's regional turnout as a warmup table it
+is now defined for every scored election including the first - which is what
+lets it be quoted as the headline rather than only as a companion. It is taken
+from the same module the model uses, so the report cannot drift from the
+model's own rule.
 
 A region absent from the previous election - 세종 first appears in 2012 - has
 no prior volume, and is given that election's mean regional volume rather than
@@ -40,6 +43,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from presidential_issue_engine import forecast_time_region_weights as ftw
 from scripts.active_model_pointer import active_output_dir
 
 ACTIVE_DIR = active_output_dir()
@@ -59,7 +63,13 @@ def regional_volumes(frame: pd.DataFrame) -> pd.DataFrame:
 
 
 def prior_election_weights(volumes: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
-    """Map each election's regions onto the previous election's volumes."""
+    """Map each election's regions onto the previous election's volumes.
+
+    Delegated to the module the model itself uses, so this report and the
+    transforms can never diverge on what "the previous election" means. The
+    first scored election is covered too: its predecessor, 1997, ships as a
+    warmup table.
+    """
 
     lookup = {
         election: group.set_index("region_id")["volume"]
@@ -68,9 +78,12 @@ def prior_election_weights(volumes: pd.DataFrame) -> tuple[pd.DataFrame, dict[st
     rows: list[dict[str, object]] = []
     substituted: dict[str, int] = {}
     for index, election in enumerate(ORDER):
-        if index == 0 or election not in lookup:
+        if election not in lookup:
             continue
-        previous = lookup.get(ORDER[index - 1])
+        if index == 0:
+            previous = ftw._warmup_volumes(ftw.WARMUP_PREDECESSOR.get(election))
+        else:
+            previous = lookup.get(ORDER[index - 1])
         if previous is None or previous.empty:
             continue
         fallback = float(previous.mean())

@@ -1,6 +1,16 @@
 Election Forecast
 Copyright 2026 Election Forecast contributors
 
+"Election Forecast contributors" is the copyright holder named for this
+project. It is maintained by bamboosalt09-bam
+(https://github.com/bamboosalt09-bam/election-forecast); the collective form is
+the name under which the work is published, not a claim that other parties hold
+rights in it.
+
+The Apache-2.0 text in LICENSE is the unmodified upstream document, including
+its appendix template. This file, not that template, carries the project's
+copyright statement.
+
 Project-authored source code and project-authored documentation are licensed
 under the Apache License, Version 2.0, unless a file states otherwise.
 
@@ -10,7 +20,7 @@ licenses, terms, attribution requirements, and redistribution restrictions.
 The source-family register and conservative redistribution decisions are in
 docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md.
 
-Packaged V27 data boundary
+Packaged V30 data boundary
 --------------------------
 The wheel contains only Git-tracked public or project-authored derived inputs.
 Local KOSPI history, official-source caches, full parliamentary text, raw HTML
