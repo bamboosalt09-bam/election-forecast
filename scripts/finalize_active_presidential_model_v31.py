@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+
+import pandas as pd
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +21,10 @@ POINTERS = (
     ROOT / "data/config/active_presidential_model.json",
 )
 V30_SHA256 = "afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e"
+#: V30's published macros, recorded so the manifest can state the change
+#: rather than assert a direction.
+V30_NATIONAL_MACRO_PP = 0.7204374174124484
+V30_REGIONAL_MACRO_PP = 2.5664447526782004
 
 PROSPECTIVE_DEMONSTRATION = {
     "artifact": "outputs/prospective_pres_2025_v31",
@@ -76,6 +82,22 @@ def main() -> None:
         (ACTIVE_DIR / "predictive_interval_manifest.json").read_text(encoding="utf-8")
     )
     prediction_hash = shared._sha256(ACTIVE_DIR / "nested_predictions.csv")
+    # read what the run actually produced, so the manifest reports rather
+    # than asserts
+    predictions = pd.read_csv(
+        ACTIVE_DIR / "nested_predictions.csv", encoding="utf-8-sig", low_memory=False
+    )
+    expansion_audit = pd.read_csv(
+        ACTIVE_DIR / "multiplicative_dispersion_expansion_audit.csv", encoding="utf-8-sig"
+    )
+    region_sums_hold = bool(
+        predictions.groupby(["election_id", "region_id"])["layer_pred"]
+        .sum()
+        .sub(1.0)
+        .abs()
+        .lt(1e-12)
+        .all()
+    )
     artifacts = [
         "scripts/run_active_presidential_model_v31.py",
         "scripts/run_prospective_forecast_v31.py",
@@ -146,9 +168,30 @@ def main() -> None:
             "gain": multiplicative_dispersion_expansion.DEFAULT_GAIN,
             "gain_selection": "parameter_free_unit_gain_not_swept",
             "index": "model_predicted_third_placed_national_level",
-            "candidate_national_level_preserved": True,
-            "regional_composition_preserved": True,
-            "feasibility_capped_elections": ["pres_2017"],
+            # measured from the shipped audit, not asserted. The previous
+            # version of this block hardcoded three claims, and two of them
+            # were false for V31: it listed pres_2017 as feasibility-capped
+            # when removing the cap is the reason V31 exists, and it declared
+            # the national macro not worse when V31 accepts a +0.0039pp cost
+            # on purpose. A record that states its conclusions as literals
+            # cannot go stale loudly.
+            "candidate_national_level_preserved": bool(
+                expansion_audit["max_candidate_level_shift_pp"].abs().lt(1e-9).all()
+            ),
+            "worst_candidate_level_shift_pp": float(
+                expansion_audit["max_candidate_level_shift_pp"].abs().max()
+            ),
+            "regional_composition_preserved": bool(region_sums_hold),
+            "feasibility_cap": (
+                "not applicable; the multiplicative form cannot reach zero from a "
+                "positive input, so no cap exists to bind"
+            ),
+            "feasibility_capped_elections": [],
+            "minimum_predicted_share": float(predictions["layer_pred"].min()),
+            "reconciliation_rounds": {
+                str(row.election_id): int(row.reconciliation_rounds)
+                for row in expansion_audit.itertuples(index=False)
+            },
             "outcome_fields_used": [],
         },
         "predictive_intervals": {
@@ -157,9 +200,22 @@ def main() -> None:
             "post_2022_outcomes_used": False,
         },
         "verification": {
+            # this one is genuinely checked above, and raises before reaching here
             "v30_rollback_hash_match": True,
             "v31_prediction_hash": prediction_hash,
-            "national_macro_not_worse_than_v30": True,
+            # the measured change, not a boolean asserting a direction. V31's
+            # national macro is worse than V30's and the version was taken
+            # anyway; a field claiming otherwise contradicted the experiment
+            # record sitting beside it.
+            "national_macro_change_vs_v30_pp": float(
+                summary["metrics"]["national_equal_election_macro_mae_pp"]
+                - V30_NATIONAL_MACRO_PP
+            ),
+            "regional_macro_change_vs_v30_pp": float(
+                summary["metrics"]["regional_equal_election_macro_mae_pp"]
+                - V30_REGIONAL_MACRO_PP
+            ),
+            "predecessor_score_was_not_a_promotion_condition": True,
         },
         "artifacts": [shared._record(path) for path in artifacts],
         "rollback": {

@@ -43,7 +43,7 @@ rather than read as permissive.
 
 Two facts a reviewer should have. The encoder is open-weight and ran locally, which
 is what Article 9 asks of embedded AI, so the historical use would have complied even
-had it remained active. And removal is not cost-free: re-measured on V31 in
+had it remained active. And removal is not cost-free: re-measured on V30 in
 `EXPERIMENT_EXTERNAL_MODEL_INPUT_REMOVAL_20260825.md`, a schema-only injection
 moves regional macro MAE from `2.566444753%p` to `4.948234183%p`, national from
 `0.720437417%p` to `4.144568904%p`, and winner accuracy from `0.8` to `0.6`, so

@@ -27,10 +27,11 @@ def build(*, n_sim: int = 50_000, seed: int = 30_820, output_dir: Path = OUTPUT_
     payload["schema"] = "active_v31_national_predictive_intervals_v1"
     payload["model_version"] = "v31"
     payload["development_outcome_warning"] = (
-        "V31 keeps V30 s transform and weights it at forecast time."
-        "expansion conserves each candidate's national level, so these national "
-        "intervals are inherited from V28 rather than re-evidenced. Coverage "
-        "remains historical calibration, not holdout evidence."
+        "V31 replaces V29's additive dispersion expansion with a multiplicative "
+        "one and reconciles the candidate levels back, so each candidate's "
+        "national level is preserved and these national intervals are inherited "
+        "from V28 rather than re-evidenced. Coverage remains historical "
+        "calibration, not holdout evidence."
     )
     shared._atomic_json(payload, output_dir / "predictive_interval_manifest.json")
     return payload

@@ -2,7 +2,7 @@
 
 The check is intentionally independent of setuptools.  It opens the produced
 archives directly, rejects unsafe or non-public members, and verifies the
-hash-indexed V30 runtime embedded in the wheel.
+hash-indexed V31 runtime embedded in the wheel.
 """
 
 from __future__ import annotations
@@ -107,7 +107,7 @@ def _audit_runtime(payload: bytes) -> int:
             raise RuntimeError("wheel runtime manifest is missing")
         manifest = json.loads(runtime.read("_runtime_manifest.json"))
         if manifest.get("active_version") != "v31":
-            raise RuntimeError("wheel runtime does not declare active V30")
+            raise RuntimeError("wheel runtime does not declare active V31")
         if manifest.get("source_boundary") != "git-tracked-public-files-only":
             raise RuntimeError("wheel runtime has an unexpected source boundary")
         if manifest.get("post_2022_outcomes_used") is not False:

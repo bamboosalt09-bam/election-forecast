@@ -28,7 +28,7 @@
   "target_outcomes_used_to_construct_bounds": false,
   "target_outcomes_used_for_historical_coverage_only": true,
   "post_2022_outcomes_used": false,
-  "development_outcome_warning": "V31 keeps V30 s transform and weights it at forecast time.expansion conserves each candidate's national level, so these national intervals are inherited from V28 rather than re-evidenced. Coverage remains historical calibration, not holdout evidence.",
+  "development_outcome_warning": "V31 replaces V29's additive dispersion expansion with a multiplicative one and reconciles the candidate levels back, so each candidate's national level is preserved and these national intervals are inherited from V28 rather than re-evidenced. Coverage remains historical calibration, not holdout evidence.",
   "input": "outputs/active_presidential_nested_v31/nested_predictions.csv",
   "input_sha256": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
   "outputs": {
