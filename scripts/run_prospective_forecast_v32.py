@@ -42,12 +42,15 @@ if str(ROOT) not in sys.path:
 from presidential_issue_engine import electorate_layers as layers  # noqa: E402
 from presidential_issue_engine import prospective_feature_contract as contract  # noqa: E402
 from scripts import run_prospective_forecast as prospective  # noqa: E402
+from scripts import run_active_presidential_model as active  # noqa: E402
 from scripts import run_prospective_forecast_v31 as v31  # noqa: E402
 
 OUTPUT_DIR = ROOT / "outputs" / "prospective_pres_2025_v32"
 TARGET_ELECTION = "pres_2025"
 #: the profile prepare_frame uses for the scored rows
 MASS_PROFILE = "direct_party_layers"
+#: The candidate conversion context that includes the forecast target.
+CONVERSION_CONTEXT_WITH_TARGET = prospective.CANDIDATE_CONVERSION_HISTORY
 
 
 def _history() -> pd.DataFrame:
@@ -107,12 +110,21 @@ def _contract(frame: pd.DataFrame, historical_columns, *, site: str) -> pd.DataF
 def run() -> Path:
     original_contract = prospective.TARGET_FEATURE_CONTRACT
     original_output = v31.OUTPUT_DIR
+    original_conversion = active.CONVERSION_CONTEXT
     try:
         prospective.TARGET_FEATURE_CONTRACT = _contract
+        # The strategic-lane consumer reads this module constant directly, and
+        # it points at the history-only table. The prospective path already
+        # prepares a context that carries the target - available 2025-06-02,
+        # the D-1 cutoff - so the merge finds nothing only because the consumer
+        # is looking somewhere else. wasted_vote_resistance and
+        # strategic_transfer_confidence were zeroed for exactly this reason.
+        active.CONVERSION_CONTEXT = CONVERSION_CONTEXT_WITH_TARGET
         v31.OUTPUT_DIR = OUTPUT_DIR
         destination = v31.run()
     finally:
         prospective.TARGET_FEATURE_CONTRACT = original_contract
+        active.CONVERSION_CONTEXT = original_conversion
         v31.OUTPUT_DIR = original_output
 
     manifest_path = Path(destination) / "run_manifest.json"
@@ -120,12 +132,10 @@ def run() -> Path:
     payload["version"] = "v32"
     payload["prospective_feature_contract"] = {
         "replaces": "blanket zero-fill of every column the target lacked",
-        "outcome_columns_set_to_nan": sorted(contract.OUTCOME_COLUMNS),
-        "declared_defaults": {
-            name: {"value": value, "reason": reason}
-            for name, (value, reason) in contract.DECLARED_DEFAULTS.items()
-        },
-        "model_active_families_built": sorted(BUILDERS),
+        "outcome_only_set_to_nan": sorted(contract.OUTCOME_COLUMNS),
+        "explicit_zero": dict(contract.EXPLICIT_ZERO_COLUMNS),
+        "diagnostic_only": dict(contract.DIAGNOSTIC_ONLY_COLUMNS),
+        "required_derived_families_built": sorted(BUILDERS),
         "unclassified_missing_column_behaviour": "raise",
         "target_election_outcome_fields_used": [],
     }
