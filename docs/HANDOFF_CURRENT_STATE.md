@@ -10,7 +10,7 @@
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_v31_forecast_time_weighted_dispersion`
+- active policy: `active_v31_multiplicative_dispersion_expansion`
 - rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
@@ -28,9 +28,38 @@
 - `outputs/external_model_free_v25_baseline/` (harness history reference; never promoted or scored)
 - `presidential_issue_engine/fixed_dataset/pres_1997_regional_turnout.csv` (warmup predecessor volumes for 2002's forecast-time weight)
 
-## V31 promotion (2026-08-24)
+## V31 promotion (2026-08-25)
 
-V31 keeps V29's statistical chain, transform forms, gain and external-model
+V31 keeps V30's statistical chain, forecast-time weighting, gain and
+external-model boundary, and replaces V29's additive dispersion expansion with a
+multiplicative one. The additive form is linear in the deviation and unbounded
+below, so it was capped per election at the factor where some region reaches
+zero - which publishes that region at exactly zero whenever the cap binds. It
+bound twice: 홍준표's 광주 in 2017 and 김문수's 광주 in the 2025 demonstration.
+The multiplicative form cannot reach zero from a positive input, so the cap is
+removed rather than widened. Regional sums and candidate levels are alternated
+to convergence, which restores level conservation without introducing a
+constant.
+
+- prediction rows: `232`
+- regional `contest_votes` weighted, equal-election MAE: `2.5007010072077227%p`
+- national candidate, equal-election MAE: `0.7242913678028117%p`
+- winner accuracy: `4/5`
+- lowest predicted share: `1.9688%` (was `0.0001%`)
+- post-2022 outcomes used: none
+- record: `docs/EXPERIMENT_V31_MULTIPLICATIVE_EXPANSION_20260825.md`
+
+The regional figure improved and **the national one got worse** (`0.720437` ->
+`0.724291`). The change was made anyway: a prediction of exactly zero for a
+major-party candidate in a metropolitan region is wrong in kind, not in degree.
+
+The 2025 demonstration was regenerated. Winner and ranking are unchanged and the
+national levels move by `4.4e-14%p`; 광주's 김문수 goes from `0.000%` to
+`2.053%`.
+
+## V30 promotion (2026-08-24)
+
+V30 keeps V29's statistical chain, transform forms, gain and external-model
 boundary, and changes only the weight the two terminal transforms use to locate
 each candidate's national level: the target election's own regional turnout
 (`contest_votes`, which exists only after the count) is replaced by the previous

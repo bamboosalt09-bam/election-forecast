@@ -43,6 +43,10 @@ Canonical prediction artifacts:
 ```text
 V31 active:
 outputs/active_presidential_nested_v31/nested_predictions.csv
+SHA-256: 969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069
+
+V30 rollback (additive expansion with a zero cap):
+outputs/active_presidential_nested_v30/nested_predictions.csv
 SHA-256: afee25e582e201873f1785c7123004336f4dfb892791c30c4e6f3f7ab9d3049e
 
 V29 rollback (target-turnout-weighted predecessor):
@@ -74,7 +78,7 @@ SHA-256: dbcf596308abf026b35a007b121d13e4bef35755aa4d4a9fe47cc95c1484204b
 `data/config/active_presidential_model.json` is an identical public
 compatibility alias. The explicit `active_presidential_model_v16.json` file is
 only the frozen internal base used by the versioned runner lineage. V31 keeps
-V29's statistical chain and its external-model boundary — no neural inference,
+V30's statistical chain and its external-model boundary — no neural inference,
 no direct sentence-level stance overlay, and the two excluded automatic mega
 seeds blocked even when a legacy engine loads after the wrapper enters its
 runtime guard. It keeps both terminal transforms unchanged in form, and
