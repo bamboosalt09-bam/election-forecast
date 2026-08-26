@@ -29,8 +29,18 @@ family.
 ## How the defect was found, including four wrong turns
 
 **Observed.** A sweep of the shipped 2025 artifact against the scored panel
-found 40 columns identically zero across all 51 rows while populated for every
-scored election.
+found **53** columns identically zero across all 51 rows while non-zero
+somewhere on the panel. An earlier edition of this record said 40 without
+stating the criterion, and 40 does not reproduce; the measurement is
+`prediction_stage_audit.csv` from the V31 2025 artifact against
+`nested_predictions.csv`.
+
+**Observed, and it qualifies the headline.** Nine of the 53 belong to **no
+class**: `rejection_beneficiary_*` (4) and `strategic_lane_*` (5). They are
+present-and-zero rather than missing, so the contract never inspects them and
+`audit_required_derived` covers only REQUIRED_DERIVED families. Whether any is
+model-active is **unresolved**. "Five model-active families" is therefore what
+the investigation found, not a proof that there are only five.
 
 **Observed.** The assembly filled every missing column with `0.0`, under a
 comment asserting the missing ones were diagnostic-only.

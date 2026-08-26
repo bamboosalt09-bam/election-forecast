@@ -29,6 +29,27 @@ def prepare_variables(
     invalid_slots = sorted(set(frame["slot"]) - set(SLOTS))
     if invalid_slots:
         raise ValueError(f"political_variables.csv contains unsupported slots: {invalid_slots}")
-    frame["variable_value"] = pd.to_numeric(frame["variable_value"], errors="coerce").fillna(0.0)
-    frame["variable_value"] = frame["variable_value"].clip(-1.0, 1.0)
+    # A value that will not parse is missing, not zero. Filling it with 0.0 made
+    # a parse failure indistinguishable from a genuine neutral reading - the
+    # same defect V32 removed from the prospective feature assembly, in a
+    # different room. This path does not feed the frozen forecast, but the rule
+    # is the rule.
+    numeric = pd.to_numeric(frame["variable_value"], errors="coerce")
+    unparsed = numeric.isna()
+    if bool(unparsed.any()):
+        offenders = (
+            frame.loc[unparsed, ["slot", "variable_name"]]
+            if "variable_name" in frame.columns
+            else frame.loc[unparsed, ["slot"]]
+        )
+        raise ValueError(
+            "political_variables.csv has "
+            f"{int(unparsed.sum())} variable_value entries that are not numeric; "
+            "a value that does not parse is missing, not zero. First few: "
+            f"{offenders.head(5).to_dict('records')}"
+        )
+    # Clipping to the declared range stays: saturation at a stated bound is a
+    # visible policy, and tests/test_variable_model_softmax.py exercises it on
+    # purpose. Only the silent substitution above was the defect.
+    frame["variable_value"] = numeric.clip(-1.0, 1.0)
     return frame

@@ -396,6 +396,19 @@ def main() -> None:
             },
             {
                 "item": (
+                    "nine columns are dead in the published 2025 artifact and "
+                    "belong to no contract class - rejection_beneficiary_* (4) "
+                    "and strategic_lane_* (5). They are present-and-zero rather "
+                    "than missing, so the contract never inspects them and "
+                    "audit_required_derived covers only REQUIRED_DERIVED "
+                    "families. Whether any is model-active is not established, "
+                    "so five model-active families is what was found rather "
+                    "than a proof that there are only five"
+                ),
+                "grade": "P2, open; the same class of defect one layer out",
+            },
+            {
+                "item": (
                     "the Windows CI runner produces one of two stable scored "
                     "artifacts, differing by 1.388e-13; why there are two "
                     "rather than one is not established"

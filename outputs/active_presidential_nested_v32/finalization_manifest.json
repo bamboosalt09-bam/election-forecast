@@ -134,8 +134,8 @@
     },
     {
       "path": "scripts/finalize_active_presidential_model_v32.py",
-      "bytes": 22949,
-      "sha256": "a8e4624863b7bab2fbcbe145461dba9883b216414d2b54fc63a81c76e90ad31e",
+      "bytes": 23714,
+      "sha256": "471f57e9fb2639f48f9b33edb9f9716ec65c9e5d35263eb525084c5f456f2ce8",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -230,20 +230,20 @@
     },
     {
       "path": "docs/FINAL_MODEL_V32_20260826.md",
-      "bytes": 8387,
-      "sha256": "7041a121dde8224b8e4f60446ac768e5d09a95487f047e4e9a52813fd12ba1c7",
+      "bytes": 8773,
+      "sha256": "46ebfcd8254d3735c3fe8b0fac24d49c30aa2247fc5d5a8b9bcec71b09278e95",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "docs/EXPERIMENT_V32_PROSPECTIVE_FEATURE_CONTRACT_20260826.md",
-      "bytes": 10602,
-      "sha256": "838c382d7d3548d7527f11925113233709651daae08b0d691019d3cab318d644",
+      "bytes": 11262,
+      "sha256": "d6a88600209db8299fadb776bb6a8523927f63756a800a0985a7c27c7cf022ad",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "docs/PROSPECTIVE_FEATURE_CONTRACT_20260826.md",
-      "bytes": 5235,
-      "sha256": "29199a0c571a51bc12e735a86aa1b0120db7e6636f0193574a434da70f571601",
+      "bytes": 6745,
+      "sha256": "e1fbd439408a77d3cecb879b64fab5f23c48e73ab533fe32416481612932b99c",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -379,6 +379,10 @@
     {
       "item": "the scored-path manifest check still inspects a file the line above it rewrote; only the read trace is written where the read happens",
       "grade": "P2, carried forward"
+    },
+    {
+      "item": "nine columns are dead in the published 2025 artifact and belong to no contract class - rejection_beneficiary_* (4) and strategic_lane_* (5). They are present-and-zero rather than missing, so the contract never inspects them and audit_required_derived covers only REQUIRED_DERIVED families. Whether any is model-active is not established, so five model-active families is what was found rather than a proof that there are only five",
+      "grade": "P2, open; the same class of defect one layer out"
     },
     {
       "item": "the Windows CI runner produces one of two stable scored artifacts, differing by 1.388e-13; why there are two rather than one is not established",
