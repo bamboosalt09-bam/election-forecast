@@ -147,13 +147,29 @@ An earlier draft of this section inferred that the runner's floating-point path
 consistent difference, and the second run does not show one. What is observed is
 that the difference is **intermittent**.
 
-**Unresolved.** Both the cause of the intermittency — thread scheduling, a BLAS
-kernel choice, a runner image difference, none of which is evidenced here — and
-its magnitude. The first failure raised before anything measured it, which is
-itself part of the defect: a fail-closed check should say how far off it was.
-The rescoped guard now records the magnitude in `summary.json` and prints it, so
-the next occurrence resolves the second question without needing to be
-reproduced on demand.
+**Observed, and it resolves the magnitude.** A third run hit the difference
+again and, this time, measured it:
+
+```
+worst absolute difference 1.388e-13, tolerance 1e-12
+got 1c2a5fee004f2c11f1678f414925ff6f5500379d60fa6956a004d63e189f3e8e
+```
+
+`1.388e-13` is roughly seven times inside the published tolerance. The
+alternative digest is **the same `1c2a5fee…` as the first failure**, so the
+three runs went `1c2a5fee` → byte-identical → `1c2a5fee`. This is not arbitrary
+noise: the runner produces one of **two stable results**.
+
+That also corrects the word this record and the guard's own message used.
+`1.388e-13` is a numerical difference, not a "formatting" one — pure formatting
+would sit near `1e-16`. The message now reports the magnitude and stops naming a
+cause it did not measure.
+
+**Unresolved.** Why there are two results rather than one. Thread partitioning
+in a BLAS reduction, a differing CPU count, or a runner image difference would
+each explain a bimodal summation order, and none of them is evidenced here.
+Resolving it is not required by the fix: the difference is a seventh of the
+tolerance the repository has always published, and both outcomes satisfy it.
 
 This makes the byte condition worse than it first appeared, not better. A guard
 that fails on some runs and not others, over identical inputs, is not a strict

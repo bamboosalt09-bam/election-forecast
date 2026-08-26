@@ -200,8 +200,9 @@ def run(output_dir: Path | None = None) -> Path:
             "[V32] the rebuilt scored panel matches V31 numerically but not "
             f"byte for byte: worst absolute difference {worst:.3e}, tolerance "
             f"{REPRODUCTION_ABS_TOL:.0e}. Expected {V31_PREDICTION_SHA256}, "
-            f"got {digest}. This is a formatting difference in this "
-            "environment, not a change in the model."
+            f"got {digest}. The model is unchanged; what this environment "
+            "differs in is not established here, so it is reported rather "
+            "than explained."
         )
 
     summary_path = Path(produced) / "summary.json"
