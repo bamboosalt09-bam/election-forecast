@@ -34,9 +34,10 @@ V32 keeps V31's statistical chain, forecast-time weighting, gain,
 external-model boundary and multiplicative dispersion expansion, and makes the
 prospective feature assembly obey the same contract as the historical one. The
 assembly used to fill every column the target lacked with zero; a sweep of the
-shipped 2025 artifact found 40 columns identically zero across all 51 rows while
-populated for every scored election, and five families among them were
-model-active - the 27-column regional accent layer,
+shipped 2025 artifact found 53 columns identically zero across all 51 rows while
+non-zero somewhere on the scored panel (an earlier edition said 40, which does
+not reproduce), and five families among them were model-active; nine more
+belong to no class and are unresolved - the 27-column regional accent layer,
 `major_party_core_eligible`, the five `lineage_identity` columns,
 `wasted_vote_resistance` and `strategic_transfer_confidence`.
 

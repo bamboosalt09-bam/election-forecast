@@ -49,3 +49,23 @@ def test_presidential_variables_exclude_future_rows() -> None:
     out = prepare_variables(frame, "pres_2022", "2022-03-08")
 
     assert out["variable_name"].tolist() == ["past"]
+
+
+def test_an_unparsable_variable_value_is_missing_not_zero() -> None:
+    """The V32 defect, in the room next door: a parse failure became 0.0."""
+
+    import pandas as pd
+    import pytest
+
+    frame = pd.DataFrame(
+        {
+            "election_id": ["pres_2022"] * 2,
+            "slot": ["A", "B"],
+            "variable_name": ["x", "y"],
+            "variable_value": [0.5, "n/a"],
+            "available_date": ["2022-03-01", "2022-03-01"],
+        }
+    )
+    with pytest.raises(ValueError) as raised:
+        prepare_variables(frame, "pres_2022", "2022-03-08")
+    assert "not zero" in str(raised.value)

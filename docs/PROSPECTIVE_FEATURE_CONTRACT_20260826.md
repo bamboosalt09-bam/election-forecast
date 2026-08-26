@@ -21,10 +21,36 @@ for column in historical_base.columns:
         out[column] = np.nan if column == "actual" else 0.0
 ```
 
-The comment states the assumption that made it safe. A sweep of the shipped
-2025 artifact found **40 columns identically zero across all 51 rows** while
-populated for the scored elections, and five families among them were
-model-active. The assumption held for most of the forty and not for those.
+The comment states the assumption that made it safe. A sweep of the shipped 2025 artifact found **53 columns identically zero across
+all 51 rows** while non-zero somewhere on the scored panel. The criterion is
+stated because an earlier edition published **40** with no criterion and the
+figure does not reproduce; 53 is what
+`outputs/prospective_pres_2025_v31/prediction_stage_audit.csv` gives against
+`outputs/active_presidential_nested_v32/nested_predictions.csv`. Of the 53:
+
+| family | columns | classified |
+| --- | ---: | --- |
+| `regional_accent_*` | 28 | REQUIRED_DERIVED |
+| `lineage_identity_*` | 5 | REQUIRED_DERIVED |
+| strategic-lane group | 3 | REQUIRED_DERIVED |
+| `major_party_core_eligible` | 1 | REQUIRED_DERIVED |
+| **unclassified** | **9** | **none — see below** |
+| outcome-only / explicit-zero / diagnostic-only | 7 | by declaration |
+
+The accent family is **27 input columns** at `_target_base`, which is what the
+contract fills. 28 appear dead in the artifact because 24 of those 27 were dead
+(the other three, `regional_accent_reform_{share,trend,volatility}`, are zero on
+the scored panel too and that is the canonical answer) and four downstream accent
+columns went dead as a consequence. The two numbers count different things at
+different sites; earlier editions gave both without saying which.
+
+**Nine columns are dead and belong to no class.**
+`rejection_beneficiary_{rate,transfer_in,transfer_net,transfer_out}` and
+`strategic_lane_{pressure,reservoir,transfer_in,transfer_net,transfer_out}` are
+present-and-zero, so the contract never sees them, and `audit_required_derived`
+inspects only REQUIRED_DERIVED families. Whether any of them is model-active is
+**unresolved** — which means "five model-active families" is what was found, not
+what was proven to be all of them.
 
 Zero is a legal value everywhere they landed, so none of it surfaced in the
 output.
