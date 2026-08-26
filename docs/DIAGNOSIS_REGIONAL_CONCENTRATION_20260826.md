@@ -164,6 +164,53 @@ conclusions in this investigation were drawn from band statistics contaminated
 by exactly those rows and had to be withdrawn. Every number in this document
 that describes a slope is an origin regression, which never divides.
 
+## The experiment, and why the line is closed
+
+**Demonstrated.** Three forms were applied to the pre-expansion predictions and
+reconciled exactly the way the shipped model reconciles. Each reuses the factor
+the model already computes, `c = 1 + predicted_third_share`; none introduces a
+new constant, because a constant chosen against this panel would be fitted to
+it.
+
+| form | regional weighted | regional equal | concentrated rows |
+| --- | ---: | ---: | ---: |
+| shipped V32 | 2.5007 | 3.1569 | −1.83 |
+| A — current, `d → c·d` | 2.5019 | 3.1552 | −1.82 |
+| B — the same `c` in log-odds | 2.5217 | 3.1759 | −1.95 |
+| C — `d → c·d + (c−1)·d·|d|` | **2.4918** | **3.1473** | **−0.71** |
+
+Form A reproduces the shipped artifact, which is the check that the offline
+reconciliation is faithful. **Log-odds is worse** and is rejected. The convex
+form C is better, and it more than halves the bias on the concentrated rows —
+the direction the tail measurement predicted.
+
+But the size is the point:
+
+- panel regional macro improves by `0.0089pp` on `2.5007`, about a third of one
+  percent;
+- 홍준표's 대구 goes `48.35 → 50.13` against an actual `55.25`, closing `1.8` of
+  a `6.9` point gap.
+
+**Demonstrated, and this closes the line.** An *oracle* was then run: the
+per-candidate factor fitted directly on the realised result — the best any
+member of this family could possibly do, and not a proposal, since it reads the
+answer.
+
+```
+shipped V32                      2.5007pp
+oracle per-candidate factor      2.3900pp
+the most any such form could win 0.1107pp
+```
+
+**The entire terminal-transform family has a ceiling of `0.11pp`, about 4% of
+the regional error.** The legitimate parameter-free convex form captures
+`0.009pp` of that ceiling. Whatever is producing a `6.9` point miss in 대구 is
+not reachable by rescaling deviations after the fact; it is in how the core
+model distributes a candidate across regions in the first place.
+
+So the answer to "would a different special function fix this" is **no, and by
+a margin large enough not to need a tie-breaker**. The version stays V32.
+
 ## What would have to be true for a fix
 
 A per-candidate expansion, or a form convex in the deviation, would address what
