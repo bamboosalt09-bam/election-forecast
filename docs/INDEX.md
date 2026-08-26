@@ -10,7 +10,7 @@ carries the active-version marker the version audit pins, **reference**
 when something current or executable points at it, and a **record**
 otherwise.
 
-## Current state (24)
+## Current state (25)
 
 These describe the active model. `scripts/audit_version_consistency.py`
 fails if any of them stops declaring the pointer's version.
@@ -31,6 +31,7 @@ fails if any of them stops declaring the pointer's version.
 - [FINAL_MODEL_V31_20260825.md](FINAL_MODEL_V31_20260825.md)
 - [GITHUB_WORKFLOW.md](GITHUB_WORKFLOW.md)
 - [HANDOFF_CURRENT_STATE.md](HANDOFF_CURRENT_STATE.md)
+- [HANDOFF_V32_IN_PROGRESS_20260826.md](HANDOFF_V32_IN_PROGRESS_20260826.md)
 - [METRIC_WEIGHTING_20260825.md](METRIC_WEIGHTING_20260825.md)
 - [PRES_2025_INPUT_GUIDE.md](PRES_2025_INPUT_GUIDE.md)
 - [PRES_2025_V31_POST_ELECTION_EVALUATION.md](PRES_2025_V31_POST_ELECTION_EVALUATION.md)
