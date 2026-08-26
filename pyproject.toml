@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "election-forecast"
 version = "0.32.0.dev0"
-description = "Point-in-time Korean presidential election forecasting engine; active V31 with a multiplicative regional dispersion expansion."
+description = "Point-in-time Korean presidential election forecasting engine; active V32, whose prospective feature assembly obeys the historical contract."
 readme = "README.md"
 authors = [
     { name = "Election Forecast contributors", email = "bamboosalt09-bam@users.noreply.github.com" },

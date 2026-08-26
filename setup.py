@@ -234,7 +234,7 @@ def _python_dependency_closure() -> set[str]:
 
 
 def v32_runtime_files() -> list[str]:
-    """Select the complete, public V30 runtime from admitted source files."""
+    """Select the complete, public V32 runtime from admitted source files."""
 
     finalization = json.loads(
         (ROOT / "outputs/active_presidential_nested_v32/finalization_manifest.json").read_text(
@@ -289,7 +289,7 @@ def _zip_info(name: str) -> ZipInfo:
 
 
 def build_v32_runtime_archive(destination: Path) -> None:
-    """Create a deterministic, hash-indexed archive of the public V30 runtime."""
+    """Create a deterministic, hash-indexed archive of the public V32 runtime."""
 
     records = []
     files = v32_runtime_files()
@@ -320,7 +320,7 @@ def build_v32_runtime_archive(destination: Path) -> None:
 
 
 class build_py(_build_py):
-    """Add the complete V30 runtime after normal Python modules are built."""
+    """Add the complete V32 runtime after normal Python modules are built."""
 
     def run(self) -> None:
         super().run()

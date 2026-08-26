@@ -442,6 +442,23 @@ def main() -> None:
         f"{current_rows or 'no baseline'} current where the audit reads {baseline_file}",
     )
 
+    # 16. the installed package's own description. It named V31, and V31's
+    #     change, under version 0.32.0.dev0 - visible to anyone reading the
+    #     metadata of an installed wheel and contradicted by the version field
+    #     directly above it. Unlike a comment or a dated note, this field's
+    #     only job is to describe the active model, so a superseded version
+    #     token in it is always wrong.
+    description = str(
+        tomllib.loads(_read("pyproject.toml"))["project"].get("description", "")
+    )
+    described = {f"v{token}" for token in re.findall(r"\bV(\d+)\b", description)}
+    check(
+        not (described - {version}),
+        "pyproject description names "
+        f"{', '.join(sorted(described - {version}))} where {version} is active: "
+        f"{description}",
+    )
+
     workflow = _read(".github/workflows/ci.yml")
     versioned_jobs = re.findall(r"^  ([a-z0-9-]*v\d+[a-z0-9-]*):", workflow, re.MULTILINE)
     check(not versioned_jobs,

@@ -394,6 +394,18 @@ def main() -> None:
                 ),
                 "grade": "P2, carried forward",
             },
+            {
+                "item": (
+                    "the Windows CI runner produces one of two stable scored "
+                    "artifacts, differing by 1.388e-13; why there are two "
+                    "rather than one is not established"
+                ),
+                "grade": (
+                    "unresolved observation, not a defect; both results sit "
+                    "inside the published 1e-12 reproduction tolerance and the "
+                    "runner records the magnitude when it recurs"
+                ),
+            },
         ],
     }
     shared._atomic_json(finalization, ACTIVE_DIR / "finalization_manifest.json")

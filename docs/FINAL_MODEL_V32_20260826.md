@@ -154,3 +154,4 @@ file pins its own hash in the V31 manifest.
 | the calibration residual plateau's root cause | unresolved observation, not a defect |
 | the `1e-11` condition inside `_calibrate` is unchanged, so three plateau calls still run all 200 rounds | P3 performance; no effect on any published figure |
 | the scored-path manifest check still inspects a file the line above it rewrote | P2, carried forward |
+| the Windows CI runner produces one of two stable scored artifacts, differing by `1.388e-13` | unresolved observation, not a defect; both sit inside the published `1e-12` tolerance |

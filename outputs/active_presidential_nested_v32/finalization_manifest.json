@@ -134,8 +134,8 @@
     },
     {
       "path": "scripts/finalize_active_presidential_model_v32.py",
-      "bytes": 22392,
-      "sha256": "a1eb469b09fd170fba3893543e49bb3b6b9d0198ae286237019a178f00bf94e8",
+      "bytes": 22949,
+      "sha256": "a8e4624863b7bab2fbcbe145461dba9883b216414d2b54fc63a81c76e90ad31e",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -230,8 +230,8 @@
     },
     {
       "path": "docs/FINAL_MODEL_V32_20260826.md",
-      "bytes": 7864,
-      "sha256": "cb64c8f908966a52c6620c49adf2589f3f0b62b6f214770c6d82dc2031b096ff",
+      "bytes": 8048,
+      "sha256": "4cb1e61825142798d3c86a4692b1116a37bb6792cecd795e6c85d9a625e08c70",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -379,6 +379,10 @@
     {
       "item": "the scored-path manifest check still inspects a file the line above it rewrote; only the read trace is written where the read happens",
       "grade": "P2, carried forward"
+    },
+    {
+      "item": "the Windows CI runner produces one of two stable scored artifacts, differing by 1.388e-13; why there are two rather than one is not established",
+      "grade": "unresolved observation, not a defect; both results sit inside the published 1e-12 reproduction tolerance and the runner records the magnitude when it recurs"
     }
   ]
 }
