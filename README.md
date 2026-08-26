@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # Election Forecast
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
@@ -6,7 +6,7 @@
 
 재현 가능한 선거 예측 프레임워크와 국회 회의록 분석 파이프라인입니다.
 
-국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V31은 2022년까지의 선거만 채점·선택에 사용합니다. V31은 V30의 통계 사슬·예측시점 가중·외부모델 경계를 그대로 둔 채, 종단 분산 확대를 **덧셈형에서 곱셈형으로** 바꿉니다. 덧셈형은 편차에 선형이라 아래로 한계가 없어 선거별 상한이 필요했는데, 그 상한이 "어느 지역이 0에 닿는 계수"로 정의되므로 **상한을 만든 지역은 정확히 0에 앉습니다.** 곱셈형은 차이가 아니라 비율을 확대하므로 양수 입력에서 0에 닿을 수 없고, 상한 자체가 사라집니다. V30은 롤백으로 동결되어 있습니다.
+국회 회의록에서 시점별 이슈 부각도를 만들고, 선거 당시 이용 가능했던 지역·정당·후보 자료와 결합합니다. 모든 학습 폴드는 목표 선거를 제외하며 point-in-time(PIT) 감사와 결과 불변성 검사로 미래 정보 혼입을 차단합니다. 한국 대통령선거 예측은 이 인프라의 검증 사례이며, 활성 V32는 2022년까지의 선거만 채점·선택에 사용합니다. V32는 V31의 통계 사슬·예측시점 가중·외부모델 경계·곱셈형 분산 확대를 **그대로 둔 채**, 예측 대상 선거의 피처 조립이 과거 선거와 **같은 계약**을 지키도록 바꿉니다. 기존 조립은 대상 프레임에 없는 열을 전부 0으로 채웠고, 그 결과 2025 산출물에서 **40개 열이 51행 모두 0**이었으며 그중 **5개 계열이 실제로 모델에 쓰이는 값**이었습니다 — 27개 지역 억양(regional accent) 열, `major_party_core_eligible`, 5개 `lineage_identity` 열, `wasted_vote_resistance`, `strategic_transfer_confidence`. 0은 그 자리에서 합법적인 값이라 출력에는 아무 흔적도 남지 않았습니다. 이제 대상이 갖지 못한 모든 열은 네 등급 중 하나로 분류되며, 분류가 없는 열은 실행을 중단시킵니다. **채점 패널은 움직일 수 없습니다** — V32의 채점 산출물은 V31과 바이트 단위로 동일하고, 두 거시 지표 모두 정확히 `0.000000%p` 변합니다. 따라서 이 버전은 점수가 아니라 계약의 정확성으로 판단되었습니다. V31은 롤백으로 동결되어 있습니다.
 
 ## Quickstart
 
@@ -35,13 +35,13 @@ python -m pytest -q
 ```
 
 동결 V31의 기준 재산출 환경은 Windows, Python 3.13과
-`requirements-v31.lock`입니다. `requirements-v27.lock`은 V27 당시의 기록으로만
+`requirements-v32.lock`입니다. `requirements-v27.lock`은 V27 당시의 기록으로만
 남아 있으며 V31 재현에 쓰면 안 됩니다(`pandas`·`pypdf` 핀이 다릅니다).
 일반 설치의 Python 3.11+ 지원과 동결 수치 환경은 구분됩니다.
 
 ## 결과 요약
 
-| 지표 | 활성 V31 |
+| 지표 | 활성 V32 |
 |---|---:|
 | 지역 `contest_votes` 가중·선거 동일가중 MAE | **2.5007%p** |
 | 전국 후보·선거 동일가중 MAE | **0.7243%p** |
@@ -49,11 +49,11 @@ python -m pytest -q
 | 채점 선거 | 2002, 2007, 2012, 2017, 2022 |
 | 결과 불변성 감사 | 215/215 통과 |
 
-![V31 회고 개발 패널 성능](presidential_issue_engine/poster_figures/v31_model_performance.png)
+![V32 회고 개발 패널 성능](presidential_issue_engine/poster_figures/v32_model_performance.png)
 
-![V31 공개 실행 구조](presidential_issue_engine/poster_figures/v31_architecture.png)
+![V32 공개 실행 구조](presidential_issue_engine/poster_figures/v32_architecture.png)
 
-![2017 지역별 V31 예측과 실제](presidential_issue_engine/poster_figures/v31_regional_pres_2017.png)
+![2017 지역별 V32 예측과 실제](presidential_issue_engine/poster_figures/v32_regional_pres_2017.png)
 
 ### 폴드별 훈련 깊이
 
@@ -190,7 +190,7 @@ python scripts/evaluate_postprocess_ablation.py
 
 | 방법 | 지역 매크로 MAE | 비고 |
 |---|---:|---:|
-| 활성 V31 | **2.5007%p** | 232개 후보×지역 행 |
+| 활성 V32 | **2.5007%p** | 232개 후보×지역 행 |
 | 동결 V26 | 2.7122%p | 232개 후보×지역 행 |
 | 동결 V25 | 2.7739%p | 232개 후보×지역 행 |
 | 동결 V24 | 2.7698%p | 232개 후보×지역 행 |
@@ -231,7 +231,7 @@ V30까지는 확대 계수가 실현 가능 상한에 걸려 `1.086615`에서 `1
 
 재현은 `scripts/verify_v31_prospective_reproduction.py`가 CI(`prospective-reproduction`)에서 매번 수행합니다. 공개 트리만으로 재현되며, 그 경계와 회의록으로부터의 재계산 절차는 [2025 입력 안내](docs/PRES_2025_INPUT_GUIDE.md)에 있습니다.
 
-![2025 D-1 V31 지역별 예측 지도](presidential_issue_engine/poster_figures/v31_pres_2025_regional_map.png)
+![2025 D-1 V32 지역별 예측 지도](presidential_issue_engine/poster_figures/v32_pres_2025_regional_map.png)
 
 지도 위 원형은 각 시·도의 후보별 예측 구성으로 합계가 100%이며, 원
 크기는 인구나 투표수를 뜻하지 않습니다. 경계는 통계청 SGIS 기반
@@ -290,7 +290,7 @@ V30까지는 확대 계수가 실현 가능 상한에 걸려 `1.086615`에서 `1
 
 ## 최고 회고 성능과 활성 버전
 
-활성 V31의 지역 MAE는 **2.5007%p**, 전국 진단 MAE는 **0.7243%p**입니다. V30의 `2.5664%p`·`0.7204%p`에서 지역은 좋아지고 **전국은 나빠졌습니다.** 그래도 승격한 이유는 하나입니다 — 광역시 하나에서 원내 1당 후보에게 정확히 0%를 발행하는 것은 정도의 문제가 아니라 종류의 문제이고, 사후 진단 집계의 `+0.0039%p`가 그것과 저울질될 수 없습니다.
+활성 V32의 지역 MAE는 **2.5007%p**, 전국 진단 MAE는 **0.7243%p**입니다. V31에서 두 값 모두 정확히 `0.000000%p` 변했습니다 — V32가 바꾼 것은 예측 대상 선거의 피처를 만드는 경로이고, 채점되는 다섯 선거는 그 경로를 지나지 않기 때문입니다. 그래서 승격 근거는 점수가 아닙니다. 그 두 수치 자체는 V31이 V30의 `2.5664%p`·`0.7204%p`에서 지역을 개선하고 전국을 `+0.0039%p` 악화시키며 만든 것이고, 그 판단의 기록은 `docs/EXPERIMENT_V31_MULTIPLICATIVE_EXPANSION_20260825.md`에 있습니다.
 
 V29가 더한 분산 확대에서 전국값이 V28과 아홉 자리까지 같았던 것은 결과가 아니라 변환의 성질입니다 — 후보 체급이 모든 지역에서 합 1이므로 균일 확대는 지역 합을 1로 남기고 재정규화가 항등이 됩니다. 실측 최대 체급 이동은 `5.6e-15%p`입니다. V31에서 전국값이 움직인 것은 확대가 아니라 체급을 찾는 가중치가 바뀌었기 때문입니다. 두 값 모두 개발표본 진단이며 untouched holdout 성능이 아닙니다.
 

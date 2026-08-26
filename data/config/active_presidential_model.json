@@ -1,23 +1,23 @@
 {
   "schema": "current_presidential_model_pointer_v1",
-  "active_version": "v31",
-  "lifecycle_status": "frozen_multiplicative_dispersion_expansion",
-  "canonical_document": "docs/FINAL_MODEL_V31_20260825.md",
-  "finalization_manifest": "outputs/active_presidential_nested_v31/finalization_manifest.json",
-  "runner": "scripts/run_active_presidential_model_v31.py",
-  "prospective_runner": "scripts/run_prospective_forecast_v31.py",
+  "active_version": "v32",
+  "lifecycle_status": "frozen_prospective_feature_contract",
+  "canonical_document": "docs/FINAL_MODEL_V32_20260826.md",
+  "finalization_manifest": "outputs/active_presidential_nested_v32/finalization_manifest.json",
+  "runner": "scripts/run_active_presidential_model_v32.py",
+  "prospective_runner": "scripts/run_prospective_forecast_v32.py",
   "config": "data/config/active_presidential_model_v23.json",
-  "version_wrapper": "scripts/run_active_presidential_model_v31.py",
+  "version_wrapper": "scripts/run_active_presidential_model_v32.py",
   "base_config_version": "v23",
-  "output": "outputs/active_presidential_nested_v31",
-  "predecessor": "v30",
-  "rollback_pointer": "outputs/active_presidential_nested_v30/finalization_manifest.json",
+  "output": "outputs/active_presidential_nested_v32",
+  "predecessor": "v31",
+  "rollback_pointer": "outputs/active_presidential_nested_v31/finalization_manifest.json",
   "regional_equal_election_macro_mae_pp": 2.5007010072077227,
   "national_equal_election_macro_mae_pp": 0.7242913678028117,
   "winner_accuracy": 0.8,
   "prediction_rows": 232,
   "prediction_sha256": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
-  "predictive_intervals": "outputs/active_presidential_nested_v31/predictive_interval_manifest.json",
+  "predictive_intervals": "outputs/active_presidential_nested_v32/predictive_interval_manifest.json",
   "predictive_interval_levels": [
     0.5,
     0.8,
@@ -31,19 +31,22 @@
   ],
   "post_2022_outcomes_used": false,
   "prospective_demonstration": {
-    "artifact": "outputs/prospective_pres_2025_v31",
-    "regenerated_for_v31": true,
+    "artifact": "outputs/prospective_pres_2025_v32",
+    "regenerated_for_v32": true,
     "history_reference": "outputs/external_model_free_v25_baseline",
-    "supersedes": "outputs/prospective_pres_2025_v30",
-    "change_from_published_v30_artifact": {
-      "regional_max_pp": 2.053,
-      "regional_mean_pp": 0.3158,
-      "national_max_pp": 4.441e-14,
-      "minimum_share_before_pct": 0.0001,
-      "minimum_share_after_pct": 2.0531,
+    "supersedes": "outputs/prospective_pres_2025_v31",
+    "change_from_published_v31_artifact": {
+      "regional_max_pp": 1.2381109433798554,
+      "regional_mean_pp": 0.29599190063001574,
+      "national_max_abs_pp": 0.41515282270842,
+      "national_shift_pp_by_slot": {
+        "A": 0.41515282270842,
+        "B": -0.4151528227083978,
+        "C": 0.0
+      },
       "winner_unchanged": true,
       "ranking_unchanged": true
     },
-    "note": "The V30 artifact published 0.00% for 김문수 in 광주. That was not an estimate: V29's expansion is capped at the factor where some region reaches zero, so the region setting the cap lands on zero by construction, and the displaced mass moved to the other two candidates in that region. V31's multiplicative form cannot reach zero from a positive input, and the same 광주 row is now 2.05% against a pre-transform 2.67%. The national levels are unchanged to 4e-14pp, so the correction is entirely within regions. No 2025 outcome was used."
+    "cause_of_change": "Five feature families that the prospective assembly had been filling with zero are now built for the target: the 27 regional_accent columns, major_party_core_eligible, the five lineage_identity columns, wasted_vote_resistance and strategic_transfer_confidence. The three external-model-derived seed tables are refused rather than read. No 2025 outcome was used, and the size of the move was measured after the change was decided, not used to decide it."
   }
 }

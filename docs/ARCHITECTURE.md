@@ -1,7 +1,7 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # V31 architecture
 
-V31 is the active, frozen presidential model. It preserves V30 as a rollback,
+V32 is the active, frozen presidential model. It preserves V31 as a rollback,
 keeps V28's external-model boundary unchanged — no neural inference, no weights,
 no source sentences, no direct stance overlay, no automatic mega seeds in the
 packaged-runtime path — and changes one thing: the terminal

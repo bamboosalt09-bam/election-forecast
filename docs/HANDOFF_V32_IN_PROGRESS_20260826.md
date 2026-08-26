@@ -1,5 +1,15 @@
 <!-- active-model-version: v31 -->
-# V32 in progress — handoff
+# V32 in progress — handoff (superseded 2026-08-26)
+
+> **Superseded.** V32 was sealed on 2026-08-26. Both P1 failures below were
+> fixed — the prospective reproduction by the default-off
+> `ROUTING_REQUIRES_DATABLE_TARGET` seam, and the repository boundary by
+> admitting the V32 output directories to the baseline. The current record is
+> `FINAL_MODEL_V32_20260826.md` and
+> `EXPERIMENT_V32_PROSPECTIVE_FEATURE_CONTRACT_20260826.md`; the open items
+> that survived the seal are listed in the V32 finalization manifest under
+> `known_open`. This file is kept as written, because a handoff that is edited
+> after the fact stops being evidence of what was known at the time.
 
 ## Status at the time of writing
 

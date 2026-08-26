@@ -1534,8 +1534,11 @@ def _target_base(
     if TARGET_FEATURE_CONTRACT is None:
         # The assembled target already contains the same electorate and issue
         # feature contract.  Missing diagnostic-only columns are inert.
-        # V31 and earlier keep this; two of the columns it caught were not
-        # inert at all, which is why V32 installs a contract instead.
+        # V31 and earlier keep this, so their artifacts still reproduce.
+        # Five of the families it swallowed were not inert at all - the
+        # regional accent layer, major_party_core_eligible, lineage_identity,
+        # wasted_vote_resistance and strategic_transfer_confidence - which is
+        # why V32 installs a contract instead.
         for column in historical_base.columns:
             if column not in out.columns:
                 out[column] = np.nan if column == "actual" else 0.0

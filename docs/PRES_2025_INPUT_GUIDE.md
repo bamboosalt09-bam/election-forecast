@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # The 2025 forecast's Assembly inputs: what ships, what does not, and how to rebuild any of it
 
 The 2025 D-1 demonstration is built from official National Assembly proceedings.

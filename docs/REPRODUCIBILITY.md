@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # Reproducibility and the Frozen V31 Boundary
 
 ## What is and is not reproducible from this repository
@@ -33,7 +33,7 @@ it before.
 
 ## Frozen scope
 
-Active V31 is a through-2022 development model. Its runner, V23 base
+Active V32 is a through-2022 development model. Its runner, V23 base
 configuration, V24 versioned panel, predictions, interval records, and
 promotion manifests are frozen. V30 through V23 remain immutable rollback
 boundaries. New experiments must use a new versioned path.
@@ -93,7 +93,7 @@ materially changes the postprocess.
 ### Installed wheel (source checkout not required)
 
 ```bash
-python -m pip install election_forecast-0.31.0.dev0-py3-none-any.whl
+python -m pip install election_forecast-0.32.0.dev0-py3-none-any.whl
 election-forecast audit-current-presidential
 election-forecast verify-current-presidential
 election-forecast run-current-presidential --output-dir outputs/reproduction_v31

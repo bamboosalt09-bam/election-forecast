@@ -21,7 +21,15 @@ They settle at a residual plateau between ``1.9e-9`` and ``3.8e-9``, and
 raising the iteration budget from 200 to 20,000 does not reduce it by a single
 digit - the same value comes back. So the ``1e-11`` termination condition was
 far stricter than the numerical fixed point this implementation actually
-reaches, and the loop was in practice always exhausting its budget.
+reaches. Two of the five calls do meet it and stop early, so the loop is not
+always exhausting its budget - but the three that plateau run all 200 rounds
+without getting closer.
+
+This wrapper checks the result afterwards and does not change the ``1e-11``
+condition inside the loop, so those three still run the full budget. That is
+wasted work rather than a correctness problem; moving the tolerance into the
+loop, where it would also stop early, belongs to whichever version can edit
+that module under its own manifest.
 
 This is deliberately *not* claimed to be a float64 floor. Machine epsilon is
 about ``2.22e-16`` and summing 51 rows does not by itself produce a ``1e-9``

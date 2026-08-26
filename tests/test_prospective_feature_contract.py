@@ -97,9 +97,10 @@ def test_every_family_that_was_silently_zeroed_is_required_derived() -> None:
 def test_the_contract_run_produces_both_active_families() -> None:
     """Checked against the artifact the contract produced, not against code.
 
-    The *published* demonstration is still V31's, which has the zeros - that is
-    the defect this fix exists to remove, and it stays true until V32 is
-    promoted. So the invariant is asserted against the contract's own output.
+    V31's demonstration, which carries the zeros, is the artifact this fix
+    exists to replace; V32's is now the published one. The invariant is
+    asserted against the contract's own output either way, so this test says
+    nothing about which version happens to be active.
     """
 
     artifact = ROOT / "outputs/prospective_pres_2025_v32/prediction_stage_audit.csv"

@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # Security policy
 
 ## Supported release
@@ -25,7 +25,7 @@ credentials in the report.
 - API credentials belong in local environment variables. `.env`, caches,
   checkpoints, full-text parliamentary corpora and raw market exports are not
   distributed.
-- Optional historical stance-model experiments are not part of the active V31
+- Optional historical stance-model experiments are not part of the active V32
   runtime or the competition demonstration.
 
 Automated checks scan the public boundary, source/data licenses, pinned GitHub

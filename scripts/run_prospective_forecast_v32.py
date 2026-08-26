@@ -2,7 +2,8 @@
 
 The prospective assembly closed the gap between the historical frame and the
 target frame by setting every missing column to zero, under a comment asserting
-such columns were diagnostic-only. Two families it caught were model-active:
+such columns were diagnostic-only. **Five** families it caught were
+model-active. The first two were found by the sweep that started this work:
 
 * ``regional_accent_*`` - 27 columns feeding the accent gain, which gates the
   log shift, which moves the prediction. The published 2025 forecast ran with
@@ -12,7 +13,18 @@ such columns were diagnostic-only. Two families it caught were model-active:
   including both major-party nominees, so their durable core was zeroed and
   folded into critical support.
 
-Neither shows in the output, because zero is a legal value everywhere it
+Three more turned up only after the contract was in place, because they never
+entered the missing list at all - upstream stages create them and default them
+to zero, so a contract inspecting only *absent* columns passed over them:
+
+* ``lineage_identity_*`` - 5 columns. The routing resolved pres_2025 to no date
+  and skipped it, leaving them at their initialised zero. 27 of 51 rows now
+  carry a lineage shift.
+* ``wasted_vote_resistance`` and ``strategic_transfer_confidence`` - the
+  consumer read a history-only table while the target's own context carried
+  them.
+
+None of it shows in the output, because zero is a legal value everywhere it
 landed.
 
 This runner installs ``prospective_feature_contract.resolve`` in place of the

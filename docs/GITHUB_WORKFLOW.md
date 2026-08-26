@@ -1,10 +1,10 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # GitHub Workflow
 
 ## Repository role
 
 This repository is the source of truth for code, tests, model configuration,
-small canonical inputs, and the frozen artifacts needed to audit active V31.
+small canonical inputs, and the frozen artifacts needed to audit active V32.
 V27 through V23 remain tracked as immutable rollback boundaries.
 OneDrive and local backup directories are recovery storage only and are not Git
 working trees.
@@ -36,7 +36,7 @@ model selection, and pre-evaluation comparison.
 
 ## Data boundary
 
-Git tracks small canonical inputs, the active V31 audit bundle, and the frozen
+Git tracks small canonical inputs, the active V32 audit bundle, and the frozen
 V27 through V23 rollback bundles. It does not
 track full transcript corpora, API caches, virtual environments, shadow
 classifier corpora, backups, or bulk experiment outputs. Those files remain in

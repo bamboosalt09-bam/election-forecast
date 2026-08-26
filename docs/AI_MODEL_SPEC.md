@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # AI and statistical-model specification
 
 This document addresses Attachment 2 and Article 9 of the 2026 Open Source
@@ -64,13 +64,13 @@ Public source families and redistribution decisions are listed in
 ## Archived external-model experiments
 
 The repository history documents stance-classifier experiments that referenced
-the following public model pages. No model executes in active V31 and their
+the following public model pages. No model executes in active V32 and their
 weights are not redistributed. The V31 wheel excludes experiment runners,
 optional dependency extras, inactive stance modules, source sentences and the
 direct overlay. A disclosed frozen aggregate at
 `data/raw/auto_issue_seed/candidate_issue_profile.csv` remains an active
 historical postprocess input. The frozen V23-V27 rollback record is not itself
-an active V31 input.
+an active V32 input.
 
 | Model | Use in repository | Source/license status | Submission status |
 | --- | --- | --- | --- |

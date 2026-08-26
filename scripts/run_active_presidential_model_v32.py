@@ -1,7 +1,10 @@
 """V32's scored panel is V31's, unchanged, and that is the point.
 
 V32 repairs the prospective assembly: the target frame used to receive a zero
-for every column it lacked, and two of those families were model-active. The
+for every column it lacked, and five of those families turned out to be
+model-active - two found by the initial sweep, three more only after the
+contract was in place, because upstream stages create them and default them to
+zero so they never entered the missing list. The
 scored panel never went through that assembly, so nothing about 2002-2022
 should move.
 

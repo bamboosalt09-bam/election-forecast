@@ -1,11 +1,11 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # V31 software bill of materials
 
 This is the human-readable SBOM required by Attachment 1 of the 2026 Open
-Source Developer Competition result report. `requirements-v31.lock` records
+Source Developer Competition result report. `requirements-v32.lock` records
 the complete tested Python 3.13 runtime reproduction resolution for the active
 model, including transitive packages, and is the file CI audits.
-`requirements-v31.lock` resolves to the same 40 pinned packages as the V29 and
+`requirements-v32.lock` resolves to the same 40 pinned packages as the V29 and
 V30 locks - no version since has added or moved a dependency, and each
 reproduction ran in the same environment. The files differ only in their header
 comment, which names the version each was frozen for. They are copied rather
@@ -52,7 +52,7 @@ tables are excluded without naming this one would be false.
 ## Reproduction environment
 
 ```bash
-python -m pip install -r requirements-v31.lock
+python -m pip install -r requirements-v32.lock
 python -m pip install --no-deps .
 election-forecast audit-current-presidential
 election-forecast verify-current-presidential

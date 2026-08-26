@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # Workspace Structure
 
 | 경로 | 현재 역할 |

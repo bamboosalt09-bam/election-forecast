@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # Visualization data and licensing
 
 `presidential_issue_engine/make_poster_figures.py` now generates only current

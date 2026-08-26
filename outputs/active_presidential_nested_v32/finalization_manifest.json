@@ -1,0 +1,384 @@
+{
+  "schema": "presidential_model_finalization_v1",
+  "status": "frozen_prospective_feature_contract",
+  "active_version": "v32",
+  "base_config_version": "v23",
+  "scored_development_elections": [
+    "pres_2002",
+    "pres_2007",
+    "pres_2012",
+    "pres_2017",
+    "pres_2022"
+  ],
+  "post_2022_outcomes_used": false,
+  "untouched_historical_holdout": false,
+  "external_neural_model_runtime": false,
+  "external_model_derived_inputs": [
+    "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+  ],
+  "metrics": {
+    "variant": "v32_prospective_feature_contract",
+    "regional_equal_election_macro_mae_pp": 2.5007010072077227,
+    "national_equal_election_macro_mae_pp": 0.7242913678028117,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "multiplicative_dispersion_expansion": {
+    "gain": 1.0,
+    "gain_selection": "parameter_free_unit_gain_not_swept",
+    "index": "model_predicted_third_placed_national_level",
+    "candidate_national_level_preserved": true,
+    "worst_candidate_level_shift_pp": 2.275957200481571e-13,
+    "regional_composition_preserved": true,
+    "feasibility_cap": "not applicable; the multiplicative form cannot reach zero from a positive input, so no cap exists to bind",
+    "feasibility_capped_elections": [],
+    "minimum_predicted_share": 0.0196875963924498,
+    "reconciliation_rounds": {
+      "pres_2002": 17,
+      "pres_2007": 16,
+      "pres_2012": 1,
+      "pres_2017": 12,
+      "pres_2022": 12
+    },
+    "outcome_fields_used": []
+  },
+  "prospective_feature_contract": {
+    "replaces": "blanket zero-fill of every column the target lacked",
+    "classes": [
+      "REQUIRED_DERIVED",
+      "EXPLICIT_ZERO",
+      "OUTCOME_ONLY",
+      "DIAGNOSTIC_ONLY"
+    ],
+    "unclassified_column_behaviour": "raises ProspectiveFeatureError",
+    "required_derived_without_builder": "hard failure, never a zero",
+    "outcome_only_fill": "NaN",
+    "model_active_families_recovered": [
+      "regional_accent_*",
+      "major_party_core_eligible",
+      "lineage_identity_*",
+      "wasted_vote_resistance",
+      "strategic_transfer_confidence"
+    ],
+    "present_but_dead_check": "audit_required_derived",
+    "scored_path_exercised": false,
+    "outcome_fields_used": [],
+    "classification_record": "docs/PROSPECTIVE_FEATURE_CONTRACT_20260826.md"
+  },
+  "external_model_derived_input_refusal": {
+    "matched_by": "file_name",
+    "previous_rule": "directory path prefix",
+    "why_it_changed": "the prospective runner copies seed tables into a temporary directory, where a path-prefix rule stopped matching and the trace showed the table opened three times",
+    "refused": [
+      "assembly_issue_character_overlay.csv",
+      "mega_issue_axis.csv",
+      "mega_issue_attribution.csv"
+    ],
+    "retained_and_disclosed": [
+      "data/raw/auto_issue_seed/candidate_issue_profile.csv"
+    ],
+    "trace": "raw_input_read_trace.csv, written where the read happens"
+  },
+  "calibration_acceptance": {
+    "tolerance_share": 1e-08,
+    "numerical_impact_bound_pp": 1e-06,
+    "worst_candidate_residual": 3.725290298461914e-09,
+    "worst_region_sum_residual": 2.220446049250313e-16,
+    "all_calls_converged": true,
+    "calls": 5,
+    "budget_exhaustion_is_not_a_success_condition": true,
+    "plateau_root_cause": "unresolved numerical observation, not a defect"
+  },
+  "predictive_intervals": {
+    "status": "historical_chronological_calibration",
+    "levels": [
+      0.5,
+      0.8,
+      0.9,
+      0.95
+    ],
+    "post_2022_outcomes_used": false
+  },
+  "verification": {
+    "v31_rollback_hash_match": true,
+    "v32_prediction_hash": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
+    "scored_predictions_byte_identical_to_v31": true,
+    "national_macro_change_vs_v31_pp": 0.0,
+    "regional_macro_change_vs_v31_pp": 0.0,
+    "predecessor_score_was_not_a_promotion_condition": true
+  },
+  "artifacts": [
+    {
+      "path": "scripts/run_active_presidential_model_v32.py",
+      "bytes": 8082,
+      "sha256": "d1d5b58d8404c61bf23b1a32c01fdff404d63e0318d5f2f8cc70d324a77afd68",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/run_prospective_forecast_v32.py",
+      "bytes": 9738,
+      "sha256": "50f5c985ca1964f3f1b11c855963d70afda95f6a0cbcb2f25fc6b8a3060517b9",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/build_active_v32_predictive_intervals.py",
+      "bytes": 1856,
+      "sha256": "4dc27048296cef0b719c65279027a183c255093e2c135c9be390edd4083a83b1",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/evaluate_electorate_layers.py",
+      "bytes": 29471,
+      "sha256": "614cc445d2d9450aefecdf36d8937c85ba2954780008a3bece3439a04d2c91da",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/finalize_active_presidential_model_v32.py",
+      "bytes": 22392,
+      "sha256": "a1eb469b09fd170fba3893543e49bb3b6b9d0198ae286237019a178f00bf94e8",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/audit_public_active_presidential_model_v32.py",
+      "bytes": 8798,
+      "sha256": "5cb67541d88fa0d28ba463112b90989b6f3edaee5c47da753e9fd45d95a8f09a",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/verify_v32_clean_reproduction.py",
+      "bytes": 1890,
+      "sha256": "507ee2b666b9ad064738e4ee7c56eb8c441cf863fb9b9b47ed799e607643ec22",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/verify_v32_prospective_reproduction.py",
+      "bytes": 4277,
+      "sha256": "4ae7213012ab38bbe4a583b4081621e03bec94187078657a084e93b756480f52",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "scripts/build_external_model_free_v25_baseline.py",
+      "bytes": 3012,
+      "sha256": "a08189da5e97921863bb961f5ba86b88f32efdde846990c4661733a1fa3de9b7",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/multiplicative_dispersion_expansion.py",
+      "bytes": 6909,
+      "sha256": "06c00209ebec812cd0478773bc97c50e79096427f1f5c15976facdf2d89314da",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/forecast_time_region_weights.py",
+      "bytes": 5702,
+      "sha256": "7efccb8879c4307060c624035a91a12d3d842e8f74ee5bcbce8d67f3cd7051ee",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/party_regionalism_dispersion.py",
+      "bytes": 5883,
+      "sha256": "0d5c477bcee4716ddcd42d327cca2c51b0110ad2568e84676898c870f6276b9b",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/pres_1997_regional_turnout.csv",
+      "bytes": 1754,
+      "sha256": "82206b81be494e96a7b20d31fb0a785f0dc88e56f9badebdc69265928e75374e",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/external_model_free_runtime.py",
+      "bytes": 4000,
+      "sha256": "e94008a63a96f0e24e23cd998dada73147165629d144e349045e41b5b025c164",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/issue_vote_engine.py",
+      "bytes": 267060,
+      "sha256": "00a7afd61837714047cbaa64d83884c637d33f8161273c9ceedfd18d7cbac6ea",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/fixed_dataset/kospi_election_context.csv",
+      "bytes": 2550,
+      "sha256": "d3709e3be33d22d91fdffdd8636c9fd82aa0c608705b1d1884a0017bff9742ff",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/prospective_feature_contract.py",
+      "bytes": 10756,
+      "sha256": "63531bd6512e7142c1fad53ca6443eb3650b3aedd1481bc75facb4243fc4ebdc",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/calibration_guard.py",
+      "bytes": 7278,
+      "sha256": "5bd5f51b9bace951ebadf9878e27a71b87c9fb4b5f985c019611854393b3e821",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/raw_input_read_trace.py",
+      "bytes": 5364,
+      "sha256": "f4dab45c4be5e5bc7c40bb0c43efab8d28be9acd16fec34304c30cd7dde1a644",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "presidential_issue_engine/unified_lineage_identity.py",
+      "bytes": 49512,
+      "sha256": "85e439375e7882afe82853e443d52d0586dc71c75812159829e0cadf6059b6ec",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "docs/FINAL_MODEL_V32_20260826.md",
+      "bytes": 7209,
+      "sha256": "0e2d7ba96b934bbc7a4242a66760f0b2165b3f4b4b5c473db08df787827b9a7f",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "docs/EXPERIMENT_V32_PROSPECTIVE_FEATURE_CONTRACT_20260826.md",
+      "bytes": 7082,
+      "sha256": "466dbe237cb5d172dc71c4bc6addd31f43b2469578639f40816c5cf605f10846",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "docs/PROSPECTIVE_FEATURE_CONTRACT_20260826.md",
+      "bytes": 5235,
+      "sha256": "29199a0c571a51bc12e735a86aa1b0120db7e6636f0193574a434da70f571601",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "docs/DIAGNOSIS_INPUT_BOUNDARY_AND_CALIBRATION_20260826.md",
+      "bytes": 8502,
+      "sha256": "1029a258f936341b1d936059a88274876af191d8dc80e0e5b7b0835c924b18e5",
+      "hash_mode": "normalized_text_lf"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/nested_predictions.csv",
+      "bytes": 619844,
+      "sha256": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/summary.json",
+      "bytes": 15088,
+      "sha256": "bc3dd24465c45b76fcc222e1285d7a9ed7f0f537f87cdad49acd437f633812ce",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/by_election.csv",
+      "bytes": 534,
+      "sha256": "1fdd1eb67abce1cb9621ed8b24a57ebf0dd88bc695730c8a98c34ee2e9aa40db",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/national_predictions.csv",
+      "bytes": 2034,
+      "sha256": "9216df5eb6201acd501c338b7dd63822676e3ee4230b30b4604c90ec288eabd7",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/input_manifest.csv",
+      "bytes": 5287,
+      "sha256": "2fafab98f4c554f250a22b2c6c9a1d69079f02249068e6b5709ff01598643635",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/multiplicative_dispersion_expansion_audit.csv",
+      "bytes": 645,
+      "sha256": "78c4f52fb88e1bac3ad61096a51f225502d28274c72dde8e2c5386b82e4e49ad",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/national_predictive_intervals.csv",
+      "bytes": 8968,
+      "sha256": "6179da8e971556c7fe17deac032c6e8e47de15f3ef1ead4e8eb3a5eeabdab26c",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/predictive_interval_summary.csv",
+      "bytes": 322,
+      "sha256": "b9a0302f6911d593aa4f84c8d23853e23b33176b94d9d8fc5ca3914642199eaa",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/predictive_interval_components.csv",
+      "bytes": 899,
+      "sha256": "c103e9bb3db7cb6990e466b0ee04ee161652381a4f646a1761d9e5777f7175ca",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/predictive_interval_manifest.json",
+      "bytes": 2702,
+      "sha256": "317d0a889a48dbc7ad58fb2bcbe71512ac42f8186f86e11f7ef7e9553e740ea7",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/calibration_acceptance_audit.csv",
+      "bytes": 466,
+      "sha256": "8ab3f63dbda72b6a3c3cd450dfdc9698ce5d4ca4d50206190d78e27917db8e15",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/raw_input_read_trace.csv",
+      "bytes": 16,
+      "sha256": "80053b21e47684b6d499a4d272576295446ce210dc790dfccc3fb14300a19636",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/prospective_pres_2025_v32/prospective_predictions.csv",
+      "bytes": 2632,
+      "sha256": "d39329363d49ac9751857fc9efd2866554f08fe3909260e2258eaab744ef8fb7",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/prospective_pres_2025_v32/national_summary.csv",
+      "bytes": 284,
+      "sha256": "d926dbc4fe2f2ea7054431254b902310eeaca89ba35a34341291f687cce289ca",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/prospective_pres_2025_v32/target_feature_audit.csv",
+      "bytes": 12628,
+      "sha256": "6918e864fcce6e49624c7b8e00e98987abdee1bedf27af21c587a8207ceccb92",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/prospective_pres_2025_v32/raw_input_read_trace.csv",
+      "bytes": 3117,
+      "sha256": "c863f47b131369853f3969bb4b38cb67e2ed7973ea7a79b5319b0c3a859a744c",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/prospective_pres_2025_v32/run_manifest.json",
+      "bytes": 11499,
+      "sha256": "67e4bf363794b1be264c8700336a071ed4c229a4e67986558b0dc28c0531ca7c",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "outputs/active_presidential_nested_v32/promotion_manifest.json",
+      "bytes": 3678,
+      "sha256": "eefed0d1ce4bfe4edf221a361faab9a0e8b6d4319489e968beff48ceaaa28348",
+      "hash_mode": "raw_bytes"
+    }
+  ],
+  "rollback": {
+    "version": "v31",
+    "prediction_sha256": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
+    "finalization_manifest": "outputs/active_presidential_nested_v31/finalization_manifest.json"
+  },
+  "change_policy": "Do not modify V23 through V32 in place; use a new versioned experiment.",
+  "known_open": [
+    {
+      "item": "calibration residual plateau root cause",
+      "grade": "unresolved observation, not a defect"
+    },
+    {
+      "item": "the 1e-11 condition inside _calibrate is unchanged, so the three plateau calls still run the full 200 rounds",
+      "grade": "P3 performance; no effect on any published figure"
+    },
+    {
+      "item": "the scored-path manifest check still inspects a file the line above it rewrote; only the read trace is written where the read happens",
+      "grade": "P2, carried forward"
+    }
+  ]
+}

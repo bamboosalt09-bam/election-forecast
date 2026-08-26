@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # Repository and distribution boundaries
 
 The public repository keeps executable releases and research history together
@@ -12,7 +12,7 @@ for transparency, but they are not the same publication surface.
 | Corrected demonstration | `outputs/prospective_pres_2025_v31/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
 | Boundary history reference | `outputs/external_model_free_v25_baseline/` | Yes | V25 pipeline under the external-model boundary; verification reference only, never promoted or scored |
 | Document record | `docs/` dated experiments, diagnoses and superseded final models | Yes | Indexed in `docs/INDEX.md`; accurate for the state each describes, never current |
-| Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V31 output |
+| Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V32 output |
 | Local/private acquisition | ignored caches, checkpoints, full text, credentials and uncertain-rights exports | No | Must be reacquired under the provider's terms or remain local |
 
 The wheel contains a hash-indexed runtime archive. The source distribution
@@ -52,7 +52,8 @@ name:
 | `docs/GITHUB_BASELINE_V28_20260823.json` | v28 |
 | `docs/GITHUB_BASELINE_V29_20260823.json` | v29 |
 | `docs/GITHUB_BASELINE_V30_20260824.json` | v30 |
-| `docs/GITHUB_BASELINE_V31_20260825.json` | **v31, current** |
+| `docs/GITHUB_BASELINE_V31_20260825.json` | v31 |
+| `docs/GITHUB_BASELINE_V32_20260826.json` | **v32, current** |
 
 They are not renamed because frozen finalizer scripts reference them by path.
 Every one carries its own `active_version` field, which is authoritative.
