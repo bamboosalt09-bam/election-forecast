@@ -6,9 +6,9 @@ for transparency, but they are not the same publication surface.
 
 | Boundary | Canonical location | Install package | Meaning |
 | --- | --- | --- | --- |
-| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V32 engine modules and declared public/derived inputs | Yes | Locally runnable V31 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
+| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V32 engine modules and declared public/derived inputs | Yes | Locally runnable V32 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
 | Frozen active evidence | `outputs/active_presidential_nested_v32/` | Yes | Immutable V32 predictions, intervals and promotion audits |
-| Rollback evidence | V23-V30 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
+| Rollback evidence | V23-V31 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
 | Corrected demonstration | `outputs/prospective_pres_2025_v32/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
 | Boundary history reference | `outputs/external_model_free_v25_baseline/` | Yes | V25 pipeline under the external-model boundary; verification reference only, never promoted or scored |
 | Document record | `docs/` dated experiments, diagnoses and superseded final models | Yes | Indexed in `docs/INDEX.md`; accurate for the state each describes, never current |
