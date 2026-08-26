@@ -118,6 +118,45 @@ identical mistake through `region_bloc_prior` at `0.0032`, and that record had
 been read before this was done. The fix is the default-off seam
 (`ROUTING_REQUIRES_DATABLE_TARGET`): V31 reproduces, V32 keeps the fix.
 
+## The guard that was right about the wrong thing
+
+**Observed.** The first version of this runner required the rebuilt scored
+artifact to be **byte identical** to V31's on every run. On the Windows CI
+runner it raised:
+
+```
+V32's scored panel differs from V31's ... Expected 969e63fe..., got 1c2a5fee...
+```
+
+**Observed.** The same wheel, with the same pinned dependencies (`numpy 2.4.6`,
+`pandas 3.0.5`, `scipy 1.18.0`, `scikit-learn 1.9.0`), reproduces byte-for-byte
+on the authoring machine, and the Linux reproduction job passes.
+
+**Observed.** V31's verifier — and every verifier before it — compares values at
+`atol=1e-12`, never bytes. That is the reproduction contract this repository
+publishes.
+
+**Inferred.** The Windows runner's floating-point path formats a few final
+digits differently while agreeing well inside `1e-12`. V31's contract absorbed
+that; V32's byte condition, being strictly stronger, turned a correct
+reproduction into a failure.
+
+**Unresolved.** The exact magnitude of the difference on that runner. The guard
+raised before anything measured it, which is itself part of the defect: a
+fail-closed check should say how far off it was.
+
+The claim was not weakened, it was moved to where it is true. Byte identity is a
+property of the committed artifact and is still asserted in three places that
+compare files in the tree — the V32 audit, the finalization manifest, and
+`tests/test_v32_promotion.py`. What a *rebuild* must satisfy is the published
+`1e-12`, and whether its bytes also matched is recorded in `summary.json`
+(`scored_panel_identical_to_v31`, `scored_panel_max_abs_difference_vs_v31`)
+rather than assumed. Those fields are measured, not written as literals, for the
+same reason V31's two hardcoded manifest claims had to be replaced.
+
+A text column has no tolerance to spend and still fails exactly; so does a
+changed row count or a changed schema.
+
 ## Result
 
 **Demonstrated.** `outputs/active_presidential_nested_v32/nested_predictions.csv`

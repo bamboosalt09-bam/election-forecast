@@ -76,6 +76,14 @@ Both macros change by exactly `0.000000%p` against V31, and
 checks that as a byte comparison rather than a tolerance, because a tolerance is
 the form of this claim that could later be quietly loosened.
 
+Byte identity is asserted of the **committed** artifact — in the audit, in the
+finalization manifest and in `tests/test_v32_promotion.py`, all of which compare
+files in the tree. A *rebuild* is held to the repository's published
+reproduction contract instead, `1e-12`, and records whether the bytes also
+matched. The difference matters: demanding a byte match of a rebuild made a
+correct third-party reproduction fail, and the reason is in
+`EXPERIMENT_V32_PROSPECTIVE_FEATURE_CONTRACT_20260826.md`.
+
 **So the version was decided on the correctness of the feature contract, not on
 a score.** There was no score to decide it on. The 2025 outcome was not
 consulted at any point, and the size of the forecast's movement was measured

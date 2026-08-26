@@ -273,9 +273,11 @@
   },
   "scored_panel_identical_to_v31": true,
   "scored_panel_sha256": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069",
+  "scored_panel_max_abs_difference_vs_v31": 0.0,
+  "scored_panel_reproduction_tolerance": 1e-12,
   "prospective_feature_contract": {
     "changed": "the prospective target assembly only",
-    "scored_panel_effect": "none; byte identical to V31 by construction and by check"
+    "scored_panel_effect": "none; the committed artifact is byte identical to V31 and a rebuild must agree numerically within the reproduction tolerance"
   },
   "calibration_acceptance": {
     "tolerance_share": 1e-08,

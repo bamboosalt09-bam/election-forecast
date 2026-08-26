@@ -110,8 +110,8 @@
   "artifacts": [
     {
       "path": "scripts/run_active_presidential_model_v32.py",
-      "bytes": 8082,
-      "sha256": "d1d5b58d8404c61bf23b1a32c01fdff404d63e0318d5f2f8cc70d324a77afd68",
+      "bytes": 13498,
+      "sha256": "b7dc5e43c570bd91d038f36e7bbc3cca356106cf374f6303a8ecfc89022cbeb0",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -230,14 +230,14 @@
     },
     {
       "path": "docs/FINAL_MODEL_V32_20260826.md",
-      "bytes": 7209,
-      "sha256": "0e2d7ba96b934bbc7a4242a66760f0b2165b3f4b4b5c473db08df787827b9a7f",
+      "bytes": 7711,
+      "sha256": "0bf099373e398d81ea70f87e8a9fed3ef1338ce9faff45e5ccd23e890ee33004",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "docs/EXPERIMENT_V32_PROSPECTIVE_FEATURE_CONTRACT_20260826.md",
-      "bytes": 7082,
-      "sha256": "466dbe237cb5d172dc71c4bc6addd31f43b2469578639f40816c5cf605f10846",
+      "bytes": 8977,
+      "sha256": "6bb8257c9864ef46ead23913faeafba4a18ca408d728c80cb137380812a85416",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -260,8 +260,8 @@
     },
     {
       "path": "outputs/active_presidential_nested_v32/summary.json",
-      "bytes": 15088,
-      "sha256": "bc3dd24465c45b76fcc222e1285d7a9ed7f0f537f87cdad49acd437f633812ce",
+      "bytes": 15255,
+      "sha256": "d6dbb6282914780602abaaa1b77f966dfb54271cc3eafc70e720c084d5e3eaff",
       "hash_mode": "raw_bytes"
     },
     {

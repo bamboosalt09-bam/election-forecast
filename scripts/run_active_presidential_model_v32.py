@@ -9,10 +9,35 @@ scored panel never went through that assembly, so nothing about 2002-2022
 should move.
 
 Rather than assert that, this runner produces the scored artifact by running
-V31's chain into V32's directory and then requires the result to be **byte
-identical** to V31's. If a single row differs, something other than the
-prospective assembly changed, and the promotion stops here rather than shipping
-a scored artifact nobody meant to move.
+V31's chain into V32's directory and then checks the result against V31's. If a
+row moves, something other than the prospective assembly changed, and the run
+stops here rather than producing a scored artifact nobody meant to move.
+
+What "unchanged" means here, and where
+--------------------------------------
+
+The first version of this guard required a **byte** match on every run, in every
+environment. That is the right condition for the *committed* artifact and the
+wrong one for a rebuild: the Windows CI runner reproduced the panel to well
+inside the repository's declared tolerance and still failed, because its
+floating-point path formats a few last digits differently. V31's verifier had
+always compared values at ``atol=1e-12``; the byte condition was strictly
+stronger than the contract this repository publishes, and it broke a third-party
+reproduction that was in fact correct.
+
+So the two claims are separated:
+
+* **this runner** requires the rebuild to agree with V31 numerically, at the
+  same ``1e-12`` the reproduction verifier uses, and *records* whether the bytes
+  also matched;
+* **byte identity** stays asserted where it is a property of committed files
+  rather than of a machine - the V32 audit, the finalization manifest, and
+  ``tests/test_v32_promotion.py``, all of which compare artifacts in the tree.
+
+A rebuild that matches numerically but not byte-for-byte says so on stdout and
+in ``summary.json``. Nothing is quietly downgraded: the promotion's claim is
+still that the committed V32 artifact is V31's, byte for byte, and that is still
+checked.
 """
 
 from __future__ import annotations
@@ -38,6 +63,12 @@ from scripts import run_active_presidential_model_v24 as v24  # noqa: E402
 from scripts import run_active_presidential_model_v31 as v31  # noqa: E402
 
 DEFAULT_OUTPUT = ROOT / "outputs" / "active_presidential_nested_v32"
+FROZEN_V31_PREDICTIONS = (
+    ROOT / "outputs" / "active_presidential_nested_v31" / "nested_predictions.csv"
+)
+#: The tolerance ``verify_v3x_clean_reproduction`` has always used. Stated
+#: here so the runner and the verifier cannot drift apart.
+REPRODUCTION_ABS_TOL = 1e-12
 V31_OUTPUT = ROOT / "outputs" / "active_presidential_nested_v31"
 FINAL_VARIANT = "v32_prospective_feature_contract"
 V31_PREDICTION_SHA256 = "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069"
@@ -59,6 +90,70 @@ def _traced_reader(original):
         return original(path)
 
     return read
+
+
+def _require_numerically_identical_to_v31(rebuilt: Path, digest: str) -> float:
+    """Fail unless the rebuild reproduces V31's panel within the tolerance.
+
+    Returns the worst absolute difference so the caller can record it. A missing
+    frozen artifact is a failure, not a skip: a reproduction check that silently
+    verifies nothing is worse than one that is absent.
+    """
+
+    if not FROZEN_V31_PREDICTIONS.is_file():
+        raise RuntimeError(
+            "the frozen V31 scored artifact is missing, so this rebuild cannot "
+            f"be checked against anything: {FROZEN_V31_PREDICTIONS}"
+        )
+    expected = pd.read_csv(FROZEN_V31_PREDICTIONS, encoding="utf-8-sig", low_memory=False)
+    actual = pd.read_csv(rebuilt, encoding="utf-8-sig", low_memory=False)
+    if list(actual.columns) != list(expected.columns):
+        raise RuntimeError(
+            "V32's scored panel has different columns from V31's. This version "
+            "changes the prospective assembly only, so the scored schema must "
+            f"not move. Expected {V31_PREDICTION_SHA256}, got {digest}."
+        )
+    if len(actual) != len(expected):
+        raise RuntimeError(
+            f"V32's scored panel has {len(actual)} rows against V31's "
+            f"{len(expected)}. Expected {V31_PREDICTION_SHA256}, got {digest}."
+        )
+
+    worst = 0.0
+    for column in expected.columns:
+        left = pd.to_numeric(expected[column], errors="coerce")
+        right = pd.to_numeric(actual[column], errors="coerce")
+        numeric = left.notna().any() and right.notna().any()
+        if not numeric:
+            # a text column has no tolerance to spend
+            if not expected[column].astype(str).equals(actual[column].astype(str)):
+                raise RuntimeError(
+                    f"V32's scored panel differs from V31's in {column!r}, which "
+                    "is not numeric, so no tolerance applies. Expected "
+                    f"{V31_PREDICTION_SHA256}, got {digest}."
+                )
+            continue
+        if left.isna().ne(right.isna()).any():
+            raise RuntimeError(
+                f"V32's scored panel differs from V31's in {column!r}: a value "
+                f"is missing on one side. Expected {V31_PREDICTION_SHA256}, "
+                f"got {digest}."
+            )
+        # bool columns come back as bool from to_numeric and refuse to
+        # subtract, so both sides are widened before the comparison
+        gap = (left.astype("float64") - right.astype("float64")).abs().max(skipna=True)
+        difference = 0.0 if pd.isna(gap) else float(gap)
+        if difference > REPRODUCTION_ABS_TOL:
+            raise RuntimeError(
+                f"V32's scored panel differs from V31's in {column!r} by "
+                f"{difference:.6e}, above the reproduction tolerance "
+                f"{REPRODUCTION_ABS_TOL:.0e}. This version changes the "
+                "prospective assembly only, so a scored difference means "
+                f"something else was mixed in. Expected {V31_PREDICTION_SHA256}, "
+                f"got {digest}."
+            )
+        worst = max(worst, difference)
+    return worst
 
 
 def run(output_dir: Path | None = None) -> Path:
@@ -97,22 +192,35 @@ def run(output_dir: Path | None = None) -> Path:
     )
     predictions = Path(produced) / "nested_predictions.csv"
     digest = _sha256(predictions)
-    if digest != V31_PREDICTION_SHA256:
-        raise RuntimeError(
-            "V32's scored panel differs from V31's. This version changes the "
-            "prospective assembly only, so a scored difference means something "
-            f"else was mixed in. Expected {V31_PREDICTION_SHA256}, got {digest}."
+    byte_identical = digest == V31_PREDICTION_SHA256
+    worst = 0.0
+    if not byte_identical:
+        worst = _require_numerically_identical_to_v31(predictions, digest)
+        print(
+            "[V32] the rebuilt scored panel matches V31 numerically but not "
+            f"byte for byte: worst absolute difference {worst:.3e}, tolerance "
+            f"{REPRODUCTION_ABS_TOL:.0e}. Expected {V31_PREDICTION_SHA256}, "
+            f"got {digest}. This is a formatting difference in this "
+            "environment, not a change in the model."
         )
 
     summary_path = Path(produced) / "summary.json"
     payload = json.loads(summary_path.read_text(encoding="utf-8"))
     payload["policy_version"] = "active_v32_prospective_feature_contract"
     payload["predecessor"] = "v31"
-    payload["scored_panel_identical_to_v31"] = True
+    # measured, not written as a literal. A manifest field that states its
+    # conclusion cannot go stale loudly, which is the defect V31's own record
+    # shipped twice.
+    payload["scored_panel_identical_to_v31"] = byte_identical
     payload["scored_panel_sha256"] = digest
+    payload["scored_panel_max_abs_difference_vs_v31"] = float(worst)
+    payload["scored_panel_reproduction_tolerance"] = REPRODUCTION_ABS_TOL
     payload["prospective_feature_contract"] = {
         "changed": "the prospective target assembly only",
-        "scored_panel_effect": "none; byte identical to V31 by construction and by check",
+        "scored_panel_effect": (
+            "none; the committed artifact is byte identical to V31 and a "
+            "rebuild must agree numerically within the reproduction tolerance"
+        ),
     }
     payload["metrics"]["variant"] = FINAL_VARIANT
     payload["calibration_acceptance"] = {

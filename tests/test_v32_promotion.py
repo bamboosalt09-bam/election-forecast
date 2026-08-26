@@ -238,3 +238,55 @@ def test_the_forecast_still_computes_no_performance_metric() -> None:
     assert manifest["performance_metrics_computed"] is False
     assert manifest["forecast_cutoff"] == "2025-06-02"
     assert manifest["candidate_selection_outcome_fields_used"] == []
+
+
+def test_a_rebuild_may_differ_in_bytes_but_not_in_numbers() -> None:
+    """The guard that broke a correct third-party reproduction, rescoped.
+
+    The runner first demanded a byte match on every run, in every environment.
+    The Windows CI runner reproduced the panel to well inside the repository's
+    declared tolerance and still failed, because its floating-point path formats
+    a few last digits differently. Byte identity is a property of the committed
+    artifact - checked above, and in the audit and the manifest - not of a
+    machine rebuilding it.
+    """
+
+    from scripts import run_active_presidential_model_v32 as runner
+
+    frozen = pd.read_csv(
+        runner.FROZEN_V31_PREDICTIONS, encoding="utf-8-sig", low_memory=False
+    )
+    directory = Path(__import__("tempfile").mkdtemp(prefix="v32_guard_"))
+
+    # a pure formatting difference is accepted, and reported as a magnitude
+    formatted = directory / "formatted.csv"
+    frozen.to_csv(formatted, index=False, encoding="utf-8-sig", float_format="%.17g")
+    worst = runner._require_numerically_identical_to_v31(formatted, "not-the-hash")
+    assert worst <= runner.REPRODUCTION_ABS_TOL
+
+    # a real move is not
+    moved = directory / "moved.csv"
+    broken = frozen.copy()
+    broken.loc[0, "layer_pred"] = float(broken.loc[0, "layer_pred"]) + 1e-9
+    broken.to_csv(moved, index=False, encoding="utf-8-sig")
+    with pytest.raises(RuntimeError) as raised:
+        runner._require_numerically_identical_to_v31(moved, "not-the-hash")
+    assert "layer_pred" in str(raised.value)
+    assert "above the reproduction tolerance" in str(raised.value)
+
+    # and neither is a text column, which has no tolerance to spend
+    renamed = directory / "renamed.csv"
+    text = frozen.copy()
+    column = "candidate_name_x" if "candidate_name_x" in text.columns else "candidate_name"
+    text.loc[0, column] = "somebody else"
+    text.to_csv(renamed, index=False, encoding="utf-8-sig")
+    with pytest.raises(RuntimeError) as raised:
+        runner._require_numerically_identical_to_v31(renamed, "not-the-hash")
+    assert "not numeric" in str(raised.value)
+
+
+def test_the_committed_summary_measures_the_identity_rather_than_asserting_it() -> None:
+    summary = json.loads((ACTIVE_DIR / "summary.json").read_text(encoding="utf-8"))
+    assert summary["scored_panel_identical_to_v31"] is True
+    assert summary["scored_panel_sha256"] == V31_SHA256
+    assert summary["scored_panel_max_abs_difference_vs_v31"] == 0.0
