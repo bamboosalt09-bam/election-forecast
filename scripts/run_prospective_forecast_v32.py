@@ -43,6 +43,7 @@ from presidential_issue_engine import electorate_layers as layers  # noqa: E402
 from presidential_issue_engine import issue_vote_engine as engine  # noqa: E402
 from presidential_issue_engine import prospective_feature_contract as contract
 from presidential_issue_engine import raw_input_read_trace as read_trace  # noqa: E402
+from presidential_issue_engine import unified_lineage_identity as lineage  # noqa: E402
 from scripts import run_prospective_forecast as prospective  # noqa: E402
 from scripts import run_active_presidential_model as active  # noqa: E402
 from scripts import run_prospective_forecast_v31 as v31  # noqa: E402
@@ -145,9 +146,13 @@ def run() -> Path:
     original_output = v31.OUTPUT_DIR
     original_conversion = active.CONVERSION_CONTEXT
     original_reader = engine._read_csv_if_exists
+    original_routing = lineage.ROUTING_REQUIRES_DATABLE_TARGET
     try:
         prospective.TARGET_FEATURE_CONTRACT = _contract
         engine._read_csv_if_exists = _traced_reader(original_reader)
+        # V31 skips a target it cannot date and its frozen 2025 artifact was
+        # produced with that skip. V32 requires the target to be datable.
+        lineage.ROUTING_REQUIRES_DATABLE_TARGET = True
         # The strategic-lane consumer reads this module constant directly, and
         # it points at the history-only table. The prospective path already
         # prepares a context that carries the target - available 2025-06-02,
@@ -162,6 +167,7 @@ def run() -> Path:
     finally:
         prospective.TARGET_FEATURE_CONTRACT = original_contract
         engine._read_csv_if_exists = original_reader
+        lineage.ROUTING_REQUIRES_DATABLE_TARGET = original_routing
         active.CONVERSION_CONTEXT = original_conversion
         v31.OUTPUT_DIR = original_output
 

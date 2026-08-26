@@ -1038,6 +1038,20 @@ def _alignment_scores(
     return score, evidence
 
 
+#: Off by default. When false the routing resolves dates exactly as V31 did -
+#: through region_bloc_prior alone - and skips a target it cannot date, which is
+#: what every frozen artifact through V31 was produced with. V32 switches it on
+#: from its runner.
+#:
+#: This is a seam rather than an outright fix because the change is not
+#: confined to the version making it: turning it on unconditionally moved V31's
+#: frozen 2025 forecast by 0.00335, caught by prospective-reproduction. The
+#: scored panel genuinely cannot move - all five scored elections resolve
+#: through the original map - but the prospective target is precisely the case
+#: that took the skip.
+ROUTING_REQUIRES_DATABLE_TARGET = False
+
+
 def _routing_cutoff(election_id: str):
     """Resolve a routed election's cutoff, central registry first.
 
@@ -1055,6 +1069,8 @@ def _routing_cutoff(election_id: str):
     date = election_date(election_id)
     if date is not None:
         return date
+    if not ROUTING_REQUIRES_DATABLE_TARGET:
+        return None
     from presidential_issue_engine import election_scope
 
     return election_scope.ELECTION_DATES.get(election_id)
@@ -1101,6 +1117,10 @@ def apply_unified_lineage_routing(
     for election_id, election_idx in out.groupby("election_id", sort=False).indices.items():
         cutoff = _routing_cutoff(str(election_id))
         if cutoff is None:
+            if not ROUTING_REQUIRES_DATABLE_TARGET:
+                # V31 and earlier skip here, and their frozen prospective
+                # artifacts were produced with the skip in place.
+                continue
             raise ValueError(
                 f"no election date for {election_id}; the lineage routing used to "
                 "skip such a target silently, which left every "
