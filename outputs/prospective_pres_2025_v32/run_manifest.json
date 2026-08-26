@@ -276,7 +276,7 @@
   },
   "raw_input_read_trace": {
     "path": "raw_input_read_trace.csv",
-    "rows": 29,
+    "rows": 28,
     "external_model_derived_reads": 0,
     "note": "recorded at the point of read and never edited. V28 stripped the overlay row from the manifest after the run and then checked the manifest; this checks the trace itself."
   }

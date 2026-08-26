@@ -40,12 +40,24 @@ from pathlib import Path
 import pandas as pd
 
 #: Paths whose appearance in a trace is a policy failure for a version that
-#: claims not to read them. Kept as fragments so a relative or absolute path
-#: matches the same way.
-EXTERNAL_MODEL_DERIVED_FRAGMENTS: tuple[str, ...] = (
-    "assembly_issue_character_overlay.csv",
-    "data/raw/auto_issue_seed/mega_issue_axis.csv",
-    "data/raw/auto_issue_seed/mega_issue_attribution.csv",
+#: claims not to read them.
+#:
+#: Matched on the *file name* rather than on a directory prefix. The earlier
+#: form required "data/raw/auto_issue_seed/mega_issue_axis.csv" and so missed
+#: the same table once the prospective runner had copied it into a temporary
+#: directory - the trace showed the copy being opened three times and the rule
+#: did not see it. A blocking rule keyed on where a file happens to sit checks
+#: the path, not the input.
+EXTERNAL_MODEL_DERIVED_FILENAMES: frozenset[str] = frozenset(
+    {
+        "assembly_issue_character_overlay.csv",
+        "mega_issue_axis.csv",
+        "mega_issue_attribution.csv",
+    }
+)
+#: Retained for callers that still pass fragments; membership is by file name.
+EXTERNAL_MODEL_DERIVED_FRAGMENTS: tuple[str, ...] = tuple(
+    sorted(EXTERNAL_MODEL_DERIVED_FILENAMES)
 )
 
 _lock = threading.Lock()
@@ -100,11 +112,8 @@ def external_model_derived(frame: pd.DataFrame) -> pd.DataFrame:
 
     if frame.empty:
         return frame
-    paths = frame["path"].astype(str)
-    hit = pd.Series(False, index=frame.index)
-    for fragment in EXTERNAL_MODEL_DERIVED_FRAGMENTS:
-        hit |= paths.str.endswith(fragment)
-    return frame.loc[hit]
+    names = frame["path"].astype(str).str.rsplit("/", n=1).str[-1]
+    return frame.loc[names.isin(EXTERNAL_MODEL_DERIVED_FILENAMES)]
 
 
 #: A reader label meaning the path was requested and denied. The request still

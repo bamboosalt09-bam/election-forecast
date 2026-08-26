@@ -162,7 +162,32 @@ version can edit that module under its own manifest.
 
 | item | grade | note |
 | --- | --- | --- |
-| manifest audit structure on the scored path | P2 | trace exists for the prospective path only |
-| blocking rules keyed on path strings | P2 | a legitimate temp-directory copy is not matched by the same rule |
-| `mega_issue_*` seed absence experiment | P2 | the originals are read; effect on predictions not yet measured |
+| manifest audit structure on the scored path | P2 | the raw trace exists for the prospective path only |
 | calibration plateau root cause | — | unresolved observation, not a defect |
+
+Two items that were on this list are now closed.
+
+### `mega_issue_*` seeds — closed
+
+**Demonstrated.** V31 was re-run with `mega_issue_axis.csv` and
+`mega_issue_attribution.csv` moved out of the tree. `nested_predictions.csv`
+came back at `969e63fe…`, identical; `layer_pred` differed on 0 of 232 rows;
+the regional macro was `2.500701` either way. `direct_mega_score`,
+`direct_mega_log_shift` and `mega_issue_intensity_response` kept exactly the
+same non-zero counts with and without the files.
+
+Same conclusion as the overlay, by the same method: read, and inert.
+
+### Blocking rules keyed on path strings — closed
+
+**Observed.** The rule required `data/raw/auto_issue_seed/mega_issue_axis.csv`
+and therefore missed the same table once the prospective runner had copied it
+into a temporary directory, where the trace showed it opened three times. A
+rule keyed on where a file sits checks the path, not the input.
+
+Matching is now on the file name. **Demonstrated:** the temp-directory copy is
+matched, all three external-model-derived files are refused in the V32
+prospective run, and the run still completes — so the combined seed is not
+needed either. Refusing it moves the 2025 forecast by `1.2381%p` at most
+against V31 (from `1.2394%p` when only the overlay was refused), and the scored
+panel stays byte-identical at `969e63fe…`.
