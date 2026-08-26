@@ -10,7 +10,7 @@ carries the active-version marker the version audit pins, **reference**
 when something current or executable points at it, and a **record**
 otherwise.
 
-## Current state (28)
+## Current state (29)
 
 These describe the active model. `scripts/audit_version_consistency.py`
 fails if any of them stops declaring the pointer's version.
@@ -23,6 +23,7 @@ fails if any of them stops declaring the pointer's version.
 - [DIAGNOSIS_IMPORT_SPEC_DRIFT_20260825.md](DIAGNOSIS_IMPORT_SPEC_DRIFT_20260825.md)
 - [DIAGNOSIS_INPUT_BOUNDARY_AND_CALIBRATION_20260826.md](DIAGNOSIS_INPUT_BOUNDARY_AND_CALIBRATION_20260826.md)
 - [DIAGNOSIS_REGIONALISM_DEAD_ENDS_20260825.md](DIAGNOSIS_REGIONALISM_DEAD_ENDS_20260825.md)
+- [DIAGNOSIS_REGIONAL_CONCENTRATION_20260826.md](DIAGNOSIS_REGIONAL_CONCENTRATION_20260826.md)
 - [DIAGNOSIS_SCORING_SCOPE_20260824.md](DIAGNOSIS_SCORING_SCOPE_20260824.md)
 - [EXPERIMENT_EXTERNAL_MODEL_INPUT_REMOVAL_20260825.md](EXPERIMENT_EXTERNAL_MODEL_INPUT_REMOVAL_20260825.md)
 - [EXPERIMENT_V30_FORECAST_TIME_WEIGHTS_20260824.md](EXPERIMENT_V30_FORECAST_TIME_WEIGHTS_20260824.md)
