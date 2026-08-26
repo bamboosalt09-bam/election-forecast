@@ -28,7 +28,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from presidential_issue_engine import calibration_guard  # noqa: E402
+from presidential_issue_engine import issue_vote_engine as engine  # noqa: E402
 from presidential_issue_engine import party_regionalism_dispersion as dispersion  # noqa: E402
+from presidential_issue_engine import raw_input_read_trace as read_trace  # noqa: E402
 from scripts import run_active_presidential_model_v24 as v24  # noqa: E402
 from scripts import run_active_presidential_model_v31 as v31  # noqa: E402
 
@@ -42,6 +44,20 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _traced_reader(original):
+    """Record every CSV opened, and refuse the external-model-derived ones."""
+
+    def read(path: str):
+        name = str(path).replace("\\", "/").rsplit("/", 1)[-1]
+        if name in read_trace.EXTERNAL_MODEL_DERIVED_FILENAMES:
+            read_trace.record(path, reader=read_trace.REFUSED_READER)
+            return pd.DataFrame()
+        read_trace.record(path, reader="issue_vote_engine._read_csv_if_exists")
+        return original(path)
+
+    return read
+
+
 def run(output_dir: Path | None = None) -> Path:
     destination = Path(output_dir) if output_dir is not None else DEFAULT_OUTPUT
     destination.mkdir(parents=True, exist_ok=True)
@@ -52,14 +68,30 @@ def run(output_dir: Path | None = None) -> Path:
     # manifests, so a wrapper keeps those reproducing while this version gets a
     # check. On a converged run the output is identical.
     original_calibrate = dispersion._calibrate
+    original_reader = engine._read_csv_if_exists
     calibration_reports: list[dict[str, object]] = []
     try:
         dispersion._calibrate = calibration_guard.checked(
             original_calibrate, record=calibration_reports.append
         )
-        produced = v31.run(output_dir=destination)
+        # The scored path gets the same treatment the prospective path got.
+        # V28 evidenced its external-model-free claim by deleting rows from the
+        # manifest after the run and then reading the manifest; this records
+        # what was opened, where nothing edits it, on both paths.
+        engine._read_csv_if_exists = _traced_reader(original_reader)
+        with read_trace.tracing() as rows:
+            produced = v31.run(output_dir=destination)
+            trace = read_trace.to_frame(rows)
     finally:
         dispersion._calibrate = original_calibrate
+        engine._read_csv_if_exists = original_reader
+
+    trace_path = read_trace.write(
+        trace, Path(produced) / "raw_input_read_trace.csv"
+    )
+    read_trace.assert_no_external_model_derived_reads(
+        trace, site="the V32 scored run"
+    )
     predictions = Path(produced) / "nested_predictions.csv"
     digest = _sha256(predictions)
     if digest != V31_PREDICTION_SHA256:
@@ -101,6 +133,30 @@ def run(output_dir: Path | None = None) -> Path:
         "invocations": len(calibration_reports),
         "reports": calibration_reports,
     }
+    payload["raw_input_read_trace"] = {
+        "path": trace_path.name,
+        "rows": int(len(trace)),
+        "external_model_derived_reads": 0,
+        "note": (
+            "recorded at the point of read and never edited; refusals are kept "
+            "so the record shows the engine still asks"
+        ),
+        # An empty trace is ambiguous on its face - it cannot be told apart
+        # from instrumentation that never engaged - so the reason is stated.
+        "empty_trace_reason": (
+            "the scored path does not call issue_vote_engine._read_csv_if_exists "
+            "at all: it reads the frozen through-2022 rederived artifacts rather "
+            "than assembling from source tables, so it has no opportunity to "
+            "open an external-model-derived input. Measured: 0 calls across a "
+            "full scored run. The instrumentation is left installed so that a "
+            "future change routing the scored path through that reader is "
+            "caught rather than silently untraced"
+        )
+        if trace.empty
+        else None,
+    }
+    if payload["raw_input_read_trace"]["empty_trace_reason"] is None:
+        payload["raw_input_read_trace"].pop("empty_trace_reason")
     calibration_frame = pd.DataFrame(calibration_reports)
     if not calibration_frame.empty:
         v24._atomic_csv_crlf(
