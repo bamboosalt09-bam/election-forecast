@@ -44,10 +44,29 @@ FAMILIES = (
 
 
 def _tracked() -> list[str]:
-    out = subprocess.run(
-        ["git", "ls-files", "-z"], cwd=ROOT, check=True, capture_output=True
-    ).stdout
-    return [i.decode("utf-8").replace("\\", "/") for i in out.split(b"\0") if i]
+    """Tracked files, plus documents present but not yet added.
+
+    `git ls-files` alone lists only what the index already knows, so running
+    this before `git add` omits a document that is about to be committed beside
+    it - and the generated index goes stale the moment that commit lands. It
+    happened twice in one session, each time caught by CI rather than locally,
+    because the local run genuinely saw a different tree from the one committed.
+
+    `--others --exclude-standard` adds untracked-but-not-ignored files, so the
+    index describes the tree as it will be committed rather than as it happened
+    to be staged when the builder ran.
+    """
+
+    def listing(*arguments: str) -> list[str]:
+        out = subprocess.run(
+            ["git", "ls-files", "-z", *arguments],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+        ).stdout
+        return [i.decode("utf-8").replace("\\", "/") for i in out.split(b"\0") if i]
+
+    return list(dict.fromkeys(listing() + listing("--others", "--exclude-standard")))
 
 
 def _referenced_paths(sources: list[str]) -> set[str]:

@@ -10,7 +10,7 @@ carries the active-version marker the version audit pins, **reference**
 when something current or executable points at it, and a **record**
 otherwise.
 
-## Current state (27)
+## Current state (28)
 
 These describe the active model. `scripts/audit_version_consistency.py`
 fails if any of them stops declaring the pointer's version.
@@ -37,6 +37,7 @@ fails if any of them stops declaring the pointer's version.
 - [METRIC_WEIGHTING_20260825.md](METRIC_WEIGHTING_20260825.md)
 - [PRES_2025_INPUT_GUIDE.md](PRES_2025_INPUT_GUIDE.md)
 - [PRES_2025_V31_POST_ELECTION_EVALUATION.md](PRES_2025_V31_POST_ELECTION_EVALUATION.md)
+- [PRES_2025_V32_POST_ELECTION_EVALUATION.md](PRES_2025_V32_POST_ELECTION_EVALUATION.md)
 - [PROSPECTIVE_FEATURE_CONTRACT_20260826.md](PROSPECTIVE_FEATURE_CONTRACT_20260826.md)
 - [REPOSITORY_BOUNDARIES.md](REPOSITORY_BOUNDARIES.md)
 - [REPRODUCIBILITY.md](REPRODUCIBILITY.md)
