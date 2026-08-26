@@ -230,8 +230,8 @@
     },
     {
       "path": "docs/FINAL_MODEL_V32_20260826.md",
-      "bytes": 8048,
-      "sha256": "4cb1e61825142798d3c86a4692b1116a37bb6792cecd795e6c85d9a625e08c70",
+      "bytes": 8387,
+      "sha256": "7041a121dde8224b8e4f60446ac768e5d09a95487f047e4e9a52813fd12ba1c7",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -248,8 +248,8 @@
     },
     {
       "path": "docs/DIAGNOSIS_INPUT_BOUNDARY_AND_CALIBRATION_20260826.md",
-      "bytes": 8626,
-      "sha256": "23468087eec66b9b5360290fffdb6bb7b5c65e69fbf645eb7f1bbe2cd0c54567",
+      "bytes": 10408,
+      "sha256": "c2e12e037713a7540d2956d94879e74d75bd13235f98c95a0b65e3538f9eac34",
       "hash_mode": "normalized_text_lf"
     },
     {
