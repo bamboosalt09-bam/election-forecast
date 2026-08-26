@@ -1,14 +1,19 @@
 <!-- active-model-version: v32 -->
 # V32 architecture
 
-V32 is the active, frozen presidential model. It preserves V31 as a rollback,
-keeps V28's external-model boundary unchanged — no neural inference, no weights,
-no source sentences, no direct stance overlay, no automatic mega seeds in the
-packaged-runtime path — and changes one thing: the terminal
-dispersion expansion is multiplicative rather than additive, so no predicted
-share can reach zero and the per-election feasibility cap is gone.
-One frozen historical candidate-issue aggregate remains as a disclosed
-postprocess input. The diagram below follows the actual
+V32 is the active, frozen presidential model. It preserves V31 as a rollback
+and keeps everything V31 computes — V28's external-model boundary, V27's
+regional transform, V30's forecast-time weighting and V31's own multiplicative
+dispersion expansion — unchanged. Its scored artifact is byte-identical to
+V31's. What it changes is the assembly that builds the *target* election's
+features: a column the target frame lacked used to be filled with zero, and
+five model-active families were silently dead in the published 2025 forecast.
+See **What V32 changes** below.
+
+The boundary is unchanged and re-audited: no neural inference, no weights, no
+source sentences, no direct stance overlay, no automatic mega seeds in the
+packaged-runtime path. One frozen historical candidate-issue aggregate remains
+as a disclosed postprocess input. The diagram below follows the actual
 public entry points rather than older poster-era experiments.
 
 The active package, frozen evidence, corrected demonstration and historical
