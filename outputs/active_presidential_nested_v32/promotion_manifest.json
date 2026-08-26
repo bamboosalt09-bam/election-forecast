@@ -1,0 +1,48 @@
+{
+  "schema": "presidential_model_promotion_v1",
+  "status": "promoted_prospective_feature_contract",
+  "active_version": "v32",
+  "predecessor": "v31",
+  "post_2022_outcomes_used": false,
+  "point_metrics": {
+    "variant": "v32_prospective_feature_contract",
+    "regional_equal_election_macro_mae_pp": 2.5007010072077227,
+    "national_equal_election_macro_mae_pp": 0.7242913678028117,
+    "winner_accuracy": 0.8,
+    "rows": 232
+  },
+  "accepted_scope": [
+    "prospective_historical_feature_contract_parity",
+    "runtime_lineage_routing_through_the_central_registry",
+    "external_model_derived_input_refusal_matched_by_file_name",
+    "dispersion_calibration_acceptance_tolerance"
+  ],
+  "rejected_scope": [
+    "any_change_evaluated_against_the_2025_outcome",
+    "tuning_the_accent_gain_map_to_move_the_2025_forecast"
+  ],
+  "selection_disclosure": "V32 makes the prospective feature assembly obey the same contract as the historical one. Until now it closed the gap between the two frames with a blanket `out[column] = 0.0`, under a comment asserting that anything missing was diagnostic-only. A sweep of the shipped 2025 artifact found 40 columns identically zero across all 51 rows while populated for every scored election, and five families among them were model-active - the 27-column regional accent layer, major_party_core_eligible, the lineage_identity family, wasted_vote_resistance and strategic_transfer_confidence. Zero is a legal value everywhere they landed, so none of it surfaced in the output. Every column the target lacks is now classified REQUIRED_DERIVED, EXPLICIT_ZERO, OUTCOME_ONLY or DIAGNOSTIC_ONLY; a required column with no builder is a hard failure, an outcome-only column becomes NaN rather than a fabricated zero, and an unclassified column stops the run. No parameter was selected and no threshold was tuned. The scored panel cannot move - V32's nested_predictions.csv is byte-identical to V31's, both macros change by exactly 0.000000pp - because the scored elections never take the assembly path that was changed. The version was therefore decided on the correctness of the feature contract, not on a score, and the 2025 outcome was not consulted at any point. The three external-model-derived seed tables are refused at the reader and the refusal is recorded, replacing a rule that matched on directory path and so missed the same table once it had been copied to a temporary directory.",
+  "prospective_demonstration": {
+    "artifact": "outputs/prospective_pres_2025_v32",
+    "regenerated_for_v32": true,
+    "history_reference": "outputs/external_model_free_v25_baseline",
+    "supersedes": "outputs/prospective_pres_2025_v31",
+    "change_from_published_v31_artifact": {
+      "regional_max_pp": 1.2381109433798554,
+      "regional_mean_pp": 0.29599190063001574,
+      "national_max_abs_pp": 0.41515282270842,
+      "national_shift_pp_by_slot": {
+        "A": 0.41515282270842,
+        "B": -0.4151528227083978,
+        "C": 0.0
+      },
+      "winner_unchanged": true,
+      "ranking_unchanged": true
+    },
+    "cause_of_change": "Five feature families that the prospective assembly had been filling with zero are now built for the target: the 27 regional_accent columns, major_party_core_eligible, the five lineage_identity columns, wasted_vote_resistance and strategic_transfer_confidence. The three external-model-derived seed tables are refused rather than read. No 2025 outcome was used, and the size of the move was measured after the change was decided, not used to decide it."
+  },
+  "rollback": {
+    "version": "v31",
+    "prediction_sha256": "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069"
+  }
+}

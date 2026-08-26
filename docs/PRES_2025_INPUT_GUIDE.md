@@ -1,4 +1,4 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # The 2025 forecast's Assembly inputs: what ships, what does not, and how to rebuild any of it
 
 The 2025 D-1 demonstration is built from official National Assembly proceedings.
@@ -135,7 +135,7 @@ Nothing to regenerate; they are in the repository. To confirm the forecast they
 produce matches the frozen artifact:
 
 ```bash
-python scripts/verify_v31_prospective_reproduction.py
+python scripts/verify_v32_prospective_reproduction.py
 ```
 
 With the collected file present this rebuilds everything including the keyword
@@ -147,10 +147,10 @@ silently weaker than it appears.
 ### Rebuilding the forecast itself
 
 ```bash
-python scripts/run_prospective_forecast_v31.py
+python scripts/run_prospective_forecast_v32.py
 ```
 
-Writes `outputs/prospective_pres_2025_v31/`. The runner resolves the collected
+Writes `outputs/prospective_pres_2025_v32/`. The runner resolves the collected
 file if present and the public form otherwise; no flag selects between them, so
 neither path can be taken by accident.
 

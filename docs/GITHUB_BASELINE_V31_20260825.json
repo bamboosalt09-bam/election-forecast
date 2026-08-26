@@ -88,9 +88,11 @@
     "outputs/prospective_pres_2025_v29/",
     "outputs/prospective_pres_2025_v30/",
     "outputs/prospective_pres_2025_v31/",
+    "outputs/prospective_pres_2025_v32/",
     "outputs/unified_exact_lineage_v21/",
     "outputs/v24_defect_ablation/",
     "outputs/v24_floor_recalibration_hypotheses/",
     "outputs/v24_structural_residual_hypotheses/"
-  ]
+  ],
+  "unsealed_version_note": "outputs/prospective_pres_2025_v32/ is tracked while V32 is in progress and unsealed. The pointer names V31; admitting the path here records the work without promoting it, and the scored V32 directory stays untracked until a finalization pins it."
 }

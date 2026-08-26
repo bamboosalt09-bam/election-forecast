@@ -1,8 +1,8 @@
-<!-- active-model-version: v31 -->
+<!-- active-model-version: v32 -->
 # Current State Handoff
 
-> Authoritative current state: `docs/FINAL_MODEL_V30_20260824.md`. The active
-> pointer is `data/config/current_presidential_model.json`; V30 through V23 are
+> Authoritative current state: `docs/FINAL_MODEL_V32_20260826.md`. The active
+> pointer is `data/config/current_presidential_model.json`; V31 through V23 are
 > immutable rollback models. Dated sections below preserve the state and
 > terminology that applied when each experiment was recorded and must not be
 > read as current active-version pointers.
@@ -10,7 +10,7 @@
 ## Active workspace and boundary
 
 - workspace: `C:\english_folder\poll_project`
-- active policy: `active_v31_multiplicative_dispersion_expansion`
+- active policy: `active_v32_prospective_feature_contract`
 - rolling warmup: 1992, 1997
 - scored/development elections: 2002, 2007, 2012, 2017, 2022
 - 2025 outcomes: prohibited from fitting, tuning, ablation, and comparison
@@ -22,11 +22,44 @@
 - `data/config/active_presidential_model.json` (identical compatibility alias)
 - `data/config/active_presidential_model_v16.json` (internal frozen base only)
 - `scripts/run_current_presidential_model.py`
-- `scripts/run_active_presidential_model_v31.py`
-- `outputs/active_presidential_nested_v31/`
-- `outputs/prospective_pres_2025_v31/` (corrected demonstration only)
+- `scripts/run_active_presidential_model_v32.py`
+- `outputs/active_presidential_nested_v32/`
+- `outputs/prospective_pres_2025_v32/` (corrected demonstration only)
 - `outputs/external_model_free_v25_baseline/` (harness history reference; never promoted or scored)
 - `presidential_issue_engine/fixed_dataset/pres_1997_regional_turnout.csv` (warmup predecessor volumes for 2002's forecast-time weight)
+
+## V32 promotion (2026-08-26)
+
+V32 keeps V31's statistical chain, forecast-time weighting, gain,
+external-model boundary and multiplicative dispersion expansion, and makes the
+prospective feature assembly obey the same contract as the historical one. The
+assembly used to fill every column the target lacked with zero; a sweep of the
+shipped 2025 artifact found 40 columns identically zero across all 51 rows while
+populated for every scored election, and five families among them were
+model-active - the 27-column regional accent layer,
+`major_party_core_eligible`, the five `lineage_identity` columns,
+`wasted_vote_resistance` and `strategic_transfer_confidence`.
+
+- prediction rows: `232`
+- regional `contest_votes` weighted, equal-election MAE: `2.5007010072077227%p`
+- national candidate, equal-election MAE: `0.7242913678028117%p`
+- winner accuracy: `4/5`
+- post-2022 outcomes used: none
+- record: `docs/EXPERIMENT_V32_PROSPECTIVE_FEATURE_CONTRACT_20260826.md`
+
+**The scored artifact is byte-identical to V31's** and both macros change by
+exactly `0.000000%p`, because the five scored elections do not take the
+assembly path V32 changed. So this version was decided on the correctness of
+the feature contract rather than on a score, and there was no score available
+to decide it on. The 2025 forecast moves by at most `1.2381%p` regionally and
+`0.4152%p` nationally, winner and ranking unchanged; those figures were
+measured after the change was decided.
+
+Also closed here: external-model-derived inputs are refused by file name rather
+than directory path (the old rule missed the runner's own temp-directory copy),
+and the regional dispersion calibration has one acceptance tolerance - `1e-8`
+share, `1e-6` percentage points - instead of a `1e-11` stop with nothing
+checking whether it was reached.
 
 ## V31 promotion (2026-08-25)
 

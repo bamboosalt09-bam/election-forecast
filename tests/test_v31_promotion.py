@@ -50,14 +50,25 @@ def _audit() -> pd.DataFrame:
     )
 
 
-def test_the_pointer_records_the_promotion_and_its_rollback() -> None:
+def test_v31_remains_in_the_declared_rollback_chain_under_v32() -> None:
+    """V31 is a rollback now, so its record moves from the live pointer to its
+    own frozen manifest. The claims are still V31's; what changed is where they
+    are read from."""
+
     pointer = _pointer()
-    assert pointer["active_version"] == "v31"
-    assert pointer["predecessor"] == "v30"
+    assert pointer["active_version"] == "v32"
+    assert pointer["predecessor"] == "v31"
     assert pointer["rollback_pointer"] == (
-        "outputs/active_presidential_nested_v30/finalization_manifest.json"
+        "outputs/active_presidential_nested_v31/finalization_manifest.json"
     )
-    assert pointer["prediction_sha256"] == _sha256(ACTIVE_DIR / "nested_predictions.csv")
+    finalization = json.loads(
+        (ACTIVE_DIR / "finalization_manifest.json").read_text(encoding="utf-8")
+    )
+    assert finalization["active_version"] == "v31"
+    assert finalization["rollback"]["version"] == "v30"
+    assert finalization["verification"]["v31_prediction_hash"] == _sha256(
+        ACTIVE_DIR / "nested_predictions.csv"
+    )
 
 
 def test_promoting_v31_moved_neither_frozen_predecessor() -> None:
@@ -190,13 +201,10 @@ def test_the_promotion_record_states_the_property_not_the_score() -> None:
 
 
 def test_the_2025_demonstration_lost_its_zero_and_kept_its_levels() -> None:
-    demonstration = _pointer()["prospective_demonstration"]
-    assert demonstration["artifact"] == "outputs/prospective_pres_2025_v31"
-    assert demonstration["regenerated_for_v31"] is True
-
-    change = demonstration["change_from_published_v30_artifact"]
-    assert change["winner_unchanged"] is True
-    assert change["national_max_pp"] < 1e-9, "the correction must live inside regions"
+    """Read from V31's own artifact rather than from the pointer, which now
+    carries V32's demonstration. The property being pinned - no region
+    published at zero - belongs to the file, so the file is the better witness.
+    """
 
     forecast = pd.read_csv(
         ROOT / "outputs/prospective_pres_2025_v31/prospective_predictions.csv",

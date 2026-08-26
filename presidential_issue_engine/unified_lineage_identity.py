@@ -1038,6 +1038,44 @@ def _alignment_scores(
     return score, evidence
 
 
+#: Off by default. When false the routing resolves dates exactly as V31 did -
+#: through region_bloc_prior alone - and skips a target it cannot date, which is
+#: what every frozen artifact through V31 was produced with. V32 switches it on
+#: from its runner.
+#:
+#: This is a seam rather than an outright fix because the change is not
+#: confined to the version making it: turning it on unconditionally moved V31's
+#: frozen 2025 forecast by 0.00335, caught by prospective-reproduction. The
+#: scored panel genuinely cannot move - all five scored elections resolve
+#: through the original map - but the prospective target is precisely the case
+#: that took the skip.
+ROUTING_REQUIRES_DATABLE_TARGET = False
+
+
+def _routing_cutoff(election_id: str):
+    """Resolve a routed election's cutoff, central registry first.
+
+    ``region_bloc_prior`` keeps its own presidential date map and it stopped at
+    2022 while ``election_scope`` already carried pres_2025. The routing dated
+    each election through that map and skipped what it could not date, so the
+    2025 forecast carried five lineage_identity_* columns at zero - the value
+    they are initialised to - and nothing said so.
+
+    The fallback only fires where the old code returned ``None`` and skipped,
+    so it cannot change a scored election: all five resolve through the
+    original map, and both registries agree on every one of their dates.
+    """
+
+    date = election_date(election_id)
+    if date is not None:
+        return date
+    if not ROUTING_REQUIRES_DATABLE_TARGET:
+        return None
+    from presidential_issue_engine import election_scope
+
+    return election_scope.ELECTION_DATES.get(election_id)
+
+
 def apply_unified_lineage_routing(
     frame: pd.DataFrame,
     events: pd.DataFrame,
@@ -1077,9 +1115,18 @@ def apply_unified_lineage_routing(
         return out, pd.DataFrame(audits), pd.DataFrame()
 
     for election_id, election_idx in out.groupby("election_id", sort=False).indices.items():
-        cutoff = election_date(str(election_id))
+        cutoff = _routing_cutoff(str(election_id))
         if cutoff is None:
-            continue
+            if not ROUTING_REQUIRES_DATABLE_TARGET:
+                # V31 and earlier skip here, and their frozen prospective
+                # artifacts were produced with the skip in place.
+                continue
+            raise ValueError(
+                f"no election date for {election_id}; the lineage routing used to "
+                "skip such a target silently, which left every "
+                "lineage_identity_* column at its initialised zero and reported "
+                "nothing. A target the caller asked to route must be datable."
+            )
         fit = fit_lineage_profiles(
             events,
             cutoff=pd.Timestamp(cutoff),

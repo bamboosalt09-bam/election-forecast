@@ -1,0 +1,6 @@
+﻿iteration_budget,max_candidate_residual,max_region_sum_residual,tolerance,all_values_finite,all_values_valid_shares,converged,numerical_impact_bound_pp
+200,0.0,2.220446049250313e-16,1e-08,True,True,True,1e-06
+200,1.862645149230957e-09,0.0,1e-08,True,True,True,1e-06
+200,0.0,0.0,1e-08,True,True,True,1e-06
+200,3.725290298461914e-09,1.1102230246251565e-16,1e-08,True,True,True,1e-06
+200,3.725290298461914e-09,1.1102230246251565e-16,1e-08,True,True,True,1e-06

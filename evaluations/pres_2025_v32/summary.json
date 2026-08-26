@@ -1,0 +1,31 @@
+{
+  "schema": "pres_2025_post_election_evaluation_v3",
+  "version": "v32",
+  "status": "post_election_evaluation_not_model_selection",
+  "boundary": "V32 was frozen before this evaluation; 2025 outcomes were not used for V32 model selection, parameterization, or promotion.",
+  "scored_forecast": {
+    "artifact": "outputs/prospective_pres_2025_v32",
+    "prospective_predictions_sha256": "d39329363d49ac9751857fc9efd2866554f08fe3909260e2258eaab744ef8fb7",
+    "national_summary_sha256": "d926dbc4fe2f2ea7054431254b902310eeaca89ba35a34341291f687cce289ca",
+    "run_manifest_sha256": "67e4bf363794b1be264c8700336a071ed4c229a4e67986558b0dc28c0531ca7c",
+    "repository": {
+      "commit": "8afbedf35ce64fcfc49088f55c198b17eb94c840",
+      "working_tree_clean": false,
+      "uncommitted_paths": 3
+    }
+  },
+  "forecast_cutoff": "2025-06-02",
+  "forecast_sha256": "d39329363d49ac9751857fc9efd2866554f08fe3909260e2258eaab744ef8fb7",
+  "national_forecast_sha256": "d926dbc4fe2f2ea7054431254b902310eeaca89ba35a34341291f687cce289ca",
+  "official_result_sha256": "87d3370f5a38d57a50e542edc40158786ba98766f70c6ab483d752cdf0ac35b9",
+  "scope": "A/B/C contest-normalized",
+  "rows": 51,
+  "regions": 17,
+  "regional_contest_vote_weighted_point_mae_pp": 4.909592709645975,
+  "regional_equal_region_point_mae_pp": 4.9800935866081835,
+  "national_frozen_forecast_point_mae_pp": 4.3307995047290255,
+  "contest_votes": 34600675,
+  "all_valid_votes": 34980616,
+  "outcome_use": "evaluation only; no fitting, tuning, selection, or forecast mutation",
+  "selection_note": "no promotion in this repository has cited a 2025 score; each version was selected on structural grounds recorded before this was computed"
+}

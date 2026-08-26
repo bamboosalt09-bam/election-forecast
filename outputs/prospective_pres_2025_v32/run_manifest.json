@@ -1,0 +1,283 @@
+{
+  "schema": "prospective_presidential_forecast_v1",
+  "status": "forecast_only_not_scored",
+  "election_id": "pres_2025",
+  "version": "v32",
+  "forecast_cutoff": "2025-06-02",
+  "config_path": "data/config/active_presidential_model_v23.json",
+  "config_sha256": "295c7f78ed14548b6555f49db7a4afb39d2d1ec0e26a34d2927b01ef41cd2094",
+  "runtime_policy_path": "data/config/active_presidential_model_v23.json",
+  "runtime_policy_sha256": "295c7f78ed14548b6555f49db7a4afb39d2d1ec0e26a34d2927b01ef41cd2094",
+  "runtime_policy_matches_declared_config": true,
+  "training_scored_elections": [
+    "pres_2002",
+    "pres_2007",
+    "pres_2012",
+    "pres_2017",
+    "pres_2022"
+  ],
+  "training_latest_election": "pres_2022",
+  "candidate_selection": [
+    {
+      "candidate_id": "pres_2025_lee_jaemyung",
+      "candidate_name": "이재명",
+      "party_name": "더불어민주당",
+      "slot": "A",
+      "prior_bloc_share": 0.5280066676141113,
+      "candidate_attention": 2.4599549411091126
+    },
+    {
+      "candidate_id": "pres_2025_kim_moonsu",
+      "candidate_name": "김문수",
+      "party_name": "국민의힘",
+      "slot": "B",
+      "prior_bloc_share": 0.3789183228934896,
+      "candidate_attention": 2.6425596897379457
+    },
+    {
+      "candidate_id": "pres_2025_lee_junseok",
+      "candidate_name": "이준석",
+      "party_name": "개혁신당",
+      "slot": "C",
+      "prior_bloc_share": 0.0502542330549601,
+      "candidate_attention": 0.1042629755861497
+    }
+  ],
+  "candidate_selection_outcome_fields_used": [],
+  "final_model_slot_assignment": [
+    {
+      "slot": "A",
+      "candidate_name": "이재명"
+    },
+    {
+      "slot": "B",
+      "candidate_name": "김문수"
+    },
+    {
+      "slot": "C",
+      "candidate_name": "이준석"
+    }
+  ],
+  "candidate_strength_projection": {
+    "method": "direct_speech_derived_candidate_context",
+    "training_elections": [],
+    "target_outcomes_used": false,
+    "polling_used": false,
+    "source": "generated_prospective_candidate_context",
+    "projected_candidates": [
+      {
+        "candidate_id": "pres_2025_lee_jaemyung",
+        "candidate_name": "이재명",
+        "slot": "A",
+        "candidate_weight": 0.4549571856407072,
+        "confidence": 0.6586011329305247,
+        "available_date": "2025-06-02"
+      },
+      {
+        "candidate_id": "pres_2025_kim_moonsu",
+        "candidate_name": "김문수",
+        "slot": "B",
+        "candidate_weight": 0.4822149473074399,
+        "confidence": 0.6560806302587512,
+        "available_date": "2025-06-02"
+      },
+      {
+        "candidate_id": "pres_2025_lee_junseok",
+        "candidate_name": "이준석",
+        "slot": "C",
+        "candidate_weight": 0.433504444163106,
+        "confidence": 0.6037523481650733,
+        "available_date": "2025-06-02"
+      }
+    ]
+  },
+  "government_context_link": {
+    "method": "current_assembly_government_to_latest_prior_winner_party",
+    "prior_election": "pres_2022",
+    "prior_winner_candidate": "윤석열",
+    "prior_winner_party": "국민의힘",
+    "mapped_candidate_id": "pres_2025_kim_moonsu",
+    "mapped_candidate_name": "김문수",
+    "mapped_slot": "B",
+    "current_assembly": 22,
+    "government_aggregate_rows": 736,
+    "government_sentence_count": 11477,
+    "directional_aggregate_rows": 53,
+    "signed_weight": -14.58665525,
+    "absolute_directional_weight": 24.094630249999998,
+    "candidate_attention_source_types": [
+      "person",
+      "party"
+    ],
+    "government_evidence_destination": "issue_character_burden_only",
+    "government_rows_excluded_from_candidate_attention": 736,
+    "candidate_issue_link_rows": 54,
+    "target_outcomes_used": false,
+    "prior_outcome_used_only_for_governing_party_identity": true,
+    "forecast_cutoff": "2025-06-02",
+    "model_slot_by_ballot": {
+      "1": "A",
+      "2": "B",
+      "4": "C"
+    },
+    "generated_context_output_rows": {
+      "candidate_issue_profile.csv": 57,
+      "mega_issue_axis.csv": 3,
+      "mega_issue_attribution.csv": 5,
+      "issue_character_overlay.csv": 57,
+      "candidate_party_speech_context.csv": 3,
+      "candidate_party_tone_gap.csv": 3,
+      "candidate_public_treatment.csv": 3,
+      "candidate_vote_conversion_context.csv": 3,
+      "automatic_third_candidate_profile.csv": 1,
+      "candidate_political_landscape.csv": 3
+    },
+    "generated_candidate_direct_profile_rows": 57,
+    "government_burden_profile_government_rows": 17,
+    "candidate_direct_profile_government_rows": 0,
+    "generated_context_sha256": {
+      "candidate_context": "dc2cfeb28f79e6c50d487bc54079e226b5e1627ec20feeafe690f34d08e9c9ee",
+      "candidate_party_speech_context": "22afa7aac02127394d7b6693422dacbd055ee9840719b63b16287a30f88bd15d",
+      "candidate_party_tone_gap": "43398682948516528fcb25ddb7f0d4bfc0685bbdc30d1081725835cfd7497c72",
+      "candidate_public_treatment": "a6478167e07b43bcd1229af72c96f2abe035bbc373e285fcc5ff8b13dbd5905c",
+      "political_landscape": "137b9ce9c2ca9149259f3b18605426fedb94713b7733e39ecc05ab903c4d4b35",
+      "third_candidate_profile": "2f858d34a58a047b2f29c0fe81325c8bf559d39a4330f13dcf716e76954457b9",
+      "candidate_issue_profile": "93222642a3caad66ae3bcbbb6094f25df286264a4d7d540863ee69398277781c",
+      "candidate_direct_issue_profile": "5c7600dbafd2f1cfbe4a13a5dafd4f10ca6c2d4ecf862eaf9cb8b550170ab5e3",
+      "mega_issue_axis": "079f38f018d5efc27c435522c1f6163e3846fc64a50e8c3a7dadf4441ab5e240",
+      "mega_issue_attribution": "5e15957e516cfeb224b3c82cd8172f9ab9b9587872f6c94030be3f0b9cb833d8"
+    }
+  },
+  "mega_issue_controls": {
+    "method": "historical_speech_row_rematch_with_official_institutional_event_gate",
+    "source": "data/raw/official_sources/assembly_pres_2025_minutes/assembly_stance_rows_2025_h1.csv",
+    "source_rows": 48588,
+    "pit_eligible_rows": 14985,
+    "semantic_gate": true,
+    "semantic_gate_adjustment_applied": false,
+    "semantic_source_rows": 1250,
+    "semantic_source_meetings": 6,
+    "semantic_source_speakers": 66,
+    "frequency_shock_type": "institutional_crisis",
+    "frequency_mega_issue_intensity": 2.0,
+    "shock_type": "institutional_crisis",
+    "mega_issue_intensity": 2.0,
+    "available_date": "2025-05-05",
+    "target_outcomes_used": false,
+    "model_parameters_changed": false,
+    "sentence_issue_rows": 14985,
+    "unique_sentence_rows": 13448,
+    "reconstructed_speech_rows": 7106,
+    "historical_compatible_match_rows": 10478
+  },
+  "national_region_weight_source": "pres_2022_valid_vote_volume",
+  "outcome_columns_used": [],
+  "performance_metrics_computed": false,
+  "pres_2025_outcome_present": false,
+  "model_selection_performed": false,
+  "model_parameters_changed": false,
+  "frozen_historical_reproduction": {
+    "required": true,
+    "passed": true,
+    "rows": 232,
+    "maximum_absolute_difference": 2.220446049250313e-16,
+    "canonical_predictions_sha256": "0f9d68e4df64edbb71061717e0750ecbb91eb700522d8d97173d99c3534e3b1d"
+  },
+  "prediction_stage_audit_rows": 51,
+  "target_feature_audit_rows": 51,
+  "target_feature_columns": [
+    "election_id",
+    "region_id",
+    "slot",
+    "candidate_name",
+    "issue_advantage",
+    "rif",
+    "partisan_prior",
+    "landscape_bloc_alignment",
+    "landscape_centrist",
+    "landscape_inferred_prior",
+    "candidate_weight",
+    "assigned_slot",
+    "preliminary_mean_share",
+    "pre_withdrawal_mean_share",
+    "post_withdrawal_mean_share",
+    "withdrawal_event_applied"
+  ],
+  "v24_postprocess_order": [
+    "strong_incumbent_veto",
+    "third_candidate_lineage_ceiling",
+    "weak_same_lane_refusal"
+  ],
+  "v24_postprocess_audit_rows": {
+    "strong_incumbent_veto": 17,
+    "third_candidate_lineage_ceiling": 17,
+    "weak_same_lane_refusal": 17
+  },
+  "assembly_context_manifest_sha256": "873a5bdae1a5d3dd7284253a98d473ee0b867f43e98fcf312c8ca9caec4c8264",
+  "assembly_context_certification": "forecast_only_not_scored",
+  "generated_candidate_context_sha256": {
+    "candidate_context": "dc2cfeb28f79e6c50d487bc54079e226b5e1627ec20feeafe690f34d08e9c9ee",
+    "candidate_party_speech_context": "22afa7aac02127394d7b6693422dacbd055ee9840719b63b16287a30f88bd15d",
+    "candidate_party_tone_gap": "43398682948516528fcb25ddb7f0d4bfc0685bbdc30d1081725835cfd7497c72",
+    "candidate_public_treatment": "a6478167e07b43bcd1229af72c96f2abe035bbc373e285fcc5ff8b13dbd5905c",
+    "political_landscape": "137b9ce9c2ca9149259f3b18605426fedb94713b7733e39ecc05ab903c4d4b35",
+    "third_candidate_profile": "2f858d34a58a047b2f29c0fe81325c8bf559d39a4330f13dcf716e76954457b9",
+    "candidate_issue_profile": "93222642a3caad66ae3bcbbb6094f25df286264a4d7d540863ee69398277781c",
+    "candidate_direct_issue_profile": "5c7600dbafd2f1cfbe4a13a5dafd4f10ca6c2d4ecf862eaf9cb8b550170ab5e3",
+    "mega_issue_axis": "079f38f018d5efc27c435522c1f6163e3846fc64a50e8c3a7dadf4441ab5e240",
+    "mega_issue_attribution": "5e15957e516cfeb224b3c82cd8172f9ab9b9587872f6c94030be3f0b9cb833d8"
+  },
+  "assembly22_roster_manifest_sha256": "b3959bdd4f833fd7d0ae9060f28aa54aa270738b61bbdd0f780a102f78204347",
+  "assembly_speaker_profile_sha256": "2de094609499dbacd7bc2fc47e02cc344aabed9c172e024e36b9fbe3ae22fdf8",
+  "predecessor_runtime": "v28",
+  "v27_party_regionalism_dispersion": {
+    "gain": 1.0,
+    "weight_source": "pres_2022_valid_vote_volume",
+    "outcome_fields_used": [],
+    "module_sha256": "0d5c477bcee4716ddcd42d327cca2c51b0110ad2568e84676898c870f6276b9b"
+  },
+  "external_neural_model_runtime": false,
+  "external_model_derived_inputs": [],
+  "parliamentary_source_policy": "official_records_and_deterministic_issue_matching_only",
+  "v31_multiplicative_dispersion_expansion": {
+    "gain": 1.0,
+    "index": "model_predicted_third_placed_national_level",
+    "weight_source": "pres_2022_valid_vote_volume",
+    "gain_selection": "parameter_free_unit_gain_not_swept",
+    "outcome_fields_used": []
+  },
+  "prospective_feature_contract": {
+    "replaces": "blanket zero-fill of every column the target lacked",
+    "outcome_only_set_to_nan": [
+      "abs_err_pp",
+      "actual",
+      "baseline_pre_layer_abs_err_pp",
+      "baseline_pre_layer_err_pp",
+      "baseline_pre_layer_pred",
+      "err_pp",
+      "official_pred",
+      "reproduced_legacy_pred"
+    ],
+    "explicit_zero": {
+      "frozen_reproduction_difference": "there is no frozen artifact for a forecast target to reproduce against",
+      "landscape_legacy_confidence": "the legacy landscape blend fades as modern landscape evidence accumulates; it is already zero for pres_2022 and stays zero from there",
+      "landscape_legacy_blend": "the legacy landscape blend fades as modern landscape evidence accumulates; it is already zero for pres_2022 and stays zero from there"
+    },
+    "diagnostic_only": {
+      "frozen_reproduction_guard_required": "a bookkeeping flag recording whether the reproduction guard was demanded",
+      "dominant_cumulative_rejection": "reported by the contest-regime audit and read by no prediction stage"
+    },
+    "required_derived_families_built": [
+      "major_party_core_eligible",
+      "regional_accent"
+    ],
+    "unclassified_missing_column_behaviour": "raise",
+    "target_election_outcome_fields_used": []
+  },
+  "raw_input_read_trace": {
+    "path": "raw_input_read_trace.csv",
+    "rows": 28,
+    "external_model_derived_reads": 0,
+    "note": "recorded at the point of read and never edited. V28 stripped the overlay row from the manifest after the run and then checked the manifest; this checks the trace itself."
+  }
+}

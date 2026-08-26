@@ -771,7 +771,7 @@ def _candidate_strength_context(
         "Projected from through-2022 speech-derived candidate weights using "
         "D-1 Assembly issue-link attention; no election outcomes or polling"
     )
-    for column in [
+    projection_gaps = [
         "coalition_cohesion",
         "coalition_mobilization_score",
         "wasted_vote_resistance",
@@ -780,8 +780,21 @@ def _candidate_strength_context(
         "third_candidate_overexposure_risk",
         "attention_to_support_gap",
         "conversion_capacity",
-    ]:
-        target[column] = 0.0
+    ]
+    if TARGET_FEATURE_CONTRACT is None:
+        for column in projection_gaps:
+            target[column] = 0.0
+    else:
+        # Fail closed. This fallback runs when the direct speech-derived context
+        # does not cover the target, and it used to answer that by zeroing eight
+        # candidate-context columns - two of which reach a prediction. Under the
+        # contract a coverage gap in the target's own context is a reason to
+        # stop, not a reason to invent zeros.
+        target = TARGET_FEATURE_CONTRACT(
+            target.drop(columns=[c for c in projection_gaps if c in target.columns]),
+            projection_gaps,
+            site="candidate_context_ridge_projection",
+        )
     columns = list(historical_context.columns)
     target_context = target.reindex(columns=columns)
     combined = pd.concat([historical_context, target_context], ignore_index=True)
@@ -1491,6 +1504,15 @@ def _prior_region_volume(version: str = "v23") -> pd.Series:
     ).sum()
 
 
+#: Optional replacement for the blanket zero-fill in the two target builders.
+#: ``None`` keeps the behaviour V31 and earlier produced, which is what lets
+#: their artifacts still reproduce. V32 installs
+#: ``prospective_feature_contract.resolve`` with builders for the model-active
+#: families, so a missing column is built, declared, or fatal - never zero by
+#: omission.
+TARGET_FEATURE_CONTRACT = None
+
+
 def _target_base(
     target: pd.DataFrame,
     historical_base: pd.DataFrame,
@@ -1509,11 +1531,19 @@ def _target_base(
         out["candidate_name_x"] = out["candidate_name"]
     if "candidate_name_y" in historical_base.columns:
         out["candidate_name_y"] = out["candidate_name"]
-    # The assembled target already contains the same electorate and issue
-    # feature contract.  Missing diagnostic-only columns are inert.
-    for column in historical_base.columns:
-        if column not in out.columns:
-            out[column] = np.nan if column == "actual" else 0.0
+    if TARGET_FEATURE_CONTRACT is None:
+        # The assembled target already contains the same electorate and issue
+        # feature contract.  Missing diagnostic-only columns are inert.
+        # V31 and earlier keep this, so their artifacts still reproduce.
+        # Five of the families it swallowed were not inert at all - the
+        # regional accent layer, major_party_core_eligible, lineage_identity,
+        # wasted_vote_resistance and strategic_transfer_confidence - which is
+        # why V32 installs a contract instead.
+        for column in historical_base.columns:
+            if column not in out.columns:
+                out[column] = np.nan if column == "actual" else 0.0
+    else:
+        out = TARGET_FEATURE_CONTRACT(out, historical_base.columns, site="_target_base")
     return out.reindex(columns=historical_base.columns)
 
 
@@ -1553,9 +1583,12 @@ def _target_full(
         0.0,
     )
     out["_order"] = len(SCORED_ELECTIONS) + 1
-    for column in historical_full.columns:
-        if column not in out.columns:
-            out[column] = 0.0
+    if TARGET_FEATURE_CONTRACT is None:
+        for column in historical_full.columns:
+            if column not in out.columns:
+                out[column] = 0.0
+    else:
+        out = TARGET_FEATURE_CONTRACT(out, historical_full.columns, site="_target_full")
     return pd.concat(
         [historical_full, out.reindex(columns=historical_full.columns)],
         ignore_index=True,

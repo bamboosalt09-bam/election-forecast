@@ -26,6 +26,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -52,6 +53,28 @@ OTHER_COLUMNS = ("kwon_yeongguk_votes", "song_jinho_votes")
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _repository_state() -> dict[str, object]:
+    """The commit the scored forecast was read at, and whether it was clean.
+
+    An evaluation is only interpretable against a specific artifact. Recording
+    the commit lets a reader recover which forecast produced the score without
+    trusting that the file has not moved since.
+    """
+
+    def git(*arguments: str) -> str:
+        result = subprocess.run(
+            ["git", *arguments], cwd=ROOT, capture_output=True, text=True, check=False
+        )
+        return result.stdout.strip() if result.returncode == 0 else ""
+
+    status = git("status", "--porcelain")
+    return {
+        "commit": git("rev-parse", "HEAD") or "unknown",
+        "working_tree_clean": status == "",
+        "uncommitted_paths": len(status.splitlines()) if status else 0,
+    }
 
 
 def _active_version() -> str:
@@ -149,9 +172,22 @@ def evaluate(version: str | None = None) -> dict[str, object]:
     scored.to_csv(out_dir / "regional_scored.csv", index=False, encoding="utf-8-sig")
     national.to_csv(out_dir / "national_scored.csv", index=False, encoding="utf-8-sig")
     summary = {
-        "schema": "pres_2025_post_election_evaluation_v2",
+        "schema": "pres_2025_post_election_evaluation_v3",
         "version": version,
         "status": "post_election_evaluation_not_model_selection",
+        # The boundary, stated in the artifact rather than only in prose.
+        "boundary": (
+            f"{version.upper()} was frozen before this evaluation; 2025 outcomes "
+            f"were not used for {version.upper()} model selection, "
+            "parameterization, or promotion."
+        ),
+        "scored_forecast": {
+            "artifact": f"outputs/prospective_pres_2025_{version}",
+            "prospective_predictions_sha256": _sha256(forecast_path),
+            "national_summary_sha256": _sha256(national_path),
+            "run_manifest_sha256": _sha256(manifest_path),
+            "repository": _repository_state(),
+        },
         "forecast_cutoff": "2025-06-02",
         "forecast_sha256": _sha256(forecast_path),
         "national_forecast_sha256": _sha256(national_path),

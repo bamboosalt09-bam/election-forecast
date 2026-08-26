@@ -92,16 +92,28 @@ def test_the_verification_block_states_changes_rather_than_directions() -> None:
         f"{forbidden} assert a direction; record the measured change instead"
     )
 
+    # The predecessor comes from the pointer rather than a literal, so this
+    # test keeps checking the newest promotion instead of an old one.
+    pointer = json.loads(POINTER.read_text(encoding="utf-8"))
+    predecessor = str(pointer["predecessor"])
     metrics = _manifest()["metrics"]
     for axis in ("national", "regional"):
-        key = f"{axis}_macro_change_vs_v30_pp"
+        key = f"{axis}_macro_change_vs_{predecessor}_pp"
         assert key in verification, f"{key} is missing"
         assert isinstance(verification[key], float)
-    # and the recorded change must reconstruct the published figure
-    assert (
-        abs(
-            (0.7204374174124484 + verification["national_macro_change_vs_v30_pp"])
-            - metrics["national_equal_election_macro_mae_pp"]
-        )
-        < 1e-12
-    )
+
+    # and the recorded change must reconstruct the published figure from the
+    # predecessor's own artifact - including when the change is exactly zero,
+    # which is V32's claim and would pass vacuously if it were not checked
+    # against a separately measured baseline.
+    previous = json.loads(
+        (
+            ROOT / f"outputs/active_presidential_nested_{predecessor}/summary.json"
+        ).read_text(encoding="utf-8")
+    )["metrics"]
+    for axis in ("national", "regional"):
+        key = f"{axis}_macro_change_vs_{predecessor}_pp"
+        published = f"{axis}_equal_election_macro_mae_pp"
+        assert (
+            abs((previous[published] + verification[key]) - metrics[published]) < 1e-12
+        ), f"{key} does not reconstruct {published} from {predecessor}"

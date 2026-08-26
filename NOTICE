@@ -20,7 +20,7 @@ licenses, terms, attribution requirements, and redistribution restrictions.
 The source-family register and conservative redistribution decisions are in
 docs/DATA_PROVENANCE_AND_REDISTRIBUTION.md.
 
-Packaged V31 data boundary
+Packaged V32 data boundary
 --------------------------
 The wheel contains only Git-tracked public or project-authored derived inputs.
 Local KOSPI history, official-source caches, full parliamentary text, raw HTML
