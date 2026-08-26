@@ -6,17 +6,17 @@ for transparency, but they are not the same publication surface.
 
 | Boundary | Canonical location | Install package | Meaning |
 | --- | --- | --- | --- |
-| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V31 engine modules and declared public/derived inputs | Yes | Locally runnable V31 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
-| Frozen active evidence | `outputs/active_presidential_nested_v31/` | Yes | Immutable V31 predictions, intervals and promotion audits |
+| Active engine | `src/election_forecast/`, `current_presidential_model.json`, reachable V32 engine modules and declared public/derived inputs | Yes | Locally runnable V31 code and inputs; neural runtime, weights, sentence corpus and direct overlay are excluded, while one disclosed frozen candidate-issue aggregate is retained |
+| Frozen active evidence | `outputs/active_presidential_nested_v32/` | Yes | Immutable V32 predictions, intervals and promotion audits |
 | Rollback evidence | V23-V30 frozen prediction CSVs | Prediction CSV only | Hash-verifiable rollback boundary, not active runtime logic |
-| Corrected demonstration | `outputs/prospective_pres_2025_v31/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
+| Corrected demonstration | `outputs/prospective_pres_2025_v32/` | Yes | D-1 demonstration repaired after the result was known; not prospective validation |
 | Boundary history reference | `outputs/external_model_free_v25_baseline/` | Yes | V25 pipeline under the external-model boundary; verification reference only, never promoted or scored |
 | Document record | `docs/` dated experiments, diagnoses and superseded final models | Yes | Indexed in `docs/INDEX.md`; accurate for the state each describes, never current |
 | Historical research | `research/`, `docs/EXPERIMENT_*`, non-promoted experiment outputs | No | Methodological record; never presented as active V32 output |
 | Local/private acquisition | ignored caches, checkpoints, full text, credentials and uncertain-rights exports | No | Must be reacquired under the provider's terms or remain local |
 
 The wheel contains a hash-indexed runtime archive. The source distribution
-contains the same runnable V31 source plus current publication, security and
+contains the same runnable V32 source plus current publication, security and
 rights documents. It deliberately excludes superseded visualization archives,
 old corrected demonstrations and non-promoted output grids. The GitHub
 repository remains the complete public research record.

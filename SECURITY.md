@@ -4,7 +4,7 @@
 ## Supported release
 
 Security fixes are applied to the current `main` branch and the active package
-release. Frozen V23-V31 research artifacts are immutable evidence: a security
+release. Frozen V23-V32 research artifacts are immutable evidence: a security
 fix that changes model behavior must be released as a new version rather than
 rewriting a frozen artifact.
 
@@ -19,7 +19,7 @@ credentials in the report.
 
 ## Security boundary
 
-- The public V31 runner is local and does not require a hosted inference API.
+- The public V32 runner is local and does not require a hosted inference API.
 - The packaged runtime admits Git-tracked files only, rejects path traversal,
   and verifies every extracted file with SHA-256 before execution.
 - API credentials belong in local environment variables. `.env`, caches,
@@ -30,4 +30,4 @@ credentials in the report.
 
 Automated checks scan the public boundary, source/data licenses, pinned GitHub
 Actions, the exact dependency lock against vulnerability advisories, dependency
-updates, the frozen V31 artifact and clean reproduction.
+updates, the frozen V32 artifact and clean reproduction.

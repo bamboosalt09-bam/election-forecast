@@ -237,10 +237,11 @@ def run(output_dir: Path | None = None) -> Path:
             "the implementation reaches a residual plateau of roughly 1.9e-9 to "
             "3.8e-9 on valid input and raising the budget from 200 to 20,000 "
             "rounds does not reduce it, so the old 1e-11 condition was stricter "
-            "than this implementation's numerical fixed point and the loop was "
-            "in practice always exhausting its budget. Whether that plateau is a "
-            "floating-point floor or a property of the alternation is not "
-            "resolved here"
+            "than this implementation's numerical fixed point. Three of the five "
+            "calls plateau and run the full budget; the other two meet 1e-11 and "
+            "stop early, so the loop was not always exhausting it. Whether the "
+            "plateau is a floating-point floor or a property of the alternation "
+            "is not resolved here"
         ),
         "invocations": len(calibration_reports),
         "reports": calibration_reports,

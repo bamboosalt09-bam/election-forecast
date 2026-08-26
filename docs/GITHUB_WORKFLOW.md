@@ -18,7 +18,7 @@ working trees.
 
 ## Model lifecycle
 
-V31 is frozen and V30 through V23 remain frozen rollback models. Experiments
+V32 is frozen and V31 through V23 remain frozen rollback models. Experiments
 must use a new versioned output directory and must not overwrite any frozen
 version's code, configuration, predictions, or manifests. Promotion of a later version requires
 all of the following in one pull request:
@@ -46,7 +46,7 @@ are required for a reproducible experiment.
 ## CI tiers
 
 The normal GitHub-hosted CI runs the repository-boundary audit, the regression
-suite, and the frozen V31 audit. Full Assembly reprocessing and historical NLP
+suite, and the frozen V32 audit. Full Assembly reprocessing and historical NLP
 experiments are manual jobs for a controlled local or self-hosted runner. A
 self-hosted runner must not execute untrusted pull-request code.
 

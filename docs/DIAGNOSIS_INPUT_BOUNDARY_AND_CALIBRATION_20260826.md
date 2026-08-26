@@ -102,8 +102,10 @@ tracked as P2.
 any of them by a single digit; the same values return.
 
 **Inferred.** The `1e-11` termination condition was therefore stricter than the
-numerical fixed point this implementation reaches, and the loop was in practice
-always exhausting its budget rather than converging.
+numerical fixed point this implementation reaches, for those three calls. The
+other two meet it and stop early, so **the loop was not always exhausting its
+budget** — an earlier draft said it was, which the five-call breakdown directly
+above contradicts.
 
 **Unresolved.** Whether that plateau is a floating-point floor or a property of
 the alternation — or a small incompatibility between how the two constraints

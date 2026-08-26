@@ -1,7 +1,7 @@
 # Contributing and extending the forecast engine
 
 Contributions are welcome, but frozen model versions are immutable evidence.
-Do not edit files under `outputs/active_presidential_nested_v23` through `v28`,
+Do not edit files under `outputs/active_presidential_nested_v23` through `v32`,
 their versioned fixed datasets, or their finalization manifests in place.
 
 ## Development setup
@@ -9,7 +9,7 @@ their versioned fixed datasets, or their finalization manifests in place.
 ```bash
 python -m pip install -e ".[dev,viz]"
 python -m pytest -q
-python scripts/audit_public_active_presidential_model_v31.py
+python scripts/audit_public_active_presidential_model_v32.py
 ```
 
 Before submitting a change, run `python scripts/audit_github_baseline.py` as

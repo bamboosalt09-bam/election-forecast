@@ -1,5 +1,5 @@
 <!-- active-model-version: v32 -->
-# V31 architecture
+# V32 architecture
 
 V32 is the active, frozen presidential model. It preserves V31 as a rollback,
 keeps V28's external-model boundary unchanged — no neural inference, no weights,
@@ -16,7 +16,7 @@ research surfaces are enumerated in `REPOSITORY_BOUNDARIES.md`.
 
 ```mermaid
 flowchart TD
-    P[Installable wheel] --> Q[Hash-verified V31 runtime]
+    P[Installable wheel] --> Q[Hash-verified V32 runtime]
     Q --> A[Point-in-time public and derived inputs]
     A --> B[Candidate, party, region and issue assembly]
     B --> C[Candidate prior and historical terrain]
@@ -33,19 +33,19 @@ flowchart TD
     W --> V
     V --> L[Regional 100 percent and national-level conservation]
     L --> M[Predictions, intervals and audit manifests]
-    M --> N[Current V31 visualizations]
+    M --> N[Current V32 visualizations]
 
     O[2025 D-1 reconstructed context] --> B
     O -. corrected demonstration only .-> M
 
-    R[External-model weights, sentences and experiment code] -. excluded from packaged V31 runtime .-> S[Research records]
+    R[External-model weights, sentences and experiment code] -. excluded from packaged V32 runtime .-> S[Research records]
     T[Disclosed frozen candidate-issue aggregate] --> F
 ```
 
 ## Runtime chain
 
 - Public historical pointer: `scripts/run_current_presidential_model.py`
-- V31 wrapper: `scripts/run_active_presidential_model_v31.py`
+- V32 wrapper: `scripts/run_active_presidential_model_v32.py`
 - V28 external-model-free wrapper: `scripts/run_active_presidential_model_v28.py`
 - V26 shock ladder and event alignment: `scripts/run_active_presidential_model_v26.py`
 - V25/V24 structural stack: `scripts/run_active_presidential_model_v25.py`
@@ -55,17 +55,17 @@ flowchart TD
 - V30 forecast-time weights: `presidential_issue_engine/forecast_time_region_weights.py`
 - V31 terminal transform: `presidential_issue_engine/multiplicative_dispersion_expansion.py`
 - External-model-runtime-free boundary: `presidential_issue_engine/external_model_free_runtime.py`
-- Public integrity audit: `scripts/audit_public_active_presidential_model_v31.py`
+- Public integrity audit: `scripts/audit_public_active_presidential_model_v32.py`
 - Version-declaration audit: `scripts/audit_version_consistency.py`
-- Installed-runtime verifier: `src/election_forecast/v31_runtime.py`
+- Installed-runtime verifier: `src/election_forecast/v32_runtime.py`
 - Wheel build boundary: `setup.py`
 
 The version wrappers are intentionally layered. A successor must use a new
-runner and output directory; it must not edit V31 or a rollback version in
+runner and output directory; it must not edit V32 or a rollback version in
 place.
 
 The public repository keeps historical research scripts for transparency, but
-the wheel traces only modules reachable from the V31 historical/prospective,
+the wheel traces only modules reachable from the V32 historical/prospective,
 audit, reproduction and visualization entry points. Optional external-model
 experiments, raw caches and noncanonical research outputs are not admitted to
 the packaged runtime.
@@ -95,7 +95,7 @@ improved — regional macro `2.5736` → `2.5664`, national `0.7262` → `0.7204
 which is recorded as an outcome, not as the justification. See
 `EXPERIMENT_V30_FORECAST_TIME_WEIGHTS_20260824.md`.
 
-## What V31 changes
+## What V31 changed, and is inherited unchanged
 
 V29's expansion is linear in each candidate's regional deviation, so it has no
 lower bound, and it was capped per election at the largest factor admitting no
@@ -161,14 +161,28 @@ itself, so there is no constant for the scored panel to select; a swept gain of
 0.50 scores better on the regional metric and is rejected for that reason. See
 `EXPERIMENT_V29_THIRD_SHARE_DISPERSION_20260823.md`.
 
+## What V32 changes
+
+Nothing on the scored path — its artifact is byte-identical to V31's. What it
+replaces is the prospective assembly's blanket zero-fill: every column the
+target frame lacks is now classified `REQUIRED_DERIVED`, `EXPLICIT_ZERO`,
+`OUTCOME_ONLY` or `DIAGNOSTIC_ONLY`, a required column with no builder is a hard
+failure, an outcome-only column becomes `NaN` rather than a fabricated zero, and
+an unclassified column stops the run. Five model-active families had been
+silently zero in the published 2025 forecast. See
+`EXPERIMENT_V32_PROSPECTIVE_FEATURE_CONTRACT_20260826.md`.
+
+The dispersion calibration also gained one acceptance tolerance, `1e-8` share,
+and external-model-derived inputs are refused by file name rather than by
+directory path.
+
 ## Preserved invariants
 
-V31 retains V27's terminal regional transform, V30's forecast-time weighting
-and V28's external-model boundary, and replaces V29's additive expansion with a
-multiplicative one that cannot emit a zero share. It
-preserves each candidate's vote-weighted national level and restores every
-election-region composition to 100 percent. The public audit additionally pins
-the 232-row panel, the V23-V30 rollback hashes, the V31 prediction hash,
+V32 retains V31's multiplicative expansion, V27's terminal regional transform,
+V30's forecast-time weighting and V28's external-model boundary. The transform
+cannot emit a zero share, preserves each candidate's vote-weighted national
+level and restores every election-region composition to 100 percent. The public audit additionally pins
+the 232-row panel, the V23-V31 rollback hashes, the V32 prediction hash,
 interval metadata, the absence of any negative share, and the fact that no 2025
 row enters the scored historical artifact.
 

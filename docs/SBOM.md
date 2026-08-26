@@ -1,5 +1,5 @@
 <!-- active-model-version: v32 -->
-# V31 software bill of materials
+# V32 software bill of materials
 
 This is the human-readable SBOM required by Attachment 1 of the 2026 Open
 Source Developer Competition result report. `requirements-v32.lock` records
@@ -11,7 +11,7 @@ reproduction ran in the same environment. The files differ only in their header
 comment, which names the version each was frozen for. They are copied rather
 than aliased so each frozen version names its own lock. `requirements-v27.lock` is retained as the V27-era record; it
 differs in `pandas` (3.0.3) and `pypdf` (6.16.1) and must not be used to
-reproduce V31. Visualization is an optional extra; its two direct
+reproduce V32. Visualization is an optional extra; its two direct
 packages are recorded below at the versions used for the published figures.
 
 | Library | Tested version | License | Official repository | Purpose |
@@ -35,7 +35,7 @@ packages are recorded below at the versions used for the published figures.
 | matplotlib | 3.11.0 | PSF-based | https://github.com/matplotlib/matplotlib | Current figures |
 | Shapely | 2.1.2 | BSD-3-Clause | https://github.com/shapely/shapely | Administrative-boundary dissolve for maps |
 
-V31 exposes no external-model optional dependency extra. Historical stance
+V32 exposes no external-model optional dependency extra. Historical stance
 experiments, model weights and sentence corpora are excluded from the active
 runtime and wheel.
 
@@ -59,4 +59,4 @@ election-forecast verify-current-presidential
 ```
 
 Package metadata remains the source of supported dependency ranges. The lock
-is the reviewed exact environment for the frozen V31 reproduction check.
+is the reviewed exact environment for the frozen V32 reproduction check.

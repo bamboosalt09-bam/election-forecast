@@ -110,8 +110,8 @@
   "artifacts": [
     {
       "path": "scripts/run_active_presidential_model_v32.py",
-      "bytes": 13556,
-      "sha256": "e31674b23f3b7067bcfc2d7403a81ff95fad7c66002601de77ed4e402e24fae5",
+      "bytes": 13652,
+      "sha256": "e1b10211fddff4957f453c94a15d7bfd11b99b369722121c8930200705d6f884",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -248,8 +248,8 @@
     },
     {
       "path": "docs/DIAGNOSIS_INPUT_BOUNDARY_AND_CALIBRATION_20260826.md",
-      "bytes": 8502,
-      "sha256": "1029a258f936341b1d936059a88274876af191d8dc80e0e5b7b0835c924b18e5",
+      "bytes": 8626,
+      "sha256": "23468087eec66b9b5360290fffdb6bb7b5c65e69fbf645eb7f1bbe2cd0c54567",
       "hash_mode": "normalized_text_lf"
     },
     {
@@ -260,8 +260,8 @@
     },
     {
       "path": "outputs/active_presidential_nested_v32/summary.json",
-      "bytes": 15255,
-      "sha256": "d6dbb6282914780602abaaa1b77f966dfb54271cc3eafc70e720c084d5e3eaff",
+      "bytes": 15336,
+      "sha256": "f6e39c7e3e88dac967cae6b06e21ac6fa0f19de08677c32f5efb92de2f9d6034",
       "hash_mode": "raw_bytes"
     },
     {

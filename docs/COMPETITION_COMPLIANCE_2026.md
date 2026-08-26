@@ -19,17 +19,17 @@ The attachments themselves are not redistributed by this repository.
 | Article 8: directly authored code under an OSI-approved license | Apache-2.0 at repository root; NOTICE separates third-party data and software | `LICENSE`, `NOTICE` |
 | Article 8: disclose all third-party software, sources and licenses | Human-readable direct-dependency SBOM plus exact tested lock. Data rights are registered per source family and enforced in CI; where a model card published no licence tag the absence is disclosed as such rather than assumed permissive. | `docs/SBOM.md`, `requirements-v32.lock`, `docs/PUBLIC_DATA_SOURCES.json` |
 | Article 9: embedded AI must run independently and be at least open weights | Active V32 runs no model at all: no external AI weight, no direct stance overlay and no hosted inference API. One external-model-derived input remains active - the compact `data/raw/auto_issue_seed/candidate_issue_profile.csv` aggregate - and is registered with its own rights basis rather than under project authorship. The encoder that produced it, `jhgan/ko-sroberta-nli`, is open-weight and ran locally, so the historical use satisfies both limbs of this Article even though nothing executes now. | `docs/AI_MODEL_SPEC.md`, `docs/PUBLIC_DATA_SOURCES.json`, `scripts/audit_public_data_rights.py` |
-| Article 10: complete source must be public and reviewable | Public source tree plus a self-contained wheel that embeds the actual V31 runtime | `setup.py`, `src/election_forecast/v31_runtime.py` |
+| Article 10: complete source must be public and reviewable | Public source tree plus a self-contained wheel that embeds the actual V32 runtime | `setup.py`, `src/election_forecast/v32_runtime.py` |
 | Article 10: winning repository remains public for five years | Repository policy records the obligation; deletion/private conversion must not occur during that period | this document and release checklist |
 | Article 11: repository state at evaluation time is judged | `main` is protected; mandatory checks pin current-pointer consistency, audit, reproduction, package and rights boundaries | `.github/workflows/ci.yml`, `scripts/audit_current_public_surface.py` |
-| Result-report form: architecture, stack, data flow, run/test and limitations | Current V31 documents link actual entry points and evidence boundaries | `docs/ARCHITECTURE.md`, `docs/REPRODUCIBILITY.md` |
+| Result-report form: architecture, stack, data flow, run/test and limitations | Current V32 documents link actual entry points and evidence boundaries | `docs/ARCHITECTURE.md`, `docs/REPRODUCIBILITY.md` |
 | Attachment 1: SBOM is mandatory | Direct dependency table and exact lock are maintained | `docs/SBOM.md` |
-| Attachment 2: AI model specification when applicable | V31 statistical model and non-active external-model experiments are distinguished | `docs/AI_MODEL_SPEC.md` |
+| Attachment 2: AI model specification when applicable | V32 statistical model and non-active external-model experiments are distinguished | `docs/AI_MODEL_SPEC.md` |
 | Duplicate-benefit confirmation | Participant must disclose same/substantially similar current-year public support, including pending/ongoing participation | submission-side declaration; not inferred by code |
 
 ## External-model-derived input
 
-Article 9 concerns embedded AI. V31 embeds none, so the Article is satisfied on its
+Article 9 concerns embedded AI. V32 embeds none, so the Article is satisfied on its
 face, but one artefact still descends from an external model and that is stated here
 rather than left to inference.
 
@@ -121,7 +121,7 @@ National Assembly proceedings the aggregate was computed over, whose provider
 terms prohibit sharing supplied information unchanged. That is why the verbatim
 corpus is excluded and only derived forms ship - see
 `PRES_2025_INPUT_GUIDE.md`. Article 9 is satisfied independently of any of this:
-the encoder is open-weight, it ran locally, and V31 executes no model at all.
+the encoder is open-weight, it ran locally, and V32 executes no model at all.
 
 ## Submission checklist that remains outside code
 
