@@ -80,6 +80,33 @@ and the check reads that. Extending the same treatment to the scored path, and
 separating "what was read" from "what may be redistributed", is **open** and
 tracked as P2.
 
+### What that P2 is and is not
+
+It is a defect in **one method of proof**, not in the model, and not in the
+claim the method was meant to support. The claim — that no external-model
+product reaches a prediction — rests on four independent legs, and the manifest
+check is the weakest of them. Removing it entirely would not weaken the
+conclusion:
+
+| evidence | what it shows | grade |
+| --- | --- | --- |
+| the files moved out of the tree | V31 re-runs to `969e63fe…`, byte-identical; `layer_pred` differs on 0 of 232 rows | **demonstrated** |
+| downstream disappearance | every `issue_pref_*` and `issue_attention_*` column identically zero since V28; 17 of 17 populated in V26 and V27, 0 of 17 after | **demonstrated** |
+| the read trace | written where the read happens and never edited afterwards: 0 calls on the scored path, and all three tables refused on the prospective one | **observed** |
+| the distribution | the three files are absent from the wheel and the sdist, checked on every build | **observed** |
+
+So the exposure is not that an external model might be influencing the forecast.
+It is that a reader auditing the chain would find a check that inspects a file
+the line above it rewrote — a check that cannot fail — and would be right to
+discount it. The cost is credibility of the audit, not correctness of the model.
+
+**Why it was not fixed in V32.** The strip-then-assert pair lives in
+`external_model_free_runtime.py`, which is pinned by hash in the V30, V31 **and**
+V32 finalization manifests. Editing it in place breaks three versions'
+reproduction at once, which the change policy forbids. It is fixable — by a
+runtime seam, or by a version that can repin the module and invert the order —
+and it is carried forward rather than left unfixable.
+
 ---
 
 ## 2. `party_regionalism_dispersion._calibrate`
