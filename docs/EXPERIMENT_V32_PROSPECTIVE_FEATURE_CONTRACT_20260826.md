@@ -136,14 +136,29 @@ on the authoring machine, and the Linux reproduction job passes.
 `atol=1e-12`, never bytes. That is the reproduction contract this repository
 publishes.
 
-**Inferred.** The Windows runner's floating-point path formats a few final
-digits differently while agreeing well inside `1e-12`. V31's contract absorbed
-that; V32's byte condition, being strictly stronger, turned a correct
-reproduction into a failure.
+**Observed, and it corrects the first explanation.** After the guard was
+rescoped, the same job on the same runner reproduced the panel **byte for
+byte** — the run printed no difference at all, because the numeric path was
+never reached. Two runs of the same job over the same model code therefore
+disagree: one byte-different, one byte-identical.
 
-**Unresolved.** The exact magnitude of the difference on that runner. The guard
-raised before anything measured it, which is itself part of the defect: a
-fail-closed check should say how far off it was.
+An earlier draft of this section inferred that the runner's floating-point path
+"formats a few final digits differently". That is **withdrawn**: it predicts a
+consistent difference, and the second run does not show one. What is observed is
+that the difference is **intermittent**.
+
+**Unresolved.** Both the cause of the intermittency — thread scheduling, a BLAS
+kernel choice, a runner image difference, none of which is evidenced here — and
+its magnitude. The first failure raised before anything measured it, which is
+itself part of the defect: a fail-closed check should say how far off it was.
+The rescoped guard now records the magnitude in `summary.json` and prints it, so
+the next occurrence resolves the second question without needing to be
+reproduced on demand.
+
+This makes the byte condition worse than it first appeared, not better. A guard
+that fails on some runs and not others, over identical inputs, is not a strict
+check — it is a flaky one, and it would have failed intermittently for anyone
+reproducing this work.
 
 The claim was not weakened, it was moved to where it is true. Byte identity is a
 property of the committed artifact and is still asserted in three places that

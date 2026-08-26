@@ -230,14 +230,14 @@
     },
     {
       "path": "docs/FINAL_MODEL_V32_20260826.md",
-      "bytes": 7711,
-      "sha256": "0bf099373e398d81ea70f87e8a9fed3ef1338ce9faff45e5ccd23e890ee33004",
+      "bytes": 7816,
+      "sha256": "bb980797d91cb1ec8c45a394f951397b225f2df9962d8f4c56d125795d48828e",
       "hash_mode": "normalized_text_lf"
     },
     {
       "path": "docs/EXPERIMENT_V32_PROSPECTIVE_FEATURE_CONTRACT_20260826.md",
-      "bytes": 8977,
-      "sha256": "6bb8257c9864ef46ead23913faeafba4a18ca408d728c80cb137380812a85416",
+      "bytes": 9910,
+      "sha256": "96c3e4d8f82d22770cd834fdb3f68c38ea1b82243a6b1a31582b837aa2e10cb2",
       "hash_mode": "normalized_text_lf"
     },
     {
