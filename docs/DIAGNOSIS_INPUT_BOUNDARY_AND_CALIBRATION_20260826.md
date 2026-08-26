@@ -162,8 +162,14 @@ version can edit that module under its own manifest.
 
 | item | grade | note |
 | --- | --- | --- |
-| manifest audit structure on the scored path | P2 | the raw trace exists for the prospective path only |
 | calibration plateau root cause | — | unresolved observation, not a defect |
+| `audit_public_active_presidential_model_v31.py` docstring says "Audit active V30" | P3 | the file pins its own hash, so correcting it needs a version that can repin — deferred to the V32 seal |
+
+The scored-path trace item is closed: the scored run is now traced, its trace
+comes back empty, and the reason is recorded beside it — that path never calls
+`issue_vote_engine._read_csv_if_exists`, measured at 0 calls, because it reads
+the frozen through-2022 rederived artifacts instead of assembling from source
+tables.
 
 Two items that were on this list are now closed.
 
