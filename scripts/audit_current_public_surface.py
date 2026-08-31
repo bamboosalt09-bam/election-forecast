@@ -12,7 +12,11 @@ ROOT = Path(__file__).resolve().parents[1]
 CURRENT_POINTER = ROOT / "data/config/current_presidential_model.json"
 ACTIVE_ALIAS = ROOT / "data/config/active_presidential_model.json"
 LEGACY_BASE = ROOT / "data/config/active_presidential_model_v16.json"
-RELEASE_VERSION = "0.30.0"
+#: The package version of the newest published GitHub release. It said "0.30.0"
+#: for a long time, and no such release ever existed: the only release was
+#: V27's 0.27.0, and V28 through V31 were never cut at all. Nothing checked it,
+#: because a release lives outside the tree and none of the audits can see one.
+RELEASE_VERSION = "0.32.0.dev0"
 MAIN_VERSION = "0.32.0.dev0"
 V32_SHA256 = "969e63fe5239462c9f26a73ff8b97a196d543063821ba0577d1b6563ff2dd069"
 #: Every frozen predecessor, not just one. This pinned V28 alone and kept
@@ -78,7 +82,21 @@ def main() -> None:
     project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
     package_version = str(project["project"]["version"])
     require(package_version == MAIN_VERSION, "main package version drift")
-    require(package_version != RELEASE_VERSION, "main reuses the frozen release version")
+    # This used to require the two to *differ*, on the reasoning that main is a
+    # development version and a release is a frozen one. V32's release was cut
+    # from the frozen tree without bumping the version - deliberately, so that
+    # the published file and the release name agree and V32 stayed frozen - so
+    # main and the release are now the same build, and the old rule could only
+    # be satisfied by writing a version that was not released.
+    #
+    # They must therefore agree. If main moves ahead without a release, this
+    # fails, and that failure is the prompt to decide which one is wrong rather
+    # than a nuisance: either cut the release, or record here what shipped.
+    require(
+        package_version == RELEASE_VERSION,
+        f"main is {package_version} while the newest release is {RELEASE_VERSION}; "
+        "cut the release or update RELEASE_VERSION to what actually shipped",
+    )
 
     package_source = (ROOT / "src/election_forecast/__init__.py").read_text(
         encoding="utf-8"
